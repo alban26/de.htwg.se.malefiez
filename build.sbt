@@ -1,4 +1,4 @@
-name          := "htwg-scala-seed"
+name          := "Malefiz in Scala"
 organization  := "de.htwg.se"
 version       := "0.0.1"
 scalaVersion  := "2.12.4"
