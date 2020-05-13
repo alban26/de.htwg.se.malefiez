@@ -106,7 +106,7 @@ case class Gameboard() {
   /*
   Aufruf aller Baufunktionen : Stringrückgabe des ganzen Spielfeldes
    */
-  def aufbauFeld(n: Int): String = {
+  def buildField(n: Int): String = {
     buildAim(n) + buildBody(n) + bottom(n) + buildPlayer(n)
   }
 
