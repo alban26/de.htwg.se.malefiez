@@ -9,8 +9,10 @@ object Malefiz {
 
     val gb = Gameboard()
     println(gb.buildField(0))
-    println("Robert 2.Versuch")
+    println("Robert")
+    print("MergeTest")
   }
+
 
 
 
