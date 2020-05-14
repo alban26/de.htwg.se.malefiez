@@ -9,7 +9,7 @@ object Malefiz {
 
     val gb = Gameboard()
     println(gb.buildField(0))
-
+    println("Robert")
   }
 
 
