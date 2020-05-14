@@ -12,6 +12,8 @@ object Malefiz {
 
     println("Alban")
 
+    println("Alban vs Djedushka")
+
   }
 
 
