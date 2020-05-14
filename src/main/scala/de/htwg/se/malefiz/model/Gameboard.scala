@@ -14,15 +14,17 @@ case class Gameboard() {
   /*
   Grundbau für die einzelnen Spielfeldreihen
    */
-  def levelVertical(k: Int, n: Int, m: Int): String = gap * k + vertical + (gap * m + vertical) * n
+  def levelVertical(distanceLeft: Int, numberPlayers: Int, blank: Int): String = gap * distanceLeft + vertical + (gap * blank + vertical) * numberPlayers
 
-  def levelBracket1(k: Int, n: Int): String = gap * k + brackets + (horizontal + brackets) * n
+  def levelBracket1(distanceLeft: Int, numberPlayers: Int): String = gap * distanceLeft + brackets + (horizontal + brackets) * numberPlayers
 
-  def levelBracket2(k: Int, n: Int, m: Int): String = gap * k + brackets + (gap * m + brackets) * n
+  def levelBracket2(distanceLeft: Int, numberPlayers: Int, blank: Int): String = gap * distanceLeft + brackets + (gap * blank + brackets) * numberPlayers
 
   /*
   Grundbau für die Startpositionen
    */
+  //def playerNumber(n: Int): String =
+
   def basisPlayer1: String = playerbrackets + (horizontal + playerbrackets) * 2
 
   def levelPlayer1(n: Int): String = gap * 4 + basisPlayer1 + (gap * 5 + basisPlayer1) * n
@@ -66,7 +68,7 @@ case class Gameboard() {
   }
 
   def buildBody2(n: Int, vert: Int, brack: Int, m: Int): String = {
-    if (n == 1) {
+    if (n == 1 || n == 0) {
       buildTop(m)
     } else {
       buildBody2(n - 1, vert + 8, brack + 8, m) +
