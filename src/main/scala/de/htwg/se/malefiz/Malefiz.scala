@@ -11,6 +11,8 @@ object Malefiz {
     println(gb.buildField(0))
     println("Robert")
     print("MergeTest")
+
+    println("hALLO")
   }
 
 
