@@ -8,14 +8,11 @@ object Malefiz {
     println("Hello, " + student.name)
 
     val gb = Gameboard()
-    println(gb.buildField(0))
+    println(gb.buildField(6))
+
     println("Robert")
     print("MergeTest")
 
     println("hALLO")
   }
-
-
-
-
 }
