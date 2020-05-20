@@ -12,3 +12,6 @@ field1.cells(0).x
 field1.cells(0).y
 
 
+val t = List(1,2,3,4)
+
+println(t(0))

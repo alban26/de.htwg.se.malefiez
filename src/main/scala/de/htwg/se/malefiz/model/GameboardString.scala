@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.model
 
-case class Gameboard() {
+case class GameboardString() {
 
   /*
   Einzelne Spielfeldkomponenten
