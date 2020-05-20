@@ -7,7 +7,7 @@ case class Gameboard(list: List[Field]) {
 
   def generateOriginal(n: Int): SortedMap[Field, Set[Field]] = {
 
-    SortedMap[Field, Set[Field]] = SortedMap(
+  val graph: SortedMap[Field, Set[Field]] = SortedMap(
       list(0) -> Set(list(1), list(17)),
       list(1) -> Set(list(0), list(2)),
       list(2) -> Set(list(1), list(3)),
@@ -120,6 +120,7 @@ case class Gameboard(list: List[Field]) {
       list(110) -> Set(list(93), list(109)),
       list(111) -> Set(list(102))
     )(CellOrdering)
+    graph
   }
 }
 
