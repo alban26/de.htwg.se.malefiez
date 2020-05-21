@@ -11,7 +11,7 @@ case class Field(fieldNumber: Int, playerNumber: Int, destination: Boolean,
   def getYCoordinate: Int = this.coordinates.y_coordinate
 
   override def toString: String = {
-    " Feldnummer: " + fieldNumber + " PlayerNumber: " + playerNumber + "  Destination: " + destination + " WallPermission: " +  wallPermission + " Coordinates: " + coordinates + " hasWall " + hasWall
+    "[ ]" + fieldNumber
   }
 
 

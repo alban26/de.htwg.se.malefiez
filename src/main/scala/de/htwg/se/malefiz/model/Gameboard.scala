@@ -109,6 +109,7 @@ case class Gameboard() {
             list(98) -> Set(list(97), list(99)),
             list(99) -> Set(list(98), list(100)),
             list(100) -> Set(list(99), list(101)),
+            list(101) -> Set(list(100), list(102)),
             list(102) -> Set(list(101), list(103), list(111)),
             list(103) -> Set(list(102), list(104)),
             list(104) -> Set(list(103), list(105)),

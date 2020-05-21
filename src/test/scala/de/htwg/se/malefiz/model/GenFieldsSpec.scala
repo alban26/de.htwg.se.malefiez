@@ -39,7 +39,9 @@ class GenFieldsSpec extends WordSpec with Matchers {
       "the destination of the game should be 111" in {
         gameboard(111).destination should be(true)
       }
-      "is generated for test purposed with only 10 Field"
+      "is generated for test purposed with only 10 Field" in {
+
+      }
 
     }
   }

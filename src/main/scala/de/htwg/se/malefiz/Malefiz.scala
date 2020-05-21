@@ -7,12 +7,19 @@ object Malefiz {
     val student = Player("Your Name")
     println("Hello, " + student.name)
 
-    val gb = GameboardString()
-    println(gb.buildField(4))
+    val gbs = GameboardString()
+    println(gbs.buildField(4))
 
     val gf = GenFields()
     val t = gf.genCells(112)
-    for (i <- t)
-      println(i)
+    /*for (i <- t)
+      println(i)*/
+
+    val gb = Gameboard()
+    val graph = gb.generateOriginal(t)
+    for((k,v) <- graph) {
+      println(k + " ---> " + v)
+    }
+println(graph.size)
   }
 }
