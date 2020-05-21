@@ -7,8 +7,8 @@ case class Field(fieldNumber: Int, playerNumber: Int, destination: Boolean,
   def getPlayerNumber : Int = this.playerNumber;
   def isDestination: Boolean = this.destination;
   def getWallPermission : Boolean = this.wallPermission
-  def getXCoordinate: Int = this.coordinates.x
-  def getYCoordinate: Int = this.coordinates.y
+  def getXCoordinate: Int = this.coordinates.x_coordinate
+  def getYCoordinate: Int = this.coordinates.y_coordinate
 
   override def toString: String = {
     " Feldnummer: " + fieldNumber + " PlayerNumber: " + playerNumber + "  Destination: " + destination + " WallPermission: " +  wallPermission + " Coordinates: " + coordinates + " hasWall " + hasWall

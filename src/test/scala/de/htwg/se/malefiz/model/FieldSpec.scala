@@ -15,20 +15,17 @@ class FieldSpec extends WordSpec with Matchers {
       }
       "have value false" in {
         emptyField.destination should be(false)
-      }
-      "have value false" in {
         emptyField.wallPermission should be(false)
       }
       "have value x = 0" in {
-        emptyField.coordinates.x should be(0)
+        emptyField.coordinates.x_coordinate should be(0)
       }
       "have value y = 0" in {
-        emptyField.coordinates.y should be(0)
+        emptyField.coordinates.y_coordinate should be(0)
       }
     }
     "set to a specific value" should{
 
     }
   }
-
 }
