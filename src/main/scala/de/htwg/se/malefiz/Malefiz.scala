@@ -11,6 +11,8 @@ object Malefiz {
     println(gb.buildField(4))
 
     val gf = GenFields()
-    gf.genCells(112)
+    val t = gf.genCells(112)
+    for (i <- t)
+      println(i)
   }
 }

@@ -27,7 +27,7 @@ class FieldSpec extends WordSpec with Matchers {
       }
     }
     "set to a specific value" should{
-      val nonEmptyField = 
+
     }
   }
 

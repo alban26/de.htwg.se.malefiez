@@ -10,6 +10,10 @@ case class Field(fieldNumber: Int, playerNumber: Int, destination: Boolean,
   def getXCoordinate: Int = this.coordinates.x
   def getYCoordinate: Int = this.coordinates.y
 
+  override def toString: String = {
+    " Feldnummer: " + fieldNumber + " PlayerNumber: " + playerNumber + "  Destination: " + destination + " WallPermission: " +  wallPermission + " Coordinates: " + coordinates + " hasWall " + hasWall
+  }
+
 
 }
 

@@ -15,3 +15,9 @@ field1.cells(0).y
 val t = List(1,2,3,4)
 
 println(t(0))
+
+val e = for {
+  i <- 0 to 9
+}yield e
+
+println(e)
