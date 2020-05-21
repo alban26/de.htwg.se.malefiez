@@ -7,8 +7,8 @@ class GenFieldsSpec extends WordSpec with Matchers {
 
   "The Gameborad ist respresented by a list of Field-Objekts. The Gameboard" when {
     "is generated" should {
-      val testGameboard = new GenFields
-      val gameboard = testGameboard.genCells(112)
+      val originalGameboard = new GenFields
+      val gameboard = originalGameboard.genCells(112)
       "should be an Instance of List of Fields" in {
         gameboard.isInstanceOf[List[Field]] should be(true)
       }
@@ -40,7 +40,9 @@ class GenFieldsSpec extends WordSpec with Matchers {
         gameboard(111).destination should be(true)
       }
       "is generated for test purposed with only 10 Field" in {
-
+        val testGameboeard = new GenFields
+        val testBoard = testGameboeard.genCells(10)
+        testBoard.length should be (10)
       }
 
     }
