@@ -1,3 +1,5 @@
+import de.htwg.se.malefiz.model.{Gameboard, GenFields}
+
 import scala.collection.mutable
 import scala.collection.immutable.TreeMap
 
@@ -14,17 +16,17 @@ field1.cells(0)=cell1
 field1.cells(0).x
 field1.cells(0).y
 
-val aMap = TreeMap[Int, TreeMap[Int, Int]](
-  1 -> 2 -> 1), 4 -> TreeMap(3 -> 1)
-)
 
-println(aMap)
-val t = List(1,2,3,4)
 
-println(t(0))
 
-val e = for {
-  i <- 0 to 9
-}yield e
+val genFields = GenFields()
+val listOfFields = genFields.genCells(112)
+val gameBoard = Gameboard()
+val graph = gameBoard.generateOriginal(listOfFields)
 
-println(e)
+val t = graph.get(listOfFields(0))
+
+val s = t.head.toList
+
+s(0).fieldNumber == 1
+s(1).fieldNumber == 17

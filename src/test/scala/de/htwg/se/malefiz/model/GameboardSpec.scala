@@ -14,6 +14,12 @@ class GameboardSpec extends WordSpec with Matchers{
     "has 112 Map Entries" in {
       graph.size should be(112)
     }
+    "Field 0 is connected to the Fields with fieldNumber 1 and 17" in {
+      val t = graph.get(listOfFields(0))
+      val s = t.head.toList
+      s(0).fieldNumber should be(1)
+      s(1).fieldNumber should be(17)
+    }
   }
 }
 }
