@@ -4,6 +4,10 @@ import de.htwg.se.malefiz.model.{Gameboard, GameboardString, GenFields, Player}
 
 object Malefiz {
   def main(args: Array[String]): Unit = {
+
+    println("Willkommen bei Malefiz!");
+    println("Wie viele Spieler möchten Spielen? (2-4 Spieler)")
+
     val student = Player("Your Name")
     println("Hello, " + student.name)
 

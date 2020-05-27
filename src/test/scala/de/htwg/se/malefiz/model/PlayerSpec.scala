@@ -9,9 +9,7 @@ class PlayerSpec extends WordSpec with Matchers {
       "have a name"  in {
         player.name should be("Your Name")
       }
-      "have"
-
-    "have a nice String representation" in {
+      "have a nice String representation" in {
       player.toString should be("Your Name")
     }
   }}

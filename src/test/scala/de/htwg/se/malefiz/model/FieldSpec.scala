@@ -8,7 +8,7 @@ class FieldSpec extends WordSpec with Matchers {
     "not set to any Value" should {
       val emptyField = Field(0, 0, destination = false, wallPermission = false, Point(0,0), hasWall = false)
       "have Value 1 " in {
-        emptyField.playerNumber should be(0)
+        emptyField.fieldNumber should be(0)
       }
       "have Value 0" in {
         emptyField.playerNumber should be(0)

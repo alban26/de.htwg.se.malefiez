@@ -30,3 +30,17 @@ val s = t.head.toList
 
 s(0).fieldNumber == 1
 s(1).fieldNumber == 17
+
+case class Cube() {
+
+
+  def getRandomNumber : Int = {
+    val randomNumber = scala.util.Random.nextInt(6) + 1
+    randomNumber
+  }
+
+}
+
+val test = Cube()
+val testNumber = test.getRandomNumber
+

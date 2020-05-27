@@ -4,7 +4,6 @@ import scala.collection.SortedMap
 
 case class Gameboard() {
 
-
     def generateOriginal(list: List[Field]): SortedMap[Field, Set[Field]] = {
 
         val graph: SortedMap[Field, Set[Field]] = SortedMap(

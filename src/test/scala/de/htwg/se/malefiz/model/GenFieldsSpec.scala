@@ -46,5 +46,7 @@ class GenFieldsSpec extends WordSpec with Matchers {
       }
 
     }
+
+
   }
 }
