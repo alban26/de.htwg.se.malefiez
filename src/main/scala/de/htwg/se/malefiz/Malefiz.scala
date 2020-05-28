@@ -21,11 +21,6 @@ object Malefiz {
       test = tui.processInput(input)
 
     } while(input != "end")
-
-
-
-
-
     }
 
 }

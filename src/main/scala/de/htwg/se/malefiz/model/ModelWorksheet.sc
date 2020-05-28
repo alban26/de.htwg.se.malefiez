@@ -1,46 +1,28 @@
-import de.htwg.se.malefiz.model.{Gameboard, GenFields}
+import de.htwg.se.malefiz.model.{CellOrdering, Field, Gameboard, GenFields}
 
-import scala.collection.mutable
+import scala.collection.{SortedMap, mutable}
 import scala.collection.immutable.TreeMap
 
-case class Cell(x:Int, y:Int)
 
-val cell1 = Cell(4,5)
-cell1.x
-cell1.y
+case class Cell(feldnummer: Int) {
+  override def toString:String = "[]"
+}
 
-case class Field(cells: Array[Cell])
+def generateOriginal(list: List[Cell]): Unit = {
+  var n = 116
 
-val field1 = Field(Array.ofDim[Cell](1))
-field1.cells(0)=cell1
-field1.cells(0).x
-field1.cells(0).y
+  for (i <- 0 to 13) {
+    for (j <- 0 to 16) {
+      var t: SortedMap[Cell, Set[Cell]] =  SortedMap(list(n) -> Set(list(n+1))) (CellOrdering)
+      print(list(n).toString)
 
-
-
-
-val genFields = GenFields()
-val listOfFields = genFields.genCells(112)
-val gameBoard = Gameboard()
-val graph = gameBoard.generateOriginal(listOfFields)
-
-val t = graph.get(listOfFields(0))
-
-val s = t.head.toList
-
-s(0).fieldNumber == 1
-s(1).fieldNumber == 17
-
-case class Cube() {
-
-
-  def getRandomNumber : Int = {
-    val randomNumber = scala.util.Random.nextInt(6) + 1
-    randomNumber
+    }
+    n = n - 16
+    println()
   }
 
 }
 
-val test = Cube()
-val testNumber = test.getRandomNumber
-
+object CellOrdering extends Ordering[Cell] {
+  override def compare(x: Cell, y: Cell): Int = x.feldnummer - y.feldnummer
+}
