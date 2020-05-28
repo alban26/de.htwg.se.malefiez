@@ -1,29 +1,31 @@
 package de.htwg.se.malefiz
 
-import de.htwg.se.malefiz.model.{Gameboard, GameboardString, GenFields, Player}
+import de.htwg.se.malefiz.aview.Tui
+import de.htwg.se.malefiz.model.{Cube, Gameboard, GenFields, Player}
+
+import scala.io.StdIn
 
 object Malefiz {
+
+  var playerList = new Array[Player] (4)
+  val tui = new Tui
+  var test = ""
   def main(args: Array[String]): Unit = {
 
-    println("Willkommen bei Malefiz!");
-    println("Wie viele Spieler möchten Spielen? (2-4 Spieler)")
+    println("Willkommen bei Malefiz!")
 
-    val student = Player("Your Name")
-    println("Hello, " + student.name)
+    var input: String = ""
 
-    val gbs = GameboardString()
-    println(gbs.buildField(4))
+    do {
+      input = io.StdIn.readLine()
+      test = tui.processInput(input)
 
-    val gf = GenFields()
-    val t = gf.genCells(112)
-    /*for (i <- t)
-      println(i)*/
+    } while(input != "end")
 
-    val gb = Gameboard()
-    val graph = gb.generateOriginal(t)
-    for((k,v) <- graph) {
-      println(k + " ---> " + v)
+
+
+
+
     }
-println(graph.size)
-  }
+
 }
