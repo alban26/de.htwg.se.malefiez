@@ -12,6 +12,7 @@ object Malefiz {
   var test = ""
   def main(args: Array[String]): Unit = {
 
+
     println("Willkommen bei Malefiz!")
 
     var input: String = ""
