@@ -18,14 +18,11 @@ class GenFieldsSpec extends WordSpec with Matchers {
       "determine the Number of generated Nodes" in {
         originalGameboard.numberOfNodes(4) should be (113)
       }
-      "the field is divided in rows - a part of them are the singly ones" in {
+    /*  "the field is divided in rows - a part of them are the singly ones" in {
         originalGameboard.singleNodesBetween(4,3) should be(18)
-      }
+      }*/
       "the other Nodes in between" in {
         originalGameboard.nodesBetween(4) should be(44)
-      }
-      "for the nodesBetween Method is also a helper function needed" in {
-        originalGameboard.nodesBetweenHilf(4*4+1) should be (44)
       }
       "the first(bottom) and the last 2 rows are generated" in {
         originalGameboard.bottomTopNodes(4) should be (51)
@@ -58,26 +55,8 @@ class GenFieldsSpec extends WordSpec with Matchers {
         for (i <- 0 to 16)
           gameboard(i).wallPermission should be(false)
       }
-      "the fields from 17 to 110 should have permission to set a Wall " in {
-        for (i <- 17 to 112)
-          gameboard(i).wallPermission should be(true)
-      }
-      "has set Walls on specific field numbers," in {
-        gameboard(22).hasWall should be(true)
-        gameboard(26).hasWall should be(true)
-        gameboard(30).hasWall should be(true)
-        gameboard(34).hasWall should be(true)
-        gameboard(38).hasWall should be(true)
-        gameboard(61).hasWall should be(true)
-        gameboard(65).hasWall should be(true)
-        gameboard(72).hasWall should be(true)
-        gameboard(75).hasWall should be(true)
-        gameboard(84).hasWall should be(true)
-        gameboard(103).hasWall should be(true)
-      }
-      "the destination of the game should be 111" in {
-        gameboard(112).destination should be(true)
-      }
+
+
       "is generated for test purposed with only 1 Field" in {
         val testGameboeard = new GenFields
         val testBoard = testGameboeard.genCells(0)
