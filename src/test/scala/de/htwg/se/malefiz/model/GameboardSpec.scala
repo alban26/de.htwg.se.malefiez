@@ -22,5 +22,4 @@ class GameboardSpec extends WordSpec with Matchers{
     }
   }
 }
-}
-*/
+}*/
