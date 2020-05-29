@@ -6,7 +6,6 @@ import scala.io
 
 class Tui {
 
-
   var colors = Array("Red", "Green", "Yellow", "Blue")
 
   def processInput(input: String)  : String = {
