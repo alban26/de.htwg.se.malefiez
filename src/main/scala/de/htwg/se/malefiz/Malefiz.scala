@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz
 
 import de.htwg.se.malefiz.aview.Tui
-import de.htwg.se.malefiz.model.{Cube, Gameboard, GenFields, Player}
+import de.htwg.se.malefiz.model.{Cube, Gameboard, GenFields, Player, PlayFigure}
 
 import scala.io.StdIn
 
