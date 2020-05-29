@@ -82,13 +82,18 @@ case class GenFields() {
 
   def genCells(n: Int): List[Field] = {
 
-    val steine2 = buildWalls(n)
-    val steine = steine2.map(x => x + 1)
-    val wallPermission = (0 to s(n)).toList
-    val destination = numberOfNodes(n) - 1
-    val anzahl = numberOfNodes(n)
+    if(n == 0) {
+      List(Field(0,0,true,false,Point(0,0),false),Field(1,0,false,true,Point(0,0),true),Field(2,1,false,true,Point(0,0),false))
+    }
+    else {
+      val steine2 = buildWalls(n)
+      val steine = steine2.map(x => x + 1)
+      val wallPermission = (0 to s(n)).toList
+      val destination = numberOfNodes(n) - 1
+      val anzahl = numberOfNodes(n)
 
-    genCellsFinal(steine, wallPermission, destination, anzahl)
+      genCellsFinal(steine, wallPermission, destination, anzahl)
+    }
   }
 
   def genCellsFinal(steine: List[Int], wallP: List[Int], desti: Int, n: Int): List[Field] = {
