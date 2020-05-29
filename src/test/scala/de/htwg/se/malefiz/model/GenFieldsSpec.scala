@@ -51,6 +51,18 @@ class GenFieldsSpec extends WordSpec with Matchers {
         originalGameboard.dreiSteine(4)(1) should be (75)
         originalGameboard.dreiSteine(4)(2) should be (84)
       }
+      "there are also two walls in the middle of the field" in {
+        val s = originalGameboard.dreiSteine(4)
+        originalGameboard.twoWalls(s).length should be(2)
+        originalGameboard.twoWalls(s)(0) should be(61)
+        originalGameboard.twoWalls(s)(1) should be(65)
+      }
+      "the last but one wall" in {
+        originalGameboard.wallBeforeAim(4)(0) should be(103)
+      }
+      "all walls together" in {
+        originalGameboard.buildWalls(4).length should be(11)
+      }
       "the first 17 Elements shouldn't have any permission to set a Wall" in {
         for (i <- 0 to 16)
           gameboard(i).wallPermission should be(false)
