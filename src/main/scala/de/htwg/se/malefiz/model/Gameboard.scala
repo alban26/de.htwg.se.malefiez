@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.model
 import scala.collection.SortedMap
 
 case class Gameboard() {
-
+    /*
     def generateOriginal(list: List[Field]): SortedMap[Field, Set[Field]] = {
 
         val graph: SortedMap[Field, Set[Field]] = SortedMap(
@@ -121,7 +121,7 @@ case class Gameboard() {
             list(111) -> Set(list(102))
         )(CellOrdering)
         graph
-    }
+    }*/
 }
 
 
