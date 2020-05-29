@@ -18,9 +18,9 @@ class GenFieldsSpec extends WordSpec with Matchers {
       "determine the Number of generated Nodes" in {
         originalGameboard.numberOfNodes(4) should be (113)
       }
-    /*  "the field is divided in rows - a part of them are the singly ones" in {
+      "the field is divided in rows - a part of them are the singly ones" in {
         originalGameboard.singleNodesBetween(4,3) should be(18)
-      }*/
+      }
       "the other Nodes in between" in {
         originalGameboard.nodesBetween(4) should be(44)
       }
@@ -57,14 +57,10 @@ class GenFieldsSpec extends WordSpec with Matchers {
       }
 
 
-      "is generated for test purposed with only 1 Field" in {
-        val testGameboeard = new GenFields
-        val testBoard = testGameboeard.genCells(0)
-        testBoard.length should be (1)
       }
 
     }
 
 
-  }
+
 }
