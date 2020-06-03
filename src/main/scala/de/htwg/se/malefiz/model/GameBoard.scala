@@ -5,8 +5,8 @@ import scala.io.Source
 
 case class GameBoard() {
 
-  val cellConfigFile = "de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
-  val cellLinksFile = "de\\htwg\\se\\malefiz\\model\\mainCellLinks"
+  val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
+  val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
 
   def getCellList(filename: String): List[Cell] = {
     val list = Source.fromFile(filename)

@@ -1,14 +1,19 @@
 package de.htwg.se.malefiz
 
 import de.htwg.se.malefiz.aview.Tui
+import de.htwg.se.malefiz.controller.Controller
 import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
 
 import scala.io.StdIn
+import scala.io.StdIn.readLine
 
 object Malefiz {
 
 
-  val tui = new Tui
+  val controller = new Controller(new GameBoard)
+  val tui = new Tui(controller)
+
+
 
   def main(args: Array[String]): Unit = {
 
@@ -18,8 +23,8 @@ object Malefiz {
     var input: String = ""
 
     do {
-      input = io.StdIn.readLine()
-
+      input = readLine()
+      tui.processInput(input)
 
     } while(input != "end")
     }
