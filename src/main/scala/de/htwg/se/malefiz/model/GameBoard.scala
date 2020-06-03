@@ -5,6 +5,9 @@ import scala.io.Source
 
 case class GameBoard() {
 
+  val cellConfigFile = "de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
+  val cellLinksFile = "de\\htwg\\se\\malefiz\\model\\mainCellLinks"
+
   def getCellList(filename: String): List[Cell] = {
     val list = Source.fromFile(filename)
     val inputData =  list.getLines
@@ -22,7 +25,7 @@ case class GameBoard() {
   }
 
   def getCellGraph(in: String) : Map[Int, Set[Int]] = {
-    val source =Source.fromFile(in)
+    val source = Source.fromFile(in)
     val lines = source.getLines()
     val graph : Map[Int, Set[Int]] = Map.empty
     while (lines.hasNext) {
@@ -52,9 +55,8 @@ case class GameBoard() {
         |""".stripMargin
   }
 
-  def buildString(list: List[Cell],n: Int): String = {
-    val z = n + 2
-    createStringValues(list,n, 0,z,0)
+  def buildString(list: List[Cell]): String = {
+    createStringValues(list,4, 0,6,0) + buildPlayerString(list)
   }
 
   def createStringValues(list: List[Cell],n: Int,O: Int,z: Int,i: Int): String = {
@@ -131,7 +133,8 @@ case class GameBoard() {
     }
   }
 
-  def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int, sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int): String = {
+  def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int,
+                   sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int): String = {
     val ol = list.slice(sliceBeginO,sliceEndO)
     val ul = list.slice(sliceBeginU,sliceEndU)
     val ol1 = for(t <- ol)yield t
@@ -145,6 +148,11 @@ case class GameBoard() {
                                                         |${gapLeftU}${ul1.mkString("-")}
                                                         |""".stripMargin
     }
-
   }
+
+  def createGameBoard(): String = {
+    val list = getCellList(cellConfigFile)
+    buildString(list)
+  }
+
 }
