@@ -1,4 +1,4 @@
-import de.htwg.se.malefiz.model.{CellOrdering, Field, Gameboard, GenFields}
+import de.htwg.se.malefiz.model.{CellOrdering, Gameboard}
 
 import scala.collection.{SortedMap, mutable}
 import scala.collection.immutable.TreeMap

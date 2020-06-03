@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.aview
 
-import de.htwg.se.malefiz.model.{Cube, GenFields, Player}
+import de.htwg.se.malefiz.model.{Cube, Player}
 
 import scala.io
 
