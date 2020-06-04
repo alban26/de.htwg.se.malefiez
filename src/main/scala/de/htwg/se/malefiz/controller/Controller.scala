@@ -8,11 +8,17 @@ import de.htwg.se.malefiz.util.{Observable,Observer}
 class Controller(var gameBoard: GameBoard) extends Observable {
 
   def createGameBoardGraph: Unit = {
-    gameBoard =  GameBoard()
+    gameBoard =  GameBoard(gameBoard.list)
     notifyObservers
 
   }
 
+
+
+  def setWall(n: Int): Unit = {
+    gameBoard = gameBoard.setWall(n)
+    notifyObservers
+  }
 
 
   def gameBoardToString: String = gameBoard.createGameBoard()

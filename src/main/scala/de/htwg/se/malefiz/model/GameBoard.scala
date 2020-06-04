@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.model
 import scala.collection.mutable.Map
 import scala.io.Source
 
-case class GameBoard() {
+case class GameBoard(list: List[Cell]) {
 
   val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
   val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
@@ -12,7 +12,7 @@ case class GameBoard() {
     val list = Source.fromFile(filename)
     val inputData =  list.getLines
       .map(line => line.split(" "))
-      .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x, y) =>
+      .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x,y) =>
         Cell(cellNumber.toInt,
           playerNumber.toInt,
           destination.toBoolean,
@@ -150,9 +150,17 @@ case class GameBoard() {
     }
   }
 
-  def createGameBoard(): String = {
-    val list = getCellList(cellConfigFile)
-    buildString(list)
-  }
+
+  def wall(n: Int): Cell = Cell(n,n,false,true,true,null)
+
+
+  def setWall(n: Int): GameBoard = copy(updateListWall(n))
+
+
+  def updateListWall(n: Int): List[Cell] = list.updated(n,wall(n))
+
+
+  def createGameBoard(): String = buildString(list)
+
 
 }

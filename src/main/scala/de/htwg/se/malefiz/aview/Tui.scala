@@ -11,9 +11,10 @@ class Tui(controller: Controller) extends Observer {
   def processInput(input: String) : Unit = {
     input match {
       case "new game" => controller.gameBoard
-        textPrint("Wie viele Spieler seit Ihr? ")
-
-
+        update
+      case "s" =>
+      case "12" => controller.setWall(input.toInt)
+        textPrint("Stein wurde von TechLead gesetzt")
 
     }
   }
