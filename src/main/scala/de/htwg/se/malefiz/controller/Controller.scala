@@ -1,7 +1,5 @@
 package de.htwg.se.malefiz.controller
 
-
-
 import de.htwg.se.malefiz.model.{GameBoard, Player}
 import de.htwg.se.malefiz.util.{Observable, Observer}
 
