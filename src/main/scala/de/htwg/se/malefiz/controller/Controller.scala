@@ -13,6 +13,8 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   }
 
+
+
   def gameBoardToString: String = gameBoard.createGameBoard()
 
 

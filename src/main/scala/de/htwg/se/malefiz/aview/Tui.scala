@@ -11,7 +11,7 @@ class Tui(controller: Controller) extends Observer {
   def processInput(input: String) : Unit = {
     input match {
       case "new game" => controller.gameBoard
-        update
+        textPrint("Wie viele Spieler seit Ihr? ")
 
 
 
@@ -21,4 +21,5 @@ class Tui(controller: Controller) extends Observer {
 
 
   override def update: Unit = println(controller.gameBoardToString)
+  def textPrint(str: String): Unit = println(update + str)
 }
