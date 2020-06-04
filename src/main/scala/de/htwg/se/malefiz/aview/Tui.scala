@@ -12,11 +12,13 @@ class Tui(controller: Controller) extends Observer {
     input match {
       case "new game" => controller.gameBoard
         update
-      case "s" =>
-      case "12" => controller.setWall(input.toInt)
-        textPrint("Stein wurde von TechLead gesetzt")
-      case "13" => controller.setPlayer(input.toInt,Player(1))
-        update
+      case "2 Player" => controller.createPlayerArray(2)
+      case "3 Player" => controller.createPlayerArray(3)
+      case "4 Player" => controller.createPlayerArray(4)
+      case "roll cube" =>
+        textPrint(controller.rollTheCube.toString)
+
+
     }
   }
 

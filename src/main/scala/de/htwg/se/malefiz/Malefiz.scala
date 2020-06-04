@@ -4,17 +4,16 @@ import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.Controller
 import de.htwg.se.malefiz.model.{ListCreator, Cube, GameBoard, Player, PlayFigure}
 
-import scala.io.StdIn
 import scala.io.StdIn.readLine
 
 object Malefiz {
 
 
-  val cellList = ListCreator()
-  val cellList1 = cellList.getCellList
+  val cellList = ListCreator().getCellList
 
 
-  val controller = new Controller(new GameBoard(cellList1))
+
+  val controller = new Controller(GameBoard(cellList))
   val tui = new Tui(controller)
 
 

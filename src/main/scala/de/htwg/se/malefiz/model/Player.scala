@@ -2,10 +2,10 @@ package de.htwg.se.malefiz.model
 
 import java.awt.Color
 
-case class Player(playerNumber: Int, colour: String, cellList: List[Cell]) {
+case class Player(playerNumber: Int,playerName: String,  colour: String, cellList: List[Cell]) {
   val numberOfPlayer: Int = playerNumber
   var playerColour: Color = Color.black
-  val playerFigures = new Array[PlayFigure](5)
+  var playerFigures = new Array[PlayFigure](5)
 
   for (i <- playerFigures.indices) {
     numberOfPlayer match {
@@ -24,6 +24,6 @@ case class Player(playerNumber: Int, colour: String, cellList: List[Cell]) {
    }
 
 
-   override def toString:String = "Playernumber: " + playerNumber// + " Player: " + name + " Color: " + playerColor + figuresOfPlayer
+   override def toString:String = "Playernumber: " + (playerNumber+1)
 }
 
