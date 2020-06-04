@@ -24,6 +24,7 @@ case class Player(playerNumber: Int,playerName: String,  colour: String, cellLis
    }
 
 
+
    override def toString:String = "Playernumber: " + (playerNumber+1)
 }
 

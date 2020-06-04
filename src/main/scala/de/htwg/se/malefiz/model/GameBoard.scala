@@ -1,36 +1,10 @@
 package de.htwg.se.malefiz.model
 
-import scala.collection.mutable.Map
+import scala.collection.mutable.{Map, Queue}
 import scala.io.Source
+import scala.io.StdIn.readLine
 
-case class GameBoard(list: List[Cell]) {
-
-  val cellList = list
-
-  val cellConfigFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
-  val cellLinksFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellCLinks"
-
-
-  def getCellGraph(in: String) : Map[Int, Set[Int]] = {
-    val source = Source.fromFile(in)
-    val lines = source.getLines()
-    val graph : Map[Int, Set[Int]] = Map.empty
-    while (lines.hasNext) {
-      val input = lines.next()
-      val inputArray: Array[String] = input.split(" ")
-      for (i <- 1 until inputArray.length) {
-        updateCellGraph(inputArray(0).toInt, inputArray(i).toInt, graph)
-      }
-    }
-    graph
-  }
-
-  def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]) : Map[Int, Set[Int]] = {
-    map.get(key)
-      .map(_=> map(key) += value)
-      .getOrElse(map(key) = Set[Int](value))
-    map
-  }
+case class GameBoard(cellList: List[Cell], playerArray: Array[Player], gameBoardGraph: Map[Int, Set[Int]]) {
 
   def s(n: Int): Int = n * 4 + 1
 
@@ -137,23 +111,95 @@ case class GameBoard(list: List[Cell]) {
     }
   }
 
+  def createPlayerArray(numberOfPlayers: Int) : GameBoard = {
 
-  def wall(n: Int): Cell = Cell(n, false,true,true,null)
+    val pArray = new Array[Player](numberOfPlayers)
+    for (i <- pArray.indices) {
+      println("Spieler " + (i+1) + " geben Sie ihren Namen ein: ")
+      val name = readLine()
+      println("Spieler " + (i+1) + " geben Sie ihre Farbe ein: ")
+      val colour = readLine()
+      pArray(i) = Player(i, name, colour, this.cellList)
+      println(pArray(i).toString)
+      for (x <- pArray(i).playerFigures.indices) {
+        println(pArray(i).playerFigures(x))
+      }
+    }
+    this.copy(playerArray = pArray)
+    this
+  }
 
-  def player1(n: Int, player: Player): Cell = Cell(n,false,false,false,null)
+  def showPlayerStats(pArray: Array[Player]) : GameBoard = {
+    for (i <- pArray.indices) {
+      println(pArray(i).toString)
+      for (x <- pArray(i).playerFigures.indices) {
+        println(pArray(i).playerFigures(x))
+      }
+    }
+    this
+  }
 
 
-  def updateListPlayer(n: Int): List[Cell] = ???
+  def setPlayerFigure(playerNumber: Int, playerFigureNumber: Int, destinationCell: Int,
+                      playerArray: Array[Player], cellList: List[Cell]): GameBoard = {
+    val newGameBoard = GameBoard(cellList, playerArray,gameBoardGraph)
+    for (i <- playerArray.indices) {
+      for (y <- playerArray(i).playerFigures.indices) {
+        if (playerArray(i).playerFigures(y).inCell == cellList(destinationCell)) {
+          if (isPlayerFigureOnCell(destinationCell, cellList, playerArray)) {
+            kickPlayerFigure(destinationCell, playerArray, cellList)
+            newGameBoard.playerArray(playerNumber-1).playerFigures(playerFigureNumber-1).copy(y,cellList(destinationCell))
+          }
+          else {
+            playerArray(i).playerFigures(y).copy(y,cellList(destinationCell))
+          }
+        }
+      }
+    }
+    newGameBoard
+  }
 
-  def setWall(n: Int): GameBoard = copy(updateListWall(n))
+  def kickPlayerFigure(cellNumber: Int, playerArray: Array[Player], cellList: List[Cell]): Unit = {
+    for (i <- playerArray.indices) {
+      for (y <- playerArray(i).playerFigures.indices) {
+        if (playerArray(i).playerFigures(y).inCell == cellList(cellNumber)) {
+          playerArray(i).playerFigures(y).copy(y, cellList(playerArray(i).numberOfPlayer))
+        }
+      }
+    }
+  }
 
-  def setPlayer(n: Int, player: Player): GameBoard = copy(updateListPlayer(n,player))
+  def isPlayerFigureOnCell(destinationCell: Int, cellList: List[Cell], playerArray: Array[Player]): Boolean = {
+    for (i <- playerArray.indices) {
+      for(y <- playerArray(i).playerFigures.indices) {
+        if (playerArray(i).playerFigures(y).inCell == cellList(destinationCell))
+          true
+      }
+    }
+    false
+  }
 
+  def visit(n: Int, graph: Map[Int, Set[Int]]): Unit = {
+    var besucht : Set[Int] = Set().empty
+    visitBF(n, graph, besucht)
+  }
 
-  def updateListWall(n: Int): List[Cell] = list.updated(n,wall(n))
-  def updateListPlayer(n: Int, player: Player): List[Cell] = list.updated(n, player1(n,player))
+  def visitBF(v: Int, g: Map[Int, Set[Int]], besucht: Set[Int]): Unit = {
+    var q : Queue[Int] = Queue().empty
+    q.apply(v)
 
-  def createGameBoard(): String = buildString(list)
+  }
+
+  def setWall(n: Int, list: List[Cell]): GameBoard =  {
+    if (n >= 26 && !list(n).hasWall) {
+      this.cellList(n).copy(hasWall = true)
+      printf("Mauer wurde auf " + n + "gesetzt")
+    }
+    printf("Mauer wurde nicht gesetzt")
+    this
+  }
+
+  def createGameBoard(): String = buildString(this.cellList)
 
 
 }
