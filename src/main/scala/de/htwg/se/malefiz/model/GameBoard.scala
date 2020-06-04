@@ -153,7 +153,7 @@ case class GameBoard(list: List[Cell]) {
 
   def wall(n: Int): Cell = Cell(n,n,false,true,true,null)
 
-  def player(n: Int, player: Player): Cell = ???
+  def player(n: Int, player: Player): Cell = Cell()
 
   def updateListPlayer(n: Int): List[Cell] = ???
 
