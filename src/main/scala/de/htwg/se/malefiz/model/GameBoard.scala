@@ -48,8 +48,8 @@ case class GameBoard() {
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
-    val abstand1 = "         "
-    val abstand = "      "
+    val abstand1 = "             "
+    val abstand = "        "
     val l = list.slice(0,4)
     s"""|$abstand${l.mkString(s"${abstand1}")}
         |""".stripMargin
