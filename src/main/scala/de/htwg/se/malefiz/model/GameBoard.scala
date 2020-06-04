@@ -5,6 +5,8 @@ import scala.io.Source
 
 case class GameBoard(list: List[Cell]) {
 
+  val cellList = list
+
   val cellConfigFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
   val cellLinksFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellCLinks"
 

@@ -10,13 +10,8 @@ object Malefiz {
 
 
   val cellList = ListCreator().getCellList
-
-
-
   val controller = new Controller(GameBoard(cellList))
   val tui = new Tui(controller)
-
-
 
   def main(args: Array[String]): Unit = {
 

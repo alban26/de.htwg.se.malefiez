@@ -3,23 +3,33 @@ package de.htwg.se.malefiz.controller
 import de.htwg.se.malefiz.model.{Cell, Cube, GameBoard, ListCreator, Player}
 import de.htwg.se.malefiz.util.{Observable, Observer}
 
+import scala.collection.immutable.Queue
 import scala.io.StdIn.readLine
 
 class Controller(var gameBoard: GameBoard) extends Observable {
   val list : List[Cell] = ListCreator().getCellList
 
-  def rollTheCube: Int = {
-    Cube().getRandomNumber
+  def rollCube: Int = {
+    gameBoard.
   }
 
   def createGameBoardGraph: Unit = {
     gameBoard =  GameBoard(gameBoard.list)
     notifyObservers
   }
-  /*
-  def possibleCells(startNumber: Int, cubeNumber: Int, gameBoard: Map[Int, Set[Int]]): Unit = {
+
+  def visit(n: Int, graph: Map[Int, Set[Int]]): Unit = {
+    var besucht : Set[Int] = Set().empty
+    visitBF(n, graph, besucht)
   }
-   */
+
+  def visitBF(v: Int, g: Map[Int, Set[Int]], besucht: Set[Int]): Unit = {
+    var q : Queue[Int] = Queue().empty
+    q.apply(v)
+
+
+
+  }
 
   def kickPlayerFigure(cellNumber: Int, playerArray: Array[Player], cellList: List[Cell]): Unit = {
     for (i <- playerArray.indices) {
@@ -35,10 +45,13 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     for (i <- playerArray.indices) {
       for (y <- playerArray(i).playerFigures.indices) {
         if (playerArray(i).playerFigures(y).inCell == cellList(destinationCell)) {
-          kickPlayerFigure(destinationCell, playerArray, cellList)
-        }
-        else {
-          playerArray(i).playerFigures(y).copy(y,cellList(destinationCell))
+          if (isPlayerFigureOnCell(destinationCell, cellList, playerArray)) {
+              kickPlayerFigure(destinationCell, playerArray, cellList)
+              playerArray(i).playerFigures(y).copy(y,cellList(destinationCell))
+            }
+          else {
+            playerArray(i).playerFigures(y).copy(y,cellList(destinationCell))
+          }
         }
       }
     }
