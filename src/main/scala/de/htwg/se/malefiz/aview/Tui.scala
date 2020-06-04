@@ -15,7 +15,8 @@ class Tui(controller: Controller) extends Observer {
       case "s" =>
       case "12" => controller.setWall(input.toInt)
         textPrint("Stein wurde von TechLead gesetzt")
-
+      case "13" => controller.setPlayer(input.toInt,Player(1))
+        update
     }
   }
 

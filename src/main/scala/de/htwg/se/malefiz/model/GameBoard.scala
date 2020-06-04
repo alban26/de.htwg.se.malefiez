@@ -8,21 +8,6 @@ case class GameBoard(list: List[Cell]) {
   val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
   val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
 
-  def getCellList(filename: String): List[Cell] = {
-    val list = Source.fromFile(filename)
-    val inputData =  list.getLines
-      .map(line => line.split(" "))
-      .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x,y) =>
-        Cell(cellNumber.toInt,
-          playerNumber.toInt,
-          destination.toBoolean,
-          wallPermission.toBoolean,
-          hasWall.toBoolean,
-          Point(x.toInt, y.toInt))}
-      .toList
-    list.close()
-    inputData
-  }
 
   def getCellGraph(in: String) : Map[Int, Set[Int]] = {
     val source = Source.fromFile(in)
@@ -151,17 +136,20 @@ case class GameBoard(list: List[Cell]) {
   }
 
 
-  def wall(n: Int): Cell = Cell(n,n,false,true,true,null)
+  def wall(n: Int): Cell = Cell(n,null,false,true,true,null)
 
-  def player(n: Int, player: Player): Cell = Cell()
+  def player1(n: Int, player: Player): Cell = Cell(n,player,false,false,false,null)
+
 
   def updateListPlayer(n: Int): List[Cell] = ???
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
+  def setPlayer(n: Int, player: Player): GameBoard = copy(updateListPlayer(n,player))
+
 
   def updateListWall(n: Int): List[Cell] = list.updated(n,wall(n))
-
+  def updateListPlayer(n: Int, player: Player): List[Cell] = list.updated(n, player1(n,player))
 
   def createGameBoard(): String = buildString(list)
 
