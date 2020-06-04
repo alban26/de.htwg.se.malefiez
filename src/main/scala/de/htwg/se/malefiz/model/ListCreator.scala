@@ -4,16 +4,15 @@ import scala.io.Source
 
 case class ListCreator() {
 
-  val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
-  val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
+  val cellConfigFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
+  val cellLinksFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
 
   def getCellList: List[Cell] = {
     val list = Source.fromFile(cellConfigFile)
     val inputData =  list.getLines
       .map(line => line.split(" "))
-      .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x,y) =>
+      .map{case Array(cellNumber,destination, wallPermission, hasWall, x,y) =>
         Cell(cellNumber.toInt,
-          Player(playerNumber.toInt),
           destination.toBoolean,
           wallPermission.toBoolean,
           hasWall.toBoolean,
