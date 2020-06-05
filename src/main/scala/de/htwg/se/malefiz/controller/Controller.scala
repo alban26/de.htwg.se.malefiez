@@ -22,13 +22,13 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     notifyObservers
   }
 
-  def showPlayer()  =  {
+  def showPlayer(): Unit =  {
     gameBoard = gameBoard.showPlayerStats(gameBoard.playerArray)
     notifyObservers
   }
 
   def setWall(n: Int): Unit = {
-    gameBoard = gameBoard.setWall(n, gameBoard.cellList)
+    gameBoard = gb.setWall(n, gameBoard)
     notifyObservers
   }
 
