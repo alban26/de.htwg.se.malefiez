@@ -1,7 +1,15 @@
+import java.awt.Color
+
 import de.htwg.se.malefiz.model.{PlayFigure, Player}
 
-val v: Vector[PlayFigure] = Vector(PlayFigure(0),PlayFigure(1))
+def createPlayer(n: Int): List[Player] = {
+  if(n == 0){
+    Nil
+  } else {
+    createPlayer(n-1) :+ Player("Spieler1",new PlayFigure(n,Color.RED))
+  }
+}
 
-val p = Player("ha","Red",3,v)
+val l : List[Player] = createPlayer(3)
 
 

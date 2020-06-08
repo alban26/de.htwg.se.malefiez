@@ -14,20 +14,16 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   }
 
 
-
   def setWall(n: Int): Unit = {
     gameBoard = gameBoard.setWall(n)
     notifyObservers
   }
 
-  def setPlayer(n: Int, player: Player): Unit = {
-    gameBoard = gameBoard.setPlayer(n,player)
+  def setPlayer(n: String): Unit = {
+    gameBoard = gameBoard.setPlayer(n)
     notifyObservers
   }
 
-
   def gameBoardToString: String = gameBoard.createGameBoard()
-
-
 
 }

@@ -1,5 +1,7 @@
 package de.htwg.se.malefiz.model
 
+import java.awt.Color
+
 import scala.collection.mutable.Map
 import scala.io.Source
 
@@ -141,16 +143,31 @@ case class GameBoard(list: List[Cell]) {
   def player1(n: Int, player: Player): Cell = Cell(n,player,false,false,false,null)
 
 
-  def updateListPlayer(n: Int): List[Cell] = ???
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
-  def setPlayer(n: Int, player: Player): GameBoard = copy(updateListPlayer(n,player))
+  def setPlayer(n: String): GameBoard = copy(updateListPlayer(createPlayer(n))
+
+
+  def createPlayer(n: Int): List[Player] = {
+    if(n == 0){
+      Nil
+    } else {
+      createPlayer(n-1) :+ Player("Spieler1",new PlayFigure(n,Color.RED))
+    }
+  }
 
 
   def updateListWall(n: Int): List[Cell] = list.updated(n,wall(n))
   def updateListPlayer(n: Int, player: Player): List[Cell] = list.updated(n, player1(n,player))
 
+  def updateListPlayer1(list: List[Player],n: Int): List[Cell] = {
+    if(n == list.length) {
+      Nil
+    } else {
+      updateListPlayer(n+1,player1(n,list(n))
+    }
+  }
   def createGameBoard(): String = buildString(list)
 
 
