@@ -8,9 +8,12 @@ import scala.io.StdIn.readLine
 
 object Malefiz {
 
+  val cellConfigFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
+  val cellLinksFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
+
   val players : Array[Player] = Array()
-  val cellList : List[Cell] = Creator().getCellList
-  val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph
+  val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
+  val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
 
   val controller = new Controller(GameBoard(cellList, players, cellGraph))
