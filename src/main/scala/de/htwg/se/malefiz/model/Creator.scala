@@ -6,11 +6,9 @@ import scala.io.Source
 
 case class Creator() {
 
-  val cellConfigFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
-  val cellLinksFile = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
 
-  def getCellList: List[Cell] = {
-    val list = Source.fromFile(cellConfigFile)
+  def getCellList(inputFile: String): List[Cell] = {
+    val list = Source.fromFile(inputFile)
     val inputData = list.getLines
       .map(line => line.split(" "))
       .map { case Array(cellNumber, destination, wallPermission, hasWall, x, y) =>
@@ -25,8 +23,8 @@ case class Creator() {
     inputData
   }
 
-  def getCellGraph: Map[Int, Set[Int]] = {
-    val source = Source.fromFile(cellLinksFile)
+  def getCellGraph(fileInput: String): Map[Int, Set[Int]] = {
+    val source = Source.fromFile(fileInput)
     val lines = source.getLines()
     val graph : Map[Int, Set[Int]] = Map.empty
     while (lines.hasNext) {

@@ -27,7 +27,6 @@ class Tui(controller: Controller) extends Observer {
           update
       }
 
-
       /*case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
         case player :: playerFigure :: cell :: Nil =>
           controller.setPlayerFigure(player, playerFigure, cell)

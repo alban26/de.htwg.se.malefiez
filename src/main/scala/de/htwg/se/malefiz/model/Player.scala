@@ -23,8 +23,6 @@ case class Player(playerNumber: Int,playerName: String,  colour: String, cellLis
       case "Blue" => playerColour = Color.blue
    }
 
-
-
    override def toString:String = "Playernumber: " + (playerNumber+1)
 }
 

@@ -190,19 +190,21 @@ case class GameBoard(cellList: List[Cell], playerArray: Array[Player], gameBoard
 
   }
 
-  def setWall(n: Int, board: GameBoard): GameBoard =  {
-    if (n >= 26 && !board.cellList(n).hasWall) {
-      val nCell = board.copy(cellList(n).copy(hasWall = true))
-      val nBoard = board.copy()
-      println("Mauer wurde auf " + n + " gesetzt")
-      board2
-    } else {
-      println("Mauer wurde nicht gesetzt")
-      board
+  def wall(n: Int): Cell = cellList(n).copy(hasWall = true)
+    //Cell(n,false,false,true, null)
+
+  def setWall(n: Int): GameBoard = copy(updateListWall(n))
+
+  def updateListWall(n: Int): List[Cell] =  {
+    if (n >= 26 && !cellList(n).hasWall) {
+      println("Mauer wurde auf folgendes Feld gesetzt: " + n)
+     cellList.updated(n, wall(n))
+    }
+    else {
+      cellList
     }
   }
 
   def createGameBoard(): String = buildString(this.cellList)
-
 
 }
