@@ -186,9 +186,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
     copy(cellList.updated(cN, setPlayerOnCell(pN, cN)))
   }
 
-
-
-
   def getPlayerFigure(pN: Int, fN: Int) : Int = {
     val feldNumber = cellList.filter(cell => cell.playerNumber == pN && cell.figureNumber == fN)
     val feld = feldNumber.head.cellNumber
@@ -196,15 +193,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
   }
 
   val menge : Set[Int] = Set()
-
-/*
-  def getPossibleCells(fN: Int,  cube: Int): Set[Int] = {
-     var besucht : Set[Int] = Set(fN)
-     if (besucht.contains(fN))
-       return
-
-
-*/
 
   def getPossibleCells(start: Int, cube: Int): Set[Int] = {
     var found: Set[Int] = Set[Int]()
@@ -232,18 +220,15 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
   def rWall(n: Int): GameBoard = copy(removeListWall(n))
 
   def removeListWall(n: Int): List[Cell] =  {
-
       cellList.updated(n, removeWall(n))
   }
-
-
 
   def placeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
   def updateListWall(n: Int): List[Cell] =  {
-    if (n >= 26 && !cellList(n).hasWall) {
+    if (n >= 42 && !cellList(n).hasWall) {
       println("Mauer wurde auf folgendes Feld gesetzt: " + n)
      cellList.updated(n, placeWall(n))
     }
