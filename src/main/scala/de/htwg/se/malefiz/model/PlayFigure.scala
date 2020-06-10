@@ -2,8 +2,6 @@ package de.htwg.se.malefiz.model
 
 import java.awt.Color
 
-
-
 case class PlayFigure(n: Int, player: Player, color: Color){
 
 
