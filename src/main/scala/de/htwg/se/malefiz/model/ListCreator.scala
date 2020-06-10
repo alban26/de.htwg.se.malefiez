@@ -13,7 +13,7 @@ case class ListCreator() {
       .map(line => line.split(" "))
       .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x,y) =>
         Cell(cellNumber.toInt,
-          null,
+          None,
           destination.toBoolean,
           wallPermission.toBoolean,
           hasWall.toBoolean,

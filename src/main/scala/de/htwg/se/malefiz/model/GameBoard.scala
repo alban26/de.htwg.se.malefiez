@@ -140,7 +140,7 @@ case class GameBoard(cellList: List[Cell]) {
 
   def wall(n: Int): Cell = cellList(n).copy(hasWall = true)
 
-  def player(n: Int, figure: PlayFigure): Cell = cellList(n).copy(figure = figure)
+  def player(n: Int, figure: PlayFigure): Cell = cellList(n).copy(figure = Some(figure))
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
