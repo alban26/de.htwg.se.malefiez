@@ -11,6 +11,7 @@ case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destinati
   val colours : List[Color] = List(Color.blue, Color.red, Color.green, Color.yellow)
 
   val stein_or_spieler = if(hasWall)"[X]" else "[ ]"
+
   override def toString: String = stein_or_spieler
 
 }
