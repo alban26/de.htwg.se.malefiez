@@ -1,10 +1,10 @@
 package de.htwg.se.malefiz.model
 
-import org.scalatest._
 import org.scalatest.matchers.should.Matchers
+import org.scalatest._
 
 class CreatorSpec extends WordSpec with Matchers {
-  "A Gameboard is a graph with 116 Cells. For testing purpose we crated a new config testfile. The new testfile" when {
+  "A Gameboard is a graph with 132 Cells. For testing purpose we crated a new config testfile. The new testfile" when {
     "is created " should {
       val testSource = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/test/scala/de/htwg/se/malefiz/model/testConfig.txt"
       val testCellList = Creator().getCellList(testSource)
@@ -64,7 +64,7 @@ class CreatorSpec extends WordSpec with Matchers {
             testGraph.size should be(10)
           }
           "to add a Cell link we call the function updateCellGraph" in {
-            val updateTest = Creator().updateCellGraph(7, 9, testGraph)
+            Creator().updateCellGraph(7, 9, testGraph)
             testGraph.get(7) should be(Some(Set(6, 8, 9)))
           }
         }
