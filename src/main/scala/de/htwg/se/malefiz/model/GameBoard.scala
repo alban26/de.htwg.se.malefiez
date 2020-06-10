@@ -6,82 +6,86 @@ import scala.io.StdIn.readLine
 
 case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph: Map[Int, Set[Int]]) {
 
+
+  println(cellList)
+
+
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
-    val abstand1 = "             "
-    val abstand = "        "
-    val l = list.slice(0,4)
+    val abstand1 = " "
+    val abstand = "    "
+    val l = list.slice(0,20)
     s"""|$abstand${l.mkString(s"${abstand1}")}
         |""".stripMargin
   }
 
   def buildString(list: List[Cell]): String = {
-    createStringValues(list,4, 0,6,0) + buildPlayerString(list)
+    createStringValues(list,20, 0,6,0,4) + buildPlayerString(list)
   }
 
-  def createStringValues(list: List[Cell],n: Int,O: Int,z: Int,i: Int): String = {
+  def createStringValues(list: List[Cell],n: Int,O: Int,z: Int,i: Int,l: Int): String = {
     val abstand = " "
-    val strecke = s(n)
+    val strecke = s(l)
     val gapBetween = abstand * 13
 
     if(i == z) {
       val sliceBeginU = O
       val sliceEndU = sliceBeginU + strecke
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n - 3
+      val sliceEndO = sliceBeginO + l - 3
       val gapLeftU = abstand * 0
       val gapLeftO = abstand*32
       val gapBetween = abstand*20
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
 
     } else if(i == 1) {
 
       val sliceBeginU = O
       val sliceEndU = sliceBeginU + strecke
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n
+      val sliceEndO = sliceBeginO + l
       val gapLeftU = abstand * 0
       val gapLeftO = abstand * 8
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     }
     else if(i == 2){
       val sliceBeginU = O
       val sliceEndU = sliceBeginU + strecke-4
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n-2
+      val sliceEndO = sliceBeginO + l-2
       val gapLeftU = abstand * 8
       val gapLeftO = abstand * 16
       val gapBetween = abstand * 29
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     } else if(i == 3) {
       val sliceBeginU = O
       val sliceEndU = sliceBeginU + strecke-8
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n-2
+      val sliceEndO = sliceBeginO + l-2
       val gapLeftU = abstand * 16
       val gapLeftO = abstand * 24
       val gapBetween = abstand * 13
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     } else if(i == 4) {
       val sliceBeginU = O
       val sliceEndU = sliceBeginU + strecke-12
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n-3
+      val sliceEndO = sliceBeginO + l-3
       val gapLeftU = abstand * 24
       val gapLeftO = abstand * 32
       val gapBetween = abstand * 13
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     }
     else if(i == 5) {
       val sliceBeginU = O
-      val sliceEndU = sliceBeginU + s(n)
+      val sliceEndU = sliceBeginU + s(l)
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n - 2
+      val sliceEndO = sliceBeginO + l - 2
       val gapLeftU = abstand * 0
       val gapLeftO = abstand * 0
       val gapBetween = abstand * 61
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     }
     else {
       val gapLeftO = abstand * 0
@@ -89,13 +93,13 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
       val sliceBeginU = n
       val sliceEndU = sliceBeginU + strecke
       val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + n + 1
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i)
+      val sliceEndO = sliceBeginO + l + 1
+      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO,gapLeftU, gapBetween, z, i,l)
     }
   }
 
   def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int,
-                   sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int): String = {
+                   sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int,l: Int): String = {
     val ol = list.slice(sliceBeginO,sliceEndO)
     val ul = list.slice(sliceBeginU,sliceEndU)
     val ol1 = for(t <- ol)yield t
@@ -105,7 +109,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
           |${gapLeftU}${ul1.mkString("-")}
           |""".stripMargin
     } else {
-      createStringValues(list,n,sliceEndO,z,i+1) +  s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
+      createStringValues(list,n,sliceEndO,z,i+1,l) +  s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
                                                         |${gapLeftU}${ul1.mkString("-")}
                                                         |""".stripMargin
     }
@@ -248,6 +252,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
     }
   }
 
-  def createGameBoard(): String = buildString(this.cellList)
+  def createGameBoard(): String = buildString(cellList)
 
 }

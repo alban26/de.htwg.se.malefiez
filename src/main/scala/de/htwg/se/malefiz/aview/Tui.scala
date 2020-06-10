@@ -7,12 +7,12 @@ import de.htwg.se.malefiz.util.Observer
 
 class Tui(controller: Controller) extends Observer {
 
-  val graphConfig = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
+ // val graphConfig = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
 
   def processInput(input: String) : Unit = {
 
     input match {
-      case "new game" => controller.gameBoard.toString
+      case "new game" => controller.gameBoard
         update
       case "2 Player" => controller.createPlayers(2)
       case "3 Player" => controller.createPlayers(3)
