@@ -1,36 +1,10 @@
 package de.htwg.se.malefiz.model
 
-import java.awt.Color
-
-import scala.collection.mutable.Map
+import scala.collection.mutable.{Map, Queue}
 import scala.io.Source
+import scala.io.StdIn.readLine
 
-case class GameBoard(cellList: List[Cell]) {
-
-  val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
-  val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
-
-
-  def getCellGraph(in: String) : Map[Int, Set[Int]] = {
-    val source = Source.fromFile(in)
-    val lines = source.getLines()
-    val graph : Map[Int, Set[Int]] = Map.empty
-    while (lines.hasNext) {
-      val input = lines.next()
-      val inputArray: Array[String] = input.split(" ")
-      for (i <- 1 until inputArray.length) {
-        updateCellGraph(inputArray(0).toInt, inputArray(i).toInt, graph)
-      }
-    }
-    graph
-  }
-
-  def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]) : Map[Int, Set[Int]] = {
-    map.get(key)
-      .map(_=> map(key) += value)
-      .getOrElse(map(key) = Set[Int](value))
-    map
-  }
+case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph: Map[Int, Set[Int]]) {
 
   def s(n: Int): Int = n * 4 + 1
 
@@ -137,59 +111,143 @@ case class GameBoard(cellList: List[Cell]) {
     }
   }
 
+  def createPlayerArray(numberOfPlayers: Int) : GameBoard = {
 
-  def wall(n: Int): Cell = cellList(n).copy(hasWall = true)
+    var newPlayerList : List[Player] = List()
+    for (i <- 0 until numberOfPlayers) {
+      println("Spieler " + (i+1) + " geben Sie ihren Namen ein: ")
+      val name = readLine()
+      println("Spieler " + (i+1) + " geben Sie ihre Farbe ein: ")
+      val colour = readLine()
+      newPlayerList = newPlayerList :+ Player(i, name, colour)
+      println(newPlayerList(i).toString)
+    }
+    copy(players = newPlayerList)
+  }
 
-  def player(n: Int, figure: PlayFigure): Cell = cellList(n).copy(figure = Some(figure))
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+  def changePlayerFigure(playerNumber: Int, figureNumber: Int, cell: Int): List[Player] = {
+    val a = getNewArrayFigure(playerNumber, figureNumber, cell)
+    val b = setFigure(playerNumber, figureNumber, cell)
+    copy(players = players.updated(playerNumber, players(playerNumber).playerFigures(figureNumber) = b))
+  }
+
+*/
+  //def setPlayer(pN: Int, fN: Int, cN: Int): GameBoard = copy(players = playerList(pN,fN,cN))
+
+  def removePlayerFigureOnCell(cN: Int) :Cell  = {
+    cellList(cN).copy(figureNumber = 0)
+  }
+
+  def removePlayerOnCell(n : Int) : Cell = {
+    cellList(n).copy(playerNumber = 0)
+  }
+
+  def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
+    cellList(cN).copy(figureNumber = fN)
+  }
+
+  def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
+    cellList(cN).copy(playerNumber = pN)
+  }
+
+  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int, cN: Int): GameBoard = {
+    val a = getPlayerFigure(pN, fN)
+    copy(cellList.updated(a, removePlayerOnCell(a)))
+    copy(cellList.updated(a, removePlayerFigureOnCell(a)))
+
+  }
+/*
+  def removeActualFigureFromCell(pN: Int, fN: Int): GameBoard = {
+    copy(cellList.updated(getPlayerFigure(pN, fN), removePlayerFigureOnCell(getPlayerFigure(pN, fN))))
+  }
+*/
+  def setFigure(fN: Int, cN: Int): GameBoard = {
+    copy(cellList.updated(cN, setPlayerFigureOnCell(fN, cN)))
+  }
+
+  def setPlayer(pN: Int, cN: Int): GameBoard = {
+    copy(cellList.updated(cN, setPlayerOnCell(pN, cN)))
+  }
+
+
+
+
+  def getPlayerFigure(pN: Int, fN: Int) : Int = {
+    val feldNumber = cellList.filter(cell => cell.playerNumber == pN && cell.figureNumber == fN)
+    val feld = feldNumber.head.cellNumber
+    feld
+  }
+
+  val menge : Set[Int] = Set()
+
+/*
+  def getPossibleCells(fN: Int,  cube: Int): Set[Int] = {
+     var besucht : Set[Int] = Set(fN)
+     if (besucht.contains(fN))
+       return
+
+
+*/
+
+  def getPossibleCells(start: Int, cube: Int): Set[Int] = {
+    var found: Set[Int] = Set[Int]()
+    var needed: Set[Int] = Set[Int]()
+
+    def recurse(current: Int, times: Int): Unit = {
+      if (times == 0) {
+        needed += current
+      }
+      found += current
+      for (next <- gameBoardGraph(current)) {
+        print(next+ " ")
+        if (!found.contains(next) && times != 0 ) {
+          recurse(next, times-1)
+        }
+      }
+    }
+    recurse(start, cube)
+    needed
+  }
+
+
+  def removeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
+
+  def rWall(n: Int): GameBoard = copy(removeListWall(n))
+
+  def removeListWall(n: Int): List[Cell] =  {
+
+      cellList.updated(n, removeWall(n))
+  }
+
+
+
+  def placeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
-
-
-  def setupFiguresH(liss: List[Cell], n: Int, fg: List[PlayFigure]): GameBoard = copy(updateListFigure(n, fg,liss))
-
-  def setupFigures(spielerListe: List[String]): GameBoard = {
-    val spieler = createPlayer(spielerListe.length-1,spielerListe)
-    val figuren = createFiguresH(spieler)
-    setupFiguresH(cellList,figuren.length-1,figuren)
-  }
-
-  def createPlayer(n: Int, name: List[String]): List[Player] = {
-    if (n == 0) {
-      List(Player(n, name(n)))
-    } else {
-      createPlayer(n - 1, name) :+ Player(n, name(n))
-    }
-  }
-
-  val colorList: List[Color] = List(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
-
-  def createFiguresH(playerList: List[Player]): List[PlayFigure] = {
-    createFigures(playerList.length * 5 - 1, playerList, colorList, 0, 1)
-  }
-
-  def createFigures(n: Int, playerList: List[Player], colorList: List[Color], m: Int, z: Int): List[PlayFigure] = {
-    if (n == 0) {
-      List(PlayFigure(n, playerList(m), colorList(m)))
-    }
-    else if (z % 5 == 0) {
-      createFigures(n - 1, playerList, colorList, m + 1, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
-    } else {
-      createFigures(n - 1, playerList, colorList, m, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
-    }
-  }
-
-  def updateListFigure(n: Int, figureList: List[PlayFigure], lis: List[Cell]): List[Cell] = {
-    if (n == 0) {
-      lis.updated(n, player(n, figureList(n)))
+  def updateListWall(n: Int): List[Cell] =  {
+    if (n >= 26 && !cellList(n).hasWall) {
+      println("Mauer wurde auf folgendes Feld gesetzt: " + n)
+     cellList.updated(n, placeWall(n))
     }
     else {
-      updateListFigure(n - 1, figureList, lis.updated(n, player(n, figureList(n))))
+      cellList
     }
   }
 
-  def updateListWall(n: Int): List[Cell] = cellList.updated(n,wall(n))
-
-  def createGameBoard(): String = buildString(cellList)
+  def createGameBoard(): String = buildString(this.cellList)
 
 }

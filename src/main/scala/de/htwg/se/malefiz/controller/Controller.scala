@@ -1,29 +1,41 @@
 package de.htwg.se.malefiz.controller
 
-
-
-import de.htwg.se.malefiz.model.{Cell, GameBoard, PlayFigure, Player}
+import de.htwg.se.malefiz.model.{Cell, Cube, GameBoard, Creator, Player}
 import de.htwg.se.malefiz.util.{Observable, Observer}
+
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
-  def createGameBoardGraph: Unit = {
-    gameBoard =  GameBoard(gameBoard.cellList)
-    notifyObservers
-
+  def rollCube: Int = {
+    Cube().getRandomNumber
   }
 
+  def createPlayers(numberOfPlayers: Int): Unit = {
+    gameBoard = gameBoard.createPlayerArray(numberOfPlayers)
+  }
+
+  def getFigure(pn: Int, fn:Int) : Int = {
+    val a = gameBoard.getPlayerFigure(pn, fn)
+    a
+  }
+
+  def getSet(startCell: Int, cubeNumber: Int) : Set[Int] = {
+    val a = gameBoard.getPossibleCells(startCell, cubeNumber)
+    a
+  }
+
+  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
+    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure, cellNumber)
+    //gameBoard = gameBoard.removeActualFigureFromCell(playerNumber, playerFigure)
+    gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
+    gameBoard = gameBoard.setFigure(playerFigure, cellNumber)
+    notifyObservers
+  }
 
   def setWall(n: Int): Unit = {
     gameBoard = gameBoard.setWall(n)
     notifyObservers
   }
 
-  def setupFigures(spielerListe: List[String]): Unit = {
-    gameBoard = gameBoard.setupFigures(spielerListe)
-  }
-
-
   def gameBoardToString: String = gameBoard.createGameBoard()
-
 }

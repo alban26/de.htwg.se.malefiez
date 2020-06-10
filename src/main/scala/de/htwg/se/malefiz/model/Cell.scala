@@ -1,10 +1,16 @@
 package de.htwg.se.malefiz.model
 
-case class Cell(cellNumber: Int, figure: Option[PlayFigure], destination: Boolean, wallPermission: Boolean, hasWall: Boolean,
+import java.awt.Color
+
+case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destination: Boolean, wallPermission: Boolean, hasWall: Boolean,
                 coordinates: Point) {
 
-  val s = if(figure == None)"[ ]" else  "["+figure.get.toString.charAt(0)+"]"
-  val stein_or_spieler = if(figure != None) s else if(hasWall==true)"[X]" else "[ ]"
+ // val s = if(playFigure.numberOfPlayer == 0)"[ ]" else  "["+playFigure.numberOfPlayer+"]"
+
+
+  val colours : List[Color] = List(Color.blue, Color.red, Color.green, Color.yellow)
+
+  val stein_or_spieler = if(hasWall)"[X]" else "[ ]"
   override def toString: String = stein_or_spieler
 
 }
