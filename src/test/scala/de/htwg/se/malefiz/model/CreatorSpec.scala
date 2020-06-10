@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-
+/*
 class CreatorSpec extends WordSpec with Matchers {
   "A Gameboard is a graph with 132 Cells. For testing purpose we crated a new config testfile. The new testfile" when {
     "is created " should {
@@ -73,3 +73,4 @@ class CreatorSpec extends WordSpec with Matchers {
     }
   }
 }
+*/
