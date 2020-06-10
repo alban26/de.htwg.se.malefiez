@@ -2,7 +2,7 @@ package de.htwg.se.malefiz
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.Controller
-import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, PlayFigure, Player}
+import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
 import scala.io.StdIn.readLine
 

@@ -18,23 +18,36 @@ class Tui(controller: Controller) extends Observer {
       case "3 Player" => controller.createPlayers(3)
       case "4 Player" => controller.createPlayers(4)
       case "roll cube" =>
-        textPrint(controller.rollCube.toString)
-      case "stats" => controller.showPlayer()
-      case _ => /* val test =
-        input.split(" ")
-        if (test(0) == "Wall") {
-          controller.setWall(test(1).toInt)
-          update
-        } else {*/
-          /*input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+
+        val a = controller.rollCube
+        val b = controller.getSet(controller.getFigure(3, 5), a)
+
+        println("geworfene Zahl" + a)
+
+        println()
+        b.foreach(x => println(x))
+
+      case "stats" => printFigures()
+      case _ => input.split(" ").toList.map(c => c.toInt) match {
             case player :: playerFigure :: cell :: Nil =>
               controller.setPlayerFigure(player, playerFigure, cell)
               update
-          }*/
+          }
 
     }
   }
 
+  def printFigures() = {
+    for(i <- 1 to 4) {
+      for (y <- 1 to 5) {
+        println("Spieler " + i + " Figur " + y + " steht auf Feld " + controller.getFigure(i, y))
+      }
+    }
+
+
+  }
+
   override def update: Unit = println(controller.gameBoardToString)
   def textPrint(str: String): Unit = println(update + str)
+
 }

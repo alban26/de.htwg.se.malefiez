@@ -14,14 +14,22 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   def createPlayers(numberOfPlayers: Int): Unit = {
     gameBoard = gameBoard.createPlayerArray(numberOfPlayers)
   }
-/*
-  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
-    gameBoard = gameBoard.setPlayerFigure(playerNumber, playerFigure, cellNumber, gameBoard.players, gameBoard.cellList)
-    notifyObservers
-  }*/
 
-  def showPlayer(): Unit =  {
-    gameBoard = gameBoard.showPlayerStats(gameBoard.players)
+  def getFigure(pn: Int, fn:Int) : Int = {
+    val a = gameBoard.getPlayerFigure(pn, fn)
+    a
+  }
+
+  def getSet(startCell: Int, cubeNumber: Int) : Set[Int] = {
+    val a = gameBoard.getPossibleCells(startCell, cubeNumber)
+    a
+  }
+
+  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
+    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure, cellNumber)
+    //gameBoard = gameBoard.removeActualFigureFromCell(playerNumber, playerFigure)
+    gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
+    gameBoard = gameBoard.setFigure(playerFigure, cellNumber)
     notifyObservers
   }
 

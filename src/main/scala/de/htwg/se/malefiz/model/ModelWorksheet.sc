@@ -1,4 +1,4 @@
-import de.htwg.se.malefiz.model.{PlayFigure, Player}
+import de.htwg.se.malefiz.model.Player
 
 val v: Vector[PlayFigure] = Vector(PlayFigure(0),PlayFigure(1))
 

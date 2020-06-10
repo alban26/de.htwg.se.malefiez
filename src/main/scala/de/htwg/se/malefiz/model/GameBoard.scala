@@ -119,65 +119,23 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
       val name = readLine()
       println("Spieler " + (i+1) + " geben Sie ihre Farbe ein: ")
       val colour = readLine()
-      newPlayerList = newPlayerList :+ Player(i, name, colour, cellList)
+      newPlayerList = newPlayerList :+ Player(i, name, colour)
       println(newPlayerList(i).toString)
-      newPlayerList(i).playerFigures.foreach(x => println("Figur" + (x.figureNumber+1) + "zeigt auf" + x.inCell.cellNumber))
     }
     copy(players = newPlayerList)
   }
 
-  def showPlayerStats(pArray: List[Player]) : GameBoard = {
-    for (i <- pArray.indices) {
-      println(pArray(i).toString)
-      for (x <- pArray(i).playerFigures.indices) {
-        println(pArray(i).playerFigures(x))
-      }
-    }
-    this
-  }
 
 
 
 
 
-  def kickPlayerFigure(cellNumber: Int, playerVector: List[Player], cellList: List[Cell]): Unit = {
-    for (i <- playerVector.indices) {
-      for (y <- playerVector(i).playerFigures.indices) {
-        if (playerVector(i).playerFigures(y).inCell == cellList(cellNumber)) {
-          playerVector(i).playerFigures(y).copy(y, cellList(playerVector(i).numberOfPlayer))
-        }
-      }
-    }
-  }
 
-  def isPlayerFigureOnCell(destinationCell: Int, cellList: List[Cell], playerVector: List[Player]): Boolean = {
-    for (i <- playerVector.indices) {
-      for(y <- playerVector(i).playerFigures.indices) {
-        if (playerVector(i).playerFigures(y).inCell == cellList(destinationCell))
-          true
-      }
-    }
-    false
-  }
 
-  def visit(n: Int, graph: Map[Int, Set[Int]]): Unit = {
-    var besucht : Set[Int] = Set().empty
-    visitBF(n, graph, besucht)
-  }
 
-  def visitBF(v: Int, g: Map[Int, Set[Int]], besucht: Set[Int]): Unit = {
-    var q : Queue[Int] = Queue().empty
-    q.apply(v)
 
-  }
 
-  def setPlayerFigure(playerNumber: Int, playerFigureNumber: Int, destinationCell: Int,
-                      playerVector: List[Player]): GameBoard = {
-    if (isPlayerFigureOnCell(destinationCell, cellList, playerVector)) {
-        print("Auf diesem Feld ist ein Spieler")
-    }
-    copy(players = players.updated(playerNumber, players(playerNumber).playerFigures(playerFigureNumber) = setFigure(playerNumber, playerFigureNumber, destinationCell)))
-  }
+
 
 /*
   def changePlayerFigure(playerNumber: Int, figureNumber: Int, cell: Int): List[Player] = {
@@ -189,16 +147,91 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
 */
   //def setPlayer(pN: Int, fN: Int, cN: Int): GameBoard = copy(players = playerList(pN,fN,cN))
 
-  def getNewArrayFigure(pN: Int, fN: Int, cN: Int): Array[PlayFigure] = {
-    val test = players(pN).playerFigures
-    val a = players(pN).playerFigures(fN).copy(inCell = cellList(cN))
-    test(fN).copy(fN, cellList(cN))
-    test
+  def removePlayerFigureOnCell(cN: Int) :Cell  = {
+    cellList(cN).copy(figureNumber = 0)
   }
 
-  def setFigure(pN: Int, fN: Int, cN: Int): PlayFigure = {
-   players(pN).playerFigures(fN).copy(inCell =  cellList(cN))
+  def removePlayerOnCell(n : Int) : Cell = {
+    cellList(n).copy(playerNumber = 0)
   }
+
+  def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
+    cellList(cN).copy(figureNumber = fN)
+  }
+
+  def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
+    cellList(cN).copy(playerNumber = pN)
+  }
+
+  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int, cN: Int): GameBoard = {
+    val a = getPlayerFigure(pN, fN)
+    copy(cellList.updated(a, removePlayerOnCell(a)))
+    copy(cellList.updated(a, removePlayerFigureOnCell(a)))
+
+  }
+/*
+  def removeActualFigureFromCell(pN: Int, fN: Int): GameBoard = {
+    copy(cellList.updated(getPlayerFigure(pN, fN), removePlayerFigureOnCell(getPlayerFigure(pN, fN))))
+  }
+*/
+  def setFigure(fN: Int, cN: Int): GameBoard = {
+    copy(cellList.updated(cN, setPlayerFigureOnCell(fN, cN)))
+  }
+
+  def setPlayer(pN: Int, cN: Int): GameBoard = {
+    copy(cellList.updated(cN, setPlayerOnCell(pN, cN)))
+  }
+
+
+
+
+  def getPlayerFigure(pN: Int, fN: Int) : Int = {
+    val feldNumber = cellList.filter(cell => cell.playerNumber == pN && cell.figureNumber == fN)
+    val feld = feldNumber.head.cellNumber
+    feld
+  }
+
+  val menge : Set[Int] = Set()
+
+/*
+  def getPossibleCells(fN: Int,  cube: Int): Set[Int] = {
+     var besucht : Set[Int] = Set(fN)
+     if (besucht.contains(fN))
+       return
+
+
+*/
+
+  def getPossibleCells(start: Int, cube: Int): Set[Int] = {
+    var found: Set[Int] = Set[Int]()
+    var needed: Set[Int] = Set[Int]()
+
+    def recurse(current: Int, times: Int): Unit = {
+      if (times == 0) {
+        needed += current
+      }
+      found += current
+      for (next <- gameBoardGraph(current)) {
+        print(next+ " ")
+        if (!found.contains(next) && times != 0 ) {
+          recurse(next, times-1)
+        }
+      }
+    }
+    recurse(start, cube)
+    needed
+  }
+
+
+  def removeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
+
+  def rWall(n: Int): GameBoard = copy(removeListWall(n))
+
+  def removeListWall(n: Int): List[Cell] =  {
+
+      cellList.updated(n, removeWall(n))
+  }
+
 
 
   def placeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
