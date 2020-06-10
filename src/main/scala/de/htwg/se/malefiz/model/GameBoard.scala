@@ -1,28 +1,18 @@
 package de.htwg.se.malefiz.model
 
+import java.awt.Color
+
 import scala.collection.mutable.Map
 import scala.io.Source
 
-case class GameBoard() {
+case class GameBoard(cellList: List[Cell]) {
 
-  def getCellList(filename: String): List[Cell] = {
-    val list = Source.fromFile(filename)
-    val inputData =  list.getLines
-      .map(line => line.split(" "))
-      .map{case Array(cellNumber, playerNumber, destination, wallPermission, hasWall, x, y) =>
-        Cell(cellNumber.toInt,
-          playerNumber.toInt,
-          destination.toBoolean,
-          wallPermission.toBoolean,
-          hasWall.toBoolean,
-          Point(x.toInt, y.toInt))}
-      .toList
-    list.close()
-    inputData
-  }
+  val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
+  val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
+
 
   def getCellGraph(in: String) : Map[Int, Set[Int]] = {
-    val source =Source.fromFile(in)
+    val source = Source.fromFile(in)
     val lines = source.getLines()
     val graph : Map[Int, Set[Int]] = Map.empty
     while (lines.hasNext) {
@@ -45,16 +35,15 @@ case class GameBoard() {
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
-    val abstand1 = "         "
-    val abstand = "      "
+    val abstand1 = "             "
+    val abstand = "        "
     val l = list.slice(0,4)
     s"""|$abstand${l.mkString(s"${abstand1}")}
         |""".stripMargin
   }
 
-  def buildString(list: List[Cell],n: Int): String = {
-    val z = n + 2
-    createStringValues(list,n, 0,z,0)
+  def buildString(list: List[Cell]): String = {
+    createStringValues(list,4, 0,6,0) + buildPlayerString(list)
   }
 
   def createStringValues(list: List[Cell],n: Int,O: Int,z: Int,i: Int): String = {
@@ -131,7 +120,8 @@ case class GameBoard() {
     }
   }
 
-  def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int, sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int): String = {
+  def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int,
+                   sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int): String = {
     val ol = list.slice(sliceBeginO,sliceEndO)
     val ul = list.slice(sliceBeginU,sliceEndU)
     val ol1 = for(t <- ol)yield t
@@ -145,6 +135,61 @@ case class GameBoard() {
                                                         |${gapLeftU}${ul1.mkString("-")}
                                                         |""".stripMargin
     }
-
   }
+
+
+  def wall(n: Int): Cell = cellList(n).copy(hasWall = true)
+
+  def player(n: Int, figure: PlayFigure): Cell = cellList(n).copy(figure = Some(figure))
+
+  def setWall(n: Int): GameBoard = copy(updateListWall(n))
+
+
+
+  def setupFiguresH(liss: List[Cell], n: Int, fg: List[PlayFigure]): GameBoard = copy(updateListFigure(n, fg,liss))
+
+  def setupFigures(spielerListe: List[String]): GameBoard = {
+    val spieler = createPlayer(spielerListe.length-1,spielerListe)
+    val figuren = createFiguresH(spieler)
+    setupFiguresH(cellList,figuren.length-1,figuren)
+  }
+
+  def createPlayer(n: Int, name: List[String]): List[Player] = {
+    if (n == 0) {
+      List(Player(n, name(n)))
+    } else {
+      createPlayer(n - 1, name) :+ Player(n, name(n))
+    }
+  }
+
+  val colorList: List[Color] = List(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
+
+  def createFiguresH(playerList: List[Player]): List[PlayFigure] = {
+    createFigures(playerList.length * 5 - 1, playerList, colorList, 0, 1)
+  }
+
+  def createFigures(n: Int, playerList: List[Player], colorList: List[Color], m: Int, z: Int): List[PlayFigure] = {
+    if (n == 0) {
+      List(PlayFigure(n, playerList(m), colorList(m)))
+    }
+    else if (z % 5 == 0) {
+      createFigures(n - 1, playerList, colorList, m + 1, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
+    } else {
+      createFigures(n - 1, playerList, colorList, m, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
+    }
+  }
+
+  def updateListFigure(n: Int, figureList: List[PlayFigure], lis: List[Cell]): List[Cell] = {
+    if (n == 0) {
+      lis.updated(n, player(n, figureList(n)))
+    }
+    else {
+      updateListFigure(n - 1, figureList, lis.updated(n, player(n, figureList(n))))
+    }
+  }
+
+  def updateListWall(n: Int): List[Cell] = cellList.updated(n,wall(n))
+
+  def createGameBoard(): String = buildString(cellList)
+
 }

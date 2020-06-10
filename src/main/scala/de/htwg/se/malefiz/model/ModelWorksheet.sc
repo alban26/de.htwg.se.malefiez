@@ -1,28 +1,51 @@
-import de.htwg.se.malefiz.model.{CellOrdering, Gameboard}
+import java.awt.Color
 
-import scala.collection.{SortedMap, mutable}
-import scala.collection.immutable.TreeMap
+import de.htwg.se.malefiz.Malefiz.cellList1
+import de.htwg.se.malefiz.model.{Cell, GameBoard, ListCreator}
 
 
-case class Cell(feldnummer: Int) {
-  override def toString:String = "[]"
-}
 
-def generateOriginal(list: List[Cell]): Unit = {
-  var n = 116
+/*
+val s = List(1,2,3,4)
 
-  for (i <- 0 to 13) {
-    for (j <- 0 to 16) {
-      var t: SortedMap[Cell, Set[Cell]] =  SortedMap(list(n) -> Set(list(n+1))) (CellOrdering)
-      print(list(n).toString)
+def an (l: List[Int],n: Int): List[Int] = {
+  if(n == 0)
+    {
+      l.updated(n,2)
+    }else { println(l)
+    an(l.updated(n,2),n-1)
 
-    }
-    n = n - 16
-    println()
   }
+}
+
+val t = an(s,3)
+
+println(t)
+*/
+
+val cellList = ListCreator()
+val cellList1 = cellList.getCellList
+
+val t = List("Alban", "Robert","Wirbser","hallo")
+val pl = GameBoard(cellList1)
+
+val li = pl.createPlayer(t.length-1,t)
+
+val s = pl.createFiguresH(li)
+
+val lc = pl.createFigureCells2(s.length-1,s)
+
+
+
+def updateListFigure(lis: List[Cell], n: Int, cl: List[Cell]): List[Cell] = {
+    if(n == 0) {
+        lis.updated(n,cl(n))
+    } else {
+        updateListFigure(lis.updated(n,cl(n)),n-1,cl)
+    }
 
 }
 
-object CellOrdering extends Ordering[Cell] {
-  override def compare(x: Cell, y: Cell): Int = x.feldnummer - y.feldnummer
-}
+println(lc.length)
+val x: List[Cell] = updateListFigure(cellList1,lc.length-1,lc)
+println(cellList1)

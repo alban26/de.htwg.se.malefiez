@@ -1,34 +1,38 @@
 package de.htwg.se.malefiz.aview
 
-import de.htwg.se.malefiz.model.{Cube, Player}
+import de.htwg.se.malefiz.Malefiz.cellList1
+import de.htwg.se.malefiz.controller.Controller
+import de.htwg.se.malefiz.model.{Cube, GameBoard, Player, SetupState}
+import de.htwg.se.malefiz.util.Observer
 
-import scala.io
 
-class Tui {
+class Tui(controller: Controller) extends Observer {
 
-  var colors = Array("Red", "Green", "Yellow", "Blue")
 
-  def processInput(input: String)  : String = {
-    input match {
-      case "new Game" =>
-        println ("Wieviele Spieler?")
-        val a = io.StdIn.readInt()
-        val b = GenFields()
-        val c = b.genCells(4)
-        println(c)
-        for (i <- 1 to a if i < 4) {
-          println("Spieler " + i +". Bitte geben Sie ihren Namen ein")
-          val name = io.StdIn.readLine()
-          println("Spieler " + i +". Bitte wählen Sie eine Farbe aus (Red, Green, Yellow or Blue")
-          val color = io.StdIn.readLine()
 
-        }
-        ""
-      case "cube" =>
-        val randomNumber = Cube()
-        println(randomNumber.getRandomNumber)
-
-        ""
+  def setupTUI(n: Int): Unit = {
+    n match {
+      case 0 => {
+        textPrint("Wie viele Spieler seit ihr? ")
+      }
+      case 1 => {
+        textPrint("Gebt eure Namen ein!")
+      }
     }
   }
+
+
+  def processInput(input: String) : Unit = {
+    input match {
+      case  "3" => controller.gameBoard
+      case _ => val s = input.split(" ").toList
+        controller.setupFigures(s)
+        update
+    }
+  }
+
+
+
+  override def update: Unit = println(controller.gameBoardToString)
+  def textPrint(str: String): Unit = println(str)
 }
