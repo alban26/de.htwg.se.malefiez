@@ -6,10 +6,10 @@ import org.scalatest._
 class CreatorSpec extends WordSpec with Matchers {
   "A Gameboard is a graph with 132 Cells. For testing purpose we crated a new config testfile. The new testfile" when {
     "is created " should {
-      val testSource = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/test/scala/de/htwg/se/malefiz/model/testConfig.txt"
+      val testSource = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\test\\scala\\de\\htwg\\se\\malefiz\\model\\testConfig.txt"
       val testCellList = Creator().getCellList(testSource)
 
-      val testSource2 = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/test/scala/de/htwg/se/malefiz/model/testCellLinks"
+      val testSource2 = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\test\\scala\\de\\htwg\\se\\malefiz\\model\\testCellLinks"
       val testGraph = Creator().getCellGraph(testSource2)
       val listLength = testCellList.length
       "have 10 Cells with different configurated attributes " in {
