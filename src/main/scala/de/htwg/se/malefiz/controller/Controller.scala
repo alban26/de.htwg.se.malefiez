@@ -14,14 +14,14 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   def createPlayers(numberOfPlayers: Int): Unit = {
     gameBoard = gameBoard.createPlayerArray(numberOfPlayers)
   }
-
+/*
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
-    gameBoard = gameBoard.setPlayerFigure(playerNumber, playerFigure, cellNumber, gameBoard.playerArray, gameBoard.cellList)
+    gameBoard = gameBoard.setPlayerFigure(playerNumber, playerFigure, cellNumber, gameBoard.players, gameBoard.cellList)
     notifyObservers
-  }
+  }*/
 
   def showPlayer(): Unit =  {
-    gameBoard = gameBoard.showPlayerStats(gameBoard.playerArray)
+    gameBoard = gameBoard.showPlayerStats(gameBoard.players)
     notifyObservers
   }
 

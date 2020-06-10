@@ -2,10 +2,10 @@ package de.htwg.se.malefiz.model
 
 import java.awt.Color
 
-case class Player(playerNumber: Int,playerName: String,  colour: String, cellList: List[Cell]) {
+case class Player(playerNumber: Int,playerName: String,  colour: String,  playerFigure: Array[PlayFigure]) {
   val numberOfPlayer: Int = playerNumber
   var playerColour: Color = Color.black
-  var playerFigures = new Array[PlayFigure](5)
+  val playerFigures = new Array[PlayFigure] (5)
 
   for (i <- playerFigures.indices) {
     numberOfPlayer match {

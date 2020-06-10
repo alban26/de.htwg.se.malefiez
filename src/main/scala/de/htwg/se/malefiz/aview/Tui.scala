@@ -20,19 +20,18 @@ class Tui(controller: Controller) extends Observer {
       case "roll cube" =>
         textPrint(controller.rollCube.toString)
       case "stats" => controller.showPlayer()
-      case _ => val test =
+      case _ => /* val test =
         input.split(" ")
         if (test(0) == "Wall") {
           controller.setWall(test(1).toInt)
           update
-      }
+        } else {*/
+          /*input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+            case player :: playerFigure :: cell :: Nil =>
+              controller.setPlayerFigure(player, playerFigure, cell)
+              update
+          }*/
 
-      /*case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-        case player :: playerFigure :: cell :: Nil =>
-          controller.setPlayerFigure(player, playerFigure, cell)
-          update
-        case _ => update
-      }*/
     }
   }
 
