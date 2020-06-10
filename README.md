@@ -1,4 +1,4 @@
 # Htwg Scala Seed Project 
 
 
-https://coveralls.io/repos/github/alban26/de.htwg.se.malefiz/badge.svg?branch=master(Coverage Status)!:https://coveralls.io/github/alban26/de.htwg.se.malefiz?branch=master
+[![Build Status](https://travis-ci.org/alban26/de.htwg.se.malefiz.svg?branch=master)](https://travis-ci.org/alban26/de.htwg.se.malefiz)
