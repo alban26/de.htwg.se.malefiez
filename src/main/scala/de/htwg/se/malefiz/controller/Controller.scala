@@ -6,7 +6,6 @@ import de.htwg.se.malefiz.util.{Observable, Observer}
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
-
   def rollCube: Int = {
     Cube().getRandomNumber
   }
