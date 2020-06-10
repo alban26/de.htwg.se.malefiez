@@ -3,7 +3,7 @@ package de.htwg.se.malefiz
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.Controller
 
-import de.htwg.se.malefiz.model.{Cube, GameBoard, SetupState, ListCreator, PlayFigure, Player, SetupState}
+import de.htwg.se.malefiz.model.{Cube, GameBoard, SetupState, ListCreator, PlayFigure, Player}
 
 import scala.io.StdIn
 import scala.io.StdIn.readLine
@@ -25,20 +25,27 @@ object Malefiz {
   def main(args: Array[String]): Unit = {
 
 
+
     println("Willkommen bei Malefiz!")
 
 
     var input: String = ""
 
+
+
     SetupState.values.foreach
     {
       // Matching values in Enumeration
-
       case d if ( d == SetupState.spielerAnzahl ) =>
-        tui.setupTUI(input,0)
+        tui.setupTUI(0)
+        input = readLine()
+        tui.processInput(input)
+      case s if(s == SetupState.spielerNamen) =>
+        tui.setupTUI(1)
+        input = readLine()
+        tui.processInput(input)
       case _ => None
     }
 
     }
-
 }

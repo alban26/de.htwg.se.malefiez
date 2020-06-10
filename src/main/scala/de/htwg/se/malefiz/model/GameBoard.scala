@@ -5,7 +5,7 @@ import java.awt.Color
 import scala.collection.mutable.Map
 import scala.io.Source
 
-case class GameBoard(list: List[Cell]) {
+case class GameBoard(cellList: List[Cell]) {
 
   val cellConfigFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellConfiguration"
   val cellLinksFile = "C:\\Users\\ALBAN\\Desktop\\AIN\\STUDIUM\\3.Semester\\Software Engineering\\de.htwg.se.malefiz\\src\\main\\scala\\de\\htwg\\se\\malefiz\\model\\mainCellLinks"
@@ -138,37 +138,58 @@ case class GameBoard(list: List[Cell]) {
   }
 
 
-  def wall(n: Int): Cell = Cell(n,null,false,true,true,null)
+  def wall(n: Int): Cell = cellList(n).copy(hasWall = true)
 
-  def player1(n: Int, player: Player): Cell = Cell(n,player,false,false,false,null)
-
-
+  def player(n: Int, figure: PlayFigure): Cell = cellList(n).copy(figure = figure)
 
   def setWall(n: Int): GameBoard = copy(updateListWall(n))
 
-  def setPlayer(n: String): GameBoard = copy(updateListPlayer(createPlayer(n))
 
 
-  def createPlayer(n: Int): List[Player] = {
-    if(n == 0){
-      Nil
+  def setupFiguresH(liss: List[Cell], n: Int, fg: List[PlayFigure]): GameBoard = copy(updateListFigure(n, fg,liss))
+
+  def setupFigures(spielerListe: List[String]): GameBoard = {
+    val spieler = createPlayer(spielerListe.length-1,spielerListe)
+    val figuren = createFiguresH(spieler)
+    setupFiguresH(cellList,figuren.length-1,figuren)
+  }
+
+  def createPlayer(n: Int, name: List[String]): List[Player] = {
+    if (n == 0) {
+      List(Player(n, name(n)))
     } else {
-      createPlayer(n-1) :+ Player("Spieler1",new PlayFigure(n,Color.RED))
+      createPlayer(n - 1, name) :+ Player(n, name(n))
     }
   }
 
+  val colorList: List[Color] = List(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW)
 
-  def updateListWall(n: Int): List[Cell] = list.updated(n,wall(n))
-  def updateListPlayer(n: Int, player: Player): List[Cell] = list.updated(n, player1(n,player))
+  def createFiguresH(playerList: List[Player]): List[PlayFigure] = {
+    createFigures(playerList.length * 5 - 1, playerList, colorList, 0, 1)
+  }
 
-  def updateListPlayer1(list: List[Player],n: Int): List[Cell] = {
-    if(n == list.length) {
-      Nil
+  def createFigures(n: Int, playerList: List[Player], colorList: List[Color], m: Int, z: Int): List[PlayFigure] = {
+    if (n == 0) {
+      List(PlayFigure(n, playerList(m), colorList(m)))
+    }
+    else if (z % 5 == 0) {
+      createFigures(n - 1, playerList, colorList, m + 1, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
     } else {
-      updateListPlayer(n+1,player1(n,list(n))
+      createFigures(n - 1, playerList, colorList, m, z + 1) :+ PlayFigure(n, playerList(m), colorList(m))
     }
   }
-  def createGameBoard(): String = buildString(list)
 
+  def updateListFigure(n: Int, figureList: List[PlayFigure], lis: List[Cell]): List[Cell] = {
+    if (n == 0) {
+      lis.updated(n, player(n, figureList(n)))
+    }
+    else {
+      updateListFigure(n - 1, figureList, lis.updated(n, player(n, figureList(n))))
+    }
+  }
+
+  def updateListWall(n: Int): List[Cell] = cellList.updated(n,wall(n))
+
+  def createGameBoard(): String = buildString(cellList)
 
 }

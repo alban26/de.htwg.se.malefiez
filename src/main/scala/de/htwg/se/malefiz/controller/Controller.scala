@@ -2,13 +2,13 @@ package de.htwg.se.malefiz.controller
 
 
 
-import de.htwg.se.malefiz.model.{GameBoard, Player}
+import de.htwg.se.malefiz.model.{Cell, GameBoard, PlayFigure, Player}
 import de.htwg.se.malefiz.util.{Observable, Observer}
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
   def createGameBoardGraph: Unit = {
-    gameBoard =  GameBoard(gameBoard.list)
+    gameBoard =  GameBoard(gameBoard.cellList)
     notifyObservers
 
   }
@@ -19,10 +19,10 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     notifyObservers
   }
 
-  def setPlayer(n: String): Unit = {
-    gameBoard = gameBoard.setPlayer(n)
-    notifyObservers
+  def setupFigures(spielerListe: List[String]): Unit = {
+    gameBoard = gameBoard.setupFigures(spielerListe)
   }
+
 
   def gameBoardToString: String = gameBoard.createGameBoard()
 
