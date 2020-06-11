@@ -7,8 +7,8 @@ class PointSpec extends WordSpec with Matchers {
   "A Point " when {
     "ist not initialized with cooradinates" should {
       val point = Point(0,0)
-      val x = point.getXCoordinate
-      val y = point.getYCoordinate
+      val x = point.x_coordinate
+      val y = point.y_coordinate
       val string = point.toString
       "have x = 0" in {
         x should be (0)

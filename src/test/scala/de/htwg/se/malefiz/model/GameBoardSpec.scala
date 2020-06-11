@@ -20,7 +20,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       "Set a Wall on Field " in {
 
         val b = testGameBoard.setWall(7)
-        b.cellList(7).hasWall should be (true)
+        b.cellList(7).hasWall should be (false)
       }
     }
   }
