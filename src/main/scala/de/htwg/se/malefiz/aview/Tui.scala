@@ -9,8 +9,6 @@ class Tui(controller: Controller) extends Observer {
   def processInput(input: String) : Unit = {
 
     input match {
-      case "new game" => controller.gameBoard
-        update
       //case "2 Player" => controller.createPlayers(2)
       //case "3 Player" => controller.createPlayers(3)
       //case "4 Player" => controller.createPlayers(4)
@@ -30,7 +28,6 @@ class Tui(controller: Controller) extends Observer {
               controller.setPlayerFigure(player, playerFigure, cell)
               update
           }
-
     }
   }
 
@@ -42,7 +39,11 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update: Unit = println(controller.gameBoardToString)
+  override def update: Boolean = {
+    println(controller.gameBoardToString)
+    true
+  }
+
   def textPrint(str: String): Unit = println(update + str)
 
 }

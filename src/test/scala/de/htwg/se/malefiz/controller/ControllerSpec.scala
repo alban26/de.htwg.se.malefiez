@@ -1,4 +1,4 @@
-/*package de.htwg.se.malefiz.controller
+package de.htwg.se.malefiz.controller
 
 
 import de.htwg.se.malefiz.model.{Cell, Creator, GameBoard, Player}
@@ -13,8 +13,8 @@ class ControllerSpec  extends WordSpec with Matchers {
   "A Controller" when {
 
     "observed by an Observer" should {
-      val cellConfigFile = "project/testConfig.txt"
-      val cellLinksFile = "project/testCellLinks.txt"
+      val cellConfigFile = "project/mainCellConfiguration"
+      val cellLinksFile = "project/mainCellLinks"
       val players : List[Player] = List().empty
       val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
@@ -28,15 +28,8 @@ class ControllerSpec  extends WordSpec with Matchers {
         override def update: Boolean = {updated = true; updated}
       }
 
-
-
-
       controller.add(observer)
-      "notify its Observer after creation" in {
-        controller.createEmptyGrid(4)
-        observer.updated should be(true)
-        controller.grid.size should be(4)
-      }
+
       "notify its Observer after a players figure is set on cell" in {
         controller.setPlayerFigure(1,1, 10)
         observer.updated should be(true)
@@ -59,4 +52,4 @@ class ControllerSpec  extends WordSpec with Matchers {
     }
   }
 }
- */
+
