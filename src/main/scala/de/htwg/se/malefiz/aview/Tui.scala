@@ -1,13 +1,10 @@
 package de.htwg.se.malefiz.aview
 
 import de.htwg.se.malefiz.controller.Controller
-import de.htwg.se.malefiz.model.{Cell, Cube, Player}
 import de.htwg.se.malefiz.util.Observer
 
 
 class Tui(controller: Controller) extends Observer {
-
- // val graphConfig = "/Users/robert/IdeaProjects/de.htwg.se.malefiz/src/main/scala/de/htwg/se/malefiz/model/mainCellLinks"
 
   def processInput(input: String) : Unit = {
 
@@ -37,14 +34,12 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  def printFigures() = {
+  def printFigures() : Unit = {
     for(i <- 1 to 4) {
       for (y <- 1 to 5) {
         println("Spieler " + i + " Figur " + y + " steht auf Feld " + controller.getFigure(i, y))
       }
     }
-
-
   }
 
   override def update: Unit = println(controller.gameBoardToString)

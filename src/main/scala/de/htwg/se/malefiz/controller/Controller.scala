@@ -20,13 +20,12 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   }
 
   def getSet(startCell: Int, cubeNumber: Int) : Set[Int] = {
-    val a = gameBoard.getPossibleCells(startCell, cubeNumber)
-    a
+    val possibleCells = gameBoard.getPossibleCells(startCell, cubeNumber)
+    possibleCells
   }
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
     gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure, cellNumber)
-    //gameBoard = gameBoard.removeActualFigureFromCell(playerNumber, playerFigure)
     gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
     gameBoard = gameBoard.setFigure(playerFigure, cellNumber)
     notifyObservers

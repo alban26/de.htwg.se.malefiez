@@ -21,7 +21,7 @@ object Malefiz {
 
   def main(args: Array[String]): Unit = {
 
-    println("Willkommen bei Malefiz!")
+    println("Willkommen bei Malefiz!\nUm eine neues")
 
     var input: String = ""
 
