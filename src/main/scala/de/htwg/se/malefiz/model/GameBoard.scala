@@ -10,7 +10,7 @@ import scala.io.StdIn.readLine
 case class GameBoard(cellList: List[Cell], players: List[Player],
                      gameBoardGraph: Map[Int, Set[Int]]) {
 
-
+/*
   def fOnCell(fN: Int, cN: Int) : Cell  = {
     cellList(cN).copy(figureNumber = fN)
   }
@@ -155,7 +155,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     }
     cellList
   }
-
+*/
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
