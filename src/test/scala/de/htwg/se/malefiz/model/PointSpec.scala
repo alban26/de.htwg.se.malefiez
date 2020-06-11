@@ -19,8 +19,6 @@ class PointSpec extends WordSpec with Matchers {
       "have a string representation" in {
         string should be ("x: 0 y: 0")
       }
-
-
     }
   }
 
