@@ -8,7 +8,7 @@ import scala.io.Source
 import scala.io.StdIn.readLine
 
 case class GameBoard(cellList: List[Cell], players: List[Player],
-                     gameBoardGraph: Map[Int, Set[Int]]) {
+                     gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) {
 
 /*
   def fOnCell(fN: Int, cN: Int) : Cell  = {
@@ -299,7 +299,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     feld
   }
 
-  def getPossibleCells(start: Int, cube: Int): Set[Int] = {
+  def getPossibleCells(start: Int, cube: Int): GameBoard = {
     var found: Set[Int] = Set[Int]()
     var needed: Set[Int] = Set[Int]()
 
@@ -315,7 +315,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
       }
     }
     recurse(start, cube)
-    needed
+    copy(possibleCells = needed)
   }
 
 

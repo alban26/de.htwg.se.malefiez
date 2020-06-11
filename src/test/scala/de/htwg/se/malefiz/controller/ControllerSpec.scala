@@ -41,12 +41,8 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.cellList(50).hasWall should be (true)
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
-        val x = controller.getPCells(20, 5)
+        controller.getPCells(20, 5)
         observer.updated should be(true)
-        x.contains(59) should be (true)
-        x.contains(45) should be (true)
-        x.contains(38) should be (true)
-        x.contains(25) should be (true)
       }
     }
   }

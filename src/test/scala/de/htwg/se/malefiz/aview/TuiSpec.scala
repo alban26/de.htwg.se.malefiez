@@ -21,10 +21,10 @@ class TuiSpec extends WordSpec with Matchers {
     val controller = new Controller(GameBoard(cellList, players, cellGraph))
     val tui = new Tui(controller)
 
-    "do nothing on input 'q'" in {
-      tui.processInput("q")
+    "do nothing on input 's'" in {
+      tui.processInput("s")
     }
-    "create and empty Sudoku on input 'n'" in {
+    "set figure 1 from player 1 to cell 20" in {
       tui.processInput("1 1 20")
       controller.gameBoard.cellList(20).playerNumber should be (1)
       controller.gameBoard.cellList(20).figureNumber should be (1)
@@ -33,7 +33,12 @@ class TuiSpec extends WordSpec with Matchers {
       tui.processInput("50")
       controller.gameBoard.cellList(50).hasWall should be (true)
     }
-
+    "get possible cells from startcell 0 with a random number 5" in {
+      tui.processInput("0 5")
+      controller.gameBoard.possibleCells.contains(42) should be (true)
+      controller.gameBoard.possibleCells.contains(46) should be (true)
+      controller.gameBoard.possibleCells.contains(26) should be (true)
+    }
   }
 
 }

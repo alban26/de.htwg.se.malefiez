@@ -19,9 +19,9 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     position
   }
 
-  def getPCells(startCell: Int, cubeNumber: Int) : Set[Int] = {
-    val possibleCells = gameBoard.getPossibleCells(startCell, cubeNumber)
-    possibleCells
+  def getPCells(startCell: Int, cubeNumber: Int) : Unit = {
+    gameBoard = gameBoard.getPossibleCells(startCell, cubeNumber)
+    notifyObservers
   }
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {

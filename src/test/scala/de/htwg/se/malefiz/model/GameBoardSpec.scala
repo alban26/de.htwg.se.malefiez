@@ -55,9 +55,9 @@ class GameBoardSpec extends WordSpec with Matchers {
       }
       "if we throw the cube and get a 5 and take the 1 first figure from player 1" in {
         val x =  main.getPossibleCells(0, 5)
-        x.contains(42) should be (true)
-        x.contains(26) should be (true)
-        x.contains(46) should be (true)
+        x.possibleCells.contains(42) should be (true)
+        x.possibleCells.contains(26) should be (true)
+        x.possibleCells.contains(46) should be (true)
       }
       " location of figure 2 from player 2 " in {
         val x = main.getPlayerFigure(2, 2)

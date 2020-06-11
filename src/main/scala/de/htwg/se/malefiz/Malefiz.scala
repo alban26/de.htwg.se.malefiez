@@ -23,12 +23,11 @@ object Malefiz {
 
     println("Willkommen bei Malefiz!\nUm eine neues")
 
-    var input: String = ""
-
-    do {
+    var input: String = args(0)
+    if (!input.isEmpty) tui.processInput(input)
+    else do {
       input = readLine()
       tui.processInput(input)
-
-    } while(input != "end")
+    } while (input != "end")
   }
 }
