@@ -47,7 +47,6 @@ class ControllerSpec  extends WordSpec with Matchers {
         x.contains(45) should be (true)
         x.contains(38) should be (true)
         x.contains(25) should be (true)
-
       }
     }
   }
