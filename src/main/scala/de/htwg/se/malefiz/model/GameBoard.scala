@@ -129,28 +129,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
     copy(players = newPlayerList)
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-  def changePlayerFigure(playerNumber: Int, figureNumber: Int, cell: Int): List[Player] = {
-    val a = getNewArrayFigure(playerNumber, figureNumber, cell)
-    val b = setFigure(playerNumber, figureNumber, cell)
-    copy(players = players.updated(playerNumber, players(playerNumber).playerFigures(figureNumber) = b))
-  }
-
-*/
-  //def setPlayer(pN: Int, fN: Int, cN: Int): GameBoard = copy(players = playerList(pN,fN,cN))
-
   def removePlayerFigureOnCell(cN: Int) :Cell  = {
     cellList(cN).copy(figureNumber = 0)
   }
@@ -173,11 +151,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
     copy(cellList.updated(a, removePlayerFigureOnCell(a)))
 
   }
-/*
-  def removeActualFigureFromCell(pN: Int, fN: Int): GameBoard = {
-    copy(cellList.updated(getPlayerFigure(pN, fN), removePlayerFigureOnCell(getPlayerFigure(pN, fN))))
-  }
-*/
+
   def setFigure(fN: Int, cN: Int): GameBoard = {
     copy(cellList.updated(cN, setPlayerFigureOnCell(fN, cN)))
   }
@@ -202,7 +176,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
       }
       found += current
       for (next <- gameBoardGraph(current)) {
-        print(next+ " ")
         if (!found.contains(next) && times != 0 ) {
           recurse(next, times-1)
         }
@@ -213,7 +186,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
   }
 
 
-  def removeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
+  def removeWall(n: Int): Cell = cellList(n).copy(hasWall = false)
 
   def rWall(n: Int): GameBoard = copy(removeListWall(n))
 
