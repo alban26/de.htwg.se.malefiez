@@ -9,6 +9,7 @@ class Tui(controller: Controller) extends Observer {
   def processInput(input: String) : Unit = {
 
     input match {
+      case "q" =>
       //case "2 Player" => controller.createPlayers(2)
       //case "3 Player" => controller.createPlayers(3)
       //case "4 Player" => controller.createPlayers(4)
@@ -23,11 +24,13 @@ class Tui(controller: Controller) extends Observer {
         b.foreach(x => println(x))
 
       case "stats" => printFigures()
-      case _ => input.split(" ").toList.map(c => c.toInt) match {
-            case player :: playerFigure :: cell :: Nil =>
-              controller.setPlayerFigure(player, playerFigure, cell)
-              update
-          }
+      case _ =>
+        val inputList = input.split(" ").toList.map(c => c.toInt)
+        inputList.length match {
+          case 1 => controller.setWall(inputList.head)
+            update
+          case 3 => controller.setPlayerFigure(inputList.head, inputList(1), inputList(2))
+        }
     }
   }
 
