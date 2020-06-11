@@ -9,10 +9,10 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   def rollCube: Int = {
     Cube().getRandomNumber
   }
-
+  /*
   def createPlayers(numberOfPlayers: Int): Unit = {
     gameBoard = gameBoard.createPlayerArray(numberOfPlayers)
-  }
+  }*/
 
   def getFigure(pn: Int, fn:Int) : Int = {
     val a = gameBoard.getPlayerFigure(pn, fn)

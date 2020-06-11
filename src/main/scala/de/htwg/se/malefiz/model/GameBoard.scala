@@ -6,10 +6,6 @@ import scala.io.StdIn.readLine
 
 case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph: Map[Int, Set[Int]]) {
 
-
-  println(cellList)
-
-
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
@@ -113,20 +109,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
                                                         |${gapLeftU}${ul1.mkString("-")}
                                                         |""".stripMargin
     }
-  }
-
-  def createPlayerArray(numberOfPlayers: Int) : GameBoard = {
-
-    var newPlayerList : List[Player] = List()
-    for (i <- 0 until numberOfPlayers) {
-      println("Spieler " + (i+1) + " geben Sie ihren Namen ein: ")
-      val name = readLine()
-      println("Spieler " + (i+1) + " geben Sie ihre Farbe ein: ")
-      val colour = readLine()
-      newPlayerList = newPlayerList :+ Player(i, name, colour)
-      println(newPlayerList(i).toString)
-    }
-    copy(players = newPlayerList)
   }
 
   def removePlayerFigureOnCell(cN: Int) :Cell  = {

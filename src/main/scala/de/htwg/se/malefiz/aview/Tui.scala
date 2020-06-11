@@ -11,9 +11,9 @@ class Tui(controller: Controller) extends Observer {
     input match {
       case "new game" => controller.gameBoard
         update
-      case "2 Player" => controller.createPlayers(2)
-      case "3 Player" => controller.createPlayers(3)
-      case "4 Player" => controller.createPlayers(4)
+      //case "2 Player" => controller.createPlayers(2)
+      //case "3 Player" => controller.createPlayers(3)
+      //case "4 Player" => controller.createPlayers(4)
       case "roll cube" =>
 
         val a = controller.rollCube
