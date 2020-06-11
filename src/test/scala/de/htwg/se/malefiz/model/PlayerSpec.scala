@@ -1,8 +1,7 @@
 package de.htwg.se.malefiz.model
 
-import java.awt.Color
-import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+import org.scalatest.matchers.should.Matchers
 
 class PlayerSpec extends WordSpec with Matchers {
   "A Player" when {
