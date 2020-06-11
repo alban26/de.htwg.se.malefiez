@@ -17,7 +17,7 @@ class Tui(controller: Controller) extends Observer {
       case "roll cube" =>
 
         val a = controller.rollCube
-        val b = controller.getSet(controller.getFigure(1, 5), a)
+        val b = controller.getPCells(controller.getFigure(1, 5), a)
 
         println("geworfene Zahl" + a)
 

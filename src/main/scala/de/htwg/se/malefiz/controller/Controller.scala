@@ -15,11 +15,11 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   }*/
 
   def getFigure(pn: Int, fn:Int) : Int = {
-    val a = gameBoard.getPlayerFigure(pn, fn)
-    a
+    val position = gameBoard.getPlayerFigure(pn, fn)
+    position
   }
 
-  def getSet(startCell: Int, cubeNumber: Int) : Set[Int] = {
+  def getPCells(startCell: Int, cubeNumber: Int) : Set[Int] = {
     val possibleCells = gameBoard.getPossibleCells(startCell, cubeNumber)
     possibleCells
   }

@@ -1,15 +1,165 @@
 package de.htwg.se.malefiz.model
 
+import java.awt.Color
+
+import scala.collection.mutable
 import scala.collection.mutable.{Map, Queue}
 import scala.io.Source
 import scala.io.StdIn.readLine
 
-case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph: Map[Int, Set[Int]]) {
+case class GameBoard(cellList: List[Cell], players: List[Player],
+                     gameBoardGraph: Map[Int, Set[Int]]) {
+
+
+  def fOnCell(fN: Int, cN: Int) : Cell  = {
+    cellList(cN).copy(figureNumber = fN)
+  }
+
+  def pOnCell(pN: Int, cN: Int) : Cell  = {
+    cellList(cN).copy(playerNumber = pN)
+  }
+
+  def setPlayer(pN: Int, s: String) : List[Cell] = {
+
+    var Farbe = Color.GRAY
+    //var benutzeFarbe : Set[Color] = Set().empty
+
+    s match {
+      case "blue" => Farbe = Color.BLUE
+      case "red" => Farbe = Color.RED
+      case "green" => Farbe = Color.GREEN
+      case "yellow" => Farbe = Color.YELLOW
+    }
+
+    pN match {
+      case 1 => Farbe match {
+        case Color.BLUE =>
+          var zahl = 1
+          for (i <- 15 to 19) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.YELLOW =>
+          var zahl = 1
+          for (i <- 10 to 14) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.GREEN =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.RED =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+      }
+      case 2 => Farbe match {
+        case Color.BLUE =>
+          var zahl = 1
+          for (i <- 15 to 19) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.YELLOW =>
+          var zahl = 1
+          for (i <- 10 to 14) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.GREEN =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.RED =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+      }
+      case 3 => Farbe match {
+        case Color.BLUE =>
+          var zahl = 1
+          for (i <- 15 to 19) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.YELLOW =>
+          var zahl = 1
+          for (i <- 10 to 14) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.GREEN =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.RED =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+      }
+      case 4 => Farbe match {
+        case Color.BLUE =>
+          var zahl = 1
+          for (i <- 15 to 19) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.YELLOW =>
+          var zahl = 1
+          for (i <- 10 to 14) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.GREEN =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+        case Color.RED =>
+          var zahl = 1
+          for (i <- 5 to 9) {
+            pOnCell(pN, i)
+            fOnCell(zahl, i)
+            zahl = zahl + 1
+          }
+      }
+    }
+    cellList
+  }
 
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
-    val abstand1 = " "
+    val abstand1 = ""
     val abstand = "    "
     val l = list.slice(0,20)
     s"""|$abstand${l.mkString(s"${abstand1}")}
@@ -129,8 +279,9 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
 
   def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int, cN: Int): GameBoard = {
     val a = getPlayerFigure(pN, fN)
-    copy(cellList.updated(a, removePlayerOnCell(a)))
+
     copy(cellList.updated(a, removePlayerFigureOnCell(a)))
+    copy(cellList.updated(a, removePlayerOnCell(a)))
 
   }
 

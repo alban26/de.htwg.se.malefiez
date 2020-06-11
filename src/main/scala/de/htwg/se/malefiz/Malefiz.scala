@@ -8,8 +8,8 @@ import scala.io.StdIn.readLine
 
 object Malefiz {
 
-  val cellConfigFile = "project/testConfig.txt"
-  val cellLinksFile = "project/testCellLinks.txt"
+  val cellConfigFile = "project/mainCellConfiguration"
+  val cellLinksFile = "project/mainCellLinks"
 
   val players : List[Player] = List().empty
   val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
