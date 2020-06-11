@@ -192,8 +192,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
     feld
   }
 
-  val menge : Set[Int] = Set()
-
   def getPossibleCells(start: Int, cube: Int): Set[Int] = {
     var found: Set[Int] = Set[Int]()
     var needed: Set[Int] = Set[Int]()
@@ -229,7 +227,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player], gameBoardGraph
 
   def updateListWall(n: Int): List[Cell] =  {
     if (n >= 42 && !cellList(n).hasWall) {
-      println("Mauer wurde auf folgendes Feld gesetzt: " + n)
      cellList.updated(n, placeWall(n))
     }
     else {
