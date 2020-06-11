@@ -21,10 +21,11 @@ object Malefiz {
 
   def main(args: Array[String]): Unit = {
 
-    println("Willkommen bei Malefiz!\nUm eine neues")
-
     var input: String = args(0)
-    if (!input.isEmpty) tui.processInput(input)
+
+    if (!input.isEmpty) {
+      tui.processInput(input)
+    }
     else do {
       input = readLine()
       tui.processInput(input)

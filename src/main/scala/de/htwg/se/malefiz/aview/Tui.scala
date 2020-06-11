@@ -10,7 +10,6 @@ class Tui(controller: Controller) extends Observer {
 
     input match {
       case "s" =>
-
       case _ =>
         val inputList = input.split(" ").toList.map(c => c.toInt)
         inputList.length match {
@@ -18,6 +17,7 @@ class Tui(controller: Controller) extends Observer {
             update
           case 2 =>
             controller.getPCells(inputList.head, inputList(1))
+            update
           case 3 => controller.setPlayerFigure(inputList.head, inputList(1), inputList(2))
             update
         }
