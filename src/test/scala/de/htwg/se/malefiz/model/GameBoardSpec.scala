@@ -9,7 +9,7 @@ class GameBoardSpec extends WordSpec with Matchers {
   "A Gameboard is a graph with 132 Cells. For testing purpose " when {
     "is created " should {
       val testSource = "project/testConfig.txt"
-      val testSource3 = "src/main/scala/de/htwg/se/malefiz/model/mainCellConfiguration"
+      val testSource3 = "project/mainCellConfiguration"
       val testCellList = Creator().getCellList(testSource)
 
       val testSource2 = "project/testCellLinks.txt"
