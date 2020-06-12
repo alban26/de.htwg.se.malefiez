@@ -8,10 +8,6 @@ case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destinati
  // val s = if(playFigure.numberOfPlayer == 0)"[ ]" else  "["+playFigure.numberOfPlayer+"]"
 
 
-  var col = Color.GRAY
-
-  val colours : List[Color] = List(Color.blue, Color.red, Color.green, Color.yellow)
-
   val stein_or_spieler =
     if(cellNumber < 20) {
       if(playerNumber != 0 && !hasWall) {
