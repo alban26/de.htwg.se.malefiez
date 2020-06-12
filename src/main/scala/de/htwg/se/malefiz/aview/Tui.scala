@@ -9,7 +9,7 @@ class Tui(controller: Controller) extends Observer {
   def processInput(input: String) : Unit = {
 
     input match {
-      case "s" =>
+      case "s" => update
       case _ =>
         val inputList = input.split(" ").toList.map(c => c.toInt)
         inputList.length match {

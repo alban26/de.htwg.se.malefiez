@@ -13,20 +13,33 @@ case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destinati
   val colours : List[Color] = List(Color.blue, Color.red, Color.green, Color.yellow)
 
   val stein_or_spieler =
+    if(cellNumber < 20) {
+      if(playerNumber != 0 && !hasWall) {
+        "("  + playerNumber + ")"
+      } else if(playerNumber == 2 && !hasWall) {
+        "("  + playerNumber + ")"
+      } else if(playerNumber == 3 && !hasWall) {
+        "(" + playerNumber + ")"
+      } else if(playerNumber == 4 && !hasWall) {
+        "(" + playerNumber + ")"
+      } else {
+        "( )"
+      }
+    } else {
     if(playerNumber != 0 && !hasWall) {
-       "("  + playerNumber + ")"
+       "["  + playerNumber + "]"
     } else if(playerNumber == 2 && !hasWall) {
-      "("  + playerNumber + ")"
+      "["  + playerNumber + "]"
     } else if(playerNumber == 3 && !hasWall) {
-       "(" + playerNumber + ")"
+       "[" + playerNumber + "]"
     } else if(playerNumber == 4 && !hasWall) {
-       "(" + playerNumber + ")"
+       "[" + playerNumber + "]"
     } else if (hasWall) {
       "[X]"
     } else {
       "[ ]"
     }
-
+    }
 
 
   override def toString: String = stein_or_spieler

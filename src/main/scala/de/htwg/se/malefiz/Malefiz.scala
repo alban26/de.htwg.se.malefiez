@@ -21,7 +21,7 @@ object Malefiz {
 
   def main(args: Array[String]): Unit = {
 
-    var input: String = args(0)
+    var input: String = ""
 
     if (!input.isEmpty) {
       tui.processInput(input)
