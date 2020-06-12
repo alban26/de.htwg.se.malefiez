@@ -16,25 +16,13 @@ case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destinati
     if(cellNumber < 20) {
       if(playerNumber != 0 && !hasWall) {
         "("  + playerNumber + ")"
-      } else if(playerNumber == 2 && !hasWall) {
-        "("  + playerNumber + ")"
-      } else if(playerNumber == 3 && !hasWall) {
-        "(" + playerNumber + ")"
-      } else if(playerNumber == 4 && !hasWall) {
-        "(" + playerNumber + ")"
-      } else {
+      }  else {
         "( )"
       }
     } else {
     if(playerNumber != 0 && !hasWall) {
        "["  + playerNumber + "]"
-    } else if(playerNumber == 2 && !hasWall) {
-      "["  + playerNumber + "]"
-    } else if(playerNumber == 3 && !hasWall) {
-       "[" + playerNumber + "]"
-    } else if(playerNumber == 4 && !hasWall) {
-       "[" + playerNumber + "]"
-    } else if (hasWall) {
+    }  else if (hasWall) {
       "[X]"
     } else {
       "[ ]"
