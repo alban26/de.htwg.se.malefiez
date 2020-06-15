@@ -1,11 +1,13 @@
 package de.htwg.se.malefiz.controller
 
+
 import de.htwg.se.malefiz.util.{Observable, Observer, UndoManager}
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
+  var gameStatus: GameState = IDLE
   private val undoManager = new UndoManager
 
   def rollCube: Int = {

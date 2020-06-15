@@ -10,8 +10,8 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
     if(controller.gameBoard.cellList(cellNumber).playerNumber != 0) {
 
-      controller.gameBoard = controller.gameBoard.setPlayer(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber-1,controller.gameBoard.cellList(cellNumber).figureNumber-1))
-      controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber, controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber-1,controller.gameBoard.cellList(cellNumber).figureNumber-1))
+      controller.gameBoard = controller.gameBoard.setPlayer(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
+      controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber, controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
       kicked = true
     }
 
@@ -23,8 +23,8 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
     controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber,playerFigure)
 
-    controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, controller.gameBoard.getHomeNr(playerNumber-1,playerFigure-1))
-    controller.gameBoard = controller.gameBoard.setFigure(playerFigure, controller.gameBoard.getHomeNr(playerNumber-1,playerFigure-1))
+    controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, controller.gameBoard.getHomeNr(playerNumber,playerFigure))
+    controller.gameBoard = controller.gameBoard.setFigure(playerFigure, controller.gameBoard.getHomeNr(playerNumber,playerFigure))
 
     if(kicked == true){
       println(safeKickedPlayer)

@@ -148,10 +148,10 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
   }
 
   def getHomeNr(pN: Int, fN: Int): Int = {
-    if(pN == 0 && fN == 0) {
+    if(pN == 1 && fN == 1) {
       0
     }else {
-      pN * 5 + fN
+      (pN - 1)  * 5 + fN - 1
     }
   }
 
