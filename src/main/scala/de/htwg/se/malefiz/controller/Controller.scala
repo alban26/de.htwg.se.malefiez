@@ -1,18 +1,20 @@
 package de.htwg.se.malefiz.controller
 
-import de.htwg.se.malefiz.model.{Cell, Cube, GameBoard, Creator, Player}
-import de.htwg.se.malefiz.util.{Observable, Observer}
+import de.htwg.se.malefiz.util.{Observable, Observer, UndoManager}
+import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
+  private val undoManager = new UndoManager
+
   def rollCube: Int = {
     Cube().getRandomNumber
   }
-  /*
-  def createPlayers(numberOfPlayers: Int): Unit = {
-    gameBoard = gameBoard.createPlayerArray(numberOfPlayers)
-  }*/
+
+  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
+    undoManager.doStep(new SetPlayerCommand(playerNumber,playerFigure,cellNumber,this))
+  }
 
   def getFigure(pn: Int, fn:Int) : Int = {
     val position = gameBoard.getPlayerFigure(pn, fn)
@@ -24,17 +26,40 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     notifyObservers
   }
 
-  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int) : Unit = {
-    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure, cellNumber)
-    gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
-    gameBoard = gameBoard.setFigure(playerFigure, cellNumber)
+  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int): Unit = {
+    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(pN,fN)
     notifyObservers
   }
+
+  def setFigure(fN: Int, cN: Int): Unit = {
+    gameBoard = gameBoard.setFigure(fN,cN)
+    notifyObservers
+  }
+
+  def setPlayer(pN: Int, cN: Int): Unit = {
+    gameBoard = gameBoard.setPlayer(pN, cN)
+    notifyObservers
+  }
+
 
   def setWall(n: Int): Unit = {
     gameBoard = gameBoard.setWall(n)
     notifyObservers
   }
 
+  def rWall(n: Int): Unit = {
+    gameBoard = gameBoard.rWall(n)
+  }
   def gameBoardToString: String = gameBoard.createGameBoard()
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
+    notifyObservers
+  }
+
 }

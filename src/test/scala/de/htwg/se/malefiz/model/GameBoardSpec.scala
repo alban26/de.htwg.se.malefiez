@@ -71,11 +71,11 @@ class GameBoardSpec extends WordSpec with Matchers {
         val x = main.setFigure(2, 30)
         x.cellList(30).figureNumber should be (2)
       }
-      " remove play2 and figure 2 from cell 30" in {
+   /*   " remove play2 and figure 2 from cell 30" in {
         val x = main.removeActualPlayerAndFigureFromCell(2, 2, 30)
         x.cellList(30).figureNumber should be (0)
         x.cellList(30).figureNumber should be (0)
-      }
+      }*/
       "build the whole gameboard as a String" in {
 
         val testCellList = Creator().getCellList(mainSourceConfig)

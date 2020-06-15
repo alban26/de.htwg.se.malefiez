@@ -10,152 +10,7 @@ import scala.io.StdIn.readLine
 case class GameBoard(cellList: List[Cell], players: List[Player],
                      gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) {
 
-/*
-  def fOnCell(fN: Int, cN: Int) : Cell  = {
-    cellList(cN).copy(figureNumber = fN)
-  }
 
-  def pOnCell(pN: Int, cN: Int) : Cell  = {
-    cellList(cN).copy(playerNumber = pN)
-  }
-
-  def setPlayer(pN: Int, s: String) : List[Cell] = {
-
-    var Farbe = Color.GRAY
-    //var benutzeFarbe : Set[Color] = Set().empty
-
-    s match {
-      case "blue" => Farbe = Color.BLUE
-      case "red" => Farbe = Color.RED
-      case "green" => Farbe = Color.GREEN
-      case "yellow" => Farbe = Color.YELLOW
-    }
-
-    pN match {
-      case 1 => Farbe match {
-        case Color.BLUE =>
-          var zahl = 1
-          for (i <- 15 to 19) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.YELLOW =>
-          var zahl = 1
-          for (i <- 10 to 14) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.GREEN =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.RED =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-      }
-      case 2 => Farbe match {
-        case Color.BLUE =>
-          var zahl = 1
-          for (i <- 15 to 19) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.YELLOW =>
-          var zahl = 1
-          for (i <- 10 to 14) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.GREEN =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.RED =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-      }
-      case 3 => Farbe match {
-        case Color.BLUE =>
-          var zahl = 1
-          for (i <- 15 to 19) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.YELLOW =>
-          var zahl = 1
-          for (i <- 10 to 14) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.GREEN =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.RED =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-      }
-      case 4 => Farbe match {
-        case Color.BLUE =>
-          var zahl = 1
-          for (i <- 15 to 19) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.YELLOW =>
-          var zahl = 1
-          for (i <- 10 to 14) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.GREEN =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-        case Color.RED =>
-          var zahl = 1
-          for (i <- 5 to 9) {
-            pOnCell(pN, i)
-            fOnCell(zahl, i)
-            zahl = zahl + 1
-          }
-      }
-    }
-    cellList
-  }
-*/
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
@@ -277,12 +132,11 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     cellList(cN).copy(playerNumber = pN)
   }
 
-  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int, cN: Int): GameBoard = {
+  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int): GameBoard = {
     val a = getPlayerFigure(pN, fN)
 
     copy(cellList.updated(a, removePlayerFigureOnCell(a)))
     copy(cellList.updated(a, removePlayerOnCell(a)))
-
   }
 
   def setFigure(fN: Int, cN: Int): GameBoard = {
@@ -293,11 +147,20 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     copy(cellList.updated(cN, setPlayerOnCell(pN, cN)))
   }
 
+  def getHomeNr(pN: Int, fN: Int): Int = {
+    if(pN == 0 && fN == 0) {
+      0
+    }else {
+      pN * 5 + fN
+    }
+  }
+
   def getPlayerFigure(pN: Int, fN: Int) : Int = {
     val feldNumber = cellList.filter(cell => cell.playerNumber == pN && cell.figureNumber == fN)
     val feld = feldNumber.head.cellNumber
     feld
   }
+
 
   def getPossibleCells(start: Int, cube: Int): GameBoard = {
     var found: Set[Int] = Set[Int]()
@@ -326,6 +189,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
   def removeListWall(n: Int): List[Cell] =  {
       cellList.updated(n, removeWall(n))
   }
+
 
   def placeWall(n: Int): Cell = cellList(n).copy(hasWall = true)
 

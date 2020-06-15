@@ -10,6 +10,10 @@ class Tui(controller: Controller) extends Observer {
 
     input match {
       case "s" => update
+      case "z" => controller.undo
+        update
+      case "y" => controller.redo
+        update
       case _ =>
         val inputList = input.split(" ").toList.map(c => c.toInt)
         inputList.length match {

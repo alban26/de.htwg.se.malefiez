@@ -5,8 +5,6 @@ import java.awt.Color
 case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destination: Boolean, wallPermission: Boolean, hasWall: Boolean,
                 coordinates: Point) {
 
- // val s = if(playFigure.numberOfPlayer == 0)"[ ]" else  "["+playFigure.numberOfPlayer+"]"
-
 
   val stein_or_spieler =
     if(cellNumber < 20) {
@@ -26,6 +24,6 @@ case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destinati
     }
 
 
-  override def toString: String = stein_or_spieler
+  override def toString: String = stein_or_spieler//"["+cellNumber+"]"
 
 }
