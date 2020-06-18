@@ -20,7 +20,8 @@ class ControllerSpec  extends WordSpec with Matchers {
       val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
       val controller = new Controller(GameBoard(cellList, players, cellGraph))
-
+      controller.player = List(Player(1, "Robert"), Player(1, "Alban"))
+      controller.playersTurn = Player(1,"Robert")
 
       val observer = new Observer {
         var updated: Boolean = false

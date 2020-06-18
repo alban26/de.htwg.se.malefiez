@@ -31,7 +31,7 @@ class Tui(controller: Controller) extends Observer {
     controller.playingState match {
 
       case PlayingState.ROLL => controller.dicedNumer = controller.rollCube
-        controller.setPosis(controller.playersTurn.playerNumber)
+        controller.setPosisTrue(controller.playersTurn.playerNumber)
 
       case PlayingState.SELECT_PLAYER => input match {
         case "z" => controller.undo
@@ -70,8 +70,6 @@ class Tui(controller: Controller) extends Observer {
         }
     }
   }
-
-
 
   override def update: Boolean = {
     textPrint(controller.gameBoardToString)

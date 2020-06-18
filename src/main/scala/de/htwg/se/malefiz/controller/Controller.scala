@@ -44,6 +44,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
     undoManager.doStep(new SetPlayerCommand(playerNumber,playerFigure,cellNumber,this))
+    notifyObservers
   }
 
   def getFigure(pn: Int, fn:Int) : Int = {
