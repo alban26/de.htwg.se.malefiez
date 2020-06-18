@@ -29,10 +29,15 @@ class Tui(controller: Controller) extends Observer {
 
   def processInput(input: String): Unit = {
     controller.playingState match {
+
       case PlayingState.ROLL => controller.dicedNumer = controller.rollCube
         controller.setPosis(controller.playersTurn.playerNumber)
 
       case PlayingState.SELECT_PLAYER => input match {
+        case "z" => controller.undo
+          update
+        case "y" => controller.redo
+          update
         case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
           case player :: figure :: Nil => controller.getPCells(controller.getFigure(player,figure), controller.dicedNumer)
             controller.setPosisFalse(controller.playersTurn.playerNumber)

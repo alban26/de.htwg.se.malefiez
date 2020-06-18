@@ -206,7 +206,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
 
 
-  def setPosies(n: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, n, cellList))
+  def setPosiesTrue(n: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, n, cellList))
 
   def setPossibilitiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
 
@@ -236,6 +236,8 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
       setPossibleFiguresFalse(m-1,n,lis)
     }
   }
+
+  def execute(callback:(Int) => GameBoard, y:Int) = callback(y)
 
   def nextPlayer(list: List[Player], n: Int): Player = {
 

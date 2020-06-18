@@ -27,13 +27,13 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   }
 
 
-  def setPosis(n: Int): Unit = {
-    gameBoard = gameBoard.setPosies(n)
+  def setPosisTrue(n: Int): Unit = {
+    gameBoard = gameBoard.execute(gameBoard.setPosiesTrue,n)
     notifyObservers
   }
 
   def setPosisFalse(n: Int): Unit = {
-    gameBoard = gameBoard.setPosiesFalse(n)
+    gameBoard = gameBoard.execute(gameBoard.setPosiesFalse,n)
     notifyObservers
   }
 
@@ -74,12 +74,12 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
 
   def setWall(n: Int): Unit = {
-    gameBoard = gameBoard.setWall(n)
+    gameBoard = gameBoard.execute(gameBoard.setWall,n)
     notifyObservers
   }
 
   def rWall(n: Int): Unit = {
-    gameBoard = gameBoard.rWall(n)
+    gameBoard = gameBoard.execute(gameBoard.rWall,n)
     notifyObservers
   }
   def gameBoardToString: String = gameBoard.createGameBoard()
