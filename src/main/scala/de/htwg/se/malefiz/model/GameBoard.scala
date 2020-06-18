@@ -206,34 +206,34 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
 
 
-  def setPosis(n: Int): GameBoard = copy(setPossibilietiesTrue(cellList.length-1, n, cellList))
+  def setPosies(n: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, n, cellList))
 
-  def setPossibilietiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
+  def setPossibilitiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
 
-  def setPossibilietiesTrue(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+  def setPossibleFiguresTrue(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
       if (m == -1) {
         lis
       } else if (lis(m).playerNumber == n) {
-        setPossibilietiesTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilietiesTrue(m)))
+        setPossibleFiguresTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilitiesTrue(m)))
       }
       else {
-        setPossibilietiesTrue(m-1,n,lis)
+        setPossibleFiguresTrue(m-1,n,lis)
       }
   }
 
 
-  def setPosisFalse(n: Int): GameBoard = copy(setPossibilietiesTrue(cellList.length-1, n, cellList))
+  def setPosiesFalse(n: Int): GameBoard = copy(setPossibleFiguresFalse(cellList.length-1, n, cellList))
 
-  def setPossibilietiesFalse(n: Int): Cell = cellList(n).copy(possibleFigures = false)
+  def setPossibilitiesFalse(n: Int): Cell = cellList(n).copy(possibleFigures = false)
 
-  def setPossibilietiesFalse(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+  def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
     if (m == -1) {
       lis
     } else if (lis(m).playerNumber == n) {
-      setPossibilietiesTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilietiesTrue(m)))
+      setPossibleFiguresFalse(m-1,n,lis.updated(lis(m).cellNumber,setPossibilitiesFalse(m)))
     }
     else {
-      setPossibilietiesTrue(m-1,n,lis)
+      setPossibleFiguresFalse(m-1,n,lis)
     }
   }
 

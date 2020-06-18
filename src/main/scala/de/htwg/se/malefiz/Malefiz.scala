@@ -3,6 +3,7 @@ import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.Controller
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
+import de.htwg.se.malefiz.model.gameBoardStrategy._
 
 import scala.io.StdIn.readLine
 
@@ -12,8 +13,9 @@ object Malefiz {
   val cellLinksFile = "project/mainCellLinks"
 
   val players : List[Player] = List().empty
-  val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
-  val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
+
+  val cellList : List[Cell] = execute(CellList,cellConfigFile)
+  val cellGraph : Map[Int, Set[Int]] = execute1(Graph, cellLinksFile)
 
 
   val controller = new Controller(GameBoard(cellList, players, cellGraph))

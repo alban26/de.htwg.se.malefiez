@@ -1,7 +1,9 @@
 package de.htwg.se.malefiz.aview
 
+import de.htwg.se.malefiz.Malefiz.cellConfigFile
 import de.htwg.se.malefiz.controller.{Controller, GameState, PlayingState}
 import de.htwg.se.malefiz.controller.GameState.GameState
+import de.htwg.se.malefiz.model.{Cell, Creator}
 import de.htwg.se.malefiz.util.Observer
 import javax.swing.plaf.basic.BasicBorders.RolloverButtonBorder
 

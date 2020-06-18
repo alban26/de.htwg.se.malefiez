@@ -20,7 +20,7 @@ object GameState extends Enumeration{
 
 object PlayingState extends Enumeration {
   type PlayingState = Value
-  val ROLL, SELECT_PLAYER, SHOW_CELLS,SET_PLAYER, SET_WALL = Value
+  val ROLL, SELECT_PLAYER, SHOW_CELLS, SET_PLAYER, SET_WALL = Value
 
   val map = Map[PlayingState, String](
   ROLL ->"Drücke bliebige Taste um zu würfeln",

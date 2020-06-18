@@ -28,12 +28,12 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
 
   def setPosis(n: Int): Unit = {
-    gameBoard = gameBoard.setPosis(n)
+    gameBoard = gameBoard.setPosies(n)
     notifyObservers
   }
 
   def setPosisFalse(n: Int): Unit = {
-    gameBoard = gameBoard.setPosisFalse(n)
+    gameBoard = gameBoard.setPosiesFalse(n)
     notifyObservers
   }
 
