@@ -204,6 +204,48 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     }
   }
 
+
+
+  def setPosis(n: Int): GameBoard = copy(setPossibilietiesTrue(cellList.length-1, n, cellList))
+
+  def setPossibilietiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
+
+  def setPossibilietiesTrue(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+      if (m == -1) {
+        lis
+      } else if (lis(m).playerNumber == n) {
+        setPossibilietiesTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilietiesTrue(m)))
+      }
+      else {
+        setPossibilietiesTrue(m-1,n,lis)
+      }
+  }
+
+
+  def setPosisFalse(n: Int): GameBoard = copy(setPossibilietiesTrue(cellList.length-1, n, cellList))
+
+  def setPossibilietiesFalse(n: Int): Cell = cellList(n).copy(possibleFigures = false)
+
+  def setPossibilietiesFalse(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+    if (m == -1) {
+      lis
+    } else if (lis(m).playerNumber == n) {
+      setPossibilietiesTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilietiesTrue(m)))
+    }
+    else {
+      setPossibilietiesTrue(m-1,n,lis)
+    }
+  }
+
+  def nextPlayer(list: List[Player], n: Int): Player = {
+
+    if(n == list.length-1) {
+      list.head
+    } else {
+      list(n+1)
+    }
+  }
+
   def createGameBoard(): String = buildString(cellList)
 
 }

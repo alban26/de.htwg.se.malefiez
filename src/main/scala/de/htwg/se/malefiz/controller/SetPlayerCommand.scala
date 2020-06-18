@@ -10,13 +10,18 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
     if(controller.gameBoard.cellList(cellNumber).playerNumber != 0) {
 
-      controller.gameBoard = controller.gameBoard.setPlayer(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
-      controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber, controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
+      controller.gameBoard = controller.gameBoard.setPlayer(controller.gameBoard.cellList(cellNumber).playerNumber,
+        controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
+      controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber,
+        controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
       kicked = true
     }
 
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
+
+    controller.playersTurn = controller.gameBoard.nextPlayer(controller.player,controller.playersTurn.playerNumber-1)
+    controller.playingState = PlayingState.ROLL
   }
 
   override def undoStep: Unit = {
@@ -26,7 +31,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, controller.gameBoard.getHomeNr(playerNumber,playerFigure))
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, controller.gameBoard.getHomeNr(playerNumber,playerFigure))
 
-    if(kicked == true){
+    if(kicked){
       println(safeKickedPlayer)
       controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(safeKickedPlayer._1,safeKickedPlayer._2)
       controller.gameBoard = controller.gameBoard.setPlayer(safeKickedPlayer._1, cellNumber)

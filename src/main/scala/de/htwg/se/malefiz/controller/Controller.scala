@@ -1,16 +1,44 @@
 package de.htwg.se.malefiz.controller
 
-
+import de.htwg.se.malefiz.controller.GameState._
+import de.htwg.se.malefiz.controller.PlayingState._
 import de.htwg.se.malefiz.util.{Observable, Observer, UndoManager}
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
-  var gameStatus: GameState = IDLE
+  var gameState: GameState = ENTRY_NAMES
+  var playingState: PlayingState = ROLL
+  var playersTurn: Player = _
+  var player: List[Player] = List.empty
+  var dicedNumer: Int = _
+  var selectedPlayer: Tuple2[Int, Int] = _
+
   private val undoManager = new UndoManager
 
+
+  def createPlayer(n: Int, name: List[String]): List[Player] = {
+    if (n == 0) {
+      List(Player(n+1, name(n)))
+    } else {
+      createPlayer(n - 1, name) :+ Player(n+1, name(n))
+    }
+  }
+
+
+  def setPosis(n: Int): Unit = {
+    gameBoard = gameBoard.setPosis(n)
+    notifyObservers
+  }
+
+  def setPosisFalse(n: Int): Unit = {
+    gameBoard = gameBoard.setPosisFalse(n)
+    notifyObservers
+  }
+
   def rollCube: Int = {
+    playingState = SELECT_PLAYER
     Cube().getRandomNumber
   }
 
@@ -25,6 +53,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def getPCells(startCell: Int, cubeNumber: Int) : Unit = {
     gameBoard = gameBoard.getPossibleCells(startCell, cubeNumber)
+    playingState = SET_PLAYER
     notifyObservers
   }
 
@@ -51,6 +80,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def rWall(n: Int): Unit = {
     gameBoard = gameBoard.rWall(n)
+    notifyObservers
   }
   def gameBoardToString: String = gameBoard.createGameBoard()
 

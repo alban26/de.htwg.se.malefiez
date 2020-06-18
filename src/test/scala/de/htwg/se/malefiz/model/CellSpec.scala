@@ -6,7 +6,7 @@ import org.scalatest._
 class CellSpec extends WordSpec with Matchers{
   "A Cell" when {
     "new" should {
-      val cell = Cell(0, 1, 1, false, false, false, Point(0,0))
+      val cell = Cell(0, 1, 1, false, false, false, Point(0,0),false)
       "have a fieldnumber"  in {
         cell.cellNumber should be(0)
       }

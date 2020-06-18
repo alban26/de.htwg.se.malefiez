@@ -21,6 +21,7 @@ object Malefiz {
 
   def main(args: Array[String]): Unit = {
 
+    println("Welcome to Malefiz: ")
     var input: String = ""
 
     if (!input.isEmpty) {
@@ -28,7 +29,7 @@ object Malefiz {
     }
     else do {
       input = readLine()
-      tui.processInput(input)
+      tui.input(input)
     } while (input != "end")
   }
 }
