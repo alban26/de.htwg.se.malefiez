@@ -1,3 +1,4 @@
+package de.htwg.se.malefiz.util
 
 import de.htwg.se.malefiz.util.{Command, UndoManager}
 import org.scalatest.matchers.should.Matchers
