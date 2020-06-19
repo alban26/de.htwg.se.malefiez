@@ -7,9 +7,8 @@ class MalefizSpec extends WordSpec with Matchers {
 
   "The Malefiz main class" should {
     "accept text input as argument without readline loop, to test it from command line " in {
-      Malefiz.main(Array[String]("s"))
+      Malefiz.main(Array[String]("1 1 20"))
     }
   }
 
-}
-*/
+}*/

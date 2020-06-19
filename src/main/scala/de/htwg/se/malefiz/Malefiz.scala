@@ -24,10 +24,10 @@ object Malefiz {
 
   def main(args: Array[String]): Unit = {
 
-    println("Welcome to Malefiz: ")
     var input: String = ""
 
     if (!input.isEmpty) {
+      input = args(0)
       tui.processInput(input)
     }
     else do {
