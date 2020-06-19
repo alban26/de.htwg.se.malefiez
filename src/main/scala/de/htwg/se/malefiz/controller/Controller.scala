@@ -75,7 +75,8 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
 
   def setWall(n: Int): Unit = {
-    gameBoard = gameBoard.execute(gameBoard.setWall,n)
+    //gameBoard = gameBoard.execute(gameBoard.setWall,n)
+    undoManager.doStep(new SetWallCommand(n,this))
     notifyObservers
   }
 
