@@ -37,7 +37,6 @@ class TuiSpec extends WordSpec with Matchers {
       tui.update should be (true)
     }
     "next up in the processInput the game continues " in {
-      //tui.input("a")
 
       controller.playingState should be(ROLL)
       tui.processInput("b")
@@ -51,12 +50,18 @@ class TuiSpec extends WordSpec with Matchers {
       controller.gameBoard.possibleCells should be (Set(22))
       controller.gameBoard.cellList(0).possibleFigures should be(false)
       tui.update should be (true)
+
     }
 
     "set figure 1 from player 1 to cell 20" in {
       tui.processInput1("1 1 20")
       controller.gameBoard.cellList(20).playerNumber should be (1)
       controller.gameBoard.cellList(20).figureNumber should be (1)
+     // controller.gameBoard.cellList(0).playerNumber should be (0)
+     // controller.gameBoard.cellList(0).figureNumber should be (0)
+      tui.processInput1("z")
+      controller.gameBoard.cellList(20).playerNumber should be (0)
+      controller.gameBoard.cellList(20).figureNumber should be (0)
     }
     "set a Wall on Cell '50'" in {
       tui.processInput1("50")
