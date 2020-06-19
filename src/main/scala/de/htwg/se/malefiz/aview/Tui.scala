@@ -40,6 +40,7 @@ class Tui(controller: Controller) extends Observer {
           update
         case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
           case player :: figure :: Nil => controller.getPCells(controller.getFigure(player,figure), controller.dicedNumer)
+
             controller.setPosisFalse(controller.playersTurn.playerNumber)
             update
           case _ =>
@@ -73,9 +74,9 @@ class Tui(controller: Controller) extends Observer {
 
   override def update: Boolean = {
     textPrint(controller.gameBoardToString)
-    println(controller.player.mkString("\n"))
+    textPrint(controller.player.mkString("\n"))
     textPrint("--------------------------")
-    println(controller.playersTurn + " ist dran")
+    textPrint(controller.playersTurn + " ist dran")
     val dice = if(controller.dicedNumer == 0) "" else controller.dicedNumer
     textPrint("Gewürfelt: "+ dice)
     textPrint(PlayingState.message(controller.playingState))
