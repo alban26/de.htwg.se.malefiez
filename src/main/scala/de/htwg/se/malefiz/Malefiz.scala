@@ -1,11 +1,10 @@
 package de.htwg.se.malefiz
-import com.sun.corba.se.impl.orbutil.graph.Graph
 
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.Controller
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
-import de.htwg.se.malefiz.model.Creator._
+
 
 import scala.io.StdIn.readLine
 
