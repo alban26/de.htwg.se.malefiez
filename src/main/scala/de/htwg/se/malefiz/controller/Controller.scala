@@ -13,10 +13,8 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   var playersTurn: Player = _
   var player: List[Player] = List.empty
   var dicedNumer: Int = _
-  var selectedPlayer: Tuple2[Int, Int] = _
 
   private val undoManager = new UndoManager
-
 
   def createPlayer(n: Int, name: List[String]): List[Player] = {
     if (n == 0) {
@@ -25,7 +23,6 @@ class Controller(var gameBoard: GameBoard) extends Observable {
       createPlayer(n - 1, name) :+ Player(n+1, name(n))
     }
   }
-
 
   def setPosisTrue(n: Int): Unit = {
     gameBoard = gameBoard.execute(gameBoard.setPosiesTrue,n)
@@ -72,7 +69,6 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     gameBoard = gameBoard.setPlayer(pN, cN)
     notifyObservers
   }
-
 
   def setWall(n: Int): Unit = {
     //gameBoard = gameBoard.execute(gameBoard.setWall,n)

@@ -45,6 +45,12 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.getPCells(20, 5)
         observer.updated should be(true)
       }
+      "Remove Player" in {
+        controller.setPlayer(1,22)
+        controller.setFigure(1,22)
+        controller.gameBoard.cellList(22).playerNumber should be(1)
+        controller.gameBoard.cellList(22).figureNumber should be(1)
+      }
     }
   }
 }

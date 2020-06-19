@@ -4,7 +4,7 @@ import de.htwg.se.malefiz.util.Command
 
 class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, controller: Controller) extends Command  {
   var memento = controller.gameBoard
-  var oldPlayer = controller.playersTurn
+
 
   override def doStep: Unit = {
     controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber,playerFigure)
@@ -26,14 +26,9 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
   }
 
   override def undoStep: Unit = {
-
     val new_memento = controller.gameBoard
-    val new_player = controller.playersTurn
     controller.gameBoard = memento
-    controller.playersTurn = oldPlayer
     memento = new_memento
-    oldPlayer = new_player
-
   }
 
   override def redoStep: Unit = doStep
