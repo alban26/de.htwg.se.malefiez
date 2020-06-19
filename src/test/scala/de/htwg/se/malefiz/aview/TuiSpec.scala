@@ -62,9 +62,16 @@ class TuiSpec extends WordSpec with Matchers {
       tui.processInput1("z")
       controller.gameBoard.cellList(20).playerNumber should be (0)
       controller.gameBoard.cellList(20).figureNumber should be (0)
+      tui.processInput1("y")
+      controller.gameBoard.cellList(20).playerNumber should be (1)
+      controller.gameBoard.cellList(20).figureNumber should be (1)
     }
-    "set a Wall on Cell '50'" in {
-      tui.processInput1("50")
+    "set a Wall on Cell '53'" in {
+      tui.processInput1("53")
+      controller.gameBoard.cellList(53).hasWall should be (true)
+      tui.processInput1("z")
+      controller.gameBoard.cellList(53).hasWall should be (false)
+      tui.processInput1("y")
       controller.gameBoard.cellList(50).hasWall should be (true)
     }
     "get possible cells from startcell 0 with a random number 5" in {

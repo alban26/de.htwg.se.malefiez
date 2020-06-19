@@ -80,10 +80,6 @@ class Controller(var gameBoard: GameBoard) extends Observable {
     notifyObservers
   }
 
-  def rWall(n: Int): Unit = {
-    gameBoard = gameBoard.execute(gameBoard.rWall,n)
-    notifyObservers
-  }
   def gameBoardToString: String = gameBoard.createGameBoard()
 
   def undo: Unit = {
