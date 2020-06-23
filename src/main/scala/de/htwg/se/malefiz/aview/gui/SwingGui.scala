@@ -28,19 +28,19 @@ class SwingGui(controller: Controller) extends Frame {
     preferredSize = new Dimension(758, 768)
   }
 
-
-  val playerTree = new TextArea()
-  val outPutTree = new TextArea()
+/*
+  val playerTree = new BorderPanel()
+  val outPutTree = new BorderPanel()
   val leftSplit = new SplitPane()
-  leftSplit.contents ++= List(playerTree, outPutTree)
+  leftSplit.contents ++  = List(playerTree, outPutTree)
   leftSplit.orientation = Orientation.Vertical
   val rightSplit = new SplitPane()
   rightSplit.orientation = Orientation.Vertical
-  rightSplit.contents += List(panel)
+  rightSplit.contents = panel
   val topSplit = new SplitPane()
   topSplit.contents ++= List(leftSplit, rightSplit)
   topSplit.dividerLocation = 0.3
-
+*/
 
 
   menuBar = new MenuBar {
@@ -68,10 +68,5 @@ class SwingGui(controller: Controller) extends Frame {
   visible = true
   size = new Dimension(800, 800)
   centerOnScreen()
-
-
-
-
-
 
 }
