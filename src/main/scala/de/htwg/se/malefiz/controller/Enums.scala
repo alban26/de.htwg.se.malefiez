@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.controller
-
-import de.htwg.se.malefiz.controller.GameState.{GameState, map}
+/*
+import de.htwg.se.malefiz.controller.GameStates.GameState.{GameState, map}
 
 object GameState extends Enumeration{
   type GameState = Value
@@ -35,3 +35,5 @@ object PlayingState extends Enumeration {
   }
 
 }
+
+ */

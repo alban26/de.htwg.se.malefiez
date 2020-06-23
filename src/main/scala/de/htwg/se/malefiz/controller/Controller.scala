@@ -1,27 +1,41 @@
 package de.htwg.se.malefiz.controller
 
-import de.htwg.se.malefiz.controller.GameState._
-import de.htwg.se.malefiz.controller.PlayingState._
+import de.htwg.se.malefiz.controller.GameStates.GameState
+import de.htwg.se.malefiz.controller.GameStates.GameState._
+//import de.htwg.se.malefiz.controller.PlayingState._
 import de.htwg.se.malefiz.util.{Observable, Observer, UndoManager}
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
 
 class Controller(var gameBoard: GameBoard) extends Observable {
 
-  var gameState: GameState = ENTRY_NAMES
-  var playingState: PlayingState = ROLL
   var playersTurn: Player = _
-  var player: List[Player] = List.empty
-  var dicedNumer: Int = _
+  var dicedNumber: Int = _
+  var selectedFigure: (Int, Int) = _
 
-  private val undoManager = new UndoManager
+  val s: GameState = GameState(this)
+  val undoManager = new UndoManager
 
-  def createPlayer(n: Int, name: List[String]): List[Player] = {
-    if (n == 0) {
-      List(Player(n+1, name(n)))
-    } else {
-      createPlayer(n - 1, name) :+ Player(n+1, name(n))
-    }
+  def execute(string: String): Boolean = {
+    s.run(string)
+    true
+  }
+
+
+  def createPlayer(name: String): Unit = {
+    gameBoard = gameBoard.createPlayer(name)
+    notifyObservers
+  }
+
+
+  def setPosisCellTrue(l: List[Int]): Unit = {
+    gameBoard = gameBoard.setPosiesCellTrue(l)
+    notifyObservers
+  }
+
+  def setPosisCellFalse(l: List[Int]): Unit = {
+    gameBoard = gameBoard.setPosiesCellFalse(l)
+    notifyObservers
   }
 
   def setPosisTrue(n: Int): Unit = {
@@ -35,7 +49,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   }
 
   def rollCube: Int = {
-    playingState = SELECT_PLAYER
+    //playingState = SELECT_PLAYER
     Cube().getRandomNumber
   }
 
@@ -51,7 +65,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def getPCells(startCell: Int, cubeNumber: Int) : Unit = {
     gameBoard = gameBoard.getPossibleCells(startCell, cubeNumber)
-    playingState = SET_PLAYER
+    //playingState = SET_PLAYER
     notifyObservers
   }
 

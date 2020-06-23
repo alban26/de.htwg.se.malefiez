@@ -11,7 +11,7 @@ case class Creator() {
     val list = Source.fromFile(inputFile)
     val inputData = list.getLines
       .map(line => line.split(" "))
-      .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibilities) =>
+      .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
         Cell(cellNumber.toInt,
           playerNumber.toInt,
           figureNumber.toInt,
@@ -19,7 +19,8 @@ case class Creator() {
           wallPermission.toBoolean,
           hasWall.toBoolean,
           Point(x.toInt, y.toInt),
-          possibilities.toBoolean)
+          possibleFigures.toBoolean,
+          possibleCells.toBoolean)
       }
       .toList
     list.close()

@@ -23,16 +23,16 @@ object Malefiz {
   val tui = new Tui(controller)
 
   def main(args: Array[String]): Unit = {
-
+    println("Welcome to Malefiz")
     var input: String = ""
 
     if (!input.isEmpty) {
       input = args(0)
-      tui.processInput(input)
+      tui.processInput1(input)
     }
     else do {
       input = readLine()
-      tui.input(input)
+      tui.processInput1(input)
     } while (input != "end")
   }
 }

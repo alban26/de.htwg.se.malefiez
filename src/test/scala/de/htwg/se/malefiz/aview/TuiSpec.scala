@@ -1,5 +1,5 @@
 package de.htwg.se.malefiz.aview
-
+/*
 import de.htwg.se.malefiz.controller.{Controller, GameState}
 import de.htwg.se.malefiz.model.{Cell, Creator, GameBoard, Player}
 import org.scalatest.matchers.should.Matchers
@@ -82,4 +82,4 @@ class TuiSpec extends WordSpec with Matchers {
     }
   }
 
-}
+}*/
