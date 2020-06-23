@@ -5,8 +5,9 @@ import de.htwg.se.malefiz.controller.PlayingState._
 import de.htwg.se.malefiz.util.{Observable, Observer, UndoManager}
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
 
+import scala.swing.Publisher
 
-class Controller(var gameBoard: GameBoard) extends Observable {
+class Controller(var gameBoard: GameBoard) extends Publisher {
 
   var gameState: GameState = ENTRY_NAMES
   var playingState: PlayingState = ROLL
@@ -26,12 +27,12 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def setPosisTrue(n: Int): Unit = {
     gameBoard = gameBoard.execute(gameBoard.setPosiesTrue,n)
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def setPosisFalse(n: Int): Unit = {
     gameBoard = gameBoard.execute(gameBoard.setPosiesFalse,n)
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def rollCube: Int = {
@@ -41,7 +42,7 @@ class Controller(var gameBoard: GameBoard) extends Observable {
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
     undoManager.doStep(new SetPlayerCommand(playerNumber,playerFigure,cellNumber,this))
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def getFigure(pn: Int, fn:Int) : Int = {
@@ -52,40 +53,40 @@ class Controller(var gameBoard: GameBoard) extends Observable {
   def getPCells(startCell: Int, cubeNumber: Int) : Unit = {
     gameBoard = gameBoard.getPossibleCells(startCell, cubeNumber)
     playingState = SET_PLAYER
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int): Unit = {
     gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(pN,fN)
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def setFigure(fN: Int, cN: Int): Unit = {
     gameBoard = gameBoard.setFigure(fN,cN)
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def setPlayer(pN: Int, cN: Int): Unit = {
     gameBoard = gameBoard.setPlayer(pN, cN)
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def setWall(n: Int): Unit = {
     //gameBoard = gameBoard.execute(gameBoard.setWall,n)
     undoManager.doStep(new SetWallCommand(n,this))
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def gameBoardToString: String = gameBoard.createGameBoard()
 
   def undo: Unit = {
     undoManager.undoStep
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
   def redo: Unit = {
     undoManager.redoStep
-    notifyObservers
+    publish(new GameBoardChanged)
   }
 
 }

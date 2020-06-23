@@ -1,21 +1,28 @@
 
-case class Player(playerNumber: Int, name: String) {
 
-  override def toString:String = "Playernumber: " + (playerNumber)
-}
 
-val lop:List[Player] = List(Player(1,"alban"),Player(1,"Robert"),Player(3,"wirbser"))
 
-println(lop.lift(0))
 
-def nextPlayer(list: List[Player], n: Int): Player = {
-  if(n == list.length-1) {
-    list.head
-  } else {
-    list(n+1)
+import scalafx.Includes._
+import scalafx.application.JFXApp
+import scalafx.scene.Scene
+import scalafx.scene.paint.Color._
+import scalafx.scene.shape.Rectangle
+
+object HelloStageDemo extends JFXApp {
+  stage = new JFXApp.PrimaryStage {
+    title.value = "Hello Stage"
+    width = 600
+    height = 450
+    scene = new Scene {
+      fill = LightGreen
+      content = new Rectangle {
+        x = 25
+        y = 40
+        width = 100
+        height = 100
+        fill <== when (hover) choose Green otherwise Red
+      }
+    }
   }
 }
-
-
-
-

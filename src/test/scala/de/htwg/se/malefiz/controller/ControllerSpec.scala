@@ -29,7 +29,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         override def update: Boolean = {updated = true; updated}
       }
 
-      controller.add(observer)
+
 
       "notify its Observer after a players figure is set on cell" in {
         controller.setPlayerFigure(1,1, 10)

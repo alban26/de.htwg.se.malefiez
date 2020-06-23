@@ -1,16 +1,18 @@
 package de.htwg.se.malefiz.aview
 
 import de.htwg.se.malefiz.Malefiz.cellConfigFile
-import de.htwg.se.malefiz.controller.{Controller, GameState, PlayingState}
+import de.htwg.se.malefiz.controller.{Controller, GameBoardChanged, GameState, PlayingState}
 import de.htwg.se.malefiz.controller.GameState.GameState
 import de.htwg.se.malefiz.model.{Cell, Creator}
 import de.htwg.se.malefiz.util.Observer
 import javax.swing.plaf.basic.BasicBorders.RolloverButtonBorder
 
+import scala.swing.Reactor
 
-class Tui(controller: Controller) extends Observer {
 
-  controller.add(this)
+class Tui(controller: Controller) extends Reactor {
+
+  listenTo(controller)
 
   def setupPlayers(input: String): Unit = {
     val list = input.split(" ").toList
@@ -54,6 +56,8 @@ class Tui(controller: Controller) extends Observer {
       case "y" => controller.redo
         update
       case _ =>
+
+
         val inputList = input.split(" ").toList.map(c => c.toInt)
         inputList.length match {
           case 1 => controller.setWall(inputList(0))
@@ -63,20 +67,27 @@ class Tui(controller: Controller) extends Observer {
             update
           case 3 => controller.setPlayerFigure(inputList.head, inputList(1), inputList(2))
             update
+
+
         }
     }
   }
 
-  override def update: Boolean = {
+
+  reactions += {
+    case event: GameBoardChanged => update
+  }
+
+
+  def update: Boolean = {
     textPrint(controller.gameBoardToString)
     textPrint(controller.player.mkString("\n"))
     textPrint("--------------------------")
-    textPrint(controller.playersTurn + " ist dran")
+    textPrint(controller.playersTurn.toString + " ist dran")
     val dice = if(controller.dicedNumer == 0) "" else controller.dicedNumer
     textPrint("Gewürfelt: "+ dice)
-    textPrint(PlayingState.message(controller.playingState))
+    //textPrint(PlayingState.message(controller.playingState))
     textPrint("Du kannst auf folgende Felder: "+ controller.gameBoard.possibleCells.toString().mkString(""))
-
     true
   }
 
