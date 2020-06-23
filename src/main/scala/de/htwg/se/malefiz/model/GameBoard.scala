@@ -11,6 +11,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
                      gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) {
 
 
+
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
@@ -151,7 +152,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     if(pN == 1 && fN == 1) {
       0
     }else {
-      (pN - 1)  * 5 + fN - 1
+      (pN - 1) * 5 + fN - 1
     }
   }
 
@@ -206,6 +207,38 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
 
 
+
+  def setPosiesCellTrue(n: List[Int]): GameBoard = copy(setPossibleCell1True(cellList.length-1, n, cellList))
+
+  def setPossibleCellTrue(n: Int): Cell = cellList(n).copy(possibleCells = true)
+
+  def setPossibleCell1True(m: Int, n: List[Int], lis: List[Cell]): List[Cell] = {
+    if (m == -1) {
+      lis
+    } else if (n contains lis(m).cellNumber) {
+      setPossibleCell1True(m-1,n,lis.updated(lis(m).cellNumber,setPossibleCellTrue(m)))
+    }
+    else {
+      setPossibleCell1True(m-1,n,lis)
+    }
+  }
+
+
+  def setPosiesCellFalse(n: List[Int]): GameBoard = copy(setPossibleCell1False(cellList.length-1, n, cellList))
+
+  def setPossibleCellFalse(n: Int): Cell = cellList(n).copy(possibleCells = false)
+
+  def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell] = {
+    if (m == -1) {
+      lis
+    } else if (n contains lis(m).cellNumber) {
+      setPossibleCell1False(m - 1, n, lis.updated(lis(m).cellNumber, setPossibleCellFalse(m)))
+    }
+    else {
+      setPossibleCell1False(m-1,n,lis)
+    }
+  }
+
   def setPosiesTrue(n: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, n, cellList))
 
   def setPossibilitiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
@@ -240,13 +273,19 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
   def execute(callback:(Int) => GameBoard, y:Int) = callback(y)
 
   def nextPlayer(list: List[Player], n: Int): Player = {
-
     if(n == list.length-1) {
       list.head
     } else {
       list(n+1)
     }
   }
+
+  def createPlayer(text: String): GameBoard = {
+      "Spieler " + text + " wurde erzeugt - bitte trage noch mindestens einen weiteren Spieler ein."
+      copy(players =  players :+ Player(players.length+1, text))
+  }
+
+
 
   def createGameBoard(): String = buildString(cellList)
 

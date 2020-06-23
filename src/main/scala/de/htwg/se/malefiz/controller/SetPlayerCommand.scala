@@ -19,10 +19,11 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
 
-    controller.dicedNumer = 0
+    controller.dicedNumber = 0
     controller.setPosisFalse(controller.playersTurn.playerNumber)
-    controller.playersTurn = controller.gameBoard.nextPlayer(controller.player,controller.playersTurn.playerNumber-1)
-    //controller.playingState = PlayingState.ROLL
+    controller.setPosisCellFalse(controller.gameBoard.possibleCells.toList)
+    controller.playersTurn = controller.gameBoard.nextPlayer(controller.gameBoard.players,controller.playersTurn.playerNumber-1)
+
   }
 
   override def undoStep: Unit = {
