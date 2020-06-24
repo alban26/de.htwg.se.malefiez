@@ -1,7 +1,6 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.Dimension
-
+import java.awt.{Color, Dimension}
 
 import de.htwg.se.malefiz.controller.Controller
 
@@ -73,6 +72,9 @@ class EntryPlayerGui(controller: Controller) extends Frame {
       visible = false
       b.visible = true
       b.updatePlayerArea
+      //b.drawCircle(125, 615, Color.BLUE)
+      b.drawCircle(327,709, Color.BLUE)
+      //b.drawCircle(500,390, Color.BLACK)
 
   }
 }

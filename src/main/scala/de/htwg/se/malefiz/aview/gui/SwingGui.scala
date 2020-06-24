@@ -1,20 +1,20 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.{Image, Toolkit}
+import java.awt.{BasicStroke, Image, Toolkit}
 
 import de.htwg.se.malefiz.controller._
 import javax.imageio.ImageIO
-import scala.swing.event.ButtonClicked
 
+import scala.swing.event.ButtonClicked
 import scala.swing.event._
 import scala.swing._
 import scala.io.Source._
 import javax.swing.ImageIcon
 import java.io.File
+
 import BorderPanel.Position._
 
 class SwingGui(controller: Controller) extends Frame {
-
 
   listenTo(controller)
 
@@ -45,8 +45,8 @@ class SwingGui(controller: Controller) extends Frame {
 
   def drawCircle(x: Int, y: Int, color: Color): Unit = {
     g2d.setColor(color)
-    g2d.setStroke(bs)
-    g2d.drawArc(x - 15, y - 15, 30, 30, 0, 360)
+    g2d.fillArc(x-20, y-20, 35, 35 ,0 ,360)
+    //g2d.drawArc(x - 20, y - 20, 50, 50, 0, 360)
     repaint()
   }
 
