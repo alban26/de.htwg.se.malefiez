@@ -72,9 +72,22 @@ class EntryPlayerGui(controller: Controller) extends Frame {
       visible = false
       b.visible = true
       b.updatePlayerArea
-      //b.drawCircle(125, 615, Color.BLUE)
-      b.drawCircle(327,709, Color.BLUE)
-      //b.drawCircle(500,390, Color.BLACK)
+      for (i <- controller.gameBoard.cellList) {
+        if (i.hasWall) {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
+        } else if (i.playerNumber == 1) {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
+        } else if (i.playerNumber == 2) {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
+        } else if (i.playerNumber == 3) {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
+        } else if (i.playerNumber == 4) {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
+        } else {
+          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+        }
+
+      }
 
   }
 }
