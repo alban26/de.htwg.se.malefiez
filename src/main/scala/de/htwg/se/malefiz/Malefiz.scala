@@ -2,9 +2,9 @@ package de.htwg.se.malefiz
 
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
+import de.htwg.se.malefiz.aview.gui.{EntryGui, EntryPlayerGui, SwingGui}
 import de.htwg.se.malefiz.controller.Controller
 import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
-
 
 import scala.io.StdIn.readLine
 
@@ -21,6 +21,7 @@ object Malefiz {
 
   val controller = new Controller(GameBoard(cellList, players, cellGraph))
   val tui = new Tui(controller)
+  val gui = new EntryGui(controller)
 
   def main(args: Array[String]): Unit = {
     println("Welcome to Malefiz")
