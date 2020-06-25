@@ -1,5 +1,7 @@
 package de.htwg.se.malefiz.aview.gui
 
+import java.awt.Color
+
 import de.htwg.se.malefiz.controller.Controller
 
 import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, GridPanel, Menu, MenuBar, MenuItem, Orientation, SplitPane}
@@ -8,6 +10,7 @@ import scala.swing.event.ButtonClicked
 
 class EntryGui(controller: Controller) extends Frame {
 
+  visible = true
   title = "Wilkommen zu Malefiz"
 
   val newGameButton = new Button("New Game")
@@ -38,9 +41,5 @@ class EntryGui(controller: Controller) extends Frame {
       val a = new EntryPlayerGui(this.controller)
       a.visible = true
   }
-
   size = new Dimension(200, 300)
-
-  visible = true
-
 }

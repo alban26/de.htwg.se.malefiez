@@ -21,7 +21,8 @@ object Malefiz {
 
   val controller = new Controller(GameBoard(cellList, players, cellGraph))
   val tui = new Tui(controller)
-  val gui = new EntryGui(controller)
+  val entryGui = new EntryGui(controller)
+  val entryNamesGui = new EntryPlayerGui(controller)
 
   def main(args: Array[String]): Unit = {
     println("Welcome to Malefiz")

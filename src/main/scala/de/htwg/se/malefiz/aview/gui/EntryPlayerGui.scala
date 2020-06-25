@@ -59,7 +59,6 @@ class EntryPlayerGui(controller: Controller) extends Frame {
 
   listenTo(continueButton)
 
-
   reactions += {
     case ButtonClicked(`continueButton`) =>
       val pList = List(playerOneName.text, playerTwoName.text, playerThreeName.text, playerFourName.text)
@@ -67,27 +66,10 @@ class EntryPlayerGui(controller: Controller) extends Frame {
         if (pList(i) != "")
           controller.execute("n "+ pList(i))
       }
-
-      val b = new SwingGui(this.controller)
-      visible = false
-      b.visible = true
-      b.updatePlayerArea
-      for (i <- controller.gameBoard.cellList) {
-        if (i.hasWall) {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
-        } else if (i.playerNumber == 1) {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
-        } else if (i.playerNumber == 2) {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
-        } else if (i.playerNumber == 3) {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
-        } else if (i.playerNumber == 4) {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
-        } else {
-          b.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
-        }
-
-      }
-
+      controller.execute("start")
+      controller.gui.visible = true
+      controller.gui.updatePlayerArea()
+      controller.gui.updatePlayerTurn()
+      controller.gui.drawGameBoard()
   }
 }

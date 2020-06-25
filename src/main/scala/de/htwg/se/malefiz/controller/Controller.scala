@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.controller
 
+import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.GameStates.GameState
 import de.htwg.se.malefiz.util.{Observable, UndoManager}
 import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
@@ -14,6 +15,8 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
 
   val s: GameState = GameState(this)
   val undoManager = new UndoManager
+
+  var gui = new SwingGui(this)
 
   def execute(string: String): Boolean = {
     s.run(string)
