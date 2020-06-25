@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.controller.GameStates
 
 import de.htwg.se.malefiz.controller.{Controller, State}
 
-class SelectFigure(controller: Controller) extends State[GameState] {
+case class SelectFigure(controller: Controller) extends State[GameState] {
   override def handle(string: String, n: GameState): Unit = {
     string.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
       case player :: figure :: Nil => controller.getPCells(controller.getFigure(player, figure), controller.dicedNumber)
