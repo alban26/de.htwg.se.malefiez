@@ -66,7 +66,7 @@ class SwingGui(controller: Controller) extends Frame {
     }
   }
   val mainPanel = new BorderPanel
-  private val thick = new BasicStroke(5f)
+  private val thick = new BasicStroke(3f)
 
   var mouseX: Set[Int] = Set().empty
   var mouseY: Set[Int] = Set().empty
@@ -176,7 +176,7 @@ class SwingGui(controller: Controller) extends Frame {
   def highlightCells(x: Int, y: Int): Unit = {
     g2d.setStroke(thick)
     g2d.setColor(Color.CYAN)
-    g2d.drawArc(x - 20, y - 20, 35, 35, 0, 360)
+    g2d.drawArc(x - 19, y - 19, 32, 32, 0, 360)
     repaint()
   }
 }
