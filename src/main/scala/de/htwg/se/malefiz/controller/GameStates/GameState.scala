@@ -8,11 +8,7 @@ case class GameState(controller: Controller) {
   def run(string: String): Unit = {
     state.handle(string, this)
   }
-/*
-  def nextState(): Unit = {
-    state.next(this)
-  }
-*/
+
   def nextState(state: State[GameState]): Unit = {
     this.state = state
   }

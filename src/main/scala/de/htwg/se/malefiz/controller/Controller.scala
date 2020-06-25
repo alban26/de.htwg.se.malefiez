@@ -51,7 +51,6 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
   }
 
   def rollCube: Int = {
-    //playingState = SELECT_PLAYER
     Cube().getRandomNumber
   }
 
