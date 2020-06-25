@@ -1,12 +1,8 @@
 package de.htwg.se.malefiz.controller.GameStates
 
-import de.htwg.se.malefiz.controller.{Controller, State}
+import de.htwg.se.malefiz.controller.Instructions.ISetFigure
+import de.htwg.se.malefiz.controller.{Controller, Request, State}
 
 case class SetFigure(controller: Controller) extends State[GameState] {
-  override def handle(string: String, n: GameState): Unit = {
-    val cellNumber = string.toInt
-    controller.setPlayerFigure(controller.selectedFigure._1,controller.selectedFigure._2,cellNumber)
-    n.nextState(new Roll(controller))
-    println("Lieber " + controller.playersTurn + " du bist als nächstes dran. Drücke eine beliebige Taste um zu würfeln.")
-  }
+  override def handle(string: String, n: GameState): Unit = ISetFigure.set(Some(Request(string.split(" ").toList,n,controller)))
 }
