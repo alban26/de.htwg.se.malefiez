@@ -1,15 +1,25 @@
 package de.htwg.se.malefiz.model
 
 import scala.collection.mutable.Map
-
 import scala.io.Source
+import scala.util.{Failure, Success, Try}
 
 case class Creator() {
 
+val a = 4
+  def readTextFile(filename: String): Try[Iterator[String]] = {
+    Try(Source.fromFile(filename).getLines)
+  }
 
   def getCellList(inputFile: String): List[Cell] = {
+      readTextFile(inputFile) match {
+        case Success(line) => println("Welcome")
+        case Failure(f) => println(f)
+      }
+
     val list = Source.fromFile(inputFile)
     val inputData = list.getLines
+
       .map(line => line.split(" "))
       .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
         Cell(cellNumber.toInt,
@@ -28,6 +38,10 @@ case class Creator() {
   }
 
   def getCellGraph(fileInput: String): Map[Int, Set[Int]] = {
+    readTextFile(fileInput) match {
+      case Success(line) => println("to Malefiz!")
+      case Failure(f) => println(f)
+    }
     val source = Source.fromFile(fileInput)
     val lines = source.getLines()
     val graph : Map[Int, Set[Int]] = Map.empty

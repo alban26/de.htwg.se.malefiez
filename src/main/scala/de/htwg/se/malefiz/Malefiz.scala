@@ -25,7 +25,6 @@ object Malefiz {
   val entryNamesGui = new EntryPlayerGui(controller)
 
   def main(args: Array[String]): Unit = {
-    println("Welcome to Malefiz")
     var input: String = ""
 
     if (!input.isEmpty) {
