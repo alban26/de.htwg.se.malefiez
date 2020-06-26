@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.controller
+/*package de.htwg.se.malefiz.controller
 
 
 import de.htwg.se.malefiz.model.{Cell, Creator, GameBoard, Player}
@@ -54,4 +54,4 @@ class ControllerSpec  extends WordSpec with Matchers {
     }
   }
 }
-
+*/

@@ -171,6 +171,7 @@ class SwingGui(controller: Controller) extends Frame {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
       randomNumberArea.text = "Gewürfelte Nummer = " + controller.dicedNumber.toString
+    case gameBoardChanged: GameBoardChanged => repaint()
   }
 
   def highlightCells(x: Int, y: Int): Unit = {

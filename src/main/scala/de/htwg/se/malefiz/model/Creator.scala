@@ -6,7 +6,6 @@ import scala.util.{Failure, Success, Try}
 
 case class Creator() {
 
-val a = 4
   def readTextFile(filename: String): Try[Iterator[String]] = {
     Try(Source.fromFile(filename).getLines)
   }
