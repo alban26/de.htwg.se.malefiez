@@ -6,35 +6,39 @@ import scala.util.{Failure, Success, Try}
 
 case class Creator() {
 
-val a = 4
+
   def readTextFile(filename: String): Try[Iterator[String]] = {
     Try(Source.fromFile(filename).getLines)
   }
 
   def getCellList(inputFile: String): List[Cell] = {
-      readTextFile(inputFile) match {
+
+    readTextFile(inputFile) match {
         case Success(line) => println("Welcome")
+
+          val list = Source.fromFile(inputFile)
+          val inputData = list.getLines
+
+            .map(line => line.split(" "))
+            .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
+              Cell(cellNumber.toInt,
+                playerNumber.toInt,
+                figureNumber.toInt,
+                destination.toBoolean,
+                wallPermission.toBoolean,
+                hasWall.toBoolean,
+                Point(x.toInt, y.toInt),
+                possibleFigures.toBoolean,
+                possibleCells.toBoolean)
+            }
+            .toList
+          list.close()
+
+          inputData
         case Failure(f) => println(f)
+          Nil
       }
 
-    val list = Source.fromFile(inputFile)
-    val inputData = list.getLines
-
-      .map(line => line.split(" "))
-      .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
-        Cell(cellNumber.toInt,
-          playerNumber.toInt,
-          figureNumber.toInt,
-          destination.toBoolean,
-          wallPermission.toBoolean,
-          hasWall.toBoolean,
-          Point(x.toInt, y.toInt),
-          possibleFigures.toBoolean,
-          possibleCells.toBoolean)
-      }
-      .toList
-    list.close()
-    inputData
   }
 
   def getCellGraph(fileInput: String): Map[Int, Set[Int]] = {
