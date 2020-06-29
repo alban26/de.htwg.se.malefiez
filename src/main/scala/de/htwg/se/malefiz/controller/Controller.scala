@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.controller
 
 import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.GameStates.GameState
-import de.htwg.se.malefiz.util.{Observable, UndoManager}
+import de.htwg.se.malefiz.util.UndoManager
 import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
 
 import scala.swing.Publisher
@@ -23,12 +23,10 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
     true
   }
 
-
   def createPlayer(name: String): Unit = {
     gameBoard = gameBoard.createPlayer(name)
     publish(new GameBoardChanged)
   }
-
 
   def setPosisCellTrue(l: List[Int]): Unit = {
     gameBoard = gameBoard.setPosiesCellTrue(l)
