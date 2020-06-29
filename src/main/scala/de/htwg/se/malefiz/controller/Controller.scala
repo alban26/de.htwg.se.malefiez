@@ -64,7 +64,6 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
 
   def getPCells(startCell: Int, cubeNumber: Int) : Unit = {
     gameBoard = gameBoard.getPossibleCells(startCell, cubeNumber)
-    //playingState = SET_PLAYER
     publish(new GameBoardChanged)
   }
 

@@ -35,6 +35,7 @@ case class Creator() {
 
           inputData
         case Failure(f) => println(f)
+          System.exit(0)
           Nil
       }
 
@@ -43,8 +44,8 @@ case class Creator() {
   def getCellGraph(fileInput: String): Map[Int, Set[Int]] = {
     readTextFile(fileInput) match {
       case Success(line) => println("to Malefiz!")
-      case Failure(f) => println(f)
-    }
+
+
     val source = Source.fromFile(fileInput)
     val lines = source.getLines()
     val graph : Map[Int, Set[Int]] = Map.empty
@@ -56,6 +57,12 @@ case class Creator() {
       }
     }
     graph
+
+    case Failure(f) => println(f)
+      System.exit(0)
+        Map.empty
+
+    }
   }
 
   def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]) : Map[Int, Set[Int]] = {
