@@ -127,6 +127,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
   def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
     cellList(cN).copy(figureNumber = fN)
+    cellList(cN).copy(hasWall = false)
   }
 
   def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
@@ -168,8 +169,11 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     var needed: Set[Int] = Set[Int]()
 
     def recurse(current: Int, times: Int): Unit = {
-      if (times == 0) {
+      if (times == 0 || cellList(current).hasWall && times == 0) {
         needed += current
+      }
+      if (times != 0 && cellList(current).hasWall) {
+        return
       }
       found += current
       for (next <- gameBoardGraph(current)) {
