@@ -71,7 +71,7 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
     gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(pN,fN)
     publish(new GameBoardChanged)
   }
-
+//hallo
   def setFigure(fN: Int, cN: Int): Unit = {
     gameBoard = gameBoard.setFigure(fN,cN)
     publish(new GameBoardChanged)
