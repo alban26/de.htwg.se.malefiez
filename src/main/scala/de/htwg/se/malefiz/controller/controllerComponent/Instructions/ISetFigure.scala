@@ -1,10 +1,9 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-//import Instructions.{Handler0, Handler1}
-import de.htwg.se.malefiz.controller
+
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone}
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
-import de.htwg.se.malefiz.controller.{InstructionTrait, Request, controllerComponent}
+import de.htwg.se.malefiz.controller.controllerComponent
 
 object ISetFigure extends InstructionTrait{
   val set1: Handler0 = {

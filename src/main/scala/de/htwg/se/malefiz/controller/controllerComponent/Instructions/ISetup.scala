@@ -1,9 +1,7 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-import de.htwg.se.malefiz.controller
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
-import de.htwg.se.malefiz.controller.Request
 
 object ISetup extends InstructionTrait {
 

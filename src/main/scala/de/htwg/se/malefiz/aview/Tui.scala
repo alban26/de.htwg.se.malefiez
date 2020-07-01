@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.aview
 
-import de.htwg.se.malefiz.controller.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
 import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 

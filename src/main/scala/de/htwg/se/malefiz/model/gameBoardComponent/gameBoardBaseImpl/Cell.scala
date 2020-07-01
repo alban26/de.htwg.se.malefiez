@@ -1,6 +1,4 @@
-package de.htwg.se.malefiz.model
-
-import java.awt.Color
+package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 case class Cell(cellNumber: Int, playerNumber: Int, figureNumber: Int, destination: Boolean, wallPermission: Boolean, hasWall: Boolean,
                 coordinates: Point, possibleFigures: Boolean, possibleCells: Boolean) {

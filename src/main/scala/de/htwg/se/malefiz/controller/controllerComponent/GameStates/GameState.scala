@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.controller.controllerComponent.GameStates
 
-import de.htwg.se.malefiz.controller.State
+import de.htwg.se.malefiz.controller.controllerComponent.State
 import de.htwg.se.malefiz.controller.controllerComponent.State
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 

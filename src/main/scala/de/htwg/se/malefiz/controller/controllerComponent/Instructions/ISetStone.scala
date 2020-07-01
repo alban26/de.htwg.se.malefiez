@@ -1,9 +1,8 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-import de.htwg.se.malefiz.controller
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone}
-import de.htwg.se.malefiz.controller.{InstructionTrait, Request, controllerComponent}
-import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISetFigure.{Handler0, Handler1}
+
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
+import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
 
 object ISetStone extends InstructionTrait {
