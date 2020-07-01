@@ -17,7 +17,7 @@ class Tui(controller: Controller) extends Reactor {
       case _ =>
         controller.execute(input)
         textPrint("-------")
-        textPrint(controller.gameBoard.players.mkString("\n") + controller.s.state)
+        textPrint(controller.gameBoard.players.mkString("\n"))
     }
   }
 
