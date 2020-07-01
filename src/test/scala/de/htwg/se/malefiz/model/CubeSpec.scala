@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.model
 
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cube
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 

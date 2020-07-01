@@ -1,4 +1,5 @@
-package de.htwg.se.malefiz.controller
+package de.htwg.se.malefiz.controller.controllerComponent
+
 import scala.swing.Button
 import scala.swing.event.Event
 

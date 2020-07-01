@@ -1,13 +1,15 @@
-package de.htwg.se.malefiz.controller
+package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.malefiz.aview.gui.SwingGui
-import de.htwg.se.malefiz.controller.GameStates.GameState
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cube, GameBoard}
+import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
 
 import scala.swing.Publisher
 
-class Controller(var gameBoard: GameBoard) extends Publisher {
+class Controller(var gameBoard: GameBoard) extends ControllerInterface with Publisher {
 
   var playersTurn: Player = _
   var dicedNumber: Int = _

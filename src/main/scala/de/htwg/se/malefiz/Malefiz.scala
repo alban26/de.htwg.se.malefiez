@@ -3,8 +3,9 @@ package de.htwg.se.malefiz
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.aview.gui.{EntryGui, EntryPlayerGui, SwingGui}
-import de.htwg.se.malefiz.controller.Controller
-import de.htwg.se.malefiz.model.{Cell, Creator, Cube, GameBoard, Player}
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
+import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.io.StdIn.readLine
 

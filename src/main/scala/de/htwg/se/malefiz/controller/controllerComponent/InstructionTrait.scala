@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.controller
+package de.htwg.se.malefiz.controller.controllerComponent
 
 trait InstructionTrait {
   type Handler0 = PartialFunction[Request,Request]

@@ -4,8 +4,10 @@ import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
 
-import de.htwg.se.malefiz.controller.GameStates.SelectFigure
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller._
+import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
 
 import scala.swing._

@@ -1,14 +1,12 @@
-package de.htwg.se.malefiz.model
+package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import java.awt.Color
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.playerComponent.Player
 
-import scala.collection.mutable
-import scala.collection.mutable.{Map, Queue}
-import scala.io.Source
-import scala.io.StdIn.readLine
+import scala.collection.mutable.Map
 
 case class GameBoard(cellList: List[Cell], players: List[Player],
-                     gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) {
+                     gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) extends GameboardInterface {
 
 
 

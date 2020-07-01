@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.model
+package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 case class Point(x_coordinate: Int, y_coordinate: Int) {
 

@@ -1,5 +1,7 @@
 package de.htwg.se.malefiz.model
 
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Creator, GameBoard}
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
@@ -22,7 +24,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       val mainCellList = Creator().getCellList(mainSourceConfig)
       val mainCellGraph = Creator().getCellGraph(mainSourceLinks)
 
-      val main = GameBoard(mainCellList, testPlayerList, mainCellGraph)
+      val main = gameBoardBaseImpl.GameBoard(mainCellList, testPlayerList, mainCellGraph)
 
       "Length of the testList" in {
         testGameBoard.cellList.length should be (10)
@@ -79,7 +81,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       "build the whole gameboard as a String" in {
 
         val testCellList = Creator().getCellList(mainSourceConfig)
-        val testGameBoard = GameBoard(testCellList, testPlayerList, testGraph)
+        val testGameBoard = gameBoardBaseImpl.GameBoard(testCellList, testPlayerList, testGraph)
 
         val gameBoardString =
           """|                                [ ]
