@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.{SetPlayerCommand, SetWallCommand}
-import de.htwg.se.malefiz.model.Cube
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cube
 import de.htwg.se.malefiz.util.UndoManager
 
 import scala.swing.Publisher

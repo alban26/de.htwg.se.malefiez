@@ -3,7 +3,8 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
-import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cube, GameBoard}
+import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 
 import scala.swing.Publisher
