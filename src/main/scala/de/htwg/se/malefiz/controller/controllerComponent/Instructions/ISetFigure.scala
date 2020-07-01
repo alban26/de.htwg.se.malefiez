@@ -1,21 +1,22 @@
-package de.htwg.se.malefiz.controller.Instructions
+package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 //import Instructions.{Handler0, Handler1}
 import de.htwg.se.malefiz.controller
-import de.htwg.se.malefiz.controller.GameStates.{Roll, SetStone}
-import de.htwg.se.malefiz.controller.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone}
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.{InstructionTrait, Request, controllerComponent}
 
 object ISetFigure extends InstructionTrait{
   val set1: Handler0 = {
     case Request(x, y, z) if x != ' ' && !z.gameBoard.cellList(x.head.toInt).hasWall =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
-      controller.Request(x,y,z)
+      Request(x,y,z)
   }
 
   val set2: Handler0 = {
     case Request(x, y, z) if x != ' ' && z.gameBoard.cellList(x.head.toInt).hasWall =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
-      controller.Request(x,y,z)
+      controllerComponent.Request(x,y,z)
   }
 
   val set3: Handler1 = {

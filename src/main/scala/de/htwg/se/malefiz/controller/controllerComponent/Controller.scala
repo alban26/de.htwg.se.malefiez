@@ -1,9 +1,9 @@
-package de.htwg.se.malefiz.controller
+package de.htwg.se.malefiz.controller.controllerComponent
 
 import de.htwg.se.malefiz.aview.gui.SwingGui
-import de.htwg.se.malefiz.controller.GameStates.GameState
-import de.htwg.se.malefiz.util.UndoManager
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.model.{Cube, GameBoard, Player}
+import de.htwg.se.malefiz.util.UndoManager
 
 import scala.swing.Publisher
 

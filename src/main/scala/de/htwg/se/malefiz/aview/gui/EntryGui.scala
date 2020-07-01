@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
 
-import de.htwg.se.malefiz.controller.Controller
+import de.htwg.se.malefiz.controller.controllerComponent.Controller
 
 import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, GridBagPanel, GridPanel, Label, Menu, MenuBar, MenuItem, Orientation, SplitPane, Swing}
 import BorderPanel.Position._

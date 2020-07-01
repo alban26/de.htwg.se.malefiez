@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.util
 
-import de.htwg.se.malefiz.controller.Controller
+import de.htwg.se.malefiz.controller.controllerComponent.Controller
 import de.htwg.se.malefiz.model.{Cell, Creator, GameBoard, Player}
 import de.htwg.se.malefiz.util.UndoManager
 import org.scalatest.matchers.should.Matchers

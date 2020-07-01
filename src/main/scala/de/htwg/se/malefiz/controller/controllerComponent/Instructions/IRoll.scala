@@ -1,18 +1,19 @@
-package de.htwg.se.malefiz.controller.Instructions
+package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.controller
-import de.htwg.se.malefiz.controller.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.{InstructionTrait, Request, controllerComponent}
 
 object IRoll extends InstructionTrait{
   val roll1: Handler0 = {
     case Request(x,y,z) if x != ' ' => z.dicedNumber = z.rollCube
-      controller.Request(x,y,z)
+      Request(x,y,z)
   }
 
   val roll2: Handler0 = {
     case Request(x,y,z) => z.setPosisTrue(z.playersTurn.playerNumber)
-      controller.Request(x,y,z)
+      controllerComponent.Request(x,y,z)
   }
 
   val roll3: Handler1 = {
