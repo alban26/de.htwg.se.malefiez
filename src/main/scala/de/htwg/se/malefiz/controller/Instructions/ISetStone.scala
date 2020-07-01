@@ -1,20 +1,20 @@
 package de.htwg.se.malefiz.controller.Instructions
 
-//import Instructions.{Handler0, Handler1}
 import de.htwg.se.malefiz.controller
 import de.htwg.se.malefiz.controller.GameStates.{Roll, SetStone}
 import de.htwg.se.malefiz.controller.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.Instructions.ISetFigure.{Handler0, Handler1}
 
-object ISetFigure extends InstructionTrait{
+object ISetStone extends InstructionTrait {
+
   val set1: Handler0 = {
-    case Request(x, y, z) if x != ' ' && !z.gameBoard.cellList(x.head.toInt).hasWall =>
-      z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
+    case Request(x, y, z) if z.gameBoard.cellList(x.head.toInt).wallPermission && z.gameBoard.cellList(x.head.toInt).playerNumber == 0 =>
+      z.setWall(x.head.toInt)
       controller.Request(x,y,z)
   }
 
   val set2: Handler0 = {
-    case Request(x, y, z) if x != ' ' && z.gameBoard.cellList(x.head.toInt).hasWall =>
-      z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
+    case Request(x, y, z) if !z.gameBoard.cellList(x.head.toInt).wallPermission || z.gameBoard.cellList(x.head.toInt).playerNumber != 0 =>
       controller.Request(x,y,z)
   }
 
@@ -30,10 +30,9 @@ object ISetFigure extends InstructionTrait{
 
   val set4: Handler1 = {
     case Request(x, y, z) =>
-      y.nextState(SetStone(z))
-      s"Lieber ${z.playersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
+      s"Lieber ${z.playersTurn} du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus."
   }
 
+  val set = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log)
 
-  val set = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) // orElse (setErr andThen log)
 }

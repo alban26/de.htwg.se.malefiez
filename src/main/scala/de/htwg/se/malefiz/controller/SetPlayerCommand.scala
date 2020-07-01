@@ -15,14 +15,19 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
       controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber,
         controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
     }
-
+    if(controller.gameBoard.cellList(cellNumber).hasWall) {
+      controller.rWall(cellNumber)
+    }
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
 
+    /*
     controller.dicedNumber = 0
     controller.setPosisFalse(controller.playersTurn.playerNumber)
     controller.setPosisCellFalse(controller.gameBoard.possibleCells.toList)
     controller.playersTurn = controller.gameBoard.nextPlayer(controller.gameBoard.players,controller.playersTurn.playerNumber-1)
+
+     */
 
   }
 

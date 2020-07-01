@@ -71,7 +71,7 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
     gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(pN,fN)
     publish(new GameBoardChanged)
   }
-//hallo
+
   def setFigure(fN: Int, cN: Int): Unit = {
     gameBoard = gameBoard.setFigure(fN,cN)
     publish(new GameBoardChanged)
@@ -83,8 +83,12 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
   }
 
   def setWall(n: Int): Unit = {
-    //gameBoard = gameBoard.execute(gameBoard.setWall,n)
     undoManager.doStep(new SetWallCommand(n,this))
+    publish(new GameBoardChanged)
+  }
+
+  def rWall(n: Int): Unit = {
+    gameBoard = gameBoard.rWall(n)
     publish(new GameBoardChanged)
   }
 
