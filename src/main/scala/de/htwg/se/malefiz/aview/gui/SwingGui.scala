@@ -24,14 +24,14 @@ class SwingGui(controller: Controller) extends Frame {
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
-  val playerTurnLabel = new Label("Player Turn")
-  playerTurnLabel.border = Swing.EtchedBorder(Swing.Lowered)
-  playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
-
   var playerArea = new TextArea("")
   playerArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
   playerArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerArea.editable = false
+
+  val playerTurnLabel = new Label("Player Turn")
+  playerTurnLabel.border = Swing.EtchedBorder(Swing.Lowered)
+  playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
 
   val playerTurnArea = new TextArea("")
   playerTurnArea.border = Swing.EtchedBorder(Swing.Lowered)
@@ -109,6 +109,8 @@ class SwingGui(controller: Controller) extends Frame {
     range
   }
 
+
+
   def updatePlayerArea(): Unit = {
     for (i <- controller.gameBoard.players.indices) {
       this.playerArea.text += "Spieler " + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
@@ -116,7 +118,7 @@ class SwingGui(controller: Controller) extends Frame {
   }
 
   def updatePlayerTurn(): Unit = {
-      this.playerTurnArea.text = controller.playersTurn.name
+      this.playerTurnArea.text = "\n" + "             " + controller.playersTurn.name
   }
 
   def drawGameBoard(): Unit = {
@@ -150,7 +152,8 @@ class SwingGui(controller: Controller) extends Frame {
   def highlightCells(x: Int, y: Int): Unit = {
     g2d.setStroke(thick)
     g2d.setColor(Color.CYAN)
-    g2d.drawArc(x - 19, y - 19, 32, 32, 0, 360)
+    //g2d.drawRect(x-10,y-10 , 10, 10)
+    g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
     repaint()
   }
 
@@ -221,7 +224,7 @@ class SwingGui(controller: Controller) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = controller.dicedNumber.toString
+      randomNumberArea.text = "\n" + "                " + controller.dicedNumber.toString
     case gameBoardChanged: GameBoardChanged => drawGameBoard()
   }
 
