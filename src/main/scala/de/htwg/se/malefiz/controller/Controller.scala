@@ -81,7 +81,7 @@ class Controller(var gameBoard: GameBoard) extends Publisher {
     gameBoard = gameBoard.setPlayer(pN, cN)
     publish(new GameBoardChanged)
   }
-
+//k
   def setWall(n: Int): Unit = {
     undoManager.doStep(new SetWallCommand(n,this))
     publish(new GameBoardChanged)
