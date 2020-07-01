@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.controller.controllerComponent
+package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.malefiz.util.Command
 

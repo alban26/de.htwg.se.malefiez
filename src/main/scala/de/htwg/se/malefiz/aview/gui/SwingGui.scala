@@ -6,7 +6,8 @@ import java.io.File
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller._
-import de.htwg.se.malefiz.controller.controllerComponent.{Controller, GameBoardChanged}
+import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
 
 import scala.swing._

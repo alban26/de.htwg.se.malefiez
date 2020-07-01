@@ -1,7 +1,8 @@
 package de.htwg.se.malefiz.aview
 
 import de.htwg.se.malefiz.controller.GameBoardChanged
-import de.htwg.se.malefiz.controller.controllerComponent.{Controller, GameBoardChanged}
+import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.Reactor
 
