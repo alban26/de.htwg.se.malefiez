@@ -7,26 +7,23 @@ import de.htwg.se.malefiz.controller.controllerComponent
 
 object ISetFigure extends InstructionTrait{
   val set1: Handler0 = {
-    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) =>
+    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) && z.getPossibleCells.contains(x.head.toInt) =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
 
-  val setF: Handler0 = {
-    case Request(x, y, z) if x.head.toInt == 131 =>
-      Request(x, y, z)
+  val set7: Handler0 = {
+    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) =>
+      Request(x,y,z)
   }
 
-  val setA: Handler1 = {
+  val set8: Handler1 = {
     case Request(x, y, z) =>
-      y.nextState(Setup(z))
-      z.resetGameboard()
-      z.weHaveAWinner
-      s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
+      "Nicht so schnell! Gehe bitte nur auf die markierten Felder!"
   }
-// hallo
+
   val set2: Handler0 = {
-    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall =>
+    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt)=>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
       controllerComponent.Request(x,y,z)
   }
@@ -46,7 +43,20 @@ object ISetFigure extends InstructionTrait{
       y.nextState(SetStone(z))
       s"Lieber ${z.playersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
   }
+  val set5: Handler0 = {
+    case Request(x, y, z) if x.head.toInt == 131 =>
+      Request(x, y, z)
+  }
+
+  val set6: Handler1 = {
+    case Request(x, y, z) =>
+      y.nextState(Setup(z))
+      z.resetGameboard()
+      z.weHaveAWinner
+      s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
+  }
 
 
-  val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) orElse (setF andThen setA andThen log)
+  val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) orElse
+    (set5 andThen set6 andThen log) orElse (set7 andThen set8 andThen log)
 }
