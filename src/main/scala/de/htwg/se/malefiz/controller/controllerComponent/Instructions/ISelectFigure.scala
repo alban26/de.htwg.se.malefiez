@@ -10,8 +10,6 @@ object ISelectFigure extends InstructionTrait{
       Request(x,y,z)
   }
 
-
-
   val select2: Handler0 = {
     case Request(x, y, z) => z.selectedFigure = (x.head.toInt, x(1).toInt)
       Request(x,y,z)
