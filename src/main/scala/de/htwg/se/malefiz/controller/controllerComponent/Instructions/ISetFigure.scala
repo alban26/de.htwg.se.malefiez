@@ -21,6 +21,7 @@ object ISetFigure extends InstructionTrait{
     case Request(x, y, z) =>
       y.nextState(Setup(z))
       z.resetGameboard()
+      z.weHaveAWinner
       s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
   }
 

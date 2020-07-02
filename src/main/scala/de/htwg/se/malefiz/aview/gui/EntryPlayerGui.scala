@@ -91,6 +91,7 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
           controller.execute("n "+ pList(i))
       }
       controller.execute("start")
+      visible = false
       controller.getGui.visible = true
       controller.getGui.updatePlayerArea()
       controller.getGui.updatePlayerTurn()

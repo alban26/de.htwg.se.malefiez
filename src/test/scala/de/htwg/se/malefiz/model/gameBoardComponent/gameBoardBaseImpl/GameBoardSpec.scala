@@ -109,10 +109,6 @@ class GameBoardSpec extends WordSpec with Matchers {
         testGameBoard.buildString(testGameBoard.cellList) should be (gameBoardString)
         testGameBoard.buildPlayerString(testGameBoard.cellList) should be (playerString)
       }
-
-
-
-
     }
   }
 }

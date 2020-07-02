@@ -17,7 +17,7 @@ object Malefiz {
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val entryGui = new EntryGui(controller)
+  //val entryGui = new EntryGui(controller)
 
 
   def main(args: Array[String]): Unit = {

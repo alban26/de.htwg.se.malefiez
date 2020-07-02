@@ -2,9 +2,9 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.aview.gui.SwingGui
+import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -26,6 +26,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   val s: GameState = GameState(this)
   val undoManager = new UndoManager
 
+  var entryGui = new EntryGui(this)
   var gui = new SwingGui(this)
 
   def execute(string: String): Boolean = {
@@ -118,6 +119,10 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
+  def weHaveAWinner : Unit = {
+    publish(new Winner)
+  }
+
   override def getCellList: List[Cell] = gameBoard.getCellList
 
   override def getPlayer: List[Player] = gameBoard.getPlayer
@@ -137,4 +142,6 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   override def getUndoManager: UndoManager = this.undoManager
 
   override def getGui: SwingGui = this.gui
+
+  override def getEntryGui: EntryGui = this.entryGui
 }
