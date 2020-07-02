@@ -21,7 +21,7 @@ case class GameBoard (cellList: List[Cell],
   val possibleCells: Set[Int] = Set().empty
   */
 
-  //val injector = Guice.createInjector(new MalefizModule)
+
 
   def s(n: Int): Int = n * 4 + 1
 
