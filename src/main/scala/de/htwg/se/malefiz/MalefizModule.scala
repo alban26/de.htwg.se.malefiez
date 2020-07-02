@@ -27,7 +27,4 @@ class MalefizModule extends AbstractModule with ScalaModule{
     ))
 
   }
-
-
-
 }
