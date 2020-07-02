@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerMockImpl
 
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
-
+/*
 class Controller(var gameBoard: GameBoard) extends ControllerInterface{
   override def execute(string: String): Boolean = ???
 
@@ -40,3 +40,4 @@ class Controller(var gameBoard: GameBoard) extends ControllerInterface{
 
   override def redo: Unit = ???
 }
+*/
