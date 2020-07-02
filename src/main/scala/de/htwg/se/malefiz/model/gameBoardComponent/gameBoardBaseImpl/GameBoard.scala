@@ -12,6 +12,8 @@ case class GameBoard (cellList: List[Cell],
                                 possibleCells: Set[Int]) extends GameboardInterface {
 
 
+
+
   def s(n: Int): Int = n * 4 + 1
 
   def buildPlayerString(list: List[Cell]): String = {
@@ -127,7 +129,6 @@ case class GameBoard (cellList: List[Cell],
 
   def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
     cellList(cN).copy(figureNumber = fN)
-    //cellList(cN).copy(hasWall = false)
   }
 
   def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
@@ -208,7 +209,6 @@ case class GameBoard (cellList: List[Cell],
       cellList
     }
   }
-
 
 
 

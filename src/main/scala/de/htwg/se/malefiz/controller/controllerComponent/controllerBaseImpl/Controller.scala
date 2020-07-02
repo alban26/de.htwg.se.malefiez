@@ -17,6 +17,8 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   val injector = Guice.createInjector(new MalefizModule)
 
+  val mementoGameboard = gameBoard
+
   var playersTurn: Player = _
   var dicedNumber: Int = _
   var selectedFigure: (Int, Int) = _
@@ -29,6 +31,10 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   def execute(string: String): Boolean = {
     s.run(string)
     true
+  }
+
+  def resetGameboard(): Unit = {
+    gameBoard = mementoGameboard
   }
 
   def createPlayer(name: String): Unit = {
@@ -89,7 +95,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     gameBoard = gameBoard.setPlayer(pN, cN)
     publish(new GameBoardChanged)
   }
-//k
+
   def setWall(n: Int): Unit = {
     undoManager.doStep(new SetWallCommand(n,this))
     publish(new GameBoardChanged)

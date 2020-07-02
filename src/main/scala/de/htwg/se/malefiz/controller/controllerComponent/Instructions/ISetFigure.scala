@@ -20,6 +20,7 @@ object ISetFigure extends InstructionTrait{
   val setA: Handler1 = {
     case Request(x, y, z) =>
       y.nextState(Setup(z))
+      z.resetGameboard()
       s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
   }
 
