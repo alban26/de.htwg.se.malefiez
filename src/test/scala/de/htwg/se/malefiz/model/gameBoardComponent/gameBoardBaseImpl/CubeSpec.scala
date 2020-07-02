@@ -1,8 +1,7 @@
-package de.htwg.se.malefiz.model
+package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cube
-import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+import org.scalatest.matchers.should.Matchers
 
 class CubeSpec extends WordSpec with Matchers {
 

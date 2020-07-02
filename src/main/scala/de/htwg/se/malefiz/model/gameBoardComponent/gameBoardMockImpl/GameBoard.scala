@@ -3,7 +3,9 @@ package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardMockImpl
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.gameBoardComponent.{GameboardInterface, gameBoardBaseImpl}
 import de.htwg.se.malefiz.model.playerComponent.Player
-/*
+
+import scala.collection.mutable
+
 case class GameBoard() extends GameboardInterface {
   override def s(n: Int): Int = ???
 
@@ -78,5 +80,12 @@ case class GameBoard() extends GameboardInterface {
   override def createPlayer(text: String): gameBoardBaseImpl.GameBoard = ???
 
   override def createGameBoard(): String = ???
+
+  override def getCellList: List[Cell] = ???
+
+  override def getPlayer: List[Player] = ???
+
+  override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = ???
+
+  override def getPossibleCells: Set[Int] = ???
 }
-*/

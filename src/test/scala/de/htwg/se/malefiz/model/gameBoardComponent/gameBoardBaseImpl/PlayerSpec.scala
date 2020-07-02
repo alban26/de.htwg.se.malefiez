@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.model
+package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest._
