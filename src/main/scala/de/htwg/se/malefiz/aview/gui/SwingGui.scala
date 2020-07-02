@@ -233,7 +233,6 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     case winner: Winner =>
       visible = false
       controller.getEntryGui.visible = true
-
   }
 
 }
