@@ -18,25 +18,14 @@ object Malefiz {
   val cellConfigFile = "project/mainCellConfiguration"
   val cellLinksFile = "project/mainCellLinks"
 
-  /*
-  val players : List[Player] = List().empty
-  val cellList : List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
-  val cellGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
-
-  val controller = new Controller(GameBoard(cellList, players, cellGraph))
-  val tui = new Tui(controller)
-  val entryGui = new EntryGui(controller)
-  val entryNamesGui = new EntryPlayerGui(controller)
-  */
 
   val injector = Guice.createInjector(new MalefizModule)
-  //var gameBoard = injector.getInstance(classOf[GameboardInterface])
-  //val gameBoard = injector.getInstance(classOf[GameboardInterface])
+
   val controller = injector.getInstance(classOf[ControllerInterface])
-  //val b = injector.getInstance(classOf[GameboardInterface])
+
   val tui = new Tui(controller)
   val entryGui = new EntryGui(controller)
-  val swingGui = new SwingGui(controller)
+
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
