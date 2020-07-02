@@ -24,7 +24,7 @@ object ISetFigure extends InstructionTrait{
       z.weHaveAWinner
       s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
   }
-
+// hallo
   val set2: Handler0 = {
     case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
