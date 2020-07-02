@@ -19,7 +19,6 @@ object Malefiz {
   val cellList : List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
   val cellGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
 
-
   val controller = new Controller(GameBoard(cellList, players, cellGraph))
   val tui = new Tui(controller)
   val entryGui = new EntryGui(controller)
@@ -28,11 +27,7 @@ object Malefiz {
   def main(args: Array[String]): Unit = {
     var input: String = ""
 
-    if (!input.isEmpty) {
-      input = args(0)
-      tui.processInput1(input)
-    }
-    else do {
+   do {
       input = readLine()
       tui.processInput1(input)
     } while (input != "end")

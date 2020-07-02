@@ -125,7 +125,6 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
   def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
     cellList(cN).copy(figureNumber = fN)
-    cellList(cN).copy(hasWall = false)
   }
 
   def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
