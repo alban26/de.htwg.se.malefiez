@@ -2,13 +2,14 @@ package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
 
+import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, GridBagPanel, GridPanel, Label, Menu, MenuBar, MenuItem, Orientation, SplitPane, Swing}
 import BorderPanel.Position._
 import scala.swing.event.ButtonClicked
 
-class EntryGui(controller: Controller) extends Frame {
+class EntryGui(controller: ControllerInterface) extends Frame {
 
   visible = true
   title = "Wilkommen zu Malefiz"

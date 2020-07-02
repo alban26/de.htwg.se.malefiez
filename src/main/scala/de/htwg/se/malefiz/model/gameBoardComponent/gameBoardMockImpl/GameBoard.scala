@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardMockImpl
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.gameBoardComponent.{GameboardInterface, gameBoardBaseImpl}
 import de.htwg.se.malefiz.model.playerComponent.Player
-
+/*
 case class GameBoard() extends GameboardInterface {
   override def s(n: Int): Int = ???
 
@@ -79,3 +79,4 @@ case class GameBoard() extends GameboardInterface {
 
   override def createGameBoard(): String = ???
 }
+*/

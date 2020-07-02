@@ -16,7 +16,7 @@ object ISelectFigure extends InstructionTrait{
 
   val select3: Handler0 = {
     case Request(x, y, z) =>
-      z.setPosisCellTrue(z.gameBoard.possibleCells.toList)
+      z.setPosisCellTrue(z.getPossibleCells.toList)
       Request(x,y,z)
   }
 

@@ -8,13 +8,13 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetStone extends InstructionTrait {
 
   val set1: Handler0 = {
-    case Request(x, y, z) if z.gameBoard.cellList(x.head.toInt).wallPermission && z.gameBoard.cellList(x.head.toInt).playerNumber == 0 =>
+    case Request(x, y, z) if z.getCellList(x.head.toInt).wallPermission && z.getCellList(x.head.toInt).playerNumber == 0 =>
       z.setWall(x.head.toInt)
       Request(x,y,z)
   }
 
   val set2: Handler0 = {
-    case Request(x, y, z) if !z.gameBoard.cellList(x.head.toInt).wallPermission || z.gameBoard.cellList(x.head.toInt).playerNumber != 0 =>
+    case Request(x, y, z) if !z.getCellList(x.head.toInt).wallPermission || z.getCellList(x.head.toInt).playerNumber != 0 =>
       controllerComponent.Request(x,y,z)
   }
 
@@ -22,8 +22,8 @@ object ISetStone extends InstructionTrait {
     case Request(x, y, z) =>
       z.dicedNumber = 0
       z.setPosisFalse(z.playersTurn.playerNumber)
-      z.setPosisCellFalse(z.gameBoard.possibleCells.toList)
-      z.playersTurn = z.gameBoard.nextPlayer(z.gameBoard.players,z.playersTurn.playerNumber-1)
+      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.playersTurn = z.gameBoard.nextPlayer(z.getPlayer,z.playersTurn.playerNumber-1)
       y.nextState(Roll(z))
       s"Lieber ${z.playersTurn} du bist als nächstes dran. Drücke eine beliebige Taste um zu würfeln."
   }
