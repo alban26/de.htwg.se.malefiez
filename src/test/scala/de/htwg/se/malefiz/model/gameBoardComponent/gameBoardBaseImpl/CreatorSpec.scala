@@ -15,19 +15,6 @@ class CreatorSpec extends WordSpec with Matchers {
       "have 10 Cells with different configurated attributes " in {
         listLength should be(10)
       }
-      "all Cells should have the permission to be the destination. Only the last cell ist the destination" in {
-        testCellList.head.destination should be(false)
-        testCellList(1).destination should be(false)
-        testCellList(2).destination should be(false)
-        testCellList(3).destination should be(false)
-        testCellList(4).destination should be(false)
-        testCellList(5).destination should be(false)
-        testCellList(6).destination should be(false)
-        testCellList(7).destination should be(false)
-        testCellList(8).destination should be(false)
-        testCellList(9).destination should be(true)
-
-      }
       "the first six Cells shouldnt have the permission to set a Wall" in {
         testCellList.head.wallPermission should be(false)
         testCellList(1).wallPermission should be(false)
@@ -53,10 +40,6 @@ class CreatorSpec extends WordSpec with Matchers {
       }
       "the Cell with the Cell number 8 should have a Wall" in {
         testCellList(8).hasWall should be(true)
-      }
-      "the last cell shouldnt have the permission to set a wall and also be the destination" in {
-        testCellList(9).wallPermission should be(false)
-        testCellList(9).destination should be(true)
       }
       "To Generate the Gameborad with a graph we read the cells with links from a txt-file. The graph" when {
         "is created" should {

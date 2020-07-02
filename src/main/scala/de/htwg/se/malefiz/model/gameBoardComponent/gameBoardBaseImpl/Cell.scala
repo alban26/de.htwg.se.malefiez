@@ -1,7 +1,5 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import com.google.inject.Inject
-
 case class Cell (cellNumber: Int, playerNumber: Int, figureNumber: Int, wallPermission: Boolean, hasWall: Boolean,
                 coordinates: Point, possibleFigures: Boolean, possibleCells: Boolean) {
 

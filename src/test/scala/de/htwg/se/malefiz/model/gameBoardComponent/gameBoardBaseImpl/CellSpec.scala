@@ -16,9 +16,6 @@ class CellSpec extends WordSpec with Matchers{
       "has a playerfigure if a player is standing on the cell" in {
         cell.figureNumber should be (1)
       }
-      "has Destination = false if its not the destination Cell" in {
-        cell.destination should be (false)
-      }
       "has a wallpermission. In this case it should be false" in {
         cell.wallPermission should be (false)
       }
@@ -26,9 +23,15 @@ class CellSpec extends WordSpec with Matchers{
         cell.hasWall should be (false)
       }
     }
-    " if it has a Wall should have a specific Tui appereance" in {
-      val cellWithWall Cell(50, 0, 0, )
+    " if it has a Wall, it should have a specific Tui appereance" in {
+      val cellWithWall = Cell(50, 0, 0, true, true, Point(0,0), false, false)
+      cellWithWall.toString should be ("[X]")
     }
+    " if it has a player and Figure, it should have a specific Tui appereance" in {
+      val cellPlayerAndFigure = Cell(0, 1, 2, false, false, Point(0,0), false, false)
+      //cellPlayerAndFigure.toString should be ("[" + cellPlayerAndFigure.playerNumber.toString + "|" + cellPlayerAndFigure.figureNumber.toString + "]")
+    }
+
   }
 
 }

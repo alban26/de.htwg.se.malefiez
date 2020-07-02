@@ -4,8 +4,6 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
-
-
 class GameBoardSpec extends WordSpec with Matchers {
   "A Gameboard is a graph with 132 Cells. For testing purpose " when {
     "is created " should {
@@ -72,11 +70,14 @@ class GameBoardSpec extends WordSpec with Matchers {
         val x = main.setFigure(2, 30)
         x.cellList(30).figureNumber should be (2)
       }
-   /*   " remove play2 and figure 2 from cell 30" in {
-        val x = main.removeActualPlayerAndFigureFromCell(2, 2, 30)
+      " remove play2 and figure 2 from cell 30" in {
+        val x = main.removeActualPlayerAndFigureFromCell(2, 2)
         x.cellList(30).figureNumber should be (0)
         x.cellList(30).figureNumber should be (0)
-      }*/
+      }
+      " get the Homenumber of a Players Figure" in {
+        main.getHomeNr(1 ,1) should be (0)
+      }
       "build the whole gameboard as a String" in {
 
         val testCellList = Creator().getCellList(mainSourceConfig)

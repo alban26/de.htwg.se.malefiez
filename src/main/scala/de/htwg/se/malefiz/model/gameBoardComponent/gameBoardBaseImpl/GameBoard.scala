@@ -1,26 +1,15 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import com.google.inject.{Guice, Inject}
-import de.htwg.se.malefiz.Malefiz.{cellConfigFile, cellLinksFile}
-import de.htwg.se.malefiz.MalefizModule
+
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
-
 import scala.collection.mutable
 import scala.collection.mutable.Map
 
 case class GameBoard (cellList: List[Cell],
                                 players: List[Player],
-                                gameBoardGraph: mutable.Map[Int, Set[Int]],
+                                gameBoardGraph: Map[Int, Set[Int]],
                                 possibleCells: Set[Int]) extends GameboardInterface {
-
-  /*
-  val cellList: List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
-  val players: List[Player] = List.empty
-  val gameBoardGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
-  val possibleCells: Set[Int] = Set().empty
-  */
-
 
 
   def s(n: Int): Int = n * 4 + 1
@@ -299,8 +288,6 @@ case class GameBoard (cellList: List[Cell],
       "Spieler " + text + " wurde erzeugt - bitte trage noch mindestens einen weiteren Spieler ein."
       copy(players =  players :+ Player(players.length+1, text))
   }
-
-
 
   def createGameBoard(): String = buildString(cellList)
 
