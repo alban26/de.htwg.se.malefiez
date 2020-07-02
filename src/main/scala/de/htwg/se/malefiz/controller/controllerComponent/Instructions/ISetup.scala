@@ -19,10 +19,6 @@ object ISetup extends InstructionTrait {
     case Request(x, y, z) => z.createPlayer(x(1))
       s"Spieler ${x(1)} wurde erfolgreich angelegt."
   }
-/*
-  val setupErr: Handler1 = {
-    case None => "Einlesen des Spielers nicht erfolgt."
-  }
-*/
-  val setup = setup1 andThen setup2 orElse setup3 andThen log // orElse (setupErr andThen log)
+
+  val setup = setup1 andThen setup2 orElse setup3 andThen log
 }

@@ -1,16 +1,19 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SetFigure
+import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISetStone.Handler1
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
 
 object ISelectFigure extends InstructionTrait{
   val select1: Handler0 = {
-    case Request(x, y, z) if x.length == 2 => z.getPCells(z.getFigure(x(0).toInt, x(1).toInt), z.dicedNumber)
+    case Request(x, y, z) if x.head.toInt == z.playersTurn.playerNumber => z.getPCells(z.getFigure(x.head.toInt, x(1).toInt), z.dicedNumber)
       Request(x,y,z)
   }
 
+
+
   val select2: Handler0 = {
-    case Request(x, y, z) => z.selectedFigure = (x(0).toInt, x(1).toInt)
+    case Request(x, y, z) => z.selectedFigure = (x.head.toInt, x(1).toInt)
       Request(x,y,z)
   }
 
@@ -26,10 +29,17 @@ object ISelectFigure extends InstructionTrait{
       "Du kannst nun auf folgende Felder gehen. Wähle eine aus indem du die Nummer eintippst."
   }
 
-  /*
-  val selectErr: Handler1 = {
-    case None => "Bei Spielerauswahl fehler aufgetreten"
+  /*wenn nicht eigener Spieler ausgewählt wird*/
+  val select5: Handler0 = {
+    case Request(x, y, z) if x.head.toInt != z.playersTurn.playerNumber =>
+      Request(x,y,z)
   }
-*/
-  val select = select1 andThen select2 andThen select3 andThen select4 andThen log // orElse (selectErr andThen log)
+
+  val select6: Handler1 = {
+    case Request(x, y, z) =>
+      s"Lieber ${z.playersTurn} bitte wähle deine eigene Figur aus."
+  }
+
+
+  val select: PartialFunction[Request, String] = (select1 andThen select2 andThen select3 andThen select4 andThen log) orElse (select5 andThen select6 andThen log)
 }
