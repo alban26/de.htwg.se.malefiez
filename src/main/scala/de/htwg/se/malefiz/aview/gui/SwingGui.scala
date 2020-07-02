@@ -4,6 +4,7 @@ import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
 
+import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
@@ -13,7 +14,7 @@ import javax.imageio.ImageIO
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
-class SwingGui(controller: ControllerInterface) extends Frame {
+class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
   val bimage: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
   val g2d: Graphics2D = bimage.createGraphics()

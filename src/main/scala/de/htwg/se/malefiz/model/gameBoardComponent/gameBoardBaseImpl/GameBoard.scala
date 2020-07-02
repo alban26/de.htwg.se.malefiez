@@ -9,14 +9,19 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable
 import scala.collection.mutable.Map
 
-case class GameBoard @Inject() (cellList: List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
-                     ,players: List[Player] = List.empty,
-                     gameBoardGraph: Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile),
-                     possibleCells: Set[Int] = Set().empty) extends GameboardInterface {
+case class GameBoard (cellList: List[Cell],
+                                players: List[Player],
+                                gameBoardGraph: mutable.Map[Int, Set[Int]],
+                                possibleCells: Set[Int]) extends GameboardInterface {
 
+  /*
+  val cellList: List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
+  val players: List[Player] = List.empty
+  val gameBoardGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
+  val possibleCells: Set[Int] = Set().empty
+  */
 
-
-  val injector = Guice.createInjector(new MalefizModule)
+  //val injector = Guice.createInjector(new MalefizModule)
 
   def s(n: Int): Int = n * 4 + 1
 

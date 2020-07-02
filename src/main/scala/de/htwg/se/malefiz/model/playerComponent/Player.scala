@@ -1,6 +1,9 @@
 package de.htwg.se.malefiz.model.playerComponent
 
-case class Player(playerNumber: Int, name: String) {
+import com.google.inject.Inject
+
+
+case class Player @Inject() (playerNumber: Int, name: String) {
 
    override def toString:String =  name
 }
