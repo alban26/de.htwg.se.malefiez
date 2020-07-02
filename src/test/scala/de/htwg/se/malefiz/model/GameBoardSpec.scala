@@ -19,12 +19,12 @@ class GameBoardSpec extends WordSpec with Matchers {
       val mainSourceConfig = "project/mainCellConfiguration"
       val mainSourceLinks =  "project/mainCellLinks"
       val testPlayerList = List()
-      val testGameBoard = GameBoard(testCellList, testPlayerList, testGraph)
+      val testGameBoard = GameBoard(testCellList, testPlayerList, testGraph, Set().empty)
 
       val mainCellList = Creator().getCellList(mainSourceConfig)
       val mainCellGraph = Creator().getCellGraph(mainSourceLinks)
 
-      val main = gameBoardBaseImpl.GameBoard(mainCellList, testPlayerList, mainCellGraph)
+      val main = gameBoardBaseImpl.GameBoard(mainCellList, testPlayerList, mainCellGraph, Set().empty)
 
       "Length of the testList" in {
         testGameBoard.cellList.length should be (10)
@@ -81,7 +81,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       "build the whole gameboard as a String" in {
 
         val testCellList = Creator().getCellList(mainSourceConfig)
-        val testGameBoard = gameBoardBaseImpl.GameBoard(testCellList, testPlayerList, testGraph)
+        val testGameBoard = gameBoardBaseImpl.GameBoard(testCellList, testPlayerList, testGraph, Set().empty)
 
         val gameBoardString =
           """|                                [ ]

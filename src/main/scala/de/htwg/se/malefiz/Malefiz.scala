@@ -1,9 +1,13 @@
 package de.htwg.se.malefiz
 
+import com.google.inject.Guice
+
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.aview.gui.{EntryGui, EntryPlayerGui, SwingGui}
+import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
 
@@ -14,8 +18,8 @@ object Malefiz {
   val cellConfigFile = "project/mainCellConfiguration"
   val cellLinksFile = "project/mainCellLinks"
 
+  /*
   val players : List[Player] = List().empty
-
   val cellList : List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
   val cellGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
 
@@ -23,11 +27,20 @@ object Malefiz {
   val tui = new Tui(controller)
   val entryGui = new EntryGui(controller)
   val entryNamesGui = new EntryPlayerGui(controller)
+  */
+
+  val injector = Guice.createInjector(new MalefizModule)
+  //var gameBoard = injector.getInstance(classOf[GameboardInterface])
+  //val gameBoard = injector.getInstance(classOf[GameboardInterface])
+  val controller = injector.getInstance(classOf[ControllerInterface])
+  //val b = injector.getInstance(classOf[GameboardInterface])
+  val tui = new Tui(controller)
+  val entryGui = new EntryGui(controller)
+  val swingGui = new SwingGui(controller)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
-
-   do {
+    do {
       input = readLine()
       tui.processInput1(input)
     } while (input != "end")

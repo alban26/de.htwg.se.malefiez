@@ -1,12 +1,25 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.malefiz.Malefiz.{cellConfigFile, cellLinksFile}
+import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
 
+import scala.collection.mutable
 import scala.collection.mutable.Map
 
-case class GameBoard(cellList: List[Cell], players: List[Player],
-                     gameBoardGraph: Map[Int, Set[Int]], possibleCells: Set[Int] = Set().empty) extends GameboardInterface {
+case class GameBoard (cellList: List[Cell],
+                                players: List[Player],
+                                gameBoardGraph: mutable.Map[Int, Set[Int]],
+                                possibleCells: Set[Int]) extends GameboardInterface {
+
+  /*
+  val cellList: List[Cell] = Creator().execute(Creator().getCellList,cellConfigFile)
+  val players: List[Player] = List.empty
+  val gameBoardGraph : Map[Int, Set[Int]] = Creator().execute1(Creator().getCellGraph, cellLinksFile)
+  val possibleCells: Set[Int] = Set().empty
+  */
 
 
 
@@ -125,6 +138,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
   def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = {
     cellList(cN).copy(figureNumber = fN)
+    //cellList(cN).copy(hasWall = false)
   }
 
   def setPlayerOnCell(pN: Int, cN : Int) : Cell = {
@@ -290,4 +304,11 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
 
   def createGameBoard(): String = buildString(cellList)
 
+  override def getCellList: List[Cell] = this.cellList
+
+  override def getPlayer: List[Player] = this.players
+
+  override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = this.gameBoardGraph
+
+  override def getPossibleCells: Set[Int] = this.possibleCells
 }

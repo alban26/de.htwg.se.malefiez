@@ -2,13 +2,13 @@ package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
 
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import com.google.inject.Inject
+import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 
-import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, GridBagPanel, GridPanel, Label, Menu, MenuBar, MenuItem, Orientation, SplitPane, Swing}
-import BorderPanel.Position._
+import scala.swing.{Action, Button, Dimension, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem}
 import scala.swing.event.ButtonClicked
 
-class EntryGui(controller: Controller) extends Frame {
+class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
 
   visible = true
   title = "Wilkommen zu Malefiz"

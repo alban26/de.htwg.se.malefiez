@@ -4,16 +4,17 @@ import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
 
+import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller._
-import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
-class SwingGui(controller: Controller) extends Frame {
+class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
   val bimage: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
   val g2d: Graphics2D = bimage.createGraphics()
@@ -70,17 +71,17 @@ class SwingGui(controller: Controller) extends Frame {
       case MouseClicked(_, p, _, 1, _) =>
         mouseX = getRange(p.x)
         mouseY = getRange(p.y)
-        val state = controller.s.state
+        val state = controller.getGameState.state
 
         if (state.isInstanceOf[SelectFigure]) {
-          for (i <- controller.gameBoard.cellList) {
+          for (i <- controller.getCellList) {
             if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
               controller.execute(i.playerNumber + " " + i.figureNumber)
               drawGameBoard()
             }
           }
         } else {
-          for (i <- controller.gameBoard.cellList) {
+          for (i <- controller.getCellList) {
             if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
               controller.execute(i.cellNumber.toString)
               drawGameBoard()
@@ -114,17 +115,17 @@ class SwingGui(controller: Controller) extends Frame {
 
 
   def updatePlayerArea(): Unit = {
-    for (i <- controller.gameBoard.players.indices) {
-      this.playerArea.text += "Spieler " + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
+    for (i <- controller.getPlayer.indices) {
+      this.playerArea.text += "Spieler " + (i + 1) + ": " + controller.getPlayer(i) + "\n"
     }
   }
 
   def updatePlayerTurn(): Unit = {
-      this.playerTurnArea.text = "\n" + "             " + controller.playersTurn.name
+      this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
   }
 
   def drawGameBoard(): Unit = {
-    for (i <- controller.gameBoard.cellList) {
+    for (i <- controller.getCellList) {
       if (i.hasWall) {
         this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
       } else if (i.playerNumber == 1) {
@@ -226,7 +227,7 @@ class SwingGui(controller: Controller) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = "\n" + "                " + controller.dicedNumber.toString
+      randomNumberArea.text = "\n" + "                " + controller.getDicedNumber.toString
     case gameBoardChanged: GameBoardChanged => drawGameBoard()
   }
 

@@ -9,13 +9,13 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
   override def doStep: Unit = {
     controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber,playerFigure)
 
-    if(controller.gameBoard.cellList(cellNumber).playerNumber != 0) {
-      controller.gameBoard = controller.gameBoard.setPlayer(controller.gameBoard.cellList(cellNumber).playerNumber,
-        controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
-      controller.gameBoard = controller.gameBoard.setFigure(controller.gameBoard.cellList(cellNumber).figureNumber,
-        controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,controller.gameBoard.cellList(cellNumber).figureNumber))
+    if(controller.getCellList(cellNumber).playerNumber != 0) {
+      controller.gameBoard = controller.gameBoard.setPlayer(controller.getCellList(cellNumber).playerNumber,
+        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,controller.getCellList(cellNumber).figureNumber))
+      controller.gameBoard = controller.gameBoard.setFigure(controller.getCellList(cellNumber).figureNumber,
+        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,controller.getCellList(cellNumber).figureNumber))
     }
-    if(controller.gameBoard.cellList(cellNumber).hasWall) {
+    if(controller.getCellList(cellNumber).hasWall) {
       controller.rWall(cellNumber)
     }
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)

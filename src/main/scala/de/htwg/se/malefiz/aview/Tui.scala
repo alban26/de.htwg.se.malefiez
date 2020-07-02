@@ -1,13 +1,13 @@
 package de.htwg.se.malefiz.aview
 
-import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
-import de.htwg.se.malefiz.controller.controllerComponent.GameBoardChanged
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.inject.Inject
 
 import scala.swing.Reactor
 
 
-class Tui(controller: Controller) extends Reactor {
+class Tui (controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
@@ -20,7 +20,7 @@ class Tui(controller: Controller) extends Reactor {
       case _ =>
         controller.execute(input)
         textPrint("-------")
-        textPrint(controller.gameBoard.players.mkString("\n"))
+        textPrint(controller.getPlayer.mkString("\n"))
     }
   }
 

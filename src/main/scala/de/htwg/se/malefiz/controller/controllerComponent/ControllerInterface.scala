@@ -2,10 +2,11 @@ package de.htwg.se.malefiz.controller.controllerComponent
 
 import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.{SetPlayerCommand, SetWallCommand}
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cube
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell}
+import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 
+import scala.collection.mutable.Map
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
@@ -44,4 +45,26 @@ trait ControllerInterface extends Publisher {
   def undo: Unit
 
   def redo: Unit
+
+  def getCellList: List[Cell]
+  def getPlayer: List[Player]
+  def getGameBoardGraph: Map[Int, Set[Int]]
+  def getPossibleCells: Set[Int]
+
+  def getDicedNumber: Int
+  def getPlayersTurn: Player
+
+  def getSelectedFigure: (Int, Int)
+
+  def getGameState: GameState
+  def getUndoManager: UndoManager
+  def getGui: SwingGui
 }
+
+import scala.swing.Button
+import scala.swing.event.Event
+
+class GameBoardChanged extends Event
+case class ButtonClicked(source: Button) extends Event
+class changeWall extends Event
+// class CandidatesChanged extends Event

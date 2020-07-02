@@ -1,20 +1,24 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
 
 import scala.collection.mutable.Map
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-case class Creator() extends CreatorInterface {
+case class Creator /*@Inject()*/ ()  extends CreatorInterface {
 
   def readTextFile(filename: String): Try[Iterator[String]] = {
     Try(Source.fromFile(filename).getLines)
   }
 
+  //val injector = Guice.createInjector(new MalefizModule)
+
   def getCellList(inputFile: String): List[Cell] = {
 
-    readTextFile(inputFile) match {
+   readTextFile(inputFile) match {
         case Success(line) => println("Welcome")
 
           val list = Source.fromFile(inputFile)
@@ -35,11 +39,12 @@ case class Creator() extends CreatorInterface {
             .toList
           list.close()
 
-          inputData
+         inputData
         case Failure(f) => println(f)
           System.exit(0)
           Nil
       }
+
 
   }
 
@@ -76,4 +81,6 @@ case class Creator() extends CreatorInterface {
 
   def execute(callback:(String) => List[Cell], y: String) = callback(y)
   def execute1(callback:String => Map[Int, Set[Int]], y:String)= callback(y)
+
+
 }

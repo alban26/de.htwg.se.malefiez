@@ -1,15 +1,21 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.SwingGui
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cube, GameBoard}
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 
+import scala.collection.mutable
 import scala.swing.Publisher
 
-class Controller(var gameBoard: GameBoard) extends ControllerInterface with Publisher {
+class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
+
+  val injector = Guice.createInjector(new MalefizModule)
 
   var playersTurn: Player = _
   var dicedNumber: Int = _
@@ -106,4 +112,23 @@ class Controller(var gameBoard: GameBoard) extends ControllerInterface with Publ
     publish(new GameBoardChanged)
   }
 
+  override def getCellList: List[Cell] = gameBoard.getCellList
+
+  override def getPlayer: List[Player] = gameBoard.getPlayer
+
+  override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = gameBoard.getGameBoardGraph
+
+  override def getPossibleCells: Set[Int] = gameBoard.getPossibleCells
+
+  override def getDicedNumber: Int = this.dicedNumber
+
+  override def getPlayersTurn: Player = this.playersTurn
+
+  override def getSelectedFigure: (Int, Int) = this.selectedFigure
+
+  override def getGameState: GameState = this.s
+
+  override def getUndoManager: UndoManager = this.undoManager
+
+  override def getGui: SwingGui = this.gui
 }
