@@ -1,20 +1,16 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import com.google.inject.{Guice, Inject}
-import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
 
+import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
 import scala.collection.mutable.Map
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-case class Creator /*@Inject()*/ ()  extends CreatorInterface {
+case class Creator()  extends CreatorInterface {
 
   def readTextFile(filename: String): Try[Iterator[String]] = {
     Try(Source.fromFile(filename).getLines)
   }
-
-  //val injector = Guice.createInjector(new MalefizModule)
 
   def getCellList(inputFile: String): List[Cell] = {
 
@@ -25,11 +21,10 @@ case class Creator /*@Inject()*/ ()  extends CreatorInterface {
           val inputData = list.getLines
 
             .map(line => line.split(" "))
-            .map { case Array(cellNumber, playerNumber, figureNumber, destination, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
+            .map { case Array(cellNumber, playerNumber, figureNumber, wallPermission, hasWall, x, y, possibleFigures, possibleCells) =>
               gameBoardBaseImpl.Cell(cellNumber.toInt,
                 playerNumber.toInt,
                 figureNumber.toInt,
-                destination.toBoolean,
                 wallPermission.toBoolean,
                 hasWall.toBoolean,
                 Point(x.toInt, y.toInt),
