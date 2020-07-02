@@ -271,7 +271,7 @@ case class GameBoard(cellList: List[Cell], players: List[Player],
     }
   }
 
-  def execute(callback:(Int) => GameBoard, y:Int) = callback(y)
+  def execute(callback:(Int) => GameBoard, y:Int): GameBoard = callback(y)
 
   def nextPlayer(list: List[Player], n: Int): Player = {
     if(n == list.length-1) {
