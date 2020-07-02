@@ -1,19 +1,30 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone, Setup}
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
 import de.htwg.se.malefiz.controller.controllerComponent
 
 object ISetFigure extends InstructionTrait{
   val set1: Handler0 = {
-    case Request(x, y, z) if x != ' ' && !z.getCellList(x.head.toInt).hasWall =>
+    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
 
+  val setF: Handler0 = {
+    case Request(x, y, z) if x.head.toInt == 131 =>
+      Request(x, y, z)
+  }
+
+  val setA: Handler1 = {
+    case Request(x, y, z) =>
+      y.nextState(Setup(z))
+      s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
+  }
+
   val set2: Handler0 = {
-    case Request(x, y, z) if x != ' ' && z.getCellList(x.head.toInt).hasWall =>
+    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall =>
       z.setPlayerFigure(z.selectedFigure._1,z.selectedFigure._2,x.head.toInt)
       controllerComponent.Request(x,y,z)
   }
@@ -35,5 +46,5 @@ object ISetFigure extends InstructionTrait{
   }
 
 
-  val set = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) // orElse (setErr andThen log)
+  val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) orElse (setF andThen setA andThen log)
 }
