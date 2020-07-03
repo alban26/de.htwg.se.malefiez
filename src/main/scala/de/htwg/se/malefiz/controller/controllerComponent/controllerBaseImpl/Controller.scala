@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube, GameBoard}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 

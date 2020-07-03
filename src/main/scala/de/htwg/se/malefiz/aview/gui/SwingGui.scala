@@ -4,13 +4,11 @@ import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
 
-import scala.swing.event.Event
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
+import javax.swing.text.StyleConstants
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
@@ -28,7 +26,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
-  var playerArea = new TextArea("")
+  var playerArea = new TextPane
   playerArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
   playerArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerArea.editable = false
@@ -57,6 +55,80 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   val randomNumberArea = new TextArea(" ")
   randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
+
+  val informationArea = new TextArea()
+  informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
+  informationArea.border = Swing.EtchedBorder(Swing.Lowered)
+
+  def updatePlayerArea(): Unit = {
+    var doc = playerArea.styledDocument
+
+    for (i <- controller.getPlayer.indices) {
+      val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
+      i match {
+        case 0 =>
+          var a = playerArea.styledDocument.addStyle("Red" ,null)
+          StyleConstants.setForeground(a,Color.RED)
+          doc.insertString(doc.getLength,playerString, a)
+        case 1 =>
+          var b = playerArea.styledDocument.addStyle("Green",null)
+          StyleConstants.setForeground(b,Color.GREEN)
+          doc.insertString(doc.getLength,playerString, b)
+        case 2 =>
+          var c = playerArea.styledDocument.addStyle("Yellow/Orange",null)
+          StyleConstants.setForeground(c,Color.ORANGE)
+          doc.insertString(doc.getLength,playerString, c)
+        case 3 =>
+          var d = playerArea.styledDocument.addStyle("Blue",null)
+          StyleConstants.setForeground(d,Color.BLUE)
+          doc.insertString(doc.getLength,playerString, d)
+      }
+    }
+  }
+
+  def updatePlayerTurn(): Unit = {
+    this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
+  }
+
+  def updateInformationArea() : Unit = {
+
+  }
+
+  def drawGameBoard(): Unit = {
+    for (i <- controller.getCellList) {
+      if (i.hasWall) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
+      } else if (i.playerNumber == 1) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
+      } else if (i.playerNumber == 2) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
+      } else if (i.playerNumber == 3) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
+      } else if (i.playerNumber == 4) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
+      } else if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
+        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
+      } else if (!i.possibleCells) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+      } else {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+      }
+    }
+  }
+
+  def drawCircle(x: Int, y: Int, color: Color): Unit = {
+    g2d.setColor(color)
+    g2d.fillArc(x - 20, y - 20, 35, 35, 0, 360)
+    repaint()
+  }
+
+  def highlightCells(x: Int, y: Int): Unit = {
+    g2d.setStroke(thick)
+    g2d.setColor(Color.CYAN)
+    //g2d.drawRect(x-10,y-10 , 10, 10)
+    g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
+    repaint()
+  }
 
   val panel: Panel = new Panel {
 
@@ -113,54 +185,6 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     range
   }
 
-
-
-  def updatePlayerArea(): Unit = {
-    for (i <- controller.getPlayer.indices) {
-      this.playerArea.text += "Spieler " + (i + 1) + ": " + controller.getPlayer(i) + "\n"
-    }
-  }
-
-  def updatePlayerTurn(): Unit = {
-      this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
-  }
-
-  def drawGameBoard(): Unit = {
-    for (i <- controller.getCellList) {
-      if (i.hasWall) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
-      } else if (i.playerNumber == 1) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
-      } else if (i.playerNumber == 2) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
-      } else if (i.playerNumber == 3) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
-      } else if (i.playerNumber == 4) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
-      } else if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
-        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
-      } else if (!i.possibleCells) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
-      } else {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
-      }
-    }
-  }
-
-  def drawCircle(x: Int, y: Int, color: Color): Unit = {
-    g2d.setColor(color)
-    g2d.fillArc(x - 20, y - 20, 35, 35, 0, 360)
-    repaint()
-  }
-
-  def highlightCells(x: Int, y: Int): Unit = {
-    g2d.setStroke(thick)
-    g2d.setColor(Color.CYAN)
-    //g2d.drawRect(x-10,y-10 , 10, 10)
-    g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
-    repaint()
-  }
-
   menuBar = new MenuBar {
     contents += new Menu("Malefiz") {
       mnemonic = Key.F
@@ -200,21 +224,23 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       c
     }
     add(playerLabel,
-      constraints(0, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 35))
+      constraints(0, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
     add(playerArea,
       constraints(0, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(playerTurnLabel,
-      constraints(2, 1,  gridwidth = 2, fill=GridBagPanel.Fill.Both ,ipadx = 104, ipady =  35))
+      constraints(2, 1,  gridwidth = 2, fill=GridBagPanel.Fill.Both ,ipadx = 104, ipady =  15))
     add(playerTurnArea,
       constraints(2, 2,gridwidth = 2, fill=GridBagPanel.Fill.Both ))
     add(cubeLabel,
-      constraints(4, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 35))
+      constraints(4, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
     add(cubeButton,
       constraints(4, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(randomNumberLabel,
-      constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 35))
+      constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 15))
     add(randomNumberArea,
       constraints(6, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
+    add(informationArea,
+      constraints(0, 3, gridwidth = 8, fill=GridBagPanel.Fill.Both))
     add(panel,
       constraints(0,
         0,
@@ -225,6 +251,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   listenTo(cubeButton, controller)
+
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
