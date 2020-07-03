@@ -59,7 +59,6 @@ trait ControllerInterface extends Publisher {
 
   def getGameState: GameState
   def getStatement: Statements
-  def getStatementStatus: String
 
   def getUndoManager: UndoManager
   def getGui: SwingGui

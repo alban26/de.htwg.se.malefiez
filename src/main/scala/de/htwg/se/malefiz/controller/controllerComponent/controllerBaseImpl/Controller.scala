@@ -34,6 +34,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   var gui = new SwingGui(this)
 
 
+
   def execute(string: String): Boolean = {
     s.run(string)
     true
@@ -152,5 +153,4 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   def getStatement: Statements = statementStatus
 
-  def getStatementStatus: String = Statements.message(statementStatus)
 }

@@ -6,7 +6,7 @@ import java.io.File
 
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.text.StyleConstants
 
@@ -91,8 +91,37 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
   }
 
-  def updateInformationArea() : Unit = {
-    this.informationArea.text = controller.getStatementStatus
+  def updateInformationArea(): Unit = {
+    if (controller.getStatement == Statements.roll) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.addPlayer) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.selectFigure) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 13) + controller.getDicedNumber +
+        Statements.message(controller.getStatement).substring(12)
+    } else if (controller.getStatement == Statements.selectField) {
+      this.informationArea.text = Statements.message(controller.getStatement)
+    } else if (controller.getStatement == Statements.selectWrongFigure) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.nextPlayer) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.wall) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.won) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 23) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(22)
+    } else if (controller.getStatement == Statements.wrongWall) {
+      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+        Statements.message(controller.getStatement).substring(6)
+    } else if (controller.getStatement == Statements.wrongField) {
+      this.informationArea.text = Statements.message(controller.getStatement)
+    }
+
   }
 
   def drawGameBoard(): Unit = {
