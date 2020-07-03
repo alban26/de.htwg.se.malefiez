@@ -5,10 +5,12 @@ import java.awt.image.BufferedImage
 import java.io.File
 
 import com.google.inject.Inject
+import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.text.StyleConstants
+import jdk.nashorn.internal.ir.RuntimeNode.Request
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
@@ -92,6 +94,9 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea(): Unit = {
+
+    this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
+    /*
     controller.getStatement match {
       case Statements.roll => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
@@ -111,7 +116,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
         Statements.message(controller.getStatement).substring(6)
       case Statements.wrongField => this.informationArea.text = Statements.message(controller.getStatement)
     }
-
+*/
   }
 
   def drawGameBoard(): Unit = {

@@ -49,6 +49,10 @@ trait ControllerInterface extends Publisher {
 
   def resetGameboard: Unit
 
+  def weHaveAWinner() : Unit
+
+  def nextPlayer(list: List[Player], n: Int): Player
+
   def getCellList: List[Cell]
   def getPlayer: List[Player]
   def getGameBoardGraph: Map[Int, Set[Int]]
@@ -65,6 +69,11 @@ trait ControllerInterface extends Publisher {
   def getUndoManager: UndoManager
   def getGui: SwingGui
   def getEntryGui: EntryGui
+
+  def setSelectedFigures(n: Int, m: Int): Boolean
+  def setStatementStatus(statements: Statements): Boolean
+  def setPlayersTurn(player: Player): Boolean
+  def setDicedNumber(n: Int): Boolean
 }
 
 import scala.swing.Button

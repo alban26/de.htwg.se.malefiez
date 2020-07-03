@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 
-import com.google.inject.{Guice, Inject}
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
@@ -19,9 +19,9 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   var statementStatus: Statements = addPlayer
 
-  val injector = Guice.createInjector(new MalefizModule)
+  val injector: Injector = Guice.createInjector(new MalefizModule)
 
-  val mementoGameboard = gameBoard
+  val mementoGameboard: GameboardInterface = gameBoard
   var playersTurn: Player = _
   var dicedNumber: Int = _
   var selectedFigure: (Int, Int) = _
@@ -39,7 +39,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     true
   }
 
-  def resetGameboard(): Unit = {
+  def resetGameboard: Unit = {
     gameBoard = mementoGameboard
   }
 
@@ -152,4 +152,27 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   def getStatement: Statements = statementStatus
 
+  override def setSelectedFigures(n: Int, m: Int): Boolean = {
+    this.selectedFigure = (n,m)
+    true
+  }
+
+  override def setStatementStatus(statements: Statements): Boolean = {
+    this.statementStatus = statements
+    true
+  }
+
+  override def setPlayersTurn(player: Player): Boolean = {
+    this.playersTurn = player
+    true
+  }
+
+  override def setDicedNumber(n: Int): Boolean = {
+    this.dicedNumber = n
+    true
+  }
+
+  override def nextPlayer(list: List[Player], n: Int): Player = {
+    gameBoard.nextPlayer(list,n)
+  }
 }

@@ -1,9 +1,17 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.Command
 
 class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, controller: Controller) extends Command  {
-  var memento = controller.gameBoard
+  var memento: GameboardInterface = controller.gameBoard
+  var mdicedNumber: Int = controller.dicedNumber
+  var mplayersNurn: Player = controller.playersTurn
+  var mStatementStatus: Statements = controller.statementStatus
+  var mS = controller.s
+
 
 
   override def doStep: Unit = {
@@ -25,7 +33,10 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
   override def undoStep: Unit = {
     val new_memento = controller.gameBoard
+    val new_mDicedNumber = controller.dicedNumber
     controller.gameBoard = memento
+    controller.dicedNumber = mdicedNumber
+
     memento = new_memento
   }
 
