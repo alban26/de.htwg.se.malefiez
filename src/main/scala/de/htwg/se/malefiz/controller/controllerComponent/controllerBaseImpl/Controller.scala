@@ -22,7 +22,6 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   val injector = Guice.createInjector(new MalefizModule)
 
   val mementoGameboard = gameBoard
-
   var playersTurn: Player = _
   var dicedNumber: Int = _
   var selectedFigure: (Int, Int) = _

@@ -57,7 +57,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
 
   val informationArea = new TextArea("")
-  informationArea.font = new Font("Sans Serif", Font.BOLD, 9)
+  informationArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 18)
   informationArea.border = Swing.EtchedBorder(Swing.Lowered)
   informationArea.editable = false
 
@@ -92,33 +92,24 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea(): Unit = {
-    if (controller.getStatement == Statements.roll) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+    controller.getStatement match {
+      case Statements.roll => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
-    } else if (controller.getStatement == Statements.addPlayer) {
-      this.informationArea.text = Statements.message(controller.getStatement)
-    } else if (controller.getStatement == Statements.selectFigure) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 13) + controller.getDicedNumber +
+      case Statements.addPlayer =>  this.informationArea.text = Statements.message(controller.getStatement)
+      case Statements.selectFigure => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 13) + controller.getDicedNumber +
         Statements.message(controller.getStatement).substring(12)
-    } else if (controller.getStatement == Statements.selectField) {
-      this.informationArea.text = Statements.message(controller.getStatement)
-    } else if (controller.getStatement == Statements.selectWrongFigure) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+      case Statements.selectField => this.informationArea.text = Statements.message(controller.getStatement)
+      case Statements.selectWrongFigure => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
-    } else if (controller.getStatement == Statements.nextPlayer) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+      case Statements.nextPlayer => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
-    } else if (controller.getStatement == Statements.wall) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+      case Statements.wall => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
-    } else if (controller.getStatement == Statements.won) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 23) + controller.getPlayersTurn +
+      case Statements.won => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 23) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(22)
-    } else if (controller.getStatement == Statements.wrongWall) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
+      case Statements.wrongWall => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
-    } else if (controller.getStatement == Statements.wrongField) {
-      this.informationArea.text = Statements.message(controller.getStatement)
+      case Statements.wrongField => this.informationArea.text = Statements.message(controller.getStatement)
     }
 
   }
