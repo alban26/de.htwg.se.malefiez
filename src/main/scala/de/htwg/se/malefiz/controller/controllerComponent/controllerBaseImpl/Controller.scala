@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -124,7 +124,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-  def weHaveAWinner : Unit = {
+  def weHaveAWinner() : Unit = {
     publish(new Winner)
   }
 
@@ -149,4 +149,8 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   override def getGui: SwingGui = this.gui
 
   override def getEntryGui: EntryGui = this.entryGui
+
+  def getStatement: Statements = statementStatus
+
+  def getStatementStatus: String = Statements.message(statementStatus)
 }

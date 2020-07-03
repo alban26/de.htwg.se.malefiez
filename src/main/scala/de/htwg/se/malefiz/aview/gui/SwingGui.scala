@@ -56,9 +56,10 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
 
-  val informationArea = new TextArea()
-  informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
+  val informationArea = new TextArea("")
+  informationArea.font = new Font("Sans Serif", Font.BOLD, 9)
   informationArea.border = Swing.EtchedBorder(Swing.Lowered)
+  informationArea.editable = false
 
   def updatePlayerArea(): Unit = {
     var doc = playerArea.styledDocument
@@ -91,7 +92,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea() : Unit = {
-
+    this.informationArea.text = controller.getStatementStatus
   }
 
   def drawGameBoard(): Unit = {
@@ -240,7 +241,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     add(randomNumberArea,
       constraints(6, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(informationArea,
-      constraints(0, 3, gridwidth = 8, fill=GridBagPanel.Fill.Both))
+      constraints(0, 3, gridwidth = 8, fill=GridBagPanel.Fill.Both, ipady = 35))
     add(panel,
       constraints(0,
         0,
@@ -256,8 +257,10 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
       randomNumberArea.text = "\n" + "                " + controller.getDicedNumber.toString
-    case gameBoardChanged: GameBoardChanged => drawGameBoard()
-    case winner: Winner =>
+    case gameBoardChanged: GameBoardChanged =>
+      drawGameBoard()
+      updateInformationArea()
+    case winner: Winner => Dialog.showConfirmation(contents.head, "Spieler: " + controller.getCellList(131).playerNumber + "hat gewonnen", optionType = Dialog.Options.Default)
       visible = false
       controller.getEntryGui.visible = true
   }
