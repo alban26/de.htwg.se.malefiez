@@ -1,12 +1,13 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
+
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube, GameBoard}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 

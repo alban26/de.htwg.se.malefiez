@@ -3,15 +3,10 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
-
-import scala.swing.event.Event
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
-
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -57,6 +52,10 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   val randomNumberArea = new TextArea(" ")
   randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
+
+  val informationArea = new TextArea()
+  informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
+  informationArea.border = Swing.EtchedBorder(Swing.Lowered)
 
   val panel: Panel = new Panel {
 
@@ -215,6 +214,8 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 35))
     add(randomNumberArea,
       constraints(6, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
+    add(informationArea,
+      constraints(0, 3, gridwidth = 8, fill=GridBagPanel.Fill.Both))
     add(panel,
       constraints(0,
         0,

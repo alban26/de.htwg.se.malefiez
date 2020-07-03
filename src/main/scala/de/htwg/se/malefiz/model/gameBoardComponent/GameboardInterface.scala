@@ -2,18 +2,18 @@ package de.htwg.se.malefiz.model.gameBoardComponent
 
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
-
 import scala.collection.mutable.Map
-import scala.io.Source
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 trait GameboardInterface {
 
   def getCellList: List[Cell]
-  def getPlayer: List[Player]
-  def getGameBoardGraph: Map[Int, Set[Int]]
-  def getPossibleCells: Set[Int]
 
+  def getPlayer: List[Player]
+
+  def getGameBoardGraph: Map[Int, Set[Int]]
+
+  def getPossibleCells: Set[Int]
 
   def s(n: Int): Int
 
@@ -91,11 +91,9 @@ trait GameboardInterface {
   def createGameBoard(): String
 }
 
-
 trait CubeInterface {
   def getRandomNumber : Int
 }
-
 
 trait CreatorInterface {
 
