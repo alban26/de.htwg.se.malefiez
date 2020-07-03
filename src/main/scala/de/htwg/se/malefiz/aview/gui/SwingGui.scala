@@ -61,6 +61,72 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
   informationArea.border = Swing.EtchedBorder(Swing.Lowered)
 
+  def updatePlayerArea(): Unit = {
+    var doc = playerArea.styledDocument
+
+    for (i <- controller.getPlayer.indices) {
+      val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
+      i match {
+        case 0 =>
+          var a = playerArea.styledDocument.addStyle("Red" ,null)
+          StyleConstants.setForeground(a,Color.RED)
+          doc.insertString(doc.getLength,playerString, a)
+        case 1 =>
+          var b = playerArea.styledDocument.addStyle("Green",null)
+          StyleConstants.setForeground(b,Color.GREEN)
+          doc.insertString(doc.getLength,playerString, b)
+        case 2 =>
+          var c = playerArea.styledDocument.addStyle("Yellow/Orange",null)
+          StyleConstants.setForeground(c,Color.ORANGE)
+          doc.insertString(doc.getLength,playerString, c)
+        case 3 =>
+          var d = playerArea.styledDocument.addStyle("Blue",null)
+          StyleConstants.setForeground(d,Color.BLUE)
+          doc.insertString(doc.getLength,playerString, d)
+      }
+    }
+  }
+
+  def updatePlayerTurn(): Unit = {
+    this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
+  }
+
+  def drawGameBoard(): Unit = {
+    for (i <- controller.getCellList) {
+      if (i.hasWall) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
+      } else if (i.playerNumber == 1) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
+      } else if (i.playerNumber == 2) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
+      } else if (i.playerNumber == 3) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
+      } else if (i.playerNumber == 4) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
+      } else if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
+        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
+      } else if (!i.possibleCells) {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+      } else {
+        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+      }
+    }
+  }
+
+  def drawCircle(x: Int, y: Int, color: Color): Unit = {
+    g2d.setColor(color)
+    g2d.fillArc(x - 20, y - 20, 35, 35, 0, 360)
+    repaint()
+  }
+
+  def highlightCells(x: Int, y: Int): Unit = {
+    g2d.setStroke(thick)
+    g2d.setColor(Color.CYAN)
+    //g2d.drawRect(x-10,y-10 , 10, 10)
+    g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
+    repaint()
+  }
+
   val panel: Panel = new Panel {
 
     override def paint(g: Graphics2D): Unit = {
@@ -114,74 +180,6 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       range += highR
     }
     range
-  }
-
-
-
-  def updatePlayerArea(): Unit = {
-    var doc = playerArea.styledDocument
-
-    for (i <- controller.getPlayer.indices) {
-      val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
-      i match {
-        case 0 =>
-          var a = playerArea.styledDocument.addStyle("Red" ,null)
-          StyleConstants.setForeground(a,Color.RED)
-          doc.insertString(doc.getLength,playerString, a)
-        case 1 =>
-          var b = playerArea.styledDocument.addStyle("Green",null)
-          StyleConstants.setForeground(b,Color.GREEN)
-          doc.insertString(doc.getLength,playerString, b)
-        case 2 =>
-          var c = playerArea.styledDocument.addStyle("Yellow/Orange",null)
-          StyleConstants.setForeground(c,Color.ORANGE)
-          doc.insertString(doc.getLength,playerString, c)
-        case 3 =>
-          var d = playerArea.styledDocument.addStyle("Blue",null)
-          StyleConstants.setForeground(d,Color.BLUE)
-          doc.insertString(doc.getLength,playerString, d)
-      }
-    }
-  }
-
-  def updatePlayerTurn(): Unit = {
-      this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
-  }
-
-  def drawGameBoard(): Unit = {
-    for (i <- controller.getCellList) {
-      if (i.hasWall) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
-      } else if (i.playerNumber == 1) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
-      } else if (i.playerNumber == 2) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
-      } else if (i.playerNumber == 3) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
-      } else if (i.playerNumber == 4) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
-      } else if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
-        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
-      } else if (!i.possibleCells) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
-      } else {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
-      }
-    }
-  }
-
-  def drawCircle(x: Int, y: Int, color: Color): Unit = {
-    g2d.setColor(color)
-    g2d.fillArc(x - 20, y - 20, 35, 35, 0, 360)
-    repaint()
-  }
-
-  def highlightCells(x: Int, y: Int): Unit = {
-    g2d.setStroke(thick)
-    g2d.setColor(Color.CYAN)
-    //g2d.drawRect(x-10,y-10 , 10, 10)
-    g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
-    repaint()
   }
 
   menuBar = new MenuBar {
