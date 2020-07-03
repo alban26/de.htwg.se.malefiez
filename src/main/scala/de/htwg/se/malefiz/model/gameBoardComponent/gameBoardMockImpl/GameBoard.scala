@@ -88,4 +88,5 @@ case class GameBoard() extends GameboardInterface {
   override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = ???
 
   override def getPossibleCells: Set[Int] = ???
+  
 }

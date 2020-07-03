@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetup extends InstructionTrait {
 
   val setup1: Handler0 = {
-    case Request(x,y,z) if x.contains("start") || z.getPlayer.length == 4 => z.playersTurn = z.getPlayer(0)
+    case Request(x,y,z) if x.contains("start") || z.getPlayer.length == 4 => z.playersTurn = z.getPlayer.head
       Request(x,y,z)
   }
 

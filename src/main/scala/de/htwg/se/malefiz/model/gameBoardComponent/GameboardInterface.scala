@@ -10,10 +10,12 @@ import scala.util.{Failure, Success, Try}
 trait GameboardInterface {
 
   def getCellList: List[Cell]
-  def getPlayer: List[Player]
-  def getGameBoardGraph: Map[Int, Set[Int]]
-  def getPossibleCells: Set[Int]
 
+  def getPlayer: List[Player]
+
+  def getGameBoardGraph: Map[Int, Set[Int]]
+
+  def getPossibleCells: Set[Int]
 
   def s(n: Int): Int
 
