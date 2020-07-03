@@ -47,6 +47,8 @@ trait ControllerInterface extends Publisher {
 
   def redo: Unit
 
+  def resetGameboard: Unit
+
   def getCellList: List[Cell]
   def getPlayer: List[Player]
   def getGameBoardGraph: Map[Int, Set[Int]]

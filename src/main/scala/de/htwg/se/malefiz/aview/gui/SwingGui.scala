@@ -286,14 +286,18 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
   reactions += {
     case ButtonClicked(`cubeButton`) =>
-
       controller.execute("r")
       randomNumberArea.text = "\n" + "                " + controller.getDicedNumber.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
 
-    case winner: Winner => Dialog.showConfirmation(contents.head, "Spieler: " + controller.getCellList(131).playerNumber + "hat gewonnen", optionType = Dialog.Options.Default)
+    case winner: Winner =>
+      drawGameBoard()
+      Dialog.showConfirmation(contents.head, "Gratulation \n " +
+        controller.getPlayer(controller.getPlayersTurn.playerNumber-1).name + " du hast gewonnen!", optionType = Dialog.Options.Default)
+      controller.resetGameboard
+      playerArea.text = ""
       visible = false
       controller.getEntryGui.visible = true
   }

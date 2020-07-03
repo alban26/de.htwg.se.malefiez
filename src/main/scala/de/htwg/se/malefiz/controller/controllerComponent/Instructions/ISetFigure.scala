@@ -57,7 +57,6 @@ object ISetFigure extends InstructionTrait{
   val set6: Handler1 = {
     case Request(x, y, z) =>
       y.nextState(Setup(z))
-      z.resetGameboard()
       z.weHaveAWinner
       z.statementStatus = Statements.won
       Statements.message(z.statementStatus).substring(0,23) + z.playersTurn + Statements.message(z.statementStatus).substring(22)
