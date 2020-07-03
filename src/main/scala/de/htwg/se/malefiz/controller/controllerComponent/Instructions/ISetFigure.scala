@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone, Setup}
-import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, Statements}
 import de.htwg.se.malefiz.controller.controllerComponent
 
 object ISetFigure extends InstructionTrait{
@@ -19,7 +19,9 @@ object ISetFigure extends InstructionTrait{
 
   val set8: Handler1 = {
     case Request(x, y, z) =>
-      "Nicht so schnell! Gehe bitte nur auf die markierten Felder!"
+      z.statementStatus = Statements.wrongField
+      Statements.message(z.statementStatus)
+      //"Nicht so schnell! Gehe bitte nur auf die markierten Felder!"
   }
 
   val set2: Handler0 = {
@@ -35,13 +37,17 @@ object ISetFigure extends InstructionTrait{
       z.setPosisCellFalse(z.getPossibleCells.toList)
       z.playersTurn = z.gameBoard.nextPlayer(z.getPlayer,z.playersTurn.playerNumber-1)
       y.nextState(Roll(z))
-      s"Lieber ${z.playersTurn} du bist als nächstes dran. Drücke eine beliebige Taste um zu würfeln."
+      z.statementStatus = Statements.nextPlayer
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
+      //s"Lieber ${z.playersTurn} du bist als nächstes dran. Drücke eine beliebige Taste um zu würfeln."
   }
 
   val set4: Handler1 = {
     case Request(x, y, z) =>
       y.nextState(SetStone(z))
-      s"Lieber ${z.playersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
+      z.statementStatus = Statements.wall
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
+      //s"Lieber ${z.playersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
   }
   val set5: Handler0 = {
     case Request(x, y, z) if x.head.toInt == 131 =>
@@ -53,7 +59,9 @@ object ISetFigure extends InstructionTrait{
       y.nextState(Setup(z))
       z.resetGameboard()
       z.weHaveAWinner
-      s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
+      z.statementStatus = Statements.won
+      Statements.message(z.statementStatus).substring(0,23) + z.playersTurn + Statements.message(z.statementStatus).substring(22)
+      //s"Herzlichen Glückwunsch ${z.playersTurn} du hast das Spiel gewonnen! ."
   }
 
 

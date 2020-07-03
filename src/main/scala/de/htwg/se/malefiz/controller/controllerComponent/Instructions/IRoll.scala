@@ -16,7 +16,9 @@ object IRoll extends InstructionTrait{
 
   val roll3: Handler1 = {
     case Request(x,y,z) => y nextState SelectFigure(z)
-      s"Du hast eine ${z.dicedNumber} gewürfelt. Wähle nun deine gewünschte Figur aus."
+      z.statementStatus = Statements.selectFigure
+      Statements.message(z.statementStatus).substring(0,13) + z.dicedNumber + Statements.message(z.statementStatus).substring(12)
+      //s"Du hast eine ${z.dicedNumber} gewürfelt. Wähle nun deine gewünschte Figur aus."
   }
 
   val roll = roll1 andThen roll2 andThen roll3 andThen log

@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
 import de.htwg.se.malefiz.controller.controllerComponent
-import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, Statements}
 
 object ISetStone extends InstructionTrait {
 
@@ -25,12 +25,15 @@ object ISetStone extends InstructionTrait {
       z.setPosisCellFalse(z.getPossibleCells.toList)
       z.playersTurn = z.gameBoard.nextPlayer(z.getPlayer,z.playersTurn.playerNumber-1)
       y.nextState(Roll(z))
-      s"Lieber ${z.playersTurn} du bist als nächstes dran. Drücke eine beliebige Taste um zu würfeln."
+      z.statementStatus = Statements.nextPlayer
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
   }
 
   val set4: Handler1 = {
     case Request(x, y, z) =>
-      s"Lieber ${z.playersTurn} du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus."
+      z.statementStatus = Statements.wrongWall
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
+      //s"Lieber ${z.playersTurn} du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus."
   }
 
   val set = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log)

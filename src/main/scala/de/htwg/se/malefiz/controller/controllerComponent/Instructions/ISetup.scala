@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
-import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, Statements}
 
 object ISetup extends InstructionTrait {
 
@@ -12,12 +12,16 @@ object ISetup extends InstructionTrait {
 
   val setup2: Handler1 = {
     case Request(x,y,z) => y.nextState(Roll(z))
-      s"Lieber ${z.playersTurn} du bist als erstes dran. Drücke eine beliebige Taste um zu würfeln!"
+      z.statementStatus = Statements.roll
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
+      //s"Lieber ${z.playersTurn} du bist als erstes dran. Drücke eine beliebige Taste um zu würfeln!"
   }
 
   val setup3: Handler1 = {
     case Request(x, y, z) => z.createPlayer(x(1))
-      s"Spieler ${x(1)} wurde erfolgreich angelegt."
+      z.statementStatus = Statements.addPlayer
+      Statements.message(z.statementStatus).substring(0,8) + x(1) + Statements.message(z.statementStatus).substring(7)
+      //s"Spieler ${x(1)} wurde erfolgreich angelegt."
   }
 
   val setup = setup1 andThen setup2 orElse setup3 andThen log

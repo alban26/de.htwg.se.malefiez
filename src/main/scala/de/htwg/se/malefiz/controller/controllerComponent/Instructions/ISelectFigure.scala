@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SetFigure
 import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISetStone.Handler1
-import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request}
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, Statements}
 
 object ISelectFigure extends InstructionTrait{
   val select1: Handler0 = {
@@ -24,7 +24,9 @@ object ISelectFigure extends InstructionTrait{
   val select4: Handler1 = {
     case Request(x,y,z) =>
       y nextState SetFigure(z)
-      "Du kannst nun auf folgende Felder gehen. Wähle eine aus indem du die Nummer eintippst."
+      z.statementStatus = Statements.selectField
+      Statements.message(z.statementStatus)
+      //"Du kannst nun auf folgende Felder gehen. Wähle eine aus indem du die Nummer eintippst."
   }
 
   /*wenn nicht eigener Spieler ausgewählt wird*/
@@ -35,7 +37,8 @@ object ISelectFigure extends InstructionTrait{
 
   val select6: Handler1 = {
     case Request(x, y, z) =>
-      s"Lieber ${z.playersTurn} bitte wähle deine eigene Figur aus."
+      z.statementStatus = Statements.selectWrongFigure
+      Statements.message(z.statementStatus).substring(0,7) + z.playersTurn + Statements.message(z.statementStatus).substring(6)
   }
 
 

@@ -1,9 +1,11 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
+
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
+import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube, GameBoard}
@@ -14,6 +16,8 @@ import scala.collection.mutable
 import scala.swing.Publisher
 
 class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
+
+  var statementStatus: Statements = roll
 
   val injector = Guice.createInjector(new MalefizModule)
 
@@ -28,6 +32,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   var entryGui = new EntryGui(this)
   var gui = new SwingGui(this)
+
 
   def execute(string: String): Boolean = {
     s.run(string)
