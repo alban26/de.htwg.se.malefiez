@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetStone, Setup}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetWall, Setup}
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 
@@ -42,7 +42,7 @@ object ISetFigure extends InstructionTrait{
 
   val set4: Handler1 = {
     case Request(x, y, z) =>
-      y.nextState(SetStone(z))
+      y.nextState(SetWall(z))
       z.setStatementStatus(wall)
       Statements.value(StatementRequest(z))
   }
@@ -54,8 +54,8 @@ object ISetFigure extends InstructionTrait{
   val set6: Handler1 = {
     case Request(x, y, z) =>
       y.nextState(Setup(z))
-      z.weHaveAWinner()
       z.setStatementStatus(won)
+      z.weHaveAWinner()
       Statements.value(StatementRequest(z))
   }
 

@@ -7,7 +7,7 @@ import java.io.File
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, StatementRequest, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.text.StyleConstants
 import jdk.nashorn.internal.ir.RuntimeNode.Request
@@ -93,31 +93,8 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
   }
 
-  def updateInformationArea(): Unit = {
+  def updateInformationArea(): Unit = this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
 
-    this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
-    /*
-    controller.getStatement match {
-      case Statements.roll => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
-      case Statements.addPlayer =>  this.informationArea.text = Statements.message(controller.getStatement)
-      case Statements.selectFigure => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 13) + controller.getDicedNumber +
-        Statements.message(controller.getStatement).substring(12)
-      case Statements.selectField => this.informationArea.text = Statements.message(controller.getStatement)
-      case Statements.selectWrongFigure => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
-      case Statements.nextPlayer => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
-      case Statements.wall => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
-      case Statements.won => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 23) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(22)
-      case Statements.wrongWall => this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
-      case Statements.wrongField => this.informationArea.text = Statements.message(controller.getStatement)
-    }
-*/
-  }
 
   def drawGameBoard(): Unit = {
     for (i <- controller.getCellList) {
@@ -290,8 +267,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
     case winner: Winner =>
       drawGameBoard()
-      Dialog.showConfirmation(contents.head, "Gratulation \n " +
-        controller.getPlayer(controller.getPlayersTurn.playerNumber-1).name + " du hast gewonnen!", optionType = Dialog.Options.Default)
+      Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
       controller.resetGameboard
       playerArea.text = ""
       visible = false

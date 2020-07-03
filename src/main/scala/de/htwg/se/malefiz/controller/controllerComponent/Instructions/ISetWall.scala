@@ -5,7 +5,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
-object ISetStone extends InstructionTrait {
+object ISetWall extends InstructionTrait {
 
   val set1: Handler0 = {
     case Request(x, y, z) if z.getCellList(x.head.toInt).wallPermission && z.getCellList(x.head.toInt).playerNumber == 0 =>
