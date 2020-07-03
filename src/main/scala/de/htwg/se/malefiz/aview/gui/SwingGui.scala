@@ -8,9 +8,8 @@ import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import javax.imageio.ImageIO
-import javax.swing.text.{DefaultStyledDocument, StyleConstants, StyledDocument}
+import javax.swing.text.StyleConstants
 
-import scala.swing.Font.Style
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -89,6 +88,10 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
   def updatePlayerTurn(): Unit = {
     this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
+  }
+
+  def updateInformationArea() : Unit = {
+
   }
 
   def drawGameBoard(): Unit = {
@@ -248,6 +251,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   listenTo(cubeButton, controller)
+
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
