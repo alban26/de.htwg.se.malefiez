@@ -3,10 +3,14 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
+
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Winner}
 import javax.imageio.ImageIO
+import javax.swing.text.{DefaultStyledDocument, StyleConstants, StyledDocument}
+
+import scala.swing.Font.Style
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -23,7 +27,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
-  var playerArea = new TextArea("")
+  var playerArea = new TextPane
   playerArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
   playerArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerArea.editable = false
@@ -115,8 +119,28 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
 
   def updatePlayerArea(): Unit = {
+    var doc = playerArea.styledDocument
+
     for (i <- controller.getPlayer.indices) {
-      this.playerArea.text += "Spieler " + (i + 1) + ": " + controller.getPlayer(i) + "\n"
+      val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
+      i match {
+        case 0 =>
+          var a = playerArea.styledDocument.addStyle("Red" ,null)
+          StyleConstants.setForeground(a,Color.RED)
+          doc.insertString(doc.getLength,playerString, a)
+        case 1 =>
+          var b = playerArea.styledDocument.addStyle("Green",null)
+          StyleConstants.setForeground(b,Color.GREEN)
+          doc.insertString(doc.getLength,playerString, b)
+        case 2 =>
+          var c = playerArea.styledDocument.addStyle("Yellow/Orange",null)
+          StyleConstants.setForeground(c,Color.ORANGE)
+          doc.insertString(doc.getLength,playerString, c)
+        case 3 =>
+          var d = playerArea.styledDocument.addStyle("Blue",null)
+          StyleConstants.setForeground(d,Color.BLUE)
+          doc.insertString(doc.getLength,playerString, d)
+      }
     }
   }
 
@@ -199,19 +223,19 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       c
     }
     add(playerLabel,
-      constraints(0, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 35))
+      constraints(0, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
     add(playerArea,
       constraints(0, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(playerTurnLabel,
-      constraints(2, 1,  gridwidth = 2, fill=GridBagPanel.Fill.Both ,ipadx = 104, ipady =  35))
+      constraints(2, 1,  gridwidth = 2, fill=GridBagPanel.Fill.Both ,ipadx = 104, ipady =  15))
     add(playerTurnArea,
       constraints(2, 2,gridwidth = 2, fill=GridBagPanel.Fill.Both ))
     add(cubeLabel,
-      constraints(4, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 35))
+      constraints(4, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
     add(cubeButton,
       constraints(4, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(randomNumberLabel,
-      constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 35))
+      constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 15))
     add(randomNumberArea,
       constraints(6, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
     add(informationArea,
