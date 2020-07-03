@@ -17,7 +17,7 @@ import scala.swing.Publisher
 
 class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
 
-  var statementStatus: Statements = roll
+  var statementStatus: Statements = addPlayer
 
   val injector = Guice.createInjector(new MalefizModule)
 

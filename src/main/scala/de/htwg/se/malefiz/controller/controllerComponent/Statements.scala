@@ -6,7 +6,7 @@ object Statements extends Enumeration {
     val addPlayer ,roll ,selectFigure, selectField, wrongField, selectWrongFigure, nextPlayer, wall, wrongWall, won = Value
 
     val map = Map[Statements, String](
-      addPlayer -> s"Spieler wurde erfolgreich angelegt.",
+      addPlayer -> "Spieler wurden erfolgreich angelegt.",
       roll -> "Lieber du bist als erstes dran. Drücke eine beliebige Taste um zu würfeln!",
       selectFigure -> "Du hast eine gewürfelt. Wähle nun deine gewünschte Figur aus.",
       selectField -> "Du kannst nun auf folgende Felder gehen. Wähle eine aus indem du die Nummer eintippst.",

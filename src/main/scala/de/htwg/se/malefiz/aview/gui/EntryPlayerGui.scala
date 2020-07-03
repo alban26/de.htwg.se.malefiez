@@ -96,6 +96,7 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
       controller.getGui.updatePlayerArea()
       controller.getGui.updatePlayerTurn()
       controller.getGui.drawGameBoard()
+      controller.getGui.updateInformationArea()
   }
   size = new Dimension(500, 500)
 }

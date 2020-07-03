@@ -96,8 +96,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
         Statements.message(controller.getStatement).substring(6)
     } else if (controller.getStatement == Statements.addPlayer) {
-      this.informationArea.text = Statements.message(controller.getStatement).substring(0, 7) + controller.getPlayersTurn +
-        Statements.message(controller.getStatement).substring(6)
+      this.informationArea.text = Statements.message(controller.getStatement)
     } else if (controller.getStatement == Statements.selectFigure) {
       this.informationArea.text = Statements.message(controller.getStatement).substring(0, 13) + controller.getDicedNumber +
         Statements.message(controller.getStatement).substring(12)
@@ -176,11 +175,13 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
 
+
         if (state.isInstanceOf[SelectFigure]) {
           for (i <- controller.getCellList) {
             if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
               controller.execute(i.playerNumber + " " + i.figureNumber)
               drawGameBoard()
+              updateInformationArea()
             }
           }
         } else {
@@ -189,6 +190,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
               controller.execute(i.cellNumber.toString)
               drawGameBoard()
               updatePlayerTurn()
+              updateInformationArea()
             }
           }
         }
@@ -284,11 +286,13 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
 
   reactions += {
     case ButtonClicked(`cubeButton`) =>
+
       controller.execute("r")
       randomNumberArea.text = "\n" + "                " + controller.getDicedNumber.toString
+      updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
-      updateInformationArea()
+
     case winner: Winner => Dialog.showConfirmation(contents.head, "Spieler: " + controller.getCellList(131).playerNumber + "hat gewonnen", optionType = Dialog.Options.Default)
       visible = false
       controller.getEntryGui.visible = true
