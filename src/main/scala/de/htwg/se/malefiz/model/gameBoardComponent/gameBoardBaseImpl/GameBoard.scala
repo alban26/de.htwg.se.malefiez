@@ -288,10 +288,8 @@ case class GameBoard (cellList: List[Cell],
     }
   }
 
-  def createPlayer(text: String): GameBoard = {
-      "Spieler " + text + " wurde erzeugt - bitte trage noch mindestens einen weiteren Spieler ein."
-      copy(players =  players :+ Player(players.length+1, text))
-  }
+  def createPlayer(text: String): GameBoard = copy(players =  players :+ Player(players.length+1, text))
+
 
   def createGameBoard(): String = buildString(cellList)
 

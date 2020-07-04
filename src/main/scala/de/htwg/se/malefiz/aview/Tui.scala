@@ -16,13 +16,13 @@ class Tui (controller: ControllerInterface) extends Reactor {
     input match {
       case "z" => controller.undo
       case "s"=> controller.save
-      case "l" => controller.load
+      case "load" => controller.load
       case "y" => controller.redo
       case "exit" => System.exit(0)
       case _ =>
         controller.execute(input)
         textPrint("-------")
-        textPrint(controller.getPlayer.mkString("\n"))
+
     }
   }
 
@@ -32,6 +32,7 @@ class Tui (controller: ControllerInterface) extends Reactor {
 
   def update: Unit = {
     textPrint(controller.gameBoardToString)
+    textPrint(controller.getPlayer.mkString("\n"))
   }
 
   def textPrint(str: String): Unit = println(str)
