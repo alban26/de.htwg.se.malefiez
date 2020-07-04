@@ -21,6 +21,6 @@ object IRoll extends InstructionTrait{
       Statements.value(StatementRequest(z))
   }
 
-  val roll = roll1 andThen roll2 andThen roll3 andThen log
+  val roll: PartialFunction[Request, String] = roll1 andThen roll2 andThen roll3 andThen log
 
 }
