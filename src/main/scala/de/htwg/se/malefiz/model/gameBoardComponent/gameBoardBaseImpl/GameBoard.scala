@@ -1,8 +1,10 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 
+import com.google.inject.Inject
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.collection.mutable
 import scala.collection.mutable.Map
 

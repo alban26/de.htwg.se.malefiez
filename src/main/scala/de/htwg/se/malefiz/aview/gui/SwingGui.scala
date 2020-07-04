@@ -10,7 +10,6 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, StatementRequest, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.text.StyleConstants
-import jdk.nashorn.internal.ir.RuntimeNode.Request
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
@@ -113,7 +112,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       }
     }
     for (i <- controller.getCellList) {
-      if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
+      if (i.possibleCells && i.playerNumber != controller.getPlayersTurn.playerNumber) {
         this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
       }
     }
