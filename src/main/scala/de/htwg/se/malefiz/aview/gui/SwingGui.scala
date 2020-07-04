@@ -108,12 +108,13 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
         this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
       } else if (i.playerNumber == 4) {
         this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
-      } else if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
-        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
-      } else if (!i.possibleCells) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
       } else {
         this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+      }
+    }
+    for (i <- controller.getCellList) {
+      if (i.possibleCells || i.possibleCells && i.playerNumber != 0) {
+        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
       }
     }
   }
