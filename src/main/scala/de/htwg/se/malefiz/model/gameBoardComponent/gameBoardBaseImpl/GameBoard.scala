@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable
 import scala.collection.mutable.Map
 
-case class GameBoard @Inject() (cellList: List[Cell],
+case class GameBoard (cellList: List[Cell],
                                 players: List[Player],
                                 gameBoardGraph: Map[Int, Set[Int]],
                                 possibleCells: Set[Int]) extends GameboardInterface {
