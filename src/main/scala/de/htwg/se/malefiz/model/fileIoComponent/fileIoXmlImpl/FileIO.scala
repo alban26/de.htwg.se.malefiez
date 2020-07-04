@@ -23,7 +23,7 @@ class FileIO extends FileIOInterface{
   def saveString(gameboard: GameboardInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("gameboardList.xml"))
-    val prettyPrinter = new PrettyPrinter(10,1)
+    val prettyPrinter = new PrettyPrinter(1,1)
     val xml = prettyPrinter.format(gameboardToXml(gameboard))
     pw.write(xml)
     pw.close
@@ -32,7 +32,7 @@ class FileIO extends FileIOInterface{
   def gameboardToXml(gameboard: GameboardInterface) : Elem= {
     <gameboard size={gameboard.getCellList.size.toString}>
 
-      {gameboard}
+      {gameboard.getCellList}
 
     </gameboard>
   }
