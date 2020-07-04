@@ -74,6 +74,9 @@ trait ControllerInterface extends Publisher {
   def setStatementStatus(statements: Statements): Boolean
   def setPlayersTurn(player: Player): Boolean
   def setDicedNumber(n: Int): Boolean
+
+  def save: Unit
+  def load: Unit
 }
 
 import scala.swing.Button

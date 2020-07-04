@@ -2,11 +2,15 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 
 import com.google.inject.{Guice, Inject, Injector}
+import com.google.inject.{ Guice, Inject }
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
+import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -20,6 +24,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   var statementStatus: Statements = addPlayer
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
+  val fileIo = injector.instance[FileIOInterface]
 
   val mementoGameboard: GameboardInterface = gameBoard
   var playersTurn: Player = _
@@ -174,5 +179,15 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def nextPlayer(list: List[Player], n: Int): Player = {
     gameBoard.nextPlayer(list,n)
+  }
+
+  override def save: Unit = {
+    fileIo.save(gameBoard)
+    publish(new GameBoardChanged)
+  }
+
+  override def load: Unit = {
+    gameBoard = fileIo.load
+    publish(new GameBoardChanged)
   }
 }

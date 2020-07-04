@@ -15,6 +15,8 @@ class Tui (controller: ControllerInterface) extends Reactor {
     update
     input match {
       case "z" => controller.undo
+      case "s"=> controller.save
+      case "l" => controller.load
       case "y" => controller.redo
       case "exit" => System.exit(0)
       case _ =>

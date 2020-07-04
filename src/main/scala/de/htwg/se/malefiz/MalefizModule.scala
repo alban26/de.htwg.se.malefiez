@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import de.htwg.se.malefiz.Malefiz.{cellConfigFile, cellLinksFile}
 import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
+import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Creator, GameBoard}
 
@@ -18,6 +19,9 @@ class MalefizModule extends AbstractModule with ScalaModule{
       Creator().getCellGraph(cellLinksFile),
       Set().empty
     ))
+
+    bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
+
   }
 
 }
