@@ -35,5 +35,5 @@ object ISetWall extends InstructionTrait {
       Statements.value(StatementRequest(z))
   }
 
-  val set = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log)
+  val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log)
 }
