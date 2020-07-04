@@ -53,7 +53,6 @@ class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
       constraints(0, 1,fill=GridBagPanel.Fill.Horizontal ))
     add(quitButton,
       constraints(0, 2))
-
   }
 
  listenTo(newGameButton, quitButton)
