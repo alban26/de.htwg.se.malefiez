@@ -80,7 +80,7 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
     add(playerFourName,
       constraints(1, 4, ipady = 20))
     add(continueButton,
-      constraints(0, 5, gridwidth = 2, ipady = 20, anchor = GridBagPanel.Anchor.Center ))
+      constraints(0, 8, gridwidth = 2, ipady = 20, anchor = GridBagPanel.Anchor.South ))
 
   }
 

@@ -42,17 +42,17 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   playerTurnLabel.border = Swing.EtchedBorder(Swing.Lowered)
   playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
 
-  val playerTurnArea = new TextArea("")
+  val playerTurnArea = new Label("")
   playerTurnArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerTurnArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
-  playerTurnArea.editable = false
+
 
   val cubeLabel = new Label("Dice")
   cubeLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   cubeLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
   val cubeButton = new Button()
-  val cubeIcon = new ImageIcon("project/dice.png")
+  val cubeIcon = new ImageIcon("src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png")
   cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EtchedBorder(Swing.Lowered)
   cubeButton.font = new Font("Sans Serif", Font.BOLD, 18)
@@ -61,7 +61,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   randomNumberLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
-  val randomNumberArea = new TextArea(" ")
+  val randomNumberArea = new Label("")
   randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
 
@@ -150,7 +150,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Unit = {
-    this.playerTurnArea.text = "\n" + "             " + controller.getPlayersTurn.name
+    this.playerTurnArea.text = controller.getPlayersTurn.name
   }
 
   def updateInformationArea(): Unit = this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
@@ -265,7 +265,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = "\n" + "                " + controller.getDicedNumber.toString
+      randomNumberArea.text = controller.getDicedNumber.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
