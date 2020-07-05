@@ -16,7 +16,6 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
   centerOnScreen()
 
   val playerLabel: Label = new Label("Enter the names")
-  playerLabel.foreground = Color.MAGENTA
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 22)
 
   val playerOneLabel: Label = new Label("Player 1   ")
@@ -45,7 +44,8 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
     def constraints(x: Int, y:Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,
-                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                    ipadx: Int = 0 , ipady: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
       val c = new Constraints
       c.gridx = x
@@ -55,29 +55,32 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
       c.weightx = weightx
       c.weighty = weighty
       c.fill = fill
+      c.ipadx = ipadx
+      c.ipady = ipady
+      c.anchor = anchor
       c
     }
 
     add(playerLabel,
-      constraints(0, 0,fill=GridBagPanel.Fill.Horizontal))
+      constraints(0, 0, gridwidth = 2, ipady = 20, fill=GridBagPanel.Fill.Horizontal, anchor = GridBagPanel.Anchor.PageStart))
     add(playerOneLabel,
-      constraints(0, 1))
+      constraints(0, 1, ipady = 20))
     add(playerOneName,
-      constraints(0, 2))
+      constraints(1, 1, ipady = 20))
     add(playerTwoLabel,
-      constraints(0, 3))
+      constraints(0, 2, ipady = 20))
     add(playerTwoName,
-      constraints(0, 4))
+      constraints(1, 2, ipady = 20))
     add(playerThreeLabel,
-      constraints(0, 5))
+      constraints(0, 3, ipady = 20))
     add(playerThreeName,
-      constraints(0, 6))
+      constraints(1, 3, ipady = 20))
     add(playerFourLabel,
-      constraints(0, 7))
+      constraints(0, 4, ipady = 20))
     add(playerFourName,
-      constraints(0, 8))
+      constraints(1, 4, ipady = 20))
     add(continueButton,
-      constraints(0, 9))
+      constraints(0, 5, gridwidth = 2, ipady = 20, anchor = GridBagPanel.Anchor.Center ))
 
   }
 

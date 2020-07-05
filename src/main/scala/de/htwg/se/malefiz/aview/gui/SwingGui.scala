@@ -24,6 +24,11 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   centerOnScreen()
   visible = false
 
+  var mouseX: Set[Int] = Set().empty
+  var mouseY: Set[Int] = Set().empty
+  val thick = new BasicStroke(3f)
+
+
   val playerLabel = new Label("Player")
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
@@ -65,6 +70,44 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   informationArea.border = Swing.EtchedBorder(Swing.Lowered)
   informationArea.editable = false
 
+  val panel: Panel = new Panel {
+
+    override def paint(g: Graphics2D): Unit = {
+      g.drawImage(bimage, 0, 0, null)
+    }
+
+    preferredSize = new Dimension(bimage.getWidth(null), bimage.getHeight())
+    listenTo(mouse.clicks)
+
+    reactions += {
+
+      case MouseClicked(_, p, _, 1, _) =>
+        mouseX = getRange(p.x)
+        mouseY = getRange(p.y)
+        val state = controller.getGameState.state
+
+
+        if (state.isInstanceOf[SelectFigure]) {
+          for (i <- controller.getCellList) {
+            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
+              controller.execute(i.playerNumber + " " + i.figureNumber)
+              drawGameBoard()
+              updateInformationArea()
+            }
+          }
+        } else {
+          for (i <- controller.getCellList) {
+            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
+              controller.execute(i.cellNumber.toString)
+              drawGameBoard()
+              updatePlayerTurn()
+              updateInformationArea()
+            }
+          }
+        }
+    }
+  }
+
   def updatePlayerArea(): Unit = {
     var doc = playerArea.styledDocument
 
@@ -89,6 +132,21 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
           doc.insertString(doc.getLength,playerString, d)
       }
     }
+  }
+
+  def getRange(u: Int): Set[Int] = {
+    var lowR = u
+    var highR = u
+    var range: Set[Int] = Set().empty
+    for (i <- 0 to 20) {
+      lowR = lowR - 1
+      range += lowR
+    }
+    for (i <- 0 to 20) {
+      highR = highR + 1
+      range += highR
+    }
+    range
   }
 
   def updatePlayerTurn(): Unit = {
@@ -135,63 +193,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     repaint()
   }
 
-  val panel: Panel = new Panel {
 
-    override def paint(g: Graphics2D): Unit = {
-      g.drawImage(bimage, 0, 0, null)
-    }
-
-    preferredSize = new Dimension(bimage.getWidth(null), bimage.getHeight())
-    listenTo(mouse.clicks)
-
-    reactions += {
-
-      case MouseClicked(_, p, _, 1, _) =>
-        mouseX = getRange(p.x)
-        mouseY = getRange(p.y)
-        val state = controller.getGameState.state
-
-
-        if (state.isInstanceOf[SelectFigure]) {
-          for (i <- controller.getCellList) {
-            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
-              controller.execute(i.playerNumber + " " + i.figureNumber)
-              drawGameBoard()
-              updateInformationArea()
-            }
-          }
-        } else {
-          for (i <- controller.getCellList) {
-            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
-              controller.execute(i.cellNumber.toString)
-              drawGameBoard()
-              updatePlayerTurn()
-              updateInformationArea()
-            }
-          }
-        }
-    }
-  }
-
-  private val thick = new BasicStroke(3f)
-
-  var mouseX: Set[Int] = Set().empty
-  var mouseY: Set[Int] = Set().empty
-
-  def getRange(u: Int): Set[Int] = {
-    var lowR = u
-    var highR = u
-    var range: Set[Int] = Set().empty
-    for (i <- 0 to 20) {
-      lowR = lowR - 1
-      range += lowR
-    }
-    for (i <- 0 to 20) {
-      highR = highR + 1
-      range += highR
-    }
-    range
-  }
 
   menuBar = new MenuBar {
     contents += new Menu("Malefiz") {
@@ -267,7 +269,6 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
-
     case winner: Winner =>
       drawGameBoard()
       Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
