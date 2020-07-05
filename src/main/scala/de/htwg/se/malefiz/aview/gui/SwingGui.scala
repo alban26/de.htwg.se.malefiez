@@ -9,6 +9,7 @@ import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, StatementRequest, Statements, Winner}
 import javax.imageio.ImageIO
+import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 
 import scala.swing._
@@ -45,7 +46,9 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   cubeLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   cubeLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
-  val cubeButton = new Button("throw Cube")
+  val cubeButton = new Button()
+  val cubeIcon = new ImageIcon("project/dice.png")
+  cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EtchedBorder(Swing.Lowered)
   cubeButton.font = new Font("Sans Serif", Font.BOLD, 18)
 
@@ -237,9 +240,9 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
     add(playerTurnArea,
       constraints(2, 2,gridwidth = 2, fill=GridBagPanel.Fill.Both ))
     add(cubeLabel,
-      constraints(4, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
+      constraints(4, 1, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
     add(cubeButton,
-      constraints(4, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
+      constraints(4, 2))
     add(randomNumberLabel,
       constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 15))
     add(randomNumberArea,
