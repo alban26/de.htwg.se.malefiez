@@ -29,7 +29,19 @@ class CellSpec extends WordSpec with Matchers{
     }
     " if it has a player and Figure, it should have a specific Tui appereance" in {
       val cellPlayerAndFigure = Cell(0, 1, 2, false, false, Point(0,0), false, false)
-      //cellPlayerAndFigure.toString should be ("[" + cellPlayerAndFigure.playerNumber.toString + "|" + cellPlayerAndFigure.figureNumber.toString + "]")
+      cellPlayerAndFigure.toString should be ("(1)")
+    }
+    "" in {
+      val cellPlayerAndFigure = Cell(0, 1, 2, false, false, Point(0,0), true, false)
+      cellPlayerAndFigure.toString should be ("(1|2)")
+    }
+    "if cell has a wall and possibleCell is true" in {
+      val cellPlayerAndFigure = Cell(40, 1, 2, true, true, Point(0,0), true, true)
+      cellPlayerAndFigure.toString should be ("[X|40]")
+    }
+    "if cell.possibleCell is true" in {
+      val cellPlayerAndFigure = Cell(35, 0, 0, false, false, Point(0,0), true, true)
+      cellPlayerAndFigure.toString should be ("[35]")
     }
 
   }
