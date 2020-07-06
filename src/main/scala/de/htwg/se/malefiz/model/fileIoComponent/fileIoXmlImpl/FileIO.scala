@@ -71,6 +71,7 @@ class FileIO extends FileIOInterface{
   }
 
 
+
   def cellToXml(l1: Int, cell: List[Cell], l2: Int, player: List[Player]): Elem = {
     <cell cellnumber={cell(l1).cellNumber.toString} playernumber={cell(l1).playerNumber.toString}
           figurenumber={cell(l1).figureNumber.toString} haswall={cell(l1).hasWall.toString} playername={player(l2).name} playersize={player.size.toString}>

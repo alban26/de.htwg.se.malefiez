@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 import scala.swing.Reactor
 
-
 class Tui (controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
@@ -22,7 +21,6 @@ class Tui (controller: ControllerInterface) extends Reactor {
       case _ =>
         controller.execute(input)
         textPrint("-------")
-
     }
   }
 
