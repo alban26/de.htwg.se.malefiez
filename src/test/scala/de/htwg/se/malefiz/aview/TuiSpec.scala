@@ -1,5 +1,5 @@
 package de.htwg.se.malefiz.aview
-
+/*
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
@@ -36,4 +36,4 @@ class TuiSpec extends WordSpec with Matchers {
       }
     }
   }
-}
+}*/
