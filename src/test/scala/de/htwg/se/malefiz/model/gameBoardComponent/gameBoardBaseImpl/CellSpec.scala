@@ -43,7 +43,9 @@ class CellSpec extends WordSpec with Matchers{
       val cellPlayerAndFigure = Cell(35, 0, 0, false, false, Point(0,0), true, true)
       cellPlayerAndFigure.toString should be ("[35]")
     }
-
+    "if cell.possibleCell is true and a player is an the cell" in {
+      val cellPlayerAndFigure = Cell(35, 3, 0, false, false, Point(0,0), true, true)
+      cellPlayerAndFigure.toString should be ("[3|35]")
+    }
   }
-
 }
