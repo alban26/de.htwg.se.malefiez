@@ -1,9 +1,7 @@
 package de.htwg.se.malefiz.aview
 
-
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player

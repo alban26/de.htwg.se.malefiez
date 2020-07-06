@@ -9,7 +9,7 @@ object Statements extends Enumeration with InstructionTrait {
       case StatementRequest(z) if z.getStatement == addPlayer => "Spieler wurden erfolgreich angelegt."
       case StatementRequest(z) if z.getStatement == wrongField => "Nicht so schnell! Gehe bitte nur auf die markierten Felder!"
       case StatementRequest(z) if z.getStatement == selectFigure => s"${z.getPlayersTurn} du hast eine ${z.getDicedNumber} gewürfelt. Wähle deine gewünschte Figur aus!"
-      case StatementRequest(z) if z.getStatement == selectField => "Du kannst nun auf folgende Felder gehen. Wähle eines der ,arkierten Felder aus."
+      case StatementRequest(z) if z.getStatement == selectField => "Du kannst nun auf folgende Felder gehen. Wähle ein markiertes Felder aus."
       case StatementRequest(z) if z.getStatement == selectWrongFigure => s"${z.getPlayersTurn} bitte wähle deine eigene Figur aus!"
       case StatementRequest(z) if z.getStatement == nextPlayer => s"${z.getPlayersTurn} du bist als nächstes dran. Klicke auf den Würfel!"
       case StatementRequest(z) if z.getStatement == wall => s"${z.getPlayersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
