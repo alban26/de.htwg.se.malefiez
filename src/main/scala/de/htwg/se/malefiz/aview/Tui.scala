@@ -8,7 +8,6 @@ class Tui (controller: ControllerInterface) extends Reactor {
   listenTo(controller)
 
   def processInput1(input: String): Unit = {
-    update
     input match {
       case "z" => controller.undo
       case "s"=> controller.save
