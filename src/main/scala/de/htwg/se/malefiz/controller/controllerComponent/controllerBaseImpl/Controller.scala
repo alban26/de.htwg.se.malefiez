@@ -2,8 +2,10 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.Injector
 import com.google.inject.{Guice, Inject}
+import de.htwg.se.malefiz.Malefiz.controller
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
+import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
@@ -21,6 +23,14 @@ import scala.swing.Publisher
 class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
 
   var statementStatus: Statements = addPlayer
+
+  def setGameBoard(gb: GameboardInterface): Unit = {
+    this.gameBoard = gb;
+  }
+
+  def getGameBoard: GameboardInterface = {
+    gameBoard
+  }
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo = injector.instance[FileIOInterface]
@@ -186,7 +196,10 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   }
 
   override def load: Unit = {
-    gameBoard = fileIo.load
+    val c = fileIo.loadController
+    this.setGameBoard(c.getGameBoard)
+    this.setDicedNumber(c.getDicedNumber)
+    s.run("n start")
     publish(new GameBoardChanged)
   }
 }

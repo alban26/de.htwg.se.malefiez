@@ -8,4 +8,6 @@ class FileIO extends FileIOInterface{
   override def load: GameboardInterface = ???
 
   override def save(gameboard: GameboardInterface, controller: ControllerInterface): Unit = ???
+
+  override def loadController: ControllerInterface = ???
 }
