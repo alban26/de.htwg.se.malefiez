@@ -5,6 +5,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, State}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
@@ -13,30 +14,41 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.xml.{Elem, NodeBuffer, PrettyPrinter}
 class FileIO extends FileIOInterface{
 
+  override def loadController: ControllerInterface = {
+    val file = scala.xml.XML.loadFile("gameboardList.xml")
+    val dicedNumberNodes = file \\ "dicednumber"
+    val playersTurnNodes = file \\ "playersTurn"
+    val gameStateNodes = file \\ "gameState"
+    var contollerNeu = new Controller(load)
+
+
+    for(dicedNumber <- dicedNumberNodes) {
+      val dicedNumberR: Int = (dicedNumber \ "@dicednumber").text.toInt
+      contollerNeu.dicedNumber = dicedNumberR
+    }
+
+    contollerNeu
+
+  }
+
+
   override def load: GameboardInterface = {
     val injector = Guice.createInjector(new MalefizModule)
     var gameboard: GameboardInterface = injector.instance[GameboardInterface]
     var gameStateT: GameState = injector.instance[GameState]
     var controller: ControllerInterface = injector.instance[ControllerInterface]
-    val file = scala.xml.XML.loadFile("gameboardList.xml")
 
+    val file = scala.xml.XML.loadFile("gameboardList.xml")
     val cellNodes = file \\ "cell"
     val playerNodes = file \\"player"
-    val dicedNumberNodes = file \\ "dicednumber"
-    val playersTurnNodes = file \\ "playersTurn"
-    val gameStateNodes = file \\ "gameState"
+
 
 
     for (player <- playerNodes){
       val playerName: String = (player \ "@playername").text
       gameboard = gameboard.createPlayer(playerName)
-
     }
 
-    for(dicedNumber <- dicedNumberNodes) {
-      val dicedNumberR: Int = (dicedNumber \ "@dicednumber").text.toInt
-      controller.setDicedNumber(dicedNumberR)
-    }
 
     /*
 
@@ -45,8 +57,6 @@ class FileIO extends FileIOInterface{
       gameStateT.nextState(Roll(controller))
 
     }*/
-
-
 
     for(cell <- cellNodes) {
 

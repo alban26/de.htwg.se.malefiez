@@ -3,6 +3,7 @@ package de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
@@ -77,6 +78,9 @@ trait ControllerInterface extends Publisher {
 
   def save: Unit
   def load: Unit
+
+  def setGameBoard(gb: GameboardInterface)
+  def getGameBoard: GameboardInterface
 
 }
 

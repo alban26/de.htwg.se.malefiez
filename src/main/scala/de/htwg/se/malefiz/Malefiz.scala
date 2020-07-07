@@ -3,7 +3,7 @@ package de.htwg.se.malefiz
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
-import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
 
 import scala.io.StdIn.readLine
 
@@ -18,7 +18,7 @@ object Malefiz {
 
   var entryGui = new EntryGui(controller)
   var gui = new SwingGui(controller)
-
+  controller.publish(new GameBoardChanged)
   def main(args: Array[String]): Unit = {
     var input: String = ""
     do {
