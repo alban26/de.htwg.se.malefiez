@@ -6,4 +6,5 @@ import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Cont
 
 case class SelectFigure(controller: ControllerInterface) extends State[GameState] {
   override def handle(string: String, n: GameState): Unit = ISelectFigure.select(Request(string.split(" ").toList,n,controller))
+  override def toString: String = "Roll(controller)"
 }

@@ -3,7 +3,8 @@ package de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl
 import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, State}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
@@ -11,21 +12,41 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.xml.{Elem, NodeBuffer, PrettyPrinter}
 class FileIO extends FileIOInterface{
+
   override def load: GameboardInterface = {
     val injector = Guice.createInjector(new MalefizModule)
     var gameboard: GameboardInterface = injector.instance[GameboardInterface]
+    var gameStateT: GameState = injector.instance[GameState]
+    var controller: ControllerInterface = injector.instance[ControllerInterface]
     val file = scala.xml.XML.loadFile("gameboardList.xml")
 
-    val cellNodes = (file \\ "cell")
+    val cellNodes = file \\ "cell"
     val playerNodes = file \\"player"
-    //val playerSize = (file \\ "gameboard" \ "@size")
-    //val psize = playerSize.text.toInt
+    val dicedNumberNodes = file \\ "dicednumber"
+    val playersTurnNodes = file \\ "playersTurn"
+    val gameStateNodes = file \\ "gameState"
+
 
     for (player <- playerNodes){
       val playerName: String = (player \ "@playername").text
-//      val playerNumber: Int = (player \ "@playernumber").text.toInt
       gameboard = gameboard.createPlayer(playerName)
+
     }
+
+    for(dicedNumber <- dicedNumberNodes) {
+      val dicedNumberR: Int = (dicedNumber \ "@dicednumber").text.toInt
+      controller.setDicedNumber(dicedNumberR)
+    }
+
+    /*
+
+    for(gameState <- gameStateNodes) {
+      val state: String = (gameState \ "@state").text
+      gameStateT.nextState(Roll(controller))
+
+    }*/
+
+
 
     for(cell <- cellNodes) {
 
@@ -48,14 +69,14 @@ class FileIO extends FileIOInterface{
   }
 
   override def save(gameboard: GameboardInterface, controller: ControllerInterface): Unit = {
-    saveString(gameboard)
+    saveString(gameboard,controller)
   }
 
   def saveString(gameboard: GameboardInterface, controller: ControllerInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("gameboardList.xml"))
     val prettyPrinter = new PrettyPrinter(80,2)
-    val xml = prettyPrinter.format(gameboardToXml(gameboard))
+    val xml = prettyPrinter.format(gameboardToXml(gameboard,controller))
     pw.write(xml)
     pw.close()
   }
@@ -68,7 +89,6 @@ class FileIO extends FileIOInterface{
         for {
           l1 <- gameboard.getCellList.indices
         } yield cellToXml(l1,gameboard.getCellList(l1))
-
       }
       <player>
         {
@@ -76,19 +96,53 @@ class FileIO extends FileIOInterface{
           l1 <- gameboard.getPlayer.indices
         } yield playerToXml(l1,gameboard.getPlayer(l1))
         }
-
-
-        <playersTurn>
-
-          playersTurnToXml(player: Player)
-
-        </playersTurn>
       </player>
+      <playersTurn>
+
+        {
+        playersTurnToXml(controller.getPlayersTurn)
+        }
+
+      </playersTurn>
+
+
+      <dicedNumber>
+
+        {
+        dicedNumberToXml(controller.getDicedNumber)
+        }
+
+      </dicedNumber>
+
+      <gameState>
+
+        {
+        gameStateToXml(controller.getGameState)
+        }
+
+      </gameState>
 
     </gameboard>
 
+  }
 
 
+  def gameStateToXml(state: GameState): Elem = {
+    <gameState state={state.state.toString}>
+      {state}
+    </gameState>
+  }
+
+  def dicedNumberToXml(dicedNumber: Int): Elem = {
+    <dicedNumber dicednumber={dicedNumber.toString}>
+      {dicedNumber}
+    </dicedNumber>
+  }
+
+  def playersTurnToXml(player: Player): Elem = {
+    <playersTurn playersturnname ={player.name}>
+      {player}
+    </playersTurn>
   }
 
   def playerToXml(i: Int, player: Player): Elem = {

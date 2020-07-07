@@ -3,14 +3,15 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Image}
 import java.io.File
-
+import de.htwg.se.malefiz.Malefiz.gui
+import de.htwg.se.malefiz.Malefiz.entryGui
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import javax.imageio.ImageIO
 import javax.swing.{ImageIcon, JLabel}
 
 import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, Graphics2D, GridBagPanel, GridPanel, Image, Label, Menu, MenuBar, MenuItem, Panel}
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, Key}
 
 class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
 
@@ -32,7 +33,17 @@ class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
         System.exit(0)
       })
     }
-  }
+    contents += new Menu("Edit") {
+      mnemonic = Key.E
+      contents += new MenuItem(Action("Load") {
+        //close()
+
+        entryGui.visible = false
+        //deafTo(controller)
+        gui.visible = true
+        controller.load
+      })
+  }}
 
 
   contents = new GridBagPanel {

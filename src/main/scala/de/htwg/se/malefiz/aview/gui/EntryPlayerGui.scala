@@ -7,6 +7,8 @@ import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 import scala.swing.event.ButtonClicked
+import de.htwg.se.malefiz.Malefiz.gui
+import de.htwg.se.malefiz.Malefiz.entryGui
 
 class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
 
@@ -94,12 +96,12 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
           controller.execute("n "+ pList(i))
       }
       controller.execute("start")
-      visible = false
-      controller.getGui.visible = true
-      controller.getGui.updatePlayerArea()
-      controller.getGui.updatePlayerTurn()
-      controller.getGui.drawGameBoard()
-      controller.getGui.updateInformationArea()
+      this.visible = false
+      gui.visible = true
+      gui.updatePlayerArea()
+      gui.updatePlayerTurn()
+      gui.drawGameBoard()
+      gui.updateInformationArea()
   }
   size = new Dimension(500, 500)
 }

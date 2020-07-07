@@ -67,8 +67,8 @@ trait ControllerInterface extends Publisher {
   def getStatement: Statements
 
   def getUndoManager: UndoManager
-  def getGui: SwingGui
-  def getEntryGui: EntryGui
+ // def getGui: SwingGui
+ // def getEntryGui: EntryGui
 
   def setSelectedFigures(n: Int, m: Int): Boolean
   def setStatementStatus(statements: Statements): Boolean
@@ -77,6 +77,7 @@ trait ControllerInterface extends Publisher {
 
   def save: Unit
   def load: Unit
+
 }
 
 import scala.swing.Button

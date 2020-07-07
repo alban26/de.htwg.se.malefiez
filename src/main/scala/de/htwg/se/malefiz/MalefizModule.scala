@@ -13,6 +13,7 @@ class MalefizModule extends AbstractModule with ScalaModule{
   override def configure(): Unit = {
 
     bind[ControllerInterface].to[controller.controllerComponent.controllerBaseImpl.Controller]
+
     bind[GameboardInterface].toInstance(GameBoard(
       Creator().getCellList(cellConfigFile),
       List().empty,
