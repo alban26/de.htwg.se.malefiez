@@ -1,20 +1,19 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
-
-import com.google.inject.{Guice, Inject, Injector}
-import com.google.inject.{ Guice, Inject }
+import com.google.inject.Injector
+import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
-import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 
 import scala.collection.mutable
 import scala.swing.Publisher
@@ -32,12 +31,12 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   var selectedFigure: (Int, Int) = _
 
   val s: GameState = GameState(this)
+
+
   val undoManager = new UndoManager
 
-  var entryGui = new EntryGui(this)
-  var gui = new SwingGui(this)
-
-
+  //var entryGui = new EntryGui(this)
+ //var gui = new SwingGui(this)
 
   def execute(string: String): Boolean = {
     s.run(string)
@@ -151,9 +150,9 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def getUndoManager: UndoManager = this.undoManager
 
-  override def getGui: SwingGui = this.gui
+ // override def getGui: SwingGui = this.gui
 
-  override def getEntryGui: EntryGui = this.entryGui
+  //override def getEntryGui: EntryGui = this.entryGui
 
   def getStatement: Statements = statementStatus
 
@@ -182,7 +181,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   }
 
   override def save: Unit = {
-    fileIo.save(gameBoard)
+    fileIo.save(gameBoard, this)
     publish(new GameBoardChanged)
   }
 

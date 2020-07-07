@@ -11,6 +11,8 @@ import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, G
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
+import de.htwg.se.malefiz.Malefiz.gui
+import de.htwg.se.malefiz.Malefiz.entryGui
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
@@ -210,6 +212,9 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       contents += new MenuItem(Action("Redo") {
         controller.redo
       })
+      contents += new MenuItem(Action("Speichern") {
+        controller.save
+      })
     }
   }
 
@@ -275,7 +280,7 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
       controller.resetGameboard
       playerArea.text = ""
       visible = false
-      controller.getEntryGui.visible = true
+      entryGui.visible = true
   }
 
 }
