@@ -13,6 +13,9 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def setStateNumber(n: Int): Unit
+  def getStateNumber: Int
+
   def execute(string: String): Boolean
 
   def createPlayer(name: String): Unit

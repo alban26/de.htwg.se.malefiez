@@ -11,7 +11,7 @@ import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure, SetFigure, SetWall, Setup}
 
 import scala.collection.mutable
 import scala.swing.Publisher
@@ -19,6 +19,14 @@ import scala.swing.Publisher
 class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
 
   var statementStatus: Statements = addPlayer
+
+  var stateNumber: Int = _
+
+  def setStateNumber(n: Int): Unit = {
+    this.stateNumber = n
+  }
+
+  def getStateNumber: Int = stateNumber
 
   def setGameBoard(gb: GameboardInterface): Unit = {
     this.gameBoard = gb;
@@ -193,12 +201,18 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def load: Unit = {
     val c = fileIo.loadController
-    println(c.getDicedNumber)
-    println(c.getPlayersTurn)
+    val stateNr = c.getStateNumber
     this.setGameBoard(c.getGameBoard)
     this.setDicedNumber(c.getDicedNumber)
     this.setPlayersTurn(c.getPlayersTurn)
-    this.s.nextState(SelectFigure(this))
+    stateNr match {
+      case 1 => this.s.nextState(Roll(this))
+      case 2 => this.s.nextState(SelectFigure(this))
+      case 3 => this.s.nextState(SetFigure(this))
+      case 4 => this.s.nextState(Setup(this))
+      case 5 => this.s.nextState(SetWall(this))
+    }
+    //this.s.nextState(s)
     publish(new GameBoardChanged)
   }
 }

@@ -11,6 +11,7 @@ import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 
+import scala.collection.mutable.ListBuffer
 import scala.xml.{Elem, NodeBuffer, PrettyPrinter}
 class FileIO extends FileIOInterface{
 
@@ -27,6 +28,10 @@ class FileIO extends FileIOInterface{
 
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
     val playerName = (file \\ "playersTurn" \ "@turnN").text
+    val stateNumber = (file \\ "gameState" \ "@state").text.toInt
+
+    println("State: "+stateNumber)
+    contollerNeu.setStateNumber(stateNumber.toInt)
 
     contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
 
@@ -49,12 +54,14 @@ class FileIO extends FileIOInterface{
     val playerNodes = file \\"player"
     val pCellNodes = file \\ "pCells"
 
-    //val posList = List.empty
+    val posCells = List.empty
     for (pos <- pCellNodes) {
       val possCell = (pos \ "@posCell").text.toInt
-      gameboard.setPossibleCellTrue(possCell)
+      println(possCell)
+      posCells :+ possCell
     }
 
+    println(posCells)
 
     for (player <- playerNodes){
       val playerName: String = (player \ "@playername").text
@@ -126,13 +133,7 @@ class FileIO extends FileIOInterface{
 
       <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
 
-      <gameState>
-
-        {
-        gameStateToXml(controller.getGameState)
-        }
-
-      </gameState>
+      <gameState state={controller.getGameState.state.toString}></gameState>
 
     </gameboard>
 
@@ -143,30 +144,30 @@ class FileIO extends FileIOInterface{
       {l1}
     </pCells>
   }
+/*
+ def gameStateToXml(state: GameState): Elem = {
+   <gameState state={state.state.toString}>
+     {state}
+   </gameState>
+ }
 
-  def gameStateToXml(state: GameState): Elem = {
-    <gameState state={state.state.toString}>
-      {state}
-    </gameState>
-  }
 
-  /*
-  def playersTurnToXml(player: Player): Elem = {
-    <playersTurn playersturnname ={player.name}>
-      {player}
-    </playersTurn>
-  }
+ dplayersTurnToXml(player: Player): Elem = {
+   <playersTurn playersturnname ={player.name}>
+     {player}
+   </playersTurn>
+ }
 */
-  def playerToXml(i: Int, player: Player): Elem = {
-  <player playernumber={player.playerNumber.toString} playername={player.name}>
-  {player}
-  </player>
-  }
+ def playerToXml(i: Int, player: Player): Elem = {
+ <player playernumber={player.playerNumber.toString} playername={player.name}>
+ {player}
+ </player>
+ }
 
-  def cellToXml(l1: Int, cell: Cell): Elem = {
-    <cell cellnumber={cell.cellNumber.toString} playernumber={cell.playerNumber.toString}
-          figurenumber={cell.figureNumber.toString} haswall={cell.hasWall.toString}>
-      {cell}
-    </cell>
-  }
+ def cellToXml(l1: Int, cell: Cell): Elem = {
+   <cell cellnumber={cell.cellNumber.toString} playernumber={cell.playerNumber.toString}
+         figurenumber={cell.figureNumber.toString} haswall={cell.hasWall.toString}>
+     {cell}
+   </cell>
+ }
 }
