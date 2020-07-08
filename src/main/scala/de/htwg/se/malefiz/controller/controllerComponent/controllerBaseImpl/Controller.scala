@@ -197,9 +197,12 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def load: Unit = {
     val c = fileIo.loadController
+    println(c.getDicedNumber)
+    println(c.getPlayersTurn)
     this.setGameBoard(c.getGameBoard)
     this.setDicedNumber(c.getDicedNumber)
-    s.run("n start")
+    this.setPlayersTurn(c.getPlayersTurn)
+    this.s.nextState(c.getGameState.state)
     publish(new GameBoardChanged)
   }
 }

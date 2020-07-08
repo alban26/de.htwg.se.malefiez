@@ -152,7 +152,11 @@ class SwingGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Unit = {
-    this.playerTurnArea.text = controller.getPlayersTurn.name
+    playerTurnArea.text = controller.getPlayersTurn.name
+  }
+
+  def updateRandomNumberArea() : Unit = {
+    randomNumberArea.text = controller.getDicedNumber.toString
   }
 
   def updateInformationArea(): Unit = this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))

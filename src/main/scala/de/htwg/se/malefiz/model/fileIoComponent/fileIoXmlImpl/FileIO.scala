@@ -16,14 +16,22 @@ class FileIO extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
     val file = scala.xml.XML.loadFile("gameboardList.xml")
-    val playersTurnNodes = file \\ "playersTurn"
+
     val gameStateNodes = file \\ "gameState"
     val contollerNeu = new Controller(load)
 
     println(load.getPlayer.mkString(" "))
+    val dice = (file \\ "dicedNumber" \ "@number").text.toInt
+    contollerNeu.setDicedNumber(dice)
+
+
+    val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
+    val playerName = (file \\ "playersTurn" \ "@turnN").text
+
+    contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
 
     contollerNeu.s.nextState(SelectFigure(contollerNeu))
-    println(contollerNeu.s.state)
+    //println(contollerNeu.s.state)
     contollerNeu
   }
 
@@ -39,9 +47,13 @@ class FileIO extends FileIOInterface{
     val file = scala.xml.XML.loadFile("gameboardList.xml")
     val cellNodes = file \\ "cell"
     val playerNodes = file \\"player"
-    val dice = (file \\ "dicednumber" \ "@number").text.toInt
-    println(dice)
+    val pCellNodes = file \\ "pCells"
 
+    //val posList = List.empty
+    for (pos <- pCellNodes) {
+      val possCell = (pos \ "@posCell").text.toInt
+      gameboard.setPossibleCellTrue(possCell)
+    }
 
 
     for (player <- playerNodes){
@@ -102,16 +114,16 @@ class FileIO extends FileIOInterface{
         } yield playerToXml(l1,gameboard.getPlayer(l1))
         }
       </player>
-      <playersTurn>
-
+      <possibleCells>
         {
-        playersTurnToXml(controller.getPlayersTurn)
+        for{
+          l1 <- gameboard.getPossibleCells
+        } yield possibleCellsToXml(l1)
         }
+      </possibleCells>
+      <playersTurn turnZ={controller.getPlayersTurn.playerNumber.toString} turnN ={controller.getPlayersTurn.name}></playersTurn>
 
-      </playersTurn>
-
-
-      <dicedNumber dicednumber={controller.getDicedNumber.toString}></dicedNumber>
+      <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
 
       <gameState>
 
@@ -125,6 +137,11 @@ class FileIO extends FileIOInterface{
 
   }
 
+  def possibleCellsToXml(l1: Int):Elem = {
+    <pCells posCell={l1.toString}>
+      {l1}
+    </pCells>
+  }
 
   def gameStateToXml(state: GameState): Elem = {
     <gameState state={state.state.toString}>
@@ -132,17 +149,17 @@ class FileIO extends FileIOInterface{
     </gameState>
   }
 
+  /*
   def playersTurnToXml(player: Player): Elem = {
     <playersTurn playersturnname ={player.name}>
       {player}
     </playersTurn>
   }
-
+*/
   def playerToXml(i: Int, player: Player): Elem = {
   <player playernumber={player.playerNumber.toString} playername={player.name}>
   {player}
   </player>
-
   }
 
   def cellToXml(l1: Int, cell: Cell): Elem = {
