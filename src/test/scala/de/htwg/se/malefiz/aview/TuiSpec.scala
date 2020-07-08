@@ -1,17 +1,23 @@
 package de.htwg.se.malefiz.aview
 
 import com.google.inject.{Guice, Injector}
-import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
+import com.google.inject.Guice
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.malefiz.MalefizModule
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State}
+import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.collection.mutable.Map
 
 class TuiSpec extends WordSpec with Matchers {
+
+
 
   "A Malefiz Tui" when {
     "when a new game start" should {
@@ -24,7 +30,10 @@ class TuiSpec extends WordSpec with Matchers {
       val possibleCells: Set[Int] = Set().empty
 
       val injector: Injector = Guice.createInjector(new MalefizModule)
-      val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+      var gameboard: GameboardInterface = injector.instance[GameboardInterface]
+      //val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+
+      val controller = new Controller(gameboard)
       val tui = new Tui(controller)
 
       "read names from the console" in {
