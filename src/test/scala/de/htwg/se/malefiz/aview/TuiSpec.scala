@@ -5,9 +5,11 @@ import org.scalatest._
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
+import org.junit.runner.RunWith
+import org.scalatestplus
 
 import scala.collection.mutable.Map
-
+@RunWith(classOf[JUnitRunner])
 class TuiSpec extends WordSpec with Matchers {
 
   "A Malefiz Tui" when {
