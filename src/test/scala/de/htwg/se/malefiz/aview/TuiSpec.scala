@@ -29,7 +29,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      var gameBoard = GameBoard(cellList,players,cellGraph,possibleCells)
+      var gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
@@ -40,10 +40,32 @@ class TuiSpec extends WordSpec with Matchers {
 
         val playerList = controller.getPlayer
 
-        playerList.head.playerNumber should be (1)
-        playerList.head.name should be ("Robert")
-        playerList(1).playerNumber should be (2)
-        playerList(1).name should be ("Alban")
+        playerList.head.playerNumber should be(1)
+        playerList.head.name should be("Robert")
+        playerList(1).playerNumber should be(2)
+        playerList(1).name should be("Alban")
+      }
+      "When the game gets started by a full Players List or if typed in start, " +
+        "in this case it's Roberts turn. The state's gonna be 'Roll' in our case it's -> 1 " in {
+        tui.processInput1("n start")
+        controller.playersTurn.playerNumber should be (1)
+        controller.playersTurn.name should be ("Robert")
+        controller.s.state.toString should be ("1")
+      }
+      "So when Robert is pressing any key now, he's going to roll the dice" in {
+        tui.processInput1("k")
+        controller.dicedNumber should (be >= 1 and be < 7)
+      }
+      "Now Robert needs to select his Figure. In this case he gets to the next State " +
+        "The 'Select Figure State' is the Number 2" in {
+        controller.s.state.toString should be ("2")
+      }
+      "Well so let's say he chooses his second Figure. In this case " +
+        "he types in '1 2', because he is the first player (1) and wants his second figure(2)" +
+        "So when he choose, the variable selectedFigures got filled with these numbers" +
+        "Also he gets to the next state SetFigure!" in {
+        tui.processInput1("1 2")
+        controller.selectedFigure should be(1,2)
       }
     }
   }
