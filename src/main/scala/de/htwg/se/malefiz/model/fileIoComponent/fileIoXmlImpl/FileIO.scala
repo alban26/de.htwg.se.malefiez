@@ -19,7 +19,7 @@ class FileIO extends FileIOInterface{
     val playersTurnNodes = file \\ "playersTurn"
     val gameStateNodes = file \\ "gameState"
     val contollerNeu = new Controller(load)
-
+    val a = 10
     println(load.getPlayer.mkString(" "))
 
     contollerNeu.s.nextState(SelectFigure(contollerNeu))
