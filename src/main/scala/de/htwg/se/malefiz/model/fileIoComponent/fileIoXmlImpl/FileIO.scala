@@ -19,7 +19,7 @@ class FileIO extends FileIOInterface{
 
     val gameStateNodes = file \\ "gameState"
     val contollerNeu = new Controller(load)
-
+    val a = 10
     println(load.getPlayer.mkString(" "))
     val dice = (file \\ "dicedNumber" \ "@number").text.toInt
     contollerNeu.setDicedNumber(dice)

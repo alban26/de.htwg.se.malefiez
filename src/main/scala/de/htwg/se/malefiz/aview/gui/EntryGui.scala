@@ -94,3 +94,4 @@ class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
   }
  size = new Dimension(500, 500)
 }
+// RObert
