@@ -142,6 +142,10 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
+  override def setPossibleCell(pC: Set[Int]): GameboardInterface = {
+    gameBoard.setPossibleCell(pC)
+  }
+
   def weHaveAWinner() : Unit = {
     publish(new Winner)
   }
@@ -202,9 +206,12 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   override def load: Unit = {
     val c = fileIo.loadController
     val stateNr = c.getStateNumber
+
     this.setGameBoard(c.getGameBoard)
+    this.setPossibleCell(c.getPossibleCells)
     this.setDicedNumber(c.getDicedNumber)
     this.setPlayersTurn(c.getPlayersTurn)
+
     stateNr match {
       case 1 => this.s.nextState(Roll(this))
         this.statementStatus = Statements.nextPlayer

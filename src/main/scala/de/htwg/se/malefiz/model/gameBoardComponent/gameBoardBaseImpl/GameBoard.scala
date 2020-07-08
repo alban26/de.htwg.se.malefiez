@@ -245,6 +245,7 @@ case class GameBoard (cellList: List[Cell],
     }
   }
 
+
   def setPosiesTrue(n: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, n, cellList))
 
   def setPossibilitiesTrue(n: Int): Cell = cellList(n).copy(possibleFigures = true)
@@ -300,4 +301,9 @@ case class GameBoard (cellList: List[Cell],
   override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = this.gameBoardGraph
 
   override def getPossibleCells: Set[Int] = this.possibleCells
+
+  def setPossibleCell(pC: Set[Int]) : GameBoard = {
+    copy(possibleCells = pC)
+  }
+
 }

@@ -89,6 +89,8 @@ trait GameboardInterface {
   def createPlayer(text: String): GameBoard
 
   def createGameBoard(): String
+
+  def setPossibleCell(pC: Set[Int]) : GameBoard
 }
 
 trait CubeInterface {

@@ -34,7 +34,7 @@ class FileIO extends FileIOInterface{
     contollerNeu.setStateNumber(stateNumber.toInt)
 
     contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
-    println(contollerNeu.gameBoard.getCellList.mkString)
+
     //contollerNeu.s.nextState(Roll(contollerNeu))
     //println(contollerNeu.s.state)
     contollerNeu
@@ -54,12 +54,13 @@ class FileIO extends FileIOInterface{
     val playerNodes = file \\"player"
     val pCellNodes = file \\ "pCells"
 
-
+    var found: Set[Int] = Set[Int]()
     for (pos <- pCellNodes) {
       val possCell = (pos \ "@posCell").text.toInt
       gameboard = gameboard.setPosiesCellTrue(List(possCell))
+      found += possCell
     }
-
+    gameboard = gameboard.setPossibleCell(found)
 
     for (player <- playerNodes){
       val playerName: String = (player \ "@playername").text
