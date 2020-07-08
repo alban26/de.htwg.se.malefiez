@@ -10,7 +10,7 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Crea
 import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.collection.mutable.Map
-
+/*
 class TuiSpec extends WordSpec with Matchers {
 
   "A Malefiz Tui" when {
@@ -41,3 +41,5 @@ class TuiSpec extends WordSpec with Matchers {
     }
   }
 }
+
+*/
