@@ -29,6 +29,12 @@ class FileIO extends FileIOInterface{
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
     val playerName = (file \\ "playersTurn" \ "@turnN").text
     val stateNumber = (file \\ "gameState" \ "@state").text.toInt
+    val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
+    val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
+    println(selectedFigure_1)
+    println(selectedFigure_2)
+
+    contollerNeu.setSelectedFigures(selectedFigure_1,selectedFigure_2)
 
     println("State: "+stateNumber)
     contollerNeu.setStateNumber(stateNumber.toInt)
@@ -131,6 +137,8 @@ class FileIO extends FileIOInterface{
       <playersTurn turnZ={controller.getPlayersTurn.playerNumber.toString} turnN ={controller.getPlayersTurn.name}></playersTurn>
 
       <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
+
+      <selectedFigure sPlayer={controller.getSelectedFigure._1.toString} sFigure={controller.getSelectedFigure._2.toString} ></selectedFigure>
 
       <gameState state={controller.getGameState.state.toString}></gameState>
 

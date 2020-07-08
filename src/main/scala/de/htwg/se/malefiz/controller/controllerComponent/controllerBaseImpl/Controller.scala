@@ -57,6 +57,10 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     true
   }
 
+  def resetPossibleCells: Unit = {
+    gameBoard = gameBoard.clearPossibleCells
+  }
+
   def resetGameboard: Unit = {
     gameBoard = mementoGameboard
   }
@@ -211,6 +215,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     this.setPossibleCell(c.getPossibleCells)
     this.setDicedNumber(c.getDicedNumber)
     this.setPlayersTurn(c.getPlayersTurn)
+    this.setSelectedFigures(c.getSelectedFigure._1,c.getSelectedFigure._2)
 
     stateNr match {
       case 1 => this.s.nextState(Roll(this))
@@ -224,7 +229,6 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
       case 5 => this.s.nextState(SetWall(this))
         this.statementStatus = wall
     }
-    //this.s.nextState(s)
     publish(new GameBoardChanged)
   }
 }

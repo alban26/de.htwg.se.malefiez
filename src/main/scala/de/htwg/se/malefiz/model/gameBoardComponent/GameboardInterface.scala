@@ -7,6 +7,8 @@ import scala.util.Try
 
 trait GameboardInterface {
 
+  def clearPossibleCells: GameBoard
+
   def getCellList: List[Cell]
 
   def getPlayer: List[Player]

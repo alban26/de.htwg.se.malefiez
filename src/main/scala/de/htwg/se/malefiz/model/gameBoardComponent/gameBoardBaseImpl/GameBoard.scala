@@ -292,6 +292,7 @@ case class GameBoard (cellList: List[Cell],
   def createPlayer(text: String): GameBoard = copy(players =  players :+ Player(players.length+1, text))
 
 
+
   def createGameBoard(): String = buildString(cellList)
 
   override def getCellList: List[Cell] = this.cellList
@@ -306,4 +307,5 @@ case class GameBoard (cellList: List[Cell],
     copy(possibleCells = pC)
   }
 
+  override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
 }

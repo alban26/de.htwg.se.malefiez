@@ -13,6 +13,8 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def resetPossibleCells: Unit
+
   def setStateNumber(n: Int): Unit
   def getStateNumber: Int
 
