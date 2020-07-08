@@ -3,8 +3,8 @@ package de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl
 import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, State}
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure, SetFigure, SetWall}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
@@ -16,19 +16,16 @@ class FileIO extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
     val file = scala.xml.XML.loadFile("gameboardList.xml")
-    val dicedNumberNodes = file \\ "dicednumber"
     val playersTurnNodes = file \\ "playersTurn"
     val gameStateNodes = file \\ "gameState"
-    var contollerNeu = new Controller(load)
+    val contollerNeu = new Controller(load)
+
+    println(load.getPlayer.mkString(" "))
 
 
-    for(dicedNumber <- dicedNumberNodes) {
-      val dicedNumberR: Int = (dicedNumber \ "@dicednumber").text.toInt
-      contollerNeu.dicedNumber = dicedNumberR
-    }
-
+    contollerNeu.s.nextState(SelectFigure(contollerNeu))
+    println(contollerNeu.s.state)
     contollerNeu
-
   }
 
 
@@ -38,9 +35,12 @@ class FileIO extends FileIOInterface{
     var gameStateT: GameState = injector.instance[GameState]
     var controller: ControllerInterface = injector.instance[ControllerInterface]
 
+
+
     val file = scala.xml.XML.loadFile("gameboardList.xml")
     val cellNodes = file \\ "cell"
     val playerNodes = file \\"player"
+
 
 
 
@@ -49,14 +49,6 @@ class FileIO extends FileIOInterface{
       gameboard = gameboard.createPlayer(playerName)
     }
 
-
-    /*
-
-    for(gameState <- gameStateNodes) {
-      val state: String = (gameState \ "@state").text
-      gameStateT.nextState(Roll(controller))
-
-    }*/
 
     for(cell <- cellNodes) {
 
@@ -67,6 +59,7 @@ class FileIO extends FileIOInterface{
 
       gameboard = gameboard.setPlayer(playerNumber,cellNumber)
       gameboard = gameboard.setFigure(figureNumber,cellNumber)
+
       if(hasWall){
         gameboard = gameboard.setWall(cellNumber)
       }
@@ -75,6 +68,7 @@ class FileIO extends FileIOInterface{
       }
 
     }
+
     gameboard
   }
 
@@ -96,6 +90,7 @@ class FileIO extends FileIOInterface{
 
     <gameboard size={gameboard.getPlayer.size.toString}>
       {
+
         for {
           l1 <- gameboard.getCellList.indices
         } yield cellToXml(l1,gameboard.getCellList(l1))
@@ -119,7 +114,9 @@ class FileIO extends FileIOInterface{
       <dicedNumber>
 
         {
+        println(controller.getDicedNumber)
         dicedNumberToXml(controller.getDicedNumber)
+
         }
 
       </dicedNumber>
@@ -145,7 +142,8 @@ class FileIO extends FileIOInterface{
 
   def dicedNumberToXml(dicedNumber: Int): Elem = {
     <dicedNumber dicednumber={dicedNumber.toString}>
-      {dicedNumber}
+      {
+      dicedNumber}
     </dicedNumber>
   }
 

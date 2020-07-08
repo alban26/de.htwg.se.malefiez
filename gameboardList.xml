@@ -1,9 +1,9 @@
 <gameboard size="2">
-  <cell cellnumber="0" playernumber="0" figurenumber="1" haswall="false">
-    ( )
-  </cell>
-  <cell cellnumber="1" playernumber="1" figurenumber="2" haswall="false">
+  <cell cellnumber="0" playernumber="1" figurenumber="1" haswall="false">
     (1)
+  </cell>
+  <cell cellnumber="1" playernumber="0" figurenumber="2" haswall="false">
+    ( )
   </cell>
   <cell cellnumber="2" playernumber="1" figurenumber="3" haswall="false">
     (1)
@@ -18,16 +18,16 @@
     ( )
   </cell>
   <cell cellnumber="6" playernumber="2" figurenumber="2" haswall="false">
-    (2)
+    (2|2)
   </cell>
   <cell cellnumber="7" playernumber="2" figurenumber="3" haswall="false">
-    (2)
+    (2|3)
   </cell>
   <cell cellnumber="8" playernumber="2" figurenumber="4" haswall="false">
-    (2)
+    (2|4)
   </cell>
   <cell cellnumber="9" playernumber="2" figurenumber="5" haswall="false">
-    (2)
+    (2|5)
   </cell>
   <cell cellnumber="10" playernumber="3" figurenumber="1" haswall="false">
     (3)
@@ -62,13 +62,13 @@
   <cell cellnumber="20" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="21" playernumber="2" figurenumber="1" haswall="false">
-    [2]
+  <cell cellnumber="21" playernumber="0" figurenumber="0" haswall="false">
+    [ ]
   </cell>
   <cell cellnumber="22" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="23" playernumber="0" figurenumber="0" haswall="false">
+  <cell cellnumber="23" playernumber="0" figurenumber="2" haswall="false">
     [ ]
   </cell>
   <cell cellnumber="24" playernumber="0" figurenumber="0" haswall="false">
@@ -80,8 +80,8 @@
   <cell cellnumber="26" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="27" playernumber="1" figurenumber="1" haswall="false">
-    [1]
+  <cell cellnumber="27" playernumber="0" figurenumber="0" haswall="false">
+    [ ]
   </cell>
   <cell cellnumber="28" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -113,8 +113,8 @@
   <cell cellnumber="37" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="38" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+  <cell cellnumber="38" playernumber="2" figurenumber="1" haswall="false">
+    [2]
   </cell>
   <cell cellnumber="39" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -125,8 +125,8 @@
   <cell cellnumber="41" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="42" playernumber="0" figurenumber="0" haswall="true">
-    [X]
+  <cell cellnumber="42" playernumber="1" figurenumber="2" haswall="false">
+    [1]
   </cell>
   <cell cellnumber="43" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -188,8 +188,8 @@
   <cell cellnumber="62" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="63" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+  <cell cellnumber="63" playernumber="0" figurenumber="0" haswall="true">
+    [X]
   </cell>
   <cell cellnumber="64" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -396,18 +396,18 @@
     [ ]
   </cell>
   <player>
-    <player playernumber="1" playername="alban"> alban </player>
-    <player playernumber="2" playername="robert"> robert </player>
+    <player playernumber="1" playername="v"> v </player>
+    <player playernumber="2" playername="a"> a </player>
   </player>
   <playersTurn>
-    <playersTurn playersturnname="alban"> alban </playersTurn>
+    <playersTurn playersturnname="a"> a </playersTurn>
   </playersTurn>
   <dicedNumber>
-    <dicedNumber dicednumber="0"> 0 </dicedNumber>
+    <dicedNumber dicednumber="4"> 4 </dicedNumber>
   </dicedNumber>
   <gameState>
-    <gameState state="Roll">
-      GameState(de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller@51bde877)
+    <gameState state="Roll(controller)">
+      GameState(de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller@17ae98d7)
     </gameState>
   </gameState>
 </gameboard>
