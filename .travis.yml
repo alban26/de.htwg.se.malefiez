@@ -4,7 +4,6 @@ scala:
 
 script:
   - sbt clean coverage test coverageReport
-  - mvn clean package -Djava.awt.headless=true
 
 after_success:
   - sbt coverageReport coveralls
