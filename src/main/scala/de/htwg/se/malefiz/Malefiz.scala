@@ -17,7 +17,7 @@ object Malefiz {
   val tui = new Tui(controller)
 
   var entryGui = new EntryGui(controller)
-  var gui = new SwingGui(controller)
+  var swingGui = new SwingGui(controller)
   controller.publish(new GameBoardChanged)
   def main(args: Array[String]): Unit = {
     var input: String = ""

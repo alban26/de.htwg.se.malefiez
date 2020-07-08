@@ -1,19 +1,15 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.image.BufferedImage
 import java.awt.{Color, Font, Image}
-import java.io.File
-import de.htwg.se.malefiz.Malefiz.gui
 import de.htwg.se.malefiz.Malefiz.entryGui
-import com.google.inject.Inject
+import de.htwg.se.malefiz.Malefiz.swingGui
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
-import javax.imageio.ImageIO
-import javax.swing.{ImageIcon, JLabel}
+
 
 import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, Graphics2D, GridBagPanel, GridPanel, Image, Label, Menu, MenuBar, MenuItem, Panel}
 import scala.swing.event.{ButtonClicked, Key}
 
-class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
+class EntryGui (controller: ControllerInterface) extends Frame {
 
   visible = true
   title = "Wilkommen zu Malefiz"
@@ -36,17 +32,15 @@ class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
     contents += new Menu("Edit") {
       mnemonic = Key.E
       contents += new MenuItem(Action("Load") {
-        //close()
-
         entryGui.visible = false
-        //deafTo(controller)
         controller.load
-        gui.visible = true
-        gui.updateInformationArea()
-        gui.updatePlayerTurn()
-        gui.updatePlayerArea()
-
-        gui.updateRandomNumberArea()
+        swingGui.visible = true
+        swingGui.updateInformationArea()
+        swingGui.updatePlayerTurn()
+        swingGui.updatePlayerArea()
+        swingGui.updateRandomNumberArea()
+        swingGui.drawGameBoard()
+        swingGui.repaint()
       })
   }}
 
