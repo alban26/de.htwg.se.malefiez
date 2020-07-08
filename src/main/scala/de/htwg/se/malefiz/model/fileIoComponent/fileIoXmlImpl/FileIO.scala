@@ -30,7 +30,7 @@ class FileIO extends FileIOInterface{
 
     contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
 
-    contollerNeu.s.nextState(Roll(contollerNeu))
+    //contollerNeu.s.nextState(Roll(contollerNeu))
     //println(contollerNeu.s.state)
     contollerNeu
   }

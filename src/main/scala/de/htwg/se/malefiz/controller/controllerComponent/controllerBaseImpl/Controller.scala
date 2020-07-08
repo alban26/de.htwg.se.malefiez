@@ -2,20 +2,16 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.Injector
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.malefiz.Malefiz.controller
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.aview.Tui
-import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
+import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure}
 
 import scala.collection.mutable
 import scala.swing.Publisher
@@ -202,7 +198,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     this.setGameBoard(c.getGameBoard)
     this.setDicedNumber(c.getDicedNumber)
     this.setPlayersTurn(c.getPlayersTurn)
-    this.s.nextState(Roll(this))
+    this.s.nextState(SelectFigure(this))
     publish(new GameBoardChanged)
   }
 }
