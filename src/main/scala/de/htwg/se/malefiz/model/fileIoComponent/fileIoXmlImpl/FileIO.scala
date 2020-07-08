@@ -19,7 +19,7 @@ class FileIO extends FileIOInterface{
 
     val gameStateNodes = file \\ "gameState"
     val contollerNeu = new Controller(load)
-    val a = 10
+
     println(load.getPlayer.mkString(" "))
     val dice = (file \\ "dicedNumber" \ "@number").text.toInt
     contollerNeu.setDicedNumber(dice)
@@ -30,7 +30,7 @@ class FileIO extends FileIOInterface{
 
     contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
 
-    contollerNeu.s.nextState(SelectFigure(contollerNeu))
+    contollerNeu.s.nextState(Roll(contollerNeu))
     //println(contollerNeu.s.state)
     contollerNeu
   }
@@ -58,7 +58,8 @@ class FileIO extends FileIOInterface{
 
     for (player <- playerNodes){
       val playerName: String = (player \ "@playername").text
-      gameboard = gameboard.createPlayer(playerName)
+      if (playerName != "")
+        gameboard = gameboard.createPlayer(playerName)
     }
 
 
