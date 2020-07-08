@@ -22,7 +22,6 @@ class FileIO extends FileIOInterface{
 
     println(load.getPlayer.mkString(" "))
 
-
     contollerNeu.s.nextState(SelectFigure(contollerNeu))
     println(contollerNeu.s.state)
     contollerNeu
