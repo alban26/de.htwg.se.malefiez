@@ -5,7 +5,7 @@ import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State, Statements, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
@@ -207,10 +207,15 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     this.setPlayersTurn(c.getPlayersTurn)
     stateNr match {
       case 1 => this.s.nextState(Roll(this))
+        this.statementStatus = Statements.nextPlayer
       case 2 => this.s.nextState(SelectFigure(this))
+        this.statementStatus = selectFigure
       case 3 => this.s.nextState(SetFigure(this))
+        this.statementStatus = selectField
       case 4 => this.s.nextState(Setup(this))
+        this.statementStatus = addPlayer
       case 5 => this.s.nextState(SetWall(this))
+        this.statementStatus = wall
     }
     //this.s.nextState(s)
     publish(new GameBoardChanged)

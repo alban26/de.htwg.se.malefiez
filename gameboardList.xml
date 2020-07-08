@@ -1,9 +1,9 @@
-<gameboard size="4">
-  <cell cellnumber="0" playernumber="0" figurenumber="1" haswall="false">
-    ( )
-  </cell>
-  <cell cellnumber="1" playernumber="1" figurenumber="2" haswall="false">
+<gameboard size="3">
+  <cell cellnumber="0" playernumber="1" figurenumber="1" haswall="false">
     (1)
+  </cell>
+  <cell cellnumber="1" playernumber="0" figurenumber="2" haswall="false">
+    ( )
   </cell>
   <cell cellnumber="2" playernumber="1" figurenumber="3" haswall="false">
     (1)
@@ -15,22 +15,22 @@
     (1)
   </cell>
   <cell cellnumber="5" playernumber="2" figurenumber="1" haswall="false">
-    (2|1)
+    (2)
   </cell>
-  <cell cellnumber="6" playernumber="2" figurenumber="2" haswall="false">
-    (2|2)
+  <cell cellnumber="6" playernumber="0" figurenumber="2" haswall="false">
+    ( )
   </cell>
   <cell cellnumber="7" playernumber="2" figurenumber="3" haswall="false">
-    (2|3)
+    (2)
   </cell>
   <cell cellnumber="8" playernumber="2" figurenumber="4" haswall="false">
-    (2|4)
+    (2)
   </cell>
   <cell cellnumber="9" playernumber="2" figurenumber="5" haswall="false">
-    (2|5)
+    (2)
   </cell>
-  <cell cellnumber="10" playernumber="3" figurenumber="1" haswall="false">
-    (3)
+  <cell cellnumber="10" playernumber="0" figurenumber="1" haswall="false">
+    ( )
   </cell>
   <cell cellnumber="11" playernumber="3" figurenumber="2" haswall="false">
     (3)
@@ -65,10 +65,10 @@
   <cell cellnumber="21" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="22" playernumber="0" figurenumber="0" haswall="false">
-    [22]
+  <cell cellnumber="22" playernumber="1" figurenumber="2" haswall="false">
+    [1]
   </cell>
-  <cell cellnumber="23" playernumber="0" figurenumber="0" haswall="false">
+  <cell cellnumber="23" playernumber="0" figurenumber="2" haswall="false">
     [ ]
   </cell>
   <cell cellnumber="24" playernumber="0" figurenumber="0" haswall="false">
@@ -80,17 +80,17 @@
   <cell cellnumber="26" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="27" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+  <cell cellnumber="27" playernumber="2" figurenumber="2" haswall="false">
+    [2]
   </cell>
   <cell cellnumber="28" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="29" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+  <cell cellnumber="29" playernumber="3" figurenumber="1" haswall="false">
+    [3]
   </cell>
   <cell cellnumber="30" playernumber="0" figurenumber="0" haswall="false">
-    [30]
+    [ ]
   </cell>
   <cell cellnumber="31" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -113,8 +113,8 @@
   <cell cellnumber="37" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="38" playernumber="1" figurenumber="1" haswall="false">
-    [1]
+  <cell cellnumber="38" playernumber="0" figurenumber="0" haswall="false">
+    [ ]
   </cell>
   <cell cellnumber="39" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -138,7 +138,7 @@
     [ ]
   </cell>
   <cell cellnumber="46" playernumber="0" figurenumber="0" haswall="true">
-    [X|46]
+    [X]
   </cell>
   <cell cellnumber="47" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -150,7 +150,7 @@
     [ ]
   </cell>
   <cell cellnumber="50" playernumber="0" figurenumber="0" haswall="true">
-    [X|50]
+    [X]
   </cell>
   <cell cellnumber="51" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -398,16 +398,13 @@
   <player>
     <player playernumber="1" playername="alice"> alice </player>
     <player playernumber="2" playername="bob"> bob </player>
-    <player playernumber="3" playername="bittel"> bittel </player>
-    <player playernumber="4" playername="drache"> drache </player>
+    <player playernumber="3" playername="charly"> charly </player>
   </player>
   <possibleCells>
     <pCells posCell="22"> 22 </pCells>
-    <pCells posCell="46"> 46 </pCells>
-    <pCells posCell="30"> 30 </pCells>
-    <pCells posCell="50"> 50 </pCells>
+    <pCells posCell="24"> 24 </pCells>
   </possibleCells>
   <playersTurn turnZ="2" turnN="bob"></playersTurn>
-  <dicedNumber number="5"></dicedNumber>
-  <gameState state="3"></gameState>
+  <dicedNumber number="0"></dicedNumber>
+  <gameState state="1"></gameState>
 </gameboard>
