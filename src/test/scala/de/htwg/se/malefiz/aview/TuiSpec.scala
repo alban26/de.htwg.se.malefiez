@@ -29,11 +29,9 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      val injector: Injector = Guice.createInjector(new MalefizModule)
-      var gameboard: GameboardInterface = injector.instance[GameboardInterface]
-      //val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+      var gameBoard = GameBoard(cellList,players,cellGraph,possibleCells)
 
-      val controller = new Controller(gameboard)
+      val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
 
       "read names from the console" in {
