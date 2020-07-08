@@ -172,9 +172,6 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def getUndoManager: UndoManager = this.undoManager
 
- // override def getGui: SwingGui = this.gui
-
-  //override def getEntryGui: EntryGui = this.entryGui
 
   def getStatement: Statements = statementStatus
 

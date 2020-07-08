@@ -19,39 +19,32 @@ class FileIO extends FileIOInterface{
     val file = scala.xml.XML.loadFile("gameboardList.xml")
 
     val gameStateNodes = file \\ "gameState"
-    val contollerNeu = new Controller(load)
+    val controllerNeu = new Controller(load)
 
-    println(load.getPlayer.mkString(" "))
     val dice = (file \\ "dicedNumber" \ "@number").text.toInt
-    contollerNeu.setDicedNumber(dice)
+    controllerNeu.setDicedNumber(dice)
 
 
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
-    val playerName = (file \\ "playersTurn" \ "@turnN").text
+    //val playerName = (file \\ "playersTurn" \ "@turnN").text
     val stateNumber = (file \\ "gameState" \ "@state").text.toInt
     val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
     val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
-    println(selectedFigure_1)
-    println(selectedFigure_2)
 
-    contollerNeu.setSelectedFigures(selectedFigure_1,selectedFigure_2)
 
-    println("State: "+stateNumber)
-    contollerNeu.setStateNumber(stateNumber.toInt)
+    controllerNeu.setSelectedFigures(selectedFigure_1,selectedFigure_2)
+    controllerNeu.setStateNumber(stateNumber.toInt)
 
-    contollerNeu.playersTurn = contollerNeu.getPlayer(playerZahl-1)
-
-    //contollerNeu.s.nextState(Roll(contollerNeu))
-    //println(contollerNeu.s.state)
-    contollerNeu
+    controllerNeu.playersTurn = controllerNeu.getPlayer(playerZahl-1)
+    controllerNeu
   }
 
 
   override def load: GameboardInterface = {
     val injector = Guice.createInjector(new MalefizModule)
     var gameboard: GameboardInterface = injector.instance[GameboardInterface]
-    var gameStateT: GameState = injector.instance[GameState]
-    var controller: ControllerInterface = injector.instance[ControllerInterface]
+    //var gameStateT: GameState = injector.instance[GameState]
+    //var controller: ControllerInterface = injector.instance[ControllerInterface]
 
 
 
