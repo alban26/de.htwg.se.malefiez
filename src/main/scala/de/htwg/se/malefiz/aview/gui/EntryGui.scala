@@ -42,6 +42,9 @@ class EntryGui @Inject() (controller: ControllerInterface) extends Frame {
         //deafTo(controller)
         gui.visible = true
         controller.load
+        gui.updateInformationArea()
+        gui.updatePlayerArea()
+        gui.updatePlayerTurn()
       })
   }}
 

@@ -39,7 +39,8 @@ class FileIO extends FileIOInterface{
     val file = scala.xml.XML.loadFile("gameboardList.xml")
     val cellNodes = file \\ "cell"
     val playerNodes = file \\"player"
-
+    val dice = (file \\ "dicedNumber" \ "@number").text.toInt
+    println(dice)
 
 
 
@@ -110,15 +111,7 @@ class FileIO extends FileIOInterface{
       </playersTurn>
 
 
-      <dicedNumber>
-
-        {
-        println(controller.getDicedNumber)
-        dicedNumberToXml(controller.getDicedNumber)
-
-        }
-
-      </dicedNumber>
+      <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
 
       <gameState>
 
@@ -137,13 +130,6 @@ class FileIO extends FileIOInterface{
     <gameState state={state.state.toString}>
       {state}
     </gameState>
-  }
-
-  def dicedNumberToXml(dicedNumber: Int): Elem = {
-    <dicedNumber dicednumber={dicedNumber.toString}>
-      {
-      dicedNumber}
-    </dicedNumber>
   }
 
   def playersTurnToXml(player: Player): Elem = {
