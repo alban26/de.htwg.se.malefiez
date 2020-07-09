@@ -298,6 +298,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       entryGui.visible = true
   }
 
-  size = new Dimension(900, 1000)
+  size = new Dimension(900, 1100)
 
 }

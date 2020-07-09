@@ -19,22 +19,22 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
 
   val playerOneLabel: Label = new Label("Player 1   ")
   playerOneLabel.foreground = Color.RED
-  playerOneLabel.font = new Font("Sans Serif", Font.BOLD, 16)
+  playerOneLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   val playerOneName: TextField = new TextField {columns = 15}
 
   val playerTwoLabel: Label = new Label("Player 2   ")
   playerTwoLabel.foreground = Color.GREEN
-  playerTwoLabel.font = new Font("Sans Serif", Font.BOLD, 16)
+  playerTwoLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   val playerTwoName: TextField = new TextField {columns = 15}
 
   val playerThreeLabel: Label = new Label("Player 3   ")
   playerThreeLabel.foreground = Color.ORANGE
-  playerThreeLabel.font = new Font("Sans Serif", Font.BOLD, 16)
+  playerThreeLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   val playerThreeName: TextField = new TextField {columns = 15}
 
   val playerFourLabel: Label = new Label("Player 4    ")
   playerFourLabel.foreground = Color.BLUE
-  playerFourLabel.font = new Font("Sans Serif", Font.BOLD, 16)
+  playerFourLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   val playerFourName: TextField = new TextField {columns = 15}
 
   val continueButton = new Button("continue")
