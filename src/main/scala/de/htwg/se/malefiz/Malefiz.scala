@@ -15,8 +15,8 @@ object Malefiz {
   val cellLinksFile = "project/mainCellLinks"
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
-  //val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-  val controller = new Controller(GameBoard())
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+  //val controller = new Controller(GameBoard())
   val tui = new Tui(controller)
   var entryGui = new EntryGui(controller)
   var swingGui = new SwingGui(controller)
