@@ -1,6 +1,8 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
+
+import scala.collection.mutable
 import scala.collection.mutable.Map
 import scala.io.Source
 import scala.util.{Failure, Success, Try}

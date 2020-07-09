@@ -58,7 +58,7 @@ class FileIO extends FileIOInterface{
 
     val source = Source.fromFile("gameboard.json")
     val string = source.getLines.mkString
-    //source.close()
+    source.close()
     val json: JsValue = Json.parse(string)
 
     val injector = Guice.createInjector(new MalefizModule)
@@ -73,6 +73,14 @@ class FileIO extends FileIOInterface{
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
 
+
+    var found: Set[Int] = Set[Int]()
+    for (index <- 0 until posCells.size) {
+      val possCell = (json \ "possibleCells")(index).as[Int]
+      gameboard = gameboard.setPosiesCellTrue(List(possCell))
+      found += possCell
+    }
+    gameboard = gameboard.setPossibleCell(found)
 
 
     for(index <- 0 until 131) {

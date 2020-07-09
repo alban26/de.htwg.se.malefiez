@@ -15,15 +15,8 @@ class MalefizModule extends AbstractModule with ScalaModule{
     bind[ControllerInterface].to[controller.controllerComponent.controllerBaseImpl.Controller]
     bind[GameboardInterface].to[model.gameBoardComponent.gameBoardBaseImpl.GameBoard]
 
-    /*bind[GameboardInterface].toInstance(GameBoard(
-      Creator().getCellList(cellConfigFile),
-      List().empty,
-      Creator().getCellGraph(cellLinksFile),
-      Set().empty
-    ))*/
-
     bind[FileIOInterface].to[model.fileIoComponent.fileIoJsonImpl.FileIO]
-    //bind[FileIOInterface].to[model.fileIoComponent.fileIoJsonImpl.FileIO]
+    //bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
   }
 
 }

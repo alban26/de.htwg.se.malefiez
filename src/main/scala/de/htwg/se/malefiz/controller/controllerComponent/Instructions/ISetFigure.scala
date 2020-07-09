@@ -26,9 +26,7 @@ object ISetFigure extends InstructionTrait{
 
   val set2: Handler0 = {
     case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt)=>
-      z.setPosisFalse(z.getPlayersTurn.playerNumber)
-      z.setPosisCellFalse(z.getPossibleCells.toList)
-      z.resetPossibleCells()
+
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
@@ -49,6 +47,9 @@ object ISetFigure extends InstructionTrait{
     case Request(x, y, z) =>
       y.nextState(SetWall(z))
       z.setStatementStatus(wall)
+      z.setPosisFalse(z.getPlayersTurn.playerNumber)
+      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.resetPossibleCells()
       Statements.value(StatementRequest(z))
   }
   val set5: Handler0 = {
