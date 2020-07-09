@@ -33,7 +33,10 @@ class TuiSpec extends WordSpec with Matchers {
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
-
+      "At the beginning you will entry to the Setup-State" +
+        "In our case its defined as Number -> 4" in {
+        controller.s.state.toString should be ("4")
+      }
       "read names from the console" in {
         tui.processInput1("n Robert")
         tui.processInput1("n Alban")
