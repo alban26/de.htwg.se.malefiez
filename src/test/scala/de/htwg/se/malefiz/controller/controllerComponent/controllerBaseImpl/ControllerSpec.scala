@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.controller
 
-/*
+
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -29,7 +29,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       val observer: Observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update: Unit = {updated = true}
+        override def update(): Unit = {updated = true}
       }
       "notify its Observer after a players figure is set on cell" in {
         controller.setPlayerFigure(1,1, 10)
@@ -45,14 +45,41 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.getPCells(20, 5)
         observer.update should be()
       }
-      "Remove Player" in {
+      "The Controller can set a players figure and con remove it " in {
         controller.setPlayer(1,22)
         controller.setFigure(1,22)
         controller.gameBoard.getCellList(22).playerNumber should be(1)
         controller.gameBoard.getCellList(22).figureNumber should be(1)
       }
+      "The Controller can reset the the possible Cells of the actual turn" in {
+        controller.resetPossibleCells
+        controller.gameBoard.getPossibleCells should be (Set().empty)
+      }
+      /*"The Controller get set a players figure" in {
+        controller.setPlayerFigure(1,1,30)
+        controller.getFigure(1,1) should be (30)
+      }*/
+      /*"The Controller can remove a player" in {
+        controller.removeActualPlayerAndFigureFromCell(1,1)
+        //controller.gameBoard.getCellList(22).figureNumber should be (0)
+        controller.gameBoard.getCellList(22).playerNumber should be (0)
+      }*/
+      "The Controller can set a List of Cell the Attribut possible Cell true" in {
+        controller.setPosisCellTrue(List(30, 31, 32, 33))
+        controller.gameBoard.getCellList(30).possibleCells should be(true)
+        controller.gameBoard.getCellList(31).possibleCells should be(true)
+        controller.gameBoard.getCellList(32).possibleCells should be(true)
+        controller.gameBoard.getCellList(33).possibleCells should be(true)
+      }
+      "The Controller can set a List of Cell the Attribut possible Cell false" in {
+        controller.setPosisCellFalse(List(30, 31, 32, 33))
+        controller.gameBoard.getCellList(30).possibleCells should be(false)
+        controller.gameBoard.getCellList(31).possibleCells should be(false)
+        controller.gameBoard.getCellList(32).possibleCells should be(false)
+        controller.gameBoard.getCellList(33).possibleCells should be(false)
+      }
+
     }
   }
 }
 
-*/
