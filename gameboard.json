@@ -1,817 +1,679 @@
 {
   "players" : [ {
-    "playernr" : 1,
-    "playername" : "A"
+    "playerNumber" : 1,
+    "name" : "Robert"
   }, {
-    "playernr" : 2,
-    "playername" : "B"
-  }, {
-    "playernr" : 3,
-    "playername" : "C"
-  }, {
-    "playernr" : 4,
-    "playername" : "D"
+    "playerNumber" : 2,
+    "name" : "Alban"
   } ],
   "playersTurn" : {
-    "playernr" : 1,
-    "playername" : "A"
+    "playerNumber" : 1,
+    "name" : "Robert"
   },
-  "diceNumber" : "2",
+  "diceNumber" : 5,
   "selectedFigure1" : 1,
   "selectedFigure2" : 1,
-  "gameState" : "3",
-  "possibleCells" : [ 21, 23 ],
+  "gameState" : 5,
+  "possibleCells" : [ ],
   "cells" : [ {
-    "cellnr" : 0,
-    "playernr" : 1,
-    "figurenr" : 1,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 1,
-    "playernr" : 1,
-    "figurenr" : 2,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 2,
-    "playernr" : 1,
-    "figurenr" : 3,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 3,
-    "playernr" : 1,
-    "figurenr" : 4,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 4,
-    "playernr" : 1,
-    "figurenr" : 5,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 5,
-    "playernr" : 2,
-    "figurenr" : 1,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 6,
-    "playernr" : 2,
-    "figurenr" : 2,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 7,
-    "playernr" : 2,
-    "figurenr" : 3,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 8,
-    "playernr" : 2,
-    "figurenr" : 4,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 9,
-    "playernr" : 2,
-    "figurenr" : 5,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 10,
-    "playernr" : 3,
-    "figurenr" : 1,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 11,
-    "playernr" : 3,
-    "figurenr" : 2,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 12,
-    "playernr" : 3,
-    "figurenr" : 3,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 13,
-    "playernr" : 3,
-    "figurenr" : 4,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 14,
-    "playernr" : 3,
-    "figurenr" : 5,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 15,
-    "playernr" : 4,
-    "figurenr" : 1,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 16,
-    "playernr" : 4,
-    "figurenr" : 2,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 17,
-    "playernr" : 4,
-    "figurenr" : 3,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 18,
-    "playernr" : 4,
-    "figurenr" : 4,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 19,
-    "playernr" : 4,
-    "figurenr" : 5,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 20,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 21,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : true
-  }, {
-    "cellnr" : 22,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 23,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : true
-  }, {
-    "cellnr" : 24,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 25,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 26,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 27,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 28,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 29,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 30,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 31,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 32,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 33,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 34,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 35,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 36,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 37,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 38,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 39,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 40,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 41,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 42,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 43,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 44,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 45,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 46,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 47,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 48,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 49,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 50,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 51,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 52,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 53,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 54,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 55,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 56,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 57,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 58,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 59,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 60,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 61,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 62,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 63,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 64,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 65,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 66,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 67,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 68,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 69,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 70,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 71,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 72,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 73,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 74,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 75,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 76,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 77,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 78,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 79,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 80,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 81,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 82,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 83,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 84,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 85,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 86,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 87,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 88,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 89,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 90,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 91,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 92,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 93,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 94,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 95,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 96,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 97,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 98,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 99,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 100,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 101,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 102,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 103,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 104,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 105,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 106,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 107,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 108,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 109,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 110,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 111,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 112,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 113,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 114,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 115,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 116,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 117,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 118,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 119,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 120,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 121,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 122,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : true,
-    "posCell" : false
-  }, {
-    "cellnr" : 123,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 124,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 125,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 126,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 127,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 128,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 129,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 130,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
-  }, {
-    "cellnr" : 131,
-    "playernr" : 0,
-    "figurenr" : 0,
-    "hasWall" : false,
-    "posCell" : false
+    "cellNumber" : 0,
+    "playerNumber" : 0,
+    "figureNumber" : 1,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 1,
+    "playerNumber" : 1,
+    "figureNumber" : 2,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 2,
+    "playerNumber" : 1,
+    "figureNumber" : 3,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 3,
+    "playerNumber" : 1,
+    "figureNumber" : 4,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 4,
+    "playerNumber" : 1,
+    "figureNumber" : 5,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 5,
+    "playerNumber" : 2,
+    "figureNumber" : 1,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 6,
+    "playerNumber" : 2,
+    "figureNumber" : 2,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 7,
+    "playerNumber" : 2,
+    "figureNumber" : 3,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 8,
+    "playerNumber" : 2,
+    "figureNumber" : 4,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 9,
+    "playerNumber" : 2,
+    "figureNumber" : 5,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 10,
+    "playerNumber" : 3,
+    "figureNumber" : 1,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 11,
+    "playerNumber" : 3,
+    "figureNumber" : 2,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 12,
+    "playerNumber" : 3,
+    "figureNumber" : 3,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 13,
+    "playerNumber" : 3,
+    "figureNumber" : 4,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 14,
+    "playerNumber" : 3,
+    "figureNumber" : 5,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 15,
+    "playerNumber" : 4,
+    "figureNumber" : 1,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 16,
+    "playerNumber" : 4,
+    "figureNumber" : 2,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 17,
+    "playerNumber" : 4,
+    "figureNumber" : 3,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 18,
+    "playerNumber" : 4,
+    "figureNumber" : 4,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 19,
+    "playerNumber" : 4,
+    "figureNumber" : 5,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 20,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 21,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 22,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 23,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 24,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 25,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 26,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 27,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 28,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 29,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 30,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 31,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 32,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 33,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 34,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 35,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 36,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 37,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 38,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 39,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 40,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 41,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 42,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 43,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 44,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 45,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 46,
+    "playerNumber" : 1,
+    "figureNumber" : 1,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 47,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 48,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 49,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 50,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 51,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 52,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 53,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 54,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 55,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 56,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 57,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 58,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 59,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 60,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 61,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 62,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 63,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 64,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 65,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 66,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 67,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 68,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 69,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 70,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 71,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 72,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 73,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 74,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 75,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 76,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 77,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 78,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 79,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 80,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 81,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 82,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 83,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 84,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 85,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 86,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 87,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 88,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 89,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 90,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 91,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 92,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 93,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 94,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 95,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 96,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 97,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 98,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 99,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 100,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 101,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 102,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 103,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 104,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 105,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 106,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 107,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 108,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 109,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 110,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 111,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 112,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 113,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 114,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 115,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 116,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 117,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 118,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 119,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 120,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 121,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 122,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true
+  }, {
+    "cellNumber" : 123,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 124,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 125,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 126,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 127,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 128,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 129,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 130,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
+  }, {
+    "cellNumber" : 131,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : false
   } ]
 }

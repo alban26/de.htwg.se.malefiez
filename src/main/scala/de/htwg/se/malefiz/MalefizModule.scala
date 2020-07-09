@@ -21,7 +21,7 @@ class MalefizModule extends AbstractModule with ScalaModule{
       Set().empty
     ))
 
-    bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
+    bind[FileIOInterface].to[model.fileIoComponent.fileIoJsonImpl.FileIO]
 
   }
 

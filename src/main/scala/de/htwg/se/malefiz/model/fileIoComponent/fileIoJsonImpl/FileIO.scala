@@ -1,24 +1,17 @@
 package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
 
-import java.io.{File, PrintWriter, Reader}
-
-import com.google.inject.Guice
-import de.htwg.se.malefiz.Malefiz.{cellLinksFile, injector}
+import java.io.{File, PrintWriter}
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard, Point}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import de.htwg.se.malefiz.model.playerComponent.Player
-import play.api.libs.json._
 import com.google.inject.Guice
-import com.google.inject.name.Names
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json
 import play.api.libs.json._
-
 import scala.io.Source
 
 
@@ -26,17 +19,12 @@ class FileIO extends FileIOInterface{
 
   //val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
-
-
-
-
   override def loadController: ControllerInterface = {
 
     val controllerNeu = new Controller(load)
-
     val source = Source.fromFile("gameboard.json")
     val string = source.getLines.mkString
-    //source.close()
+    source.close()
     val json: JsValue = Json.parse(string)
     implicit val pointReader: Reads[Point] = Json.reads[Point]
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
@@ -44,7 +32,7 @@ class FileIO extends FileIOInterface{
 
 
     val dicenr: Int = (json \ "diceNumber").as[Int]
-    val plTurn: Player = (json \ "playerTurn").as[Player]
+    val plTurn: Player = (json \ "playersTurn").as[Player]
     val f1: Int = (json \ "selectedFigure1").as[Int]
     val f2: Int = (json \ "selectedFigure2").as[Int]
     val state: Int = (json \ "gameState").as[Int]
@@ -80,18 +68,19 @@ class FileIO extends FileIOInterface{
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
     implicit val playerReader: Reads[Player] = Json.reads[Player]
     println("Hab ich notiert")
-    val cells : List[Cell] = (json \ "cells").as[List[Cell]]
+   // val cells : List[Cell] = (json \ "cells").as[List[Cell]]
 
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
 
 
 
-    for(cell <- cells) {
-      val cellNumber: Int = cell.cellNumber
-      val playerNumber: Int = cell.playerNumber
-      val figureNumber: Int = cell.figureNumber
-      val hasWall: Boolean = cell.hasWall
+    for(index <- 0 until 131) {
+
+      val cellNumber: Int = ((json \ "cells")(index) \ "cellNumber").as[Int]
+      val playerNumber: Int = ((json \ "cells")(index) \ "playerNumber").as[Int]
+      val figureNumber: Int = ((json \ "cells")(index) \ "figureNumber").as[Int]
+      val hasWall: Boolean = ((json \ "cells")(index) \ "hasWall").as[Boolean]
 
       gameboard = gameboard.setPlayer(playerNumber,cellNumber)
       gameboard = gameboard.setFigure(figureNumber,cellNumber)
@@ -123,20 +112,24 @@ class FileIO extends FileIOInterface{
 
   implicit val playerWrites: Writes[Player] = (player: Player) => {
     Json.obj(
-      "playernr" ->JsNumber(player.playerNumber),
-      "playername" -> player.name
+      "playerNumber" ->player.playerNumber,
+      "name" -> player.name
     )
   }
 
+  /*
   implicit val cellWrites: Writes[Cell] = (cell: Cell) => {
     Json.obj(
       "cellnr" -> JsNumber(cell.cellNumber),
       "playernr" -> JsNumber(cell.playerNumber),
       "figurenr" -> JsNumber(cell.figureNumber),
-      "hasWall" -> cell.hasWall,
-      "posCell" -> cell.possibleCells
+      "wallPermission" -> Json.toJson(cell.wallPermission),
+      "hasWall" -> Json.toJson(cell.hasWall),
+      "coord" -> Json.toJson(cell.coordinates),
+      "posFigur" -> Json.toJson(cell.possibleFigures),
+      "posCell" -> Json.toJson(cell.possibleCells)
     )
-  }
+  }*/
 
 
 
@@ -157,15 +150,22 @@ class FileIO extends FileIOInterface{
         } yield Json.toJson(p)
       ),
       "playersTurn" -> controller.getPlayersTurn,
-      "diceNumber" -> controller.getDicedNumber.toString,
+      "diceNumber" -> controller.getDicedNumber,
       "selectedFigure1" -> controller.getSelectedFigure._1,
       "selectedFigure2" -> controller.getSelectedFigure._2,
-      "gameState" -> controller.getGameState.state.toString,
+      "gameState" -> controller.getGameState.state.toString.toInt,
       "possibleCells" -> gameB.getPossibleCells,
       "cells" -> Json.toJson(
         for {
           c <- gameB.getCellList
-        } yield Json.toJson(c)
+        } yield {
+          Json.obj(
+            "cellNumber" -> c.cellNumber,
+            "playerNumber" -> c.playerNumber,
+            "figureNumber" -> c.figureNumber,
+            "hasWall" -> c.hasWall
+          )
+        }
       )
     )
   }
