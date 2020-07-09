@@ -205,14 +205,14 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   }
 
   override def load: Unit = {
-    val c = fileIo.loadController
-    val stateNr = c.getStateNumber
+    val cNeu = fileIo.loadController
+    val stateNr = cNeu.getStateNumber
 
-    this.setGameBoard(c.getGameBoard)
-    this.setPossibleCell(c.getPossibleCells)
-    this.setDicedNumber(c.getDicedNumber)
-    this.setPlayersTurn(c.getPlayersTurn)
-    this.setSelectedFigures(c.getSelectedFigure._1,c.getSelectedFigure._2)
+    this.setGameBoard(cNeu.getGameBoard)
+    this.setPossibleCell(cNeu.getPossibleCells)
+    this.setDicedNumber(cNeu.getDicedNumber)
+    this.setPlayersTurn(cNeu.getPlayersTurn)
+    this.setSelectedFigures(cNeu.getSelectedFigure._1,cNeu.getSelectedFigure._2)
 
     stateNr match {
       case 1 => this.s.nextState(Roll(this))
