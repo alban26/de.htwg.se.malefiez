@@ -23,14 +23,20 @@ class ControllerSpec  extends WordSpec with Matchers {
       val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
       val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty))
-      controller.gameBoard.createPlayer("Robert")
-      controller.gameBoard.createPlayer("Alban")
+
       controller.playersTurn = Player(1,"Robert")
 
       val observer: Observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
         override def update(): Unit = {updated = true}
+      }
+      "Set Players" in {
+        controller.createPlayer("Robert")
+        controller.createPlayer("Alban")
+
+        controller.getPlayer.head.name should be ("Robert")
+        controller.getPlayer(1).name should be ("Alban")
       }
       "notify its Observer after a players figure is set on cell" in {
         controller.setPlayerFigure(1,1, 10)
@@ -68,10 +74,12 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.resetPossibleCells
         controller.gameBoard.getPossibleCells should be (Set().empty)
       }
-      /*"The Controller get set a players figure" in {
-        controller.setPlayerFigure(1,1,30)
-        controller.getFigure(1,1) should be (30)
-      }*/
+      "The Controller can save the Game" in {
+        controller.save()
+        controller.load()
+
+        controller.gameBoard.getCellList(22).playerNumber should be(1)
+      }
       /*"The Controller can remove a player" in {
         controller.removeActualPlayerAndFigureFromCell(1,1)
         //controller.gameBoard.getCellList(22).figureNumber should be (0)
