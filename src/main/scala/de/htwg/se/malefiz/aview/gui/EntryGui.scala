@@ -1,11 +1,13 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.Font
+import java.awt.{Color, Font}
+
 import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.Malefiz.swingGui
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
+
 import scala.swing.{Action, Button, Dimension, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem}
-import scala.swing.event.{ButtonClicked, Key}
+import scala.swing.event.ButtonClicked
 
 class EntryGui (controller: ControllerInterface) extends Frame {
 
@@ -13,9 +15,13 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   title = "Wilkommen zu Malefiz"
   centerOnScreen()
 
+
+
   val welcomeLabel = new Label("Willkommen bei Malefiz")
+  welcomeLabel.foreground = Color.WHITE
   welcomeLabel.font = new Font("Sans Serif", Font.BOLD, 22)
   val newGameButton = new Button("New Game")
+  val loadButton = new Button("Load Game")
   val quitButton = new Button("Quit")
 
   menuBar = new MenuBar{
@@ -25,24 +31,11 @@ class EntryGui (controller: ControllerInterface) extends Frame {
         System.exit(0)
       })
     }
-    contents += new Menu("Edit") {
-      mnemonic = Key.E
-      contents += new MenuItem(Action("Load") {
-        entryGui.visible = false
-        controller.load
-        swingGui.visible = true
-        swingGui.updateInformationArea()
-        swingGui.updatePlayerTurn()
-        swingGui.updatePlayerArea()
-        swingGui.updateRandomNumberArea()
-        swingGui.drawGameBoard()
-        swingGui.repaint()
-      })
-    }
   }
 
-
   contents = new GridBagPanel {
+
+    background = Color.DARK_GRAY
 
     def constraints(x: Int, y:Int,
             gridwidth: Int = 1, gridheight: Int = 1,
@@ -69,21 +62,33 @@ class EntryGui (controller: ControllerInterface) extends Frame {
       constraints(0, 0, gridheight = 2, ipadx= 50, ipady = 50, anchor = GridBagPanel.Anchor.North, fill = GridBagPanel.Fill.Vertical))
     add(newGameButton,
       constraints(0, 2, gridheight = 2,ipadx = 20, ipady = 20))
-    add(quitButton,
+    add(loadButton,
       constraints(0, 4, gridheight = 2, ipadx = 20, ipady = 20))
+    add(quitButton,
+      constraints(0, 6, gridheight = 2, ipadx = 20, ipady = 20))
 
   }
 
- listenTo(newGameButton, quitButton)
+ listenTo(newGameButton, quitButton, loadButton)
 
   reactions += {
     case ButtonClicked(`quitButton`) => System.exit(0)
+    case ButtonClicked(`loadButton`) =>
+      entryGui.visible = false
+      controller.load
+      swingGui.visible = true
+      swingGui.updateInformationArea()
+      swingGui.updatePlayerTurn()
+      swingGui.updatePlayerArea()
+      swingGui.updateRandomNumberArea()
+      swingGui.drawGameBoard()
+      swingGui.repaint()
     case ButtonClicked(`newGameButton`) =>
       visible = false
       val a = new EntryPlayerGui(this.controller)
       a.visible = true
   }
 
- size = new Dimension(500, 500)
+  size = new Dimension(500, 500)
 
 }

@@ -14,18 +14,27 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
   centerOnScreen()
 
   val playerLabel: Label = new Label("Enter the names")
+  playerLabel.foreground = Color.WHITE
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 22)
 
   val playerOneLabel: Label = new Label("Player 1   ")
+  playerOneLabel.foreground = Color.RED
+  playerOneLabel.font = new Font("Sans Serif", Font.BOLD, 16)
   val playerOneName: TextField = new TextField {columns = 15}
 
   val playerTwoLabel: Label = new Label("Player 2   ")
+  playerTwoLabel.foreground = Color.GREEN
+  playerTwoLabel.font = new Font("Sans Serif", Font.BOLD, 16)
   val playerTwoName: TextField = new TextField {columns = 15}
 
   val playerThreeLabel: Label = new Label("Player 3   ")
+  playerThreeLabel.foreground = Color.ORANGE
+  playerThreeLabel.font = new Font("Sans Serif", Font.BOLD, 16)
   val playerThreeName: TextField = new TextField {columns = 15}
 
   val playerFourLabel: Label = new Label("Player 4    ")
+  playerFourLabel.foreground = Color.BLUE
+  playerFourLabel.font = new Font("Sans Serif", Font.BOLD, 16)
   val playerFourName: TextField = new TextField {columns = 15}
 
   val continueButton = new Button("continue")
@@ -39,6 +48,9 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
   }
 
   contents = new GridBagPanel {
+
+    background = Color.DARK_GRAY
+
     def constraints(x: Int, y:Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,

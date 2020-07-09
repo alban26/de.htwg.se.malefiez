@@ -26,26 +26,34 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   var mouseY: Set[Int] = Set().empty
   val thick = new BasicStroke(3f)
 
-
   val playerLabel = new Label("Player")
+  playerLabel.foreground = Color.WHITE
+  playerLabel.background= Color.DARK_GRAY
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
   var playerArea = new TextPane
+  playerArea.background = Color.DARK_GRAY
   playerArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
   playerArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerArea.editable = false
 
   val playerTurnLabel = new Label("Player Turn")
+  playerTurnLabel.foreground = Color.WHITE
+  playerTurnLabel.background= Color.DARK_GRAY
   playerTurnLabel.border = Swing.EtchedBorder(Swing.Lowered)
   playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
 
   val playerTurnArea = new Label("")
+  playerTurnArea.foreground = Color.WHITE
+  playerTurnArea.background= Color.DARK_GRAY
   playerTurnArea.border = Swing.EtchedBorder(Swing.Lowered)
   playerTurnArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
 
 
   val cubeLabel = new Label("Dice")
+  cubeLabel.foreground = Color.WHITE
+  cubeLabel.background = Color.DARK_GRAY
   cubeLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   cubeLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
@@ -56,15 +64,21 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   cubeButton.font = new Font("Sans Serif", Font.BOLD, 18)
 
   val randomNumberLabel = new Label("Cube shows: ")
+  randomNumberLabel.foreground = Color.WHITE
+  randomNumberLabel.background = Color.DARK_GRAY
   randomNumberLabel.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberLabel.border = Swing.EtchedBorder(Swing.Lowered)
 
   val randomNumberArea = new Label("")
+  randomNumberArea.foreground = Color.WHITE
+  randomNumberArea.background= Color.DARK_GRAY
   randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
   randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
 
   val informationArea = new TextArea("")
-  informationArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 18)
+  informationArea.foreground = Color.WHITE
+  informationArea.background = Color.DARK_GRAY
+  informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
   informationArea.border = Swing.EtchedBorder(Swing.Lowered)
   informationArea.editable = false
 
@@ -195,8 +209,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     repaint()
   }
 
-
-
   menuBar = new MenuBar {
     contents += new Menu("Malefiz") {
       mnemonic = Key.F
@@ -218,7 +230,11 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
   }
 
+
   contents = new GridBagPanel {
+
+    background = Color.DARK_GRAY
+
     def constraints(x: Int, y:Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,
@@ -282,5 +298,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       visible = false
       entryGui.visible = true
   }
+
+  size = new Dimension(900, 1000)
 
 }
