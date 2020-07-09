@@ -29,56 +29,55 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   val playerLabel = new Label("Player")
   playerLabel.foreground = Color.WHITE
   playerLabel.background= Color.DARK_GRAY
-  playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
+  playerLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   playerLabel.border = Swing.EmptyBorder(3)
 
   var playerArea = new TextPane
   playerArea.background = Color.DARK_GRAY
-  playerArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
-  playerArea.border = Swing.EtchedBorder(Swing.Lowered)
+  playerArea.font = new Font("Sans Serif", Font.ITALIC, 16)
+  playerArea.border = Swing.EmptyBorder(3)
   playerArea.editable = false
 
   val playerTurnLabel = new Label("Player Turn")
   playerTurnLabel.foreground = Color.WHITE
   playerTurnLabel.background= Color.DARK_GRAY
   playerTurnLabel.border = Swing.EmptyBorder(3)
-  playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
+  playerTurnLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
 
   val playerTurnArea = new Label("")
   playerTurnArea.foreground = Color.WHITE
   playerTurnArea.background= Color.DARK_GRAY
-  playerTurnArea.border = Swing.EtchedBorder(Swing.Lowered)
-  playerTurnArea.font = new Font("Sans Serif", Font.CENTER_BASELINE, 16)
+  playerTurnArea.border = Swing.EmptyBorder(3)
+  playerTurnArea.font = new Font("Sans Serif", Font.ITALIC, 16)
 
 
   val cubeLabel = new Label("Dice")
   cubeLabel.foreground = Color.WHITE
   cubeLabel.background = Color.DARK_GRAY
-  cubeLabel.font = new Font("Sans Serif", Font.BOLD, 18)
+  cubeLabel.font = new Font("Sans Serif", Font.ITALIC, 18)
   cubeLabel.border = Swing.EmptyBorder(3)
 
   val cubeButton = new Button()
   val cubeIcon = new ImageIcon("src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png")
   cubeButton.icon = cubeIcon
-  cubeButton.border = Swing.EtchedBorder(Swing.Lowered)
-  cubeButton.font = new Font("Sans Serif", Font.BOLD, 18)
+  cubeButton.border = Swing.EmptyBorder(3)
 
   val randomNumberLabel = new Label("Cube shows: ")
   randomNumberLabel.foreground = Color.WHITE
   randomNumberLabel.background = Color.DARK_GRAY
-  randomNumberLabel.font = new Font("Sans Serif", Font.BOLD, 18)
+  randomNumberLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   randomNumberLabel.border = Swing.EmptyBorder(3)
 
   val randomNumberArea = new Label("")
   randomNumberArea.foreground = Color.WHITE
   randomNumberArea.background= Color.DARK_GRAY
-  randomNumberArea.font = new Font("Sans Serif", Font.BOLD, 18)
-  randomNumberArea.border = Swing.EtchedBorder(Swing.Lowered)
+  randomNumberArea.font = new Font("Sans Serif", Font.ITALIC, 16)
+  randomNumberArea.border = Swing.EmptyBorder(3)
 
   val informationArea = new TextArea("")
   informationArea.foreground = Color.WHITE
   informationArea.background = Color.DARK_GRAY
-  informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
+  informationArea.font = new Font("Sans Serif", Font.ITALIC, 20)
   informationArea.border = Swing.EmptyBorder(3)
   informationArea.editable = false
 
