@@ -1,6 +1,7 @@
 package de.htwg.se.malefiz.controller
 
 
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -38,8 +39,20 @@ class ControllerSpec  extends WordSpec with Matchers {
       }
       "notify its Observer after setting a Wall on a Cell" in {
         controller.setWall(50)
+        controller.gameBoard.getCellList(50).hasWall should be(true)
         observer.update should be()
-       // controller.gameBoard.cellList(50).hasWall should be (true)
+      }
+      "The Controller has the abililty to remove a wall" in {
+        controller.rWall(50)
+        controller.gameBoard.getCellList(50).hasWall should be(false)
+      }
+      "The Controller has the ability to save the current selected figure of a player" in {
+        controller.setSelectedFigures(1,5)
+        controller.getSelectedFigure should be ((1,5))
+      }
+      "The Controller has the ability to save a gamestate" in {
+        controller.s.nextState(Roll(controller))
+        controller.getGameState should be (GameState(controller.getGameState.controller))
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
         controller.getPCells(20, 5)
@@ -78,7 +91,6 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(32).possibleCells should be(false)
         controller.gameBoard.getCellList(33).possibleCells should be(false)
       }
-
     }
   }
 }
