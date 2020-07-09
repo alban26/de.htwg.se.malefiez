@@ -4,11 +4,14 @@ import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable
 import scala.collection.mutable.Map
+import de.htwg.se.malefiz.Malefiz._
 
-case class GameBoard (cellList: List[Cell],
-                                players: List[Player],
-                                gameBoardGraph: Map[Int, Set[Int]],
-                                possibleCells: Set[Int]) extends GameboardInterface {
+case class GameBoard (cellList: List[Cell] = Creator().getCellList(cellConfigFile),
+                                players: List[Player] = List.empty,
+                                gameBoardGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile),
+                                possibleCells: Set[Int] = Set.empty) extends GameboardInterface {
+
+  def this() = this(Creator().getCellList(cellConfigFile),List.empty,Creator().getCellGraph(cellLinksFile),Set.empty)
 
   def s(n: Int): Int = n * 4 + 1
 
