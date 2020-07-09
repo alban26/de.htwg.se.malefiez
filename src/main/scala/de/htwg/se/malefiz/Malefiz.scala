@@ -14,11 +14,12 @@ object Malefiz {
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-  val tui = new Tui(controller)
 
+  val tui = new Tui(controller)
   var entryGui = new EntryGui(controller)
   var swingGui = new SwingGui(controller)
   controller.publish(new GameBoardChanged)
+
   def main(args: Array[String]): Unit = {
     var input: String = ""
     do {

@@ -9,10 +9,10 @@ class Tui (controller: ControllerInterface) extends Reactor {
 
   def processInput1(input: String): Unit = {
     input match {
-      case "z" => controller.undo
-      case "s"=> controller.save
-      case "load" => controller.load
-      case "y" => controller.redo
+      case "z" => controller.undo()
+      case "s"=> controller.save()
+      case "load" => controller.load()
+      case "y" => controller.redo()
       case "exit" => System.exit(0)
       case _ =>
         controller.execute(input)
@@ -21,10 +21,10 @@ class Tui (controller: ControllerInterface) extends Reactor {
   }
 
   reactions += {
-    case event: GameBoardChanged => update
+    case event: GameBoardChanged => update()
   }
 
-  def update: Unit = {
+  def update(): Unit = {
     textPrint(controller.gameBoardToString)
     textPrint(controller.getPlayer.mkString("\n"))
   }

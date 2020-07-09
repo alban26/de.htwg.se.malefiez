@@ -1,13 +1,10 @@
 package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Dimension, Font}
-
 import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
-
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 import scala.swing.event.ButtonClicked
-
 
 class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
 
@@ -104,4 +101,5 @@ class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
       sgui.updateInformationArea()
   }
   size = new Dimension(500, 500)
+
 }

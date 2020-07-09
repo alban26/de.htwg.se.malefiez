@@ -84,7 +84,7 @@ trait GameboardInterface {
 
   def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell]
 
-  def execute(callback:(Int) => GameBoard, y:Int): GameBoard
+  def execute(callback: Int => GameBoard, y:Int): GameBoard
 
   def nextPlayer(list: List[Player], n: Int): Player
 
@@ -96,7 +96,9 @@ trait GameboardInterface {
 }
 
 trait CubeInterface {
+
   def getRandomNumber : Int
+
 }
 
 trait CreatorInterface {

@@ -3,15 +3,13 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
-
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Request, StatementRequest, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, StatementRequest, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 import de.htwg.se.malefiz.Malefiz.entryGui
-
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -209,13 +207,13 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     contents += new Menu("Edit") {
       mnemonic = Key.E
       contents += new MenuItem(Action("Undo") {
-        controller.undo
+        controller.undo()
       })
       contents += new MenuItem(Action("Redo") {
-        controller.redo
+        controller.redo()
       })
       contents += new MenuItem(Action("Speichern") {
-        controller.save
+        controller.save()
       })
     }
   }
@@ -279,7 +277,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     case winner: Winner =>
       drawGameBoard()
       Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
-      controller.resetGameboard
+      controller.resetGameboard()
       playerArea.text = ""
       visible = false
       entryGui.visible = true

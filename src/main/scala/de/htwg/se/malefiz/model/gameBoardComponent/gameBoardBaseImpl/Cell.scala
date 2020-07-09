@@ -20,7 +20,7 @@ case class Cell (cellNumber: Int, playerNumber: Int, figureNumber: Int, wallPerm
 */
 
 
-val stein_or_spieler =
+val stein_or_spieler: String =
   if (cellNumber < 20) {
     if (playerNumber != 0 && !hasWall) {
       if (possibleFigures) {

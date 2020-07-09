@@ -3,16 +3,14 @@ package de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl
 import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State}
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure, SetFigure, SetWall}
+import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
+import scala.xml.{Elem, PrettyPrinter}
 
-import scala.collection.mutable.ListBuffer
-import scala.xml.{Elem, NodeBuffer, PrettyPrinter}
 class FileIO extends FileIOInterface{
 
   override def loadController: ControllerInterface = {

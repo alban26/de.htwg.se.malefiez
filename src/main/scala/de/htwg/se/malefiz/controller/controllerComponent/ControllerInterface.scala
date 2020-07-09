@@ -1,19 +1,17 @@
 package de.htwg.se.malefiz.controller.controllerComponent
 
-import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-
 import scala.collection.mutable.Map
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def resetPossibleCells: Unit
+  def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
   def getStateNumber: Int
@@ -49,11 +47,11 @@ trait ControllerInterface extends Publisher {
 
   def gameBoardToString: String
 
-  def undo: Unit
+  def undo(): Unit
 
-  def redo: Unit
+  def redo(): Unit
 
-  def resetGameboard: Unit
+  def resetGameboard(): Unit
 
   def weHaveAWinner() : Unit
 
@@ -81,12 +79,13 @@ trait ControllerInterface extends Publisher {
   def setPlayersTurn(player: Player): Boolean
   def setDicedNumber(n: Int): Boolean
 
-  def save: Unit
-  def load: Unit
+  def save(): Unit
+  def load(): Unit
 
   def setGameBoard(gb: GameboardInterface)
   def getGameBoard: GameboardInterface
   def setPossibleCell(pC: Set[Int]) : GameboardInterface
+
 }
 
 import scala.swing.Button
@@ -96,4 +95,4 @@ class GameBoardChanged extends Event
 case class ButtonClicked(source: Button) extends Event
 class changeWall extends Event
 class Winner extends Event
-// class CandidatesChanged extends Event
+

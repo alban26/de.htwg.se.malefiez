@@ -5,6 +5,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 
 object IRoll extends InstructionTrait{
+
   val roll1: Handler0 = {
     case Request(x,y,z) if x != ' ' => z.setDicedNumber(z.rollCube)
       Request(x,y,z)

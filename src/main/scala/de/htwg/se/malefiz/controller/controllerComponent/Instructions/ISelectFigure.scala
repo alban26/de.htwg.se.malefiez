@@ -5,6 +5,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
 object ISelectFigure extends InstructionTrait{
+
   val select1: Handler0 = {
     case Request(x, y, z) if x.head.toInt == z.getPlayersTurn.playerNumber => z.getPCells(z.getFigure(x.head.toInt, x(1).toInt), z.getDicedNumber)
       Request(x,y,z)
@@ -40,6 +41,6 @@ object ISelectFigure extends InstructionTrait{
       Statements.value(StatementRequest(z))
   }
 
-
   val select: PartialFunction[Request, String] = (select1 andThen select2 andThen select3 andThen select4 andThen log) orElse (select5 andThen select6 andThen log)
+
 }

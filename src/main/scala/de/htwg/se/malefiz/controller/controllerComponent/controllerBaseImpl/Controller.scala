@@ -5,7 +5,7 @@ import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, State, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
@@ -46,11 +46,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   val s: GameState = GameState(this)
 
-
   val undoManager = new UndoManager
-
-  //var entryGui = new EntryGui(this)
- //var gui = new SwingGui(this)
 
   def execute(string: String): Boolean = {
     s.run(string)
@@ -136,13 +132,13 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   def gameBoardToString: String = gameBoard.createGameBoard()
 
-  def undo: Unit = {
-    undoManager.undoStep
+  def undo(): Unit = {
+    undoManager.undoStep()
     publish(new GameBoardChanged)
   }
 
-  def redo: Unit = {
-    undoManager.redoStep
+  def redo(): Unit = {
+    undoManager.redoStep()
     publish(new GameBoardChanged)
   }
 
@@ -199,12 +195,12 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     gameBoard.nextPlayer(list,n)
   }
 
-  override def save: Unit = {
+  override def save(): Unit = {
     fileIo.save(gameBoard, this)
     publish(new GameBoardChanged)
   }
 
-  override def load: Unit = {
+  override def load(): Unit = {
     val cNeu = fileIo.loadController
     val stateNr = cNeu.getStateNumber
 
@@ -228,4 +224,5 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
     }
     publish(new GameBoardChanged)
   }
+
 }

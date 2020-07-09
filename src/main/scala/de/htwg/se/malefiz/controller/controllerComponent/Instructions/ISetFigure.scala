@@ -6,6 +6,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 
 object ISetFigure extends InstructionTrait{
+
   val set1: Handler0 = {
     case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) && z.getPossibleCells.contains(x.head.toInt) =>
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
@@ -27,7 +28,7 @@ object ISetFigure extends InstructionTrait{
     case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt)=>
       z.setPosisFalse(z.getPlayersTurn.playerNumber)
       z.setPosisCellFalse(z.getPossibleCells.toList)
-      z.resetPossibleCells
+      z.resetPossibleCells()
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
@@ -37,7 +38,7 @@ object ISetFigure extends InstructionTrait{
       z.setDicedNumber(0)
       z.setPosisFalse(z.getPlayersTurn.playerNumber)
       z.setPosisCellFalse(z.getPossibleCells.toList)
-      z.resetPossibleCells
+      z.resetPossibleCells()
       z.setPlayersTurn(z.nextPlayer(z.getPlayer,z.getPlayersTurn.playerNumber-1))
       y.nextState(Roll(z))
       z.setStatementStatus(nextPlayer)
@@ -63,7 +64,7 @@ object ISetFigure extends InstructionTrait{
       Statements.value(StatementRequest(z))
   }
 
-
   val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) orElse
     (set5 andThen set6 andThen log) orElse (set7 andThen set8 andThen log)
+
 }

@@ -1,4 +1,5 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
+
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
@@ -23,4 +24,5 @@ object ISetup extends InstructionTrait {
   }
 
   val setup: PartialFunction[Request, String] = setup1 andThen setup2 orElse setup3 andThen log
+
 }

@@ -1,12 +1,10 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.{Color, Font, Image}
+import java.awt.Font
 import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.Malefiz.swingGui
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
-
-
-import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, Graphics2D, GridBagPanel, GridPanel, Image, Label, Menu, MenuBar, MenuItem, Panel}
+import scala.swing.{Action, Button, Dimension, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem}
 import scala.swing.event.{ButtonClicked, Key}
 
 class EntryGui (controller: ControllerInterface) extends Frame {
@@ -15,12 +13,10 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   title = "Wilkommen zu Malefiz"
   centerOnScreen()
 
-
   val welcomeLabel = new Label("Willkommen bei Malefiz")
   welcomeLabel.font = new Font("Sans Serif", Font.BOLD, 22)
   val newGameButton = new Button("New Game")
   val quitButton = new Button("Quit")
-
 
   menuBar = new MenuBar{
 
@@ -42,7 +38,8 @@ class EntryGui (controller: ControllerInterface) extends Frame {
         swingGui.drawGameBoard()
         swingGui.repaint()
       })
-  }}
+    }
+  }
 
 
   contents = new GridBagPanel {
@@ -86,6 +83,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
       val a = new EntryPlayerGui(this.controller)
       a.visible = true
   }
+
  size = new Dimension(500, 500)
+
 }
-// RObert

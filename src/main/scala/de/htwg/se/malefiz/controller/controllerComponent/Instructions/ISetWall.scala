@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.Roll
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
@@ -36,4 +35,5 @@ object ISetWall extends InstructionTrait {
   }
 
   val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log)
+
 }
