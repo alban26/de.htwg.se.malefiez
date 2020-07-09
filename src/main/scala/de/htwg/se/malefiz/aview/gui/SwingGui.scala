@@ -30,7 +30,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   playerLabel.foreground = Color.WHITE
   playerLabel.background= Color.DARK_GRAY
   playerLabel.font = new Font("Sans Serif", Font.BOLD, 18)
-  playerLabel.border = Swing.EtchedBorder(Swing.Lowered)
+  playerLabel.border = Swing.EmptyBorder(3)
 
   var playerArea = new TextPane
   playerArea.background = Color.DARK_GRAY
@@ -41,7 +41,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   val playerTurnLabel = new Label("Player Turn")
   playerTurnLabel.foreground = Color.WHITE
   playerTurnLabel.background= Color.DARK_GRAY
-  playerTurnLabel.border = Swing.EtchedBorder(Swing.Lowered)
+  playerTurnLabel.border = Swing.EmptyBorder(3)
   playerTurnLabel.font = new Font("Sans Serif", Font.BOLD, 18)
 
   val playerTurnArea = new Label("")
@@ -55,7 +55,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   cubeLabel.foreground = Color.WHITE
   cubeLabel.background = Color.DARK_GRAY
   cubeLabel.font = new Font("Sans Serif", Font.BOLD, 18)
-  cubeLabel.border = Swing.EtchedBorder(Swing.Lowered)
+  cubeLabel.border = Swing.EmptyBorder(3)
 
   val cubeButton = new Button()
   val cubeIcon = new ImageIcon("src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png")
@@ -67,7 +67,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   randomNumberLabel.foreground = Color.WHITE
   randomNumberLabel.background = Color.DARK_GRAY
   randomNumberLabel.font = new Font("Sans Serif", Font.BOLD, 18)
-  randomNumberLabel.border = Swing.EtchedBorder(Swing.Lowered)
+  randomNumberLabel.border = Swing.EmptyBorder(3)
 
   val randomNumberArea = new Label("")
   randomNumberArea.foreground = Color.WHITE
@@ -79,7 +79,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   informationArea.foreground = Color.WHITE
   informationArea.background = Color.DARK_GRAY
   informationArea.font = new Font("Sans Serif", Font.BOLD, 18)
-  informationArea.border = Swing.EtchedBorder(Swing.Lowered)
+  informationArea.border = Swing.EmptyBorder(3)
   informationArea.editable = false
 
   val panel: Panel = new Panel {
