@@ -74,12 +74,12 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.resetPossibleCells
         controller.gameBoard.getPossibleCells should be (Set().empty)
       }
-      "The Controller can save the Game" in {
+      /*"The Controller can save the Game" in {
         controller.save()
         controller.load()
 
         controller.gameBoard.getCellList(22).playerNumber should be(1)
-      }
+      }*/
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
         controller.setPosisCellTrue(List(30, 31, 32, 33))
         controller.gameBoard.getCellList(30).possibleCells should be(true)
