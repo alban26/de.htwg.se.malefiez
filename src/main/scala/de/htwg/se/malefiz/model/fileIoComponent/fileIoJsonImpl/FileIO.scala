@@ -88,6 +88,7 @@ class FileIO @Inject extends FileIOInterface{
       }
     }
 
+    //players.filter(_ != null).map(x => gameboard.createPlayer(x.name))
     for (player <- players){
       if (player != "")
         gameboard = gameboard.createPlayer(player.name)
