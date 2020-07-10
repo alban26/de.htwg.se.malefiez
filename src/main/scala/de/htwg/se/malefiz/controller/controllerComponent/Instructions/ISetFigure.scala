@@ -13,19 +13,10 @@ object ISetFigure extends InstructionTrait{
       Request(x,y,z)
   }
 
-  val set7: Handler0 = {
-    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) =>
-      Request(x,y,z)
-  }
 
-  val set8: Handler1 = {
-    case Request(x, y, z) =>
-      z.setStatementStatus(wrongField)
-      Statements.value(StatementRequest(z))
-  }
 
   val set2: Handler0 = {
-    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt)=>
+    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt) =>
 
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
       Request(x,y,z)
@@ -62,6 +53,17 @@ object ISetFigure extends InstructionTrait{
       y.nextState(Setup(z))
       z.setStatementStatus(won)
       z.weHaveAWinner()
+      Statements.value(StatementRequest(z))
+  }
+
+  val set7: Handler0 = {
+    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getCellList(x.head.toInt).playerNumber != 0 =>
+      Request(x,y,z)
+  }
+
+  val set8: Handler1 = {
+    case Request(x, y, z) =>
+      z.setStatementStatus(wrongField)
       Statements.value(StatementRequest(z))
   }
 
