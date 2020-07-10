@@ -105,6 +105,15 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("22")
         controller.statementStatus should be(Statements.wrongWall)
       }
+      "It seems to be not Albans day today - now he sets his wall on another wall! he will read the statement" +
+        "again - 'Alban du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus.'" in {
+        tui.processInput1("54")
+        controller.statementStatus should be(Statements.wrongWall)
+      }
+      "Now he will put his wall on a valid field " in {
+        tui.processInput1("48")
+        controller.statementStatus should be (Statements.roll)
+      }
     }
   }
 }
