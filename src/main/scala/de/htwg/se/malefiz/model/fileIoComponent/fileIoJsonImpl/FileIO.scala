@@ -2,16 +2,18 @@ package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
 
 import java.io.{File, PrintWriter}
+
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Point}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
+
 import scala.io.Source
 
 
@@ -63,6 +65,7 @@ class FileIO extends FileIOInterface{
 
     val injector = Guice.createInjector(new MalefizModule)
     var gameboard: GameboardInterface = injector.instance[GameboardInterface]
+
 
     implicit val pointReader: Reads[Point] = Json.reads[Point]
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
@@ -124,21 +127,6 @@ class FileIO extends FileIOInterface{
       "name" -> player.name
     )
   }
-
-  /*
-  implicit val cellWrites: Writes[Cell] = (cell: Cell) => {
-    Json.obj(
-      "cellnr" -> JsNumber(cell.cellNumber),
-      "playernr" -> JsNumber(cell.playerNumber),
-      "figurenr" -> JsNumber(cell.figureNumber),
-      "wallPermission" -> Json.toJson(cell.wallPermission),
-      "hasWall" -> Json.toJson(cell.hasWall),
-      "coord" -> Json.toJson(cell.coordinates),
-      "posFigur" -> Json.toJson(cell.possibleFigures),
-      "posCell" -> Json.toJson(cell.possibleCells)
-    )
-  }*/
-
 
 
   override def save(gameBoard: GameboardInterface, controller: ControllerInterface): Unit = {
