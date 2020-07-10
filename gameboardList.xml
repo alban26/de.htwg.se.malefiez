@@ -398,7 +398,7 @@
   <player> </player>
   <possibleCells> </possibleCells>
   <playersTurn turnZ="1" turnN="Robert"></playersTurn>
-  <dicedNumber number="0"></dicedNumber>
+  <dicedNumber number="6"></dicedNumber>
   <selectedFigure sPlayer="1" sFigure="1"></selectedFigure>
-  <gameState state="1"></gameState>
+  <gameState state="3"></gameState>
 </gameboard>

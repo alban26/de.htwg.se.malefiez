@@ -1,26 +1,37 @@
 package de.htwg.se.malefiz.model.fileIoCmponent
 
+import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
+import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+
+import scala.collection.mutable.Map
 
 class FileIOSpec extends WordSpec with Matchers {
 
   "FilIO" when {
     "called playing a Game" should {
 
-      var gameBoard = new GameBoard()
-      var controller = new Controller(gameBoard)
+      val cellConfigFile = "project/mainCellConfiguration"
+      val cellLinksFile = "project/mainCellLinks"
 
-      controller.createPlayer("Robert")
-      controller.createPlayer("Alban")
-      controller.execute("n Robert")
-      controller.execute("n Alban")
-      controller.execute("start")
+      val players: List[Player] = List().empty
+      val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
+      val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
+      val possibleCells: Set[Int] = Set().empty
 
-      controller.setStateNumber(1)
-      controller.setSelectedFigures(1, 1)
+      var gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
+
+      val controller = new Controller(gameBoard)
+      val tui = new Tui(controller)
+
+      tui.processInput1("n Robert")
+      tui.processInput1("n Alban")
+      tui.processInput1("n start")
+      tui.processInput1("r")
+      tui.processInput1("1 1")
 
       "save and load with XML" in {
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl.FileIO
