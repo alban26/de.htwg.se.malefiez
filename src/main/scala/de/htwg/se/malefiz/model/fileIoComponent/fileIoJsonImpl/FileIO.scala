@@ -1,25 +1,19 @@
 package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
-
 import java.io.{File, PrintWriter}
-
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Point}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import com.google.inject.Guice
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
-
 import scala.io.Source
 
-
 class FileIO extends FileIOInterface{
-
-  //val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
   override def loadController: ControllerInterface = {
 
@@ -28,10 +22,8 @@ class FileIO extends FileIOInterface{
     val string = source.getLines.mkString
     source.close()
     val json: JsValue = Json.parse(string)
-    implicit val pointReader: Reads[Point] = Json.reads[Point]
-    implicit val cellReader: Reads[Cell] = Json.reads[Cell]
-    implicit val playerReader: Reads[Player] = Json.reads[Player]
 
+    implicit val playerReader: Reads[Player] = Json.reads[Player]
 
     val dicenr: Int = (json \ "diceNumber").as[Int]
     val plTurn: Player = (json \ "playersTurn").as[Player]
@@ -39,17 +31,9 @@ class FileIO extends FileIOInterface{
     val f2: Int = (json \ "selectedFigure2").as[Int]
     val state: Int = (json \ "gameState").as[Int]
 
-    println("dicenr "+dicenr)
-    println("playturn "+plTurn)
-    println("f1 "+f1)
-    println("f2 "+f2)
-    println("state "+f2)
-
     controllerNeu.setDicedNumber(dicenr)
     controllerNeu.playersTurn = controllerNeu.getPlayer(plTurn.playerNumber-1)
-
     controllerNeu.setSelectedFigures(f1,f2)
-
     controllerNeu.setStateNumber(state)
 
     controllerNeu
@@ -66,12 +50,9 @@ class FileIO extends FileIOInterface{
     val injector = Guice.createInjector(new MalefizModule)
     var gameboard: GameboardInterface = injector.instance[GameboardInterface]
 
-
     implicit val pointReader: Reads[Point] = Json.reads[Point]
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
     implicit val playerReader: Reads[Player] = Json.reads[Player]
-    println("Hab ich notiert")
-   // val cells : List[Cell] = (json \ "cells").as[List[Cell]]
 
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
@@ -128,7 +109,6 @@ class FileIO extends FileIOInterface{
     )
   }
 
-
   override def save(gameBoard: GameboardInterface, controller: ControllerInterface): Unit = {
     val jsonGameBoard = gameBoardToJson(gameBoard,controller)
     val jsonFile = Json.prettyPrint(jsonGameBoard)
@@ -165,6 +145,5 @@ class FileIO extends FileIOInterface{
       )
     )
   }
-
 
 }

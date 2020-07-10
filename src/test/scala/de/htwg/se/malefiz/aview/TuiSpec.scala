@@ -10,9 +10,7 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable.Map
 
 class TuiSpec extends WordSpec with Matchers {
-
-
-
+  
   "A Malefiz Tui" when {
     "when a new game start" should {
       val cellConfigFile = "project/mainCellConfiguration"
