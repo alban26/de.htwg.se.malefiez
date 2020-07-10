@@ -17,7 +17,6 @@ object ISetFigure extends InstructionTrait{
 
   val set2: Handler0 = {
     case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt) =>
-
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
@@ -57,7 +56,7 @@ object ISetFigure extends InstructionTrait{
   }
 
   val set7: Handler0 = {
-    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getPossibleCells.contains(z.getPlayersTurn.playerNumber)=>
+    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getCellList(x.head.toInt).playerNumber == z.getPlayersTurn.playerNumber =>
       Request(x,y,z)
   }
 
