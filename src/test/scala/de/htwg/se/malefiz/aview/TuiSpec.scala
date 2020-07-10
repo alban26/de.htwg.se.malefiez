@@ -121,7 +121,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("2 1")
         controller.statementStatus should be (Statements.selectWrongFigure)
       }
-      "Now he chooses his wright figure but he decides to kick his own other figure." in {
+      "Now he chooses his right figure but he decides to kick his own other figure." in {
         tui.processInput1("1 1")
         tui.processInput1("22")
         controller.statementStatus should be (Statements.wrongField)

@@ -31,6 +31,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       }
       "Check if there is a Wall on Cell 52" in {
         main.cellList(52).hasWall should be (false)
+        main.getGameBoardGraph should be (mainCellGraph)
       }
       "Set Wall on Cell 52" in {
         var c = main.setWall(52)

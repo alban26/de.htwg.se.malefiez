@@ -2,7 +2,8 @@ package de.htwg.se.malefiz.model.fileIoCmponent
 
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest._
 
 class FileIOSpec extends WordSpec with Matchers {
 
