@@ -96,6 +96,7 @@ class TuiSpec extends WordSpec with Matchers {
         controller.s.state.toString should be("5")
 
       }
+
       "Alban decides to set his wall on 24 - what he may forgot - this is a forbidden area for walls" +
         "he gets the message that he should put his wall on another field" in {
         tui.processInput1("23")
@@ -112,8 +113,15 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "Now he will put his wall on a valid field " in {
         tui.processInput1("48")
-        //controller.statementStatus should be (Statements.roll)
+        controller.statementStatus should be (Statements.nextPlayer)
       }
+      "Now it's Roberts turn again. But what happens when he chooses albans Figure after throwing the Cube" in {
+        tui.processInput1("r")
+        controller.setDicedNumber(1)
+        tui.processInput1("2 1")
+        controller.statementStatus should be (Statements.selectWrongFigure)
+      }
+
     }
   }
 }
