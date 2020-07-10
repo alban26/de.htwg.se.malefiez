@@ -107,7 +107,7 @@
     }
   }, {
     "cellNumber" : 10,
-    "playerNumber" : 1,
+    "playerNumber" : 0,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {

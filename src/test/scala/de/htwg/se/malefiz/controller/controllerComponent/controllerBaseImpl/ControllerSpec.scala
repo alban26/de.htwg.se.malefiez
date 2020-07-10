@@ -42,6 +42,8 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.setPlayerFigure(1,1, 10)
         observer.update should be()
         controller.getFigure(1,1) should be (10)
+        controller.removeActualPlayerAndFigureFromCell(1,1)
+        controller.getGameBoard.getCellList(10).playerNumber should be (0)
       }
       "notify its Observer after setting a Wall on a Cell" in {
         controller.setWall(50)
