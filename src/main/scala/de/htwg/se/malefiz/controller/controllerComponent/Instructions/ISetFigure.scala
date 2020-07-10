@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 object ISetFigure extends InstructionTrait{
 
   val set1: Handler0 = {
-    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) && z.getPossibleCells.contains(x.head.toInt) =>
+    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) && z.getPossibleCells.contains(x.head.toInt) && z.getCellList(x.head.toInt).playerNumber != z.getPlayersTurn.playerNumber =>
       z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
       Request(x,y,z)
   }
@@ -57,7 +57,7 @@ object ISetFigure extends InstructionTrait{
   }
 
   val set7: Handler0 = {
-    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getCellList(x.head.toInt).playerNumber != 0 =>
+    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) =>
       Request(x,y,z)
   }
 
