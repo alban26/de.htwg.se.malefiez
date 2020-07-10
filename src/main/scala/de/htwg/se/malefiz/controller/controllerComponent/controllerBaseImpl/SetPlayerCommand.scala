@@ -34,6 +34,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
   }
 
   override def undoStep(): Unit = {
+
     val new_memento = controller.gameBoard
     val new_mDicedNumber = controller.dicedNumber
     val new_mPlayersTurn = controller.playersTurn
