@@ -10,33 +10,46 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
   var memento: GameboardInterface = controller.gameBoard
   var mdicedNumber: Int = controller.dicedNumber
-  var mplayersNurn: Player = controller.playersTurn
+  var mplayersTurn: Player = controller.playersTurn
   var mStatementStatus: Statements = controller.statementStatus
   var mS: GameState = controller.s
 
   override def doStep(): Unit = {
-    controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber,playerFigure)
+    controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure)
 
-    if(controller.getCellList(cellNumber).playerNumber != 0) {
+    if (controller.getCellList(cellNumber).playerNumber != 0) {
       controller.gameBoard = controller.gameBoard.setPlayer(controller.getCellList(cellNumber).playerNumber,
-        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,controller.getCellList(cellNumber).figureNumber))
+        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,
+          controller.getCellList(cellNumber).figureNumber))
       controller.gameBoard = controller.gameBoard.setFigure(controller.getCellList(cellNumber).figureNumber,
-        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,controller.getCellList(cellNumber).figureNumber))
+        controller.gameBoard.getHomeNr(controller.getCellList(cellNumber).playerNumber,
+          controller.getCellList(cellNumber).figureNumber))
     }
-    if(controller.getCellList(cellNumber).hasWall) {
+    if (controller.getCellList(cellNumber).hasWall) {
       controller.rWall(cellNumber)
     }
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
-
   }
 
   override def undoStep(): Unit = {
     val new_memento = controller.gameBoard
     val new_mDicedNumber = controller.dicedNumber
+    val new_mPlayersTurn = controller.playersTurn
+    val new_mS = controller.s
+    val new_mStatementStatus = controller.statementStatus
+
     controller.gameBoard = memento
     controller.dicedNumber = mdicedNumber
+    controller.s.nextState(mS.state)
+    controller.playersTurn = mplayersTurn
+    controller.statementStatus = mStatementStatus
+
     memento = new_memento
+    mdicedNumber = new_mDicedNumber
+    mS.nextState(new_mS.state)
+    mplayersTurn = new_mPlayersTurn
+    mStatementStatus = new_mStatementStatus
   }
 
   override def redoStep(): Unit = doStep()
