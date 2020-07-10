@@ -66,7 +66,7 @@
     [ ]
   </cell>
   <cell cellnumber="22" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+    [22]
   </cell>
   <cell cellnumber="23" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -75,7 +75,7 @@
     [ ]
   </cell>
   <cell cellnumber="25" playernumber="0" figurenumber="0" haswall="false">
-    [25]
+    [ ]
   </cell>
   <cell cellnumber="26" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -111,10 +111,10 @@
     [ ]
   </cell>
   <cell cellnumber="37" playernumber="0" figurenumber="0" haswall="false">
-    [37]
+    [ ]
   </cell>
   <cell cellnumber="38" playernumber="0" figurenumber="0" haswall="false">
-    [38]
+    [ ]
   </cell>
   <cell cellnumber="39" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -400,12 +400,10 @@
     <player playernumber="2" playername="B"> B </player>
   </player>
   <possibleCells>
-    <pCells posCell="37"> 37 </pCells>
-    <pCells posCell="25"> 25 </pCells>
-    <pCells posCell="38"> 38 </pCells>
+    <pCells posCell="22"> 22 </pCells>
   </possibleCells>
   <playersTurn turnZ="1" turnN="A"></playersTurn>
-  <dicedNumber number="4"></dicedNumber>
+  <dicedNumber number="1"></dicedNumber>
   <selectedFigure sPlayer="1" sFigure="1"></selectedFigure>
   <gameState state="3"></gameState>
 </gameboard>

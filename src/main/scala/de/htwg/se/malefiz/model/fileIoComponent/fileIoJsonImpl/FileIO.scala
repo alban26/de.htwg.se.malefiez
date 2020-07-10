@@ -61,6 +61,7 @@ class FileIO @Inject extends FileIOInterface{
 
 
     var found: Set[Int] = Set[Int]()
+
     for (index <- 0 until posCells.size) {
       val possCell = (json \ "possibleCells")(index).as[Int]
       gameboard = gameboard.setPosiesCellTrue(List(possCell))

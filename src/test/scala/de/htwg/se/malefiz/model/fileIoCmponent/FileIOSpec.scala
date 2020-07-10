@@ -31,6 +31,7 @@ class FileIOSpec extends WordSpec with Matchers {
       tui.processInput1("n B")
       tui.processInput1("start")
       tui.processInput1("r")
+      controller.setDicedNumber(1)
       tui.processInput1("1 1")
 
       "save and load with XML" in {
@@ -39,6 +40,9 @@ class FileIOSpec extends WordSpec with Matchers {
         val fileIO = new FileIO()
         fileIO.save(controller.gameBoard,controller)
         fileIO.load.getPlayer.head.name should be("A")
+        fileIO.load.getPossibleCells.head should be (22)
+        controller.playersTurn.name should be ("A")
+        controller.getDicedNumber should be (1)
         //fileIO.load.getPlayer.head.playerNumber should be (1)
         //fileIO.load.getPlayer.head.name should be ("Robert")
       }
@@ -48,6 +52,9 @@ class FileIOSpec extends WordSpec with Matchers {
         val fileIO = new FileIO()
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
+        fileIO.load.getPossibleCells.head should be (22)
+        controller.playersTurn.name should be ("A")
+        controller.getDicedNumber should be (1)
         /*
         fileIO.load.getPlayer.head.playerNumber should be (1)
         fileIO.load.getPlayer.head.name should be ("Robert")
