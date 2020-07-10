@@ -59,7 +59,7 @@ trait ControllerInterface extends Publisher {
 
   def getCellList: List[Cell]
   def getPlayer: List[Player]
-  def getGameBoardGraph: Map[Int, Set[Int]]
+ // def getGameBoardGraph: Map[Int, Set[Int]]
   def getPossibleCells: Set[Int]
 
   def getDicedNumber: Int
@@ -70,7 +70,7 @@ trait ControllerInterface extends Publisher {
   def getGameState: GameState
   def getStatement: Statements
 
-  def getUndoManager: UndoManager
+  //def getUndoManager: UndoManager
  // def getGui: SwingGui
  // def getEntryGui: EntryGui
 

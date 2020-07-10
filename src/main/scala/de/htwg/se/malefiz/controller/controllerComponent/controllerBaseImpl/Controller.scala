@@ -154,7 +154,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def getPlayer: List[Player] = gameBoard.getPlayer
 
-  override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = gameBoard.getGameBoardGraph
+  //override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = gameBoard.getGameBoardGraph
 
   override def getPossibleCells: Set[Int] = gameBoard.getPossibleCells
 
@@ -166,7 +166,7 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
 
   override def getGameState: GameState = this.s
 
-  override def getUndoManager: UndoManager = this.undoManager
+  //override def getUndoManager: UndoManager = this.undoManager
 
 
   def getStatement: Statements = statementStatus
