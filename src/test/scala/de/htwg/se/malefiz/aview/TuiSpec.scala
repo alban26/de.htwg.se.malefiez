@@ -126,6 +126,12 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("22")
         controller.statementStatus should be (Statements.wrongField)
       }
+      "If we want to Test if a player can win the game, we set the possible Cell of this turn to the Cell 131 - The Winner Cell" +
+        "Then we set the the figure 1 of player 1 to the winner Cell" in {
+        controller.setPossibleCell(Set(131))
+        tui.processInput1("131")
+        controller.statementStatus should be (Statements.won)
+      }
 
     }
   }
