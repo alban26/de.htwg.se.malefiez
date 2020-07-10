@@ -141,7 +141,8 @@ class FileIO @Inject extends FileIOInterface{
             "cellNumber" -> c.cellNumber,
             "playerNumber" -> c.playerNumber,
             "figureNumber" -> c.figureNumber,
-            "hasWall" -> c.hasWall
+            "hasWall" -> c.hasWall,
+            "coordinates"-> c.coordinates
           )
         }
       )
