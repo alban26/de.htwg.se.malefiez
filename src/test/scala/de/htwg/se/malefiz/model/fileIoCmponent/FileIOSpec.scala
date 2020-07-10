@@ -27,25 +27,27 @@ class FileIOSpec extends WordSpec with Matchers {
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
 
-      tui.processInput1("n Robert")
-      tui.processInput1("n Alban")
-      tui.processInput1("n start")
+      tui.processInput1("n A")
+      tui.processInput1("n B")
+      tui.processInput1("start")
       tui.processInput1("r")
       tui.processInput1("1 1")
 
       "save and load with XML" in {
+
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIO = new FileIO()
-        fileIO.save(gameBoard,controller)
-        fileIO.load should be(gameBoard)
+        fileIO.save(controller.gameBoard,controller)
+        fileIO.load.getPlayer.head.name should be("A")
         //fileIO.load.getPlayer.head.playerNumber should be (1)
         //fileIO.load.getPlayer.head.name should be ("Robert")
       }
       "save and load with Json" in {
+
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl.FileIO
         val fileIO = new FileIO()
-        fileIO.save(gameBoard, controller)
-        fileIO.load should be(gameBoard)
+        fileIO.save(controller.gameBoard, controller)
+        fileIO.load.getPlayer.head.name should be("A")
         /*
         fileIO.load.getPlayer.head.playerNumber should be (1)
         fileIO.load.getPlayer.head.name should be ("Robert")

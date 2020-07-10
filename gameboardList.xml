@@ -1,18 +1,18 @@
-<gameboard size="0">
+<gameboard size="2">
   <cell cellnumber="0" playernumber="1" figurenumber="1" haswall="false">
-    (1)
+    (1|1)
   </cell>
   <cell cellnumber="1" playernumber="1" figurenumber="2" haswall="false">
-    (1)
+    (1|2)
   </cell>
   <cell cellnumber="2" playernumber="1" figurenumber="3" haswall="false">
-    (1)
+    (1|3)
   </cell>
   <cell cellnumber="3" playernumber="1" figurenumber="4" haswall="false">
-    (1)
+    (1|4)
   </cell>
   <cell cellnumber="4" playernumber="1" figurenumber="5" haswall="false">
-    (1)
+    (1|5)
   </cell>
   <cell cellnumber="5" playernumber="2" figurenumber="1" haswall="false">
     (2)
@@ -81,7 +81,7 @@
     [ ]
   </cell>
   <cell cellnumber="27" playernumber="0" figurenumber="0" haswall="false">
-    [ ]
+    [27]
   </cell>
   <cell cellnumber="28" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -395,9 +395,14 @@
   <cell cellnumber="131" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <player> </player>
-  <possibleCells> </possibleCells>
-  <playersTurn turnZ="1" turnN="Robert"></playersTurn>
+  <player>
+    <player playernumber="1" playername="A"> A </player>
+    <player playernumber="2" playername="B"> B </player>
+  </player>
+  <possibleCells>
+    <pCells posCell="27"> 27 </pCells>
+  </possibleCells>
+  <playersTurn turnZ="1" turnN="A"></playersTurn>
   <dicedNumber number="6"></dicedNumber>
   <selectedFigure sPlayer="1" sFigure="1"></selectedFigure>
   <gameState state="3"></gameState>
