@@ -10,11 +10,11 @@
     "playerNumber" : 1,
     "name" : "A"
   },
-  "diceNumber" : 2,
+  "diceNumber" : 1,
   "selectedFigure1" : 1,
   "selectedFigure2" : 1,
   "gameState" : 3,
-  "possibleCells" : [ 21, 23 ],
+  "possibleCells" : [ 22 ],
   "cells" : [ {
     "cellNumber" : 0,
     "playerNumber" : 1,
