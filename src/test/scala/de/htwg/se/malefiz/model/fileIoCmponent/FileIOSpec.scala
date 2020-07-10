@@ -9,25 +9,38 @@ class FileIOSpec extends WordSpec with Matchers {
   "FilIO" when {
     "called playing a Game" should {
 
-      var playfield = new GameBoard()
-      var controller = new Controller(playfield)
-      controller.gameBoard.createPlayer("Robert")
-      controller.createPlayer("Lukas")
+      var gameBoard = new GameBoard()
+      var controller = new Controller(gameBoard)
+
+      controller.createPlayer("Robert")
+      controller.createPlayer("Alban")
+      controller.execute("n Robert")
+      controller.execute("n Alban")
       controller.execute("start")
+
       controller.setStateNumber(1)
       controller.setSelectedFigures(1, 1)
 
       "save and load with XML" in {
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIO = new FileIO()
-        fileIO.save(playfield,controller)
-        fileIO.load should be(playfield)
+        fileIO.save(gameBoard,controller)
+        fileIO.load should be(gameBoard)
+        //fileIO.load.getPlayer.head.playerNumber should be (1)
+        //fileIO.load.getPlayer.head.name should be ("Robert")
       }
       "save and load with Json" in {
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl.FileIO
         val fileIO = new FileIO()
-        fileIO.save(playfield, controller)
-        fileIO.load should be(playfield)
+        fileIO.save(gameBoard, controller)
+        fileIO.load should be(gameBoard)
+        /*
+        fileIO.load.getPlayer.head.playerNumber should be (1)
+        fileIO.load.getPlayer.head.name should be ("Robert")
+        fileIO.load.getPlayer(2).playerNumber should be (2)
+        fileIO.load.getPlayer(2).name should be ("Alban")
+
+         */
       }
     }
 

@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl
 
-import com.google.inject.Guice
+import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
@@ -9,9 +9,10 @@ import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.xml.{Elem, PrettyPrinter}
 
-class FileIO extends FileIOInterface{
+class FileIO @Inject extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
     val file = scala.xml.XML.loadFile("gameboardList.xml")
