@@ -76,7 +76,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       }
       "The Controller can save the Game" in {
         controller.save()
-        //controller.load()
+        controller.load()
 
         controller.gameBoard.getCellList(22).playerNumber should be(1)
       }
