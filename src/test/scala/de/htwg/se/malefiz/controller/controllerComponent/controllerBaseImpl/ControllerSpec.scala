@@ -94,6 +94,10 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(32).possibleCells should be(false)
         controller.gameBoard.getCellList(33).possibleCells should be(false)
       }
+      "Reset the GameBoard" in {
+        val a = controller.resetGameboard
+        a shouldNot be (controller.getGameBoard)
+      }
     }
   }
 }

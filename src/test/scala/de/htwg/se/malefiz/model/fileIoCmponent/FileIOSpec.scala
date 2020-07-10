@@ -30,12 +30,13 @@ class FileIOSpec extends WordSpec with Matchers {
       tui.processInput1("n A")
       tui.processInput1("n B")
       tui.processInput1("start")
+
       tui.processInput1("r")
       controller.setDicedNumber(1)
       tui.processInput1("1 1")
 
-      "save and load with XML" in {
 
+      "save and load with XML" in {
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIO = new FileIO()
         fileIO.loadController shouldNot be (controller)
