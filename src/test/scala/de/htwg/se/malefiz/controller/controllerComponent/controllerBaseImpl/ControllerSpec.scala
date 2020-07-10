@@ -80,11 +80,6 @@ class ControllerSpec  extends WordSpec with Matchers {
 
         controller.gameBoard.getCellList(22).playerNumber should be(1)
       }
-      "The Controller can remove a player" in {
-       /* controller.removeActualPlayerAndFigureFromCell(1,1)
-        controller.gameBoard.getCellList(22).figureNumber should be (0)
-        controller.gameBoard.getCellList(22).playerNumber should be (0)*/
-      }
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
         controller.setPosisCellTrue(List(30, 31, 32, 33))
         controller.gameBoard.getCellList(30).possibleCells should be(true)

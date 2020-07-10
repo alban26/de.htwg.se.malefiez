@@ -1,9 +1,9 @@
-<gameboard size="3">
+<gameboard size="0">
   <cell cellnumber="0" playernumber="1" figurenumber="1" haswall="false">
     (1)
   </cell>
-  <cell cellnumber="1" playernumber="0" figurenumber="2" haswall="false">
-    ( )
+  <cell cellnumber="1" playernumber="1" figurenumber="2" haswall="false">
+    (1)
   </cell>
   <cell cellnumber="2" playernumber="1" figurenumber="3" haswall="false">
     (1)
@@ -15,19 +15,19 @@
     (1)
   </cell>
   <cell cellnumber="5" playernumber="2" figurenumber="1" haswall="false">
-    (2|1)
+    (2)
   </cell>
   <cell cellnumber="6" playernumber="2" figurenumber="2" haswall="false">
-    (2|2)
+    (2)
   </cell>
   <cell cellnumber="7" playernumber="2" figurenumber="3" haswall="false">
-    (2|3)
+    (2)
   </cell>
   <cell cellnumber="8" playernumber="2" figurenumber="4" haswall="false">
-    (2|4)
+    (2)
   </cell>
   <cell cellnumber="9" playernumber="2" figurenumber="5" haswall="false">
-    (2|5)
+    (2)
   </cell>
   <cell cellnumber="10" playernumber="3" figurenumber="1" haswall="false">
     (3)
@@ -68,11 +68,11 @@
   <cell cellnumber="22" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <cell cellnumber="23" playernumber="1" figurenumber="2" haswall="false">
-    [1]
+  <cell cellnumber="23" playernumber="0" figurenumber="0" haswall="false">
+    [ ]
   </cell>
   <cell cellnumber="24" playernumber="0" figurenumber="0" haswall="false">
-    [24]
+    [ ]
   </cell>
   <cell cellnumber="25" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -84,7 +84,7 @@
     [ ]
   </cell>
   <cell cellnumber="28" playernumber="0" figurenumber="0" haswall="false">
-    [28]
+    [ ]
   </cell>
   <cell cellnumber="29" playernumber="0" figurenumber="0" haswall="false">
     [ ]
@@ -395,17 +395,10 @@
   <cell cellnumber="131" playernumber="0" figurenumber="0" haswall="false">
     [ ]
   </cell>
-  <player>
-    <player playernumber="1" playername="alicde"> alicde </player>
-    <player playernumber="2" playername="bob"> bob </player>
-    <player playernumber="3" playername="mark"> mark </player>
-  </player>
-  <possibleCells>
-    <pCells posCell="24"> 24 </pCells>
-    <pCells posCell="28"> 28 </pCells>
-  </possibleCells>
-  <playersTurn turnZ="2" turnN="bob"></playersTurn>
-  <dicedNumber number="3"></dicedNumber>
-  <selectedFigure sPlayer="2" sFigure="1"></selectedFigure>
-  <gameState state="3"></gameState>
+  <player> </player>
+  <possibleCells> </possibleCells>
+  <playersTurn turnZ="1" turnN="Lukas"></playersTurn>
+  <dicedNumber number="0"></dicedNumber>
+  <selectedFigure sPlayer="1" sFigure="1"></selectedFigure>
+  <gameState state="1"></gameState>
 </gameboard>
