@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 import scala.swing.event.ButtonClicked
 
-class EntryPlayerGui @Inject() (controller: ControllerInterface) extends Frame {
+class EntryPlayerGui (controller: ControllerInterface) extends Frame {
 
   visible = false
   title = "Malefiz"
