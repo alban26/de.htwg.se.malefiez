@@ -18,8 +18,8 @@ object Malefiz {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   //val controller = new Controller(GameBoard())
   val tui = new Tui(controller)
-  var entryGui = new EntryGui(controller)
-  var swingGui = new SwingGui(controller)
+  //var entryGui = new EntryGui(controller)
+  //var swingGui = new SwingGui(controller)
   controller.publish(new GameBoardChanged)
 
   def main(args: Array[String]): Unit = {
