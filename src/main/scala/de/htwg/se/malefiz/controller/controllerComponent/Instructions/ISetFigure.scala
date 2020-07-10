@@ -57,7 +57,7 @@ object ISetFigure extends InstructionTrait{
   }
 
   val set7: Handler0 = {
-    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) =>
+    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getPossibleCells.contains(z.getPlayersTurn.playerNumber)=>
       Request(x,y,z)
   }
 
