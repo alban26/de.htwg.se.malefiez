@@ -101,6 +101,10 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("23")
         controller.statementStatus should be(Statements.wrongWall)
       }
+      "Now Alban decides to put his wall on Roberts figure ... he should get the last statement again!" in {
+        tui.processInput1("22")
+        controller.statementStatus should be(Statements.wrongWall)
+      }
     }
   }
 }

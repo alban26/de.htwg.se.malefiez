@@ -7,13 +7,13 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetWall extends InstructionTrait {
 
   val set1: Handler0 = {
-    case Request(x, y, z) if z.getCellList(x.head.toInt).wallPermission && z.getCellList(x.head.toInt).playerNumber == 0 =>
+    case Request(x, y, z) if z.getCellList(x.head.toInt).wallPermission && z.getCellList(x.head.toInt).playerNumber == 0 && !z.getCellList(x.head.toInt).hasWall =>
       z.setWall(x.head.toInt)
       Request(x,y,z)
   }
 
   val set2: Handler0 = {
-    case Request(x, y, z) if !z.getCellList(x.head.toInt).wallPermission || z.getCellList(x.head.toInt).playerNumber != 0 =>
+    case Request(x, y, z) if !z.getCellList(x.head.toInt).wallPermission || z.getCellList(x.head.toInt).playerNumber != 0 || z.getCellList(x.head.toInt).hasWall =>
       Request(x,y,z)
   }
 
