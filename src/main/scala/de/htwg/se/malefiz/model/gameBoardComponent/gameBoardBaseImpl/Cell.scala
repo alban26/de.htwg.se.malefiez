@@ -9,17 +9,16 @@ case class Cell (cellNumber: Int, playerNumber: Int, figureNumber: Int, wallPerm
  val selects: List[Select] = List (
    { case x if cellNumber < 20 && playerNumber != 0 && !hasWall && possibleFigures =>  "("+ playerNumber+"|"+figureNumber+")"},
    { case x if cellNumber < 20 && playerNumber != 0 && !hasWall && !possibleFigures => "(" + playerNumber + ")"},
-   { case x if cellNumber < 20 && playerNumber == 0 && !hasWall => "( )"},
-   { case x if cellNumber >= 20 && playerNumber != 0 && !hasWall => "["  + playerNumber + "]" },
-   { case x if cellNumber >= 20 && playerNumber == 0 && hasWall => "[x]"},
-   { case x if cellNumber >= 20 && playerNumber == 0 && !hasWall => "[ ]"}
+   { case x if cellNumber < 20 => "( )"},
+   { case x if cellNumber >= 20 && playerNumber != 0 && !hasWall && possibleCells => "[" + playerNumber + "|" + cellNumber + "]" },
+   { case x if cellNumber >= 20 && playerNumber != 0 && !hasWall  && !possibleCells => "[" + playerNumber + "]"},
+   { case x if cellNumber >= 20 && playerNumber != 0 && hasWall  && possibleCells => "[X" + "|" + cellNumber + "]"},
+   { case x if cellNumber >= 20 && playerNumber != 0 && hasWall && !possibleCells => "[X]"},
+   { case x if cellNumber >= 20 && playerNumber != 0 && !hasWall && possibleCells => "[" + cellNumber + "]"},
+   { case x if cellNumber >= 20 && playerNumber != 0 && !hasWall && !possibleCells => "[ ]"},
  )
-
- val stein_or_spieler: String = selects.tail.foldLeft(selects.head)(_.orElse(_)) {6}
-
-*/
-
-
+ val stein_or_spieler: String = selects.tail.(_.orElse(_)) {cellNumber}
+  */
 val stein_or_spieler: String =
   if (cellNumber < 20) {
     if (playerNumber != 0 && !hasWall) {

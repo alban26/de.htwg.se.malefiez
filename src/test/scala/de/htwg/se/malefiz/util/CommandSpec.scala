@@ -1,9 +1,7 @@
 package de.htwg.se.malefiz.util
 
-import de.htwg.se.malefiz.util.{Command, UndoManager}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-
 
 class incrCommand extends Command {
   var state:Int =0

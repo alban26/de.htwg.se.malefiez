@@ -9,7 +9,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, G
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
-// import de.htwg.se.malefiz.Malefiz.entryGui
+import de.htwg.se.malefiz.Malefiz.entryGui
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -39,7 +39,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   playerArea.border = Swing.EmptyBorder(3)
   playerArea.editable = false
 
-  val playerTurnLabel = new Label("Player Turn")
+  val playerTurnLabel = new Label("Turn")
   playerTurnLabel.foreground = Color.WHITE
   playerTurnLabel.background= Color.DARK_GRAY
   playerTurnLabel.border = Swing.EmptyBorder(3)
@@ -291,7 +291,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       controller.resetGameboard()
       playerArea.text = ""
       visible = false
-      //entryGui.visible = true
+      entryGui.visible = true
   }
 
   size = new Dimension(900, 1100)

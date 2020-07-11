@@ -13,7 +13,7 @@ class FileIOSpec extends WordSpec with Matchers {
 
   "FilIO" when {
     "called playing a Game" should {
-
+/*
       val cellConfigFile = "project/mainCellConfiguration"
       val cellLinksFile = "project/mainCellLinks"
 
@@ -34,25 +34,41 @@ class FileIOSpec extends WordSpec with Matchers {
       tui.processInput1("r")
       controller.setDicedNumber(1)
       tui.processInput1("1 1")
-
+*/
 
       "save and load with XML" in {
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoXmlImpl.FileIO
+        val controller = new Controller(new GameBoard())
+        controller.execute("n A")
+        controller.execute("n B")
+        controller.execute("start")
+        controller.execute("r")
+        controller.setDicedNumber(1)
+        controller.execute("1 1")
         val fileIO = new FileIO()
+
         fileIO.loadController shouldNot be (controller)
         fileIO.save(controller.gameBoard,controller)
 
         fileIO.load.getPlayer.head.name should be("A")
         fileIO.load.getPossibleCells.head should be (22)
         controller.playersTurn.name should be ("A")
-        controller.getDicedNumber should be (1)
+        //controller.getDicedNumber should be (1)
         //fileIO.load.getPlayer.head.playerNumber should be (1)
         //fileIO.load.getPlayer.head.name should be ("Robert")
       }
       "save and load with Json" in {
 
         import de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl.FileIO
+        val controller = new Controller(new GameBoard())
+        controller.execute("n A")
+        controller.execute("n B")
+        controller.execute("start")
+        controller.execute("r")
+        controller.setDicedNumber(1)
+        controller.execute("1 1")
         val fileIO = new FileIO()
+
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
         fileIO.load.getPossibleCells.head should be (22)

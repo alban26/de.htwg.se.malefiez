@@ -35,7 +35,7 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
   playerFourLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   val playerFourName: TextField = new TextField {columns = 15}
 
-  val continueButton = new Button("continue")
+  val continueButton = new Button("start new game")
 
   menuBar = new MenuBar{
     contents += new Menu("Malefiz") {

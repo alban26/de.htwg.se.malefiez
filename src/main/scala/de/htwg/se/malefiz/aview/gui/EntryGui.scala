@@ -1,8 +1,8 @@
 package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
-//import de.htwg.se.malefiz.Malefiz.entryGui
-//import de.htwg.se.malefiz.Malefiz.swingGui
+import de.htwg.se.malefiz.Malefiz.entryGui
+import de.htwg.se.malefiz.Malefiz.swingGui
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.{Button, Dimension, Frame, GridBagPanel, Label}
 import scala.swing.event.ButtonClicked
@@ -10,10 +10,10 @@ import scala.swing.event.ButtonClicked
 class EntryGui (controller: ControllerInterface) extends Frame {
 
   visible = true
-  title = "Wilkommen zu Malefiz"
+  title = "Malefiz"
   centerOnScreen()
 
-  val welcomeLabel = new Label("Willkommen bei Malefiz")
+  val welcomeLabel = new Label("Welcome to malefiz")
   welcomeLabel.foreground = Color.WHITE
   welcomeLabel.font = new Font("Sans Serif", Font.BOLD, 22)
   val newGameButton = new Button("New Game")
@@ -61,9 +61,9 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`quitButton`) => System.exit(0)
     case ButtonClicked(`loadButton`) =>
-      //entryGui.visible = false
+      entryGui.visible = false
       controller.load
-      /*
+
       swingGui.visible = true
       swingGui.updateInformationArea()
       swingGui.updatePlayerTurn()
@@ -72,7 +72,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
       swingGui.drawGameBoard()
       swingGui.repaint()
 
-       */
+
     case ButtonClicked(`newGameButton`) =>
       visible = false
       val newEntryPlayerGui = new EntryPlayerGui(this.controller)

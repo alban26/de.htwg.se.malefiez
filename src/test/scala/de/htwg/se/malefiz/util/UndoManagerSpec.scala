@@ -1,13 +1,8 @@
 package de.htwg.se.malefiz.util
 
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.malefiz.model.playerComponent.Player
-import de.htwg.se.malefiz.util.UndoManager
+
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-
-import scala.collection.mutable.Map
-
 
 class UndoManagerSpec extends WordSpec with Matchers {
 
@@ -19,9 +14,9 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(0)
       undoManager.doStep(command)
       command.state should be(1)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(0)
-      undoManager.redoStep
+      undoManager.redoStep()
       command.state should be(1)
     }
 
@@ -32,11 +27,11 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(1)
       undoManager.doStep(command)
       command.state should be(2)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(1)
-      undoManager.undoStep
+      undoManager.undoStep()
       command.state should be(0)
-      undoManager.redoStep
+      undoManager.redoStep()
       command.state should be(1)
     }
   }

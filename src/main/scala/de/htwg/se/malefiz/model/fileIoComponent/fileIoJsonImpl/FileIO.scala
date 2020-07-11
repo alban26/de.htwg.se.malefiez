@@ -88,14 +88,16 @@ class FileIO @Inject extends FileIOInterface{
       }
     }
 
-    //players.filter(_ != null).map(x => gameboard.createPlayer(x.name))
+    //players.filter(_.name != "").map(x => gameboard.createPlayer(x.name))
+
     for (player <- players){
       if (player != "")
         gameboard = gameboard.createPlayer(player.name)
     }
-    gameboard = gameboard.setPossibleCell(posCells)
 
+    gameboard = gameboard.setPossibleCell(posCells)
     gameboard
+
   }
 
   implicit val pointWrites: Writes[Point] = (point: Point) => {
