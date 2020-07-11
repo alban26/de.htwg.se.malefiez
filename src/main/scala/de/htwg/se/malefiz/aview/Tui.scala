@@ -9,10 +9,10 @@ class Tui (controller: ControllerInterface) extends Reactor {
 
   def processInput1(input: String): Unit = {
     input match {
-      case "z" => controller.undo()
-      case "s"=> controller.save()
+      case "undo" => controller.undo()
+      case "save"=> controller.save()
       case "load" => controller.load()
-      case "y" => controller.redo()
+      case "redo" => controller.redo()
       case "exit" => System.exit(0)
       case _ =>
         controller.execute(input)

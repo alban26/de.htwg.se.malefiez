@@ -126,9 +126,13 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("22")
         controller.statementStatus should be (Statements.wrongField)
       }
+      "We can do this action with the redo again" in {
+        tui.processInput1("redo")
+        controller.statementStatus should be (Statements.wrongField)
+      }
       "If we want to save the game, we can click on edit in the menubar and save the game." +
         "After that we can load the Game in the entry gui and can play where we left off" in {
-        tui.processInput1("s")
+        tui.processInput1("save")
         tui.processInput1("load")
         controller.playersTurn.name should be ("Robert")
 
