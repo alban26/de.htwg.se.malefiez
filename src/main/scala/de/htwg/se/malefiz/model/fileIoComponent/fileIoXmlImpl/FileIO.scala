@@ -12,7 +12,7 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.xml.{Elem, PrettyPrinter}
 
-class FileIO @Inject extends FileIOInterface{
+class FileIO @Inject() extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
     val file = scala.xml.XML.loadFile("gameboardList.xml")

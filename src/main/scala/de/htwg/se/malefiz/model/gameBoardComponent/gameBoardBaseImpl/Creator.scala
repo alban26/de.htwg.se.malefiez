@@ -7,7 +7,7 @@ import scala.collection.mutable.Map
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-case class Creator @Inject() ()  extends CreatorInterface {
+case class Creator()  extends CreatorInterface {
 
   def readTextFile(filename: String): Try[Iterator[String]] = {
     Try(Source.fromFile(filename).getLines)

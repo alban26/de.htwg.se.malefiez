@@ -15,7 +15,7 @@ import play.api.libs.json._
 
 import scala.io.Source
 
-class FileIO @Inject extends FileIOInterface{
+class FileIO @Inject() extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
 
