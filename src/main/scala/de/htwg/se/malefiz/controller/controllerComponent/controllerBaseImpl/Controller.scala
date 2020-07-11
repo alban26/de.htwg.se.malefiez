@@ -12,15 +12,20 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure, SetFigure, SetWall, Setup}
-
-import scala.collection.mutable
 import scala.swing.Publisher
 
 class Controller @Inject() (var gameBoard: GameboardInterface) extends ControllerInterface with Publisher {
 
   var statementStatus: Statements = addPlayer
-
   var stateNumber: Int = _
+  val injector: Injector = Guice.createInjector(new MalefizModule)
+  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+  val mementoGameboard: GameboardInterface = gameBoard
+  var playersTurn: Player = _
+  var dicedNumber: Int = _
+  var selectedFigure: (Int, Int) = _
+  val s: GameState = GameState(this)
+  val undoManager = new UndoManager
 
   def setStateNumber(n: Int): Unit = {
     this.stateNumber = n
@@ -29,35 +34,23 @@ class Controller @Inject() (var gameBoard: GameboardInterface) extends Controlle
   def getStateNumber: Int = stateNumber
 
   def setGameBoard(gb: GameboardInterface): Unit = {
-    this.gameBoard = gb;
+    this.gameBoard = gb
   }
 
   def getGameBoard: GameboardInterface = {
     gameBoard
   }
 
-  val injector: Injector = Guice.createInjector(new MalefizModule)
-  val fileIo = injector.instance[FileIOInterface]
-
-  val mementoGameboard: GameboardInterface = gameBoard
-  var playersTurn: Player = _
-  var dicedNumber: Int = _
-  var selectedFigure: (Int, Int) = _
-
-  val s: GameState = GameState(this)
-
-  val undoManager = new UndoManager
-
   def execute(string: String): Boolean = {
     s.run(string)
     true
   }
 
-  def resetPossibleCells: Unit = {
+  def resetPossibleCells(): Unit = {
     gameBoard = gameBoard.clearPossibleCells
   }
 
-  def resetGameboard: Unit = {
+  def resetGameboard(): Unit = {
     gameBoard = mementoGameboard
   }
 

@@ -24,6 +24,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   var mouseX: Set[Int] = Set().empty
   var mouseY: Set[Int] = Set().empty
+
   val thick = new BasicStroke(3f)
 
   val playerLabel = new Label("Player")
@@ -49,7 +50,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   playerTurnArea.background= Color.DARK_GRAY
   playerTurnArea.border = Swing.EmptyBorder(3)
   playerTurnArea.font = new Font("Sans Serif", Font.ITALIC, 16)
-
 
   val cubeLabel = new Label("Dice")
   cubeLabel.foreground = Color.WHITE
@@ -96,8 +96,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         mouseX = getRange(p.x)
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
-
-
         if (state.isInstanceOf[SelectFigure]) {
           for (i <- controller.getCellList) {
             if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
@@ -120,27 +118,27 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerArea(): Unit = {
-    var doc = playerArea.styledDocument
+    val doc = playerArea.styledDocument
 
     for (i <- controller.getPlayer.indices) {
       val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
       i match {
         case 0 =>
-          var a = playerArea.styledDocument.addStyle("Red" ,null)
-          StyleConstants.setForeground(a,Color.RED)
-          doc.insertString(doc.getLength,playerString, a)
+          val red = playerArea.styledDocument.addStyle("Red", null)
+          StyleConstants.setForeground(red,Color.RED)
+          doc.insertString(doc.getLength,playerString, red)
         case 1 =>
-          var b = playerArea.styledDocument.addStyle("Green",null)
-          StyleConstants.setForeground(b,Color.GREEN)
-          doc.insertString(doc.getLength,playerString, b)
+          val green = playerArea.styledDocument.addStyle("Green", null)
+          StyleConstants.setForeground(green,Color.GREEN)
+          doc.insertString(doc.getLength,playerString, green)
         case 2 =>
-          var c = playerArea.styledDocument.addStyle("Yellow/Orange",null)
-          StyleConstants.setForeground(c,Color.ORANGE)
-          doc.insertString(doc.getLength,playerString, c)
+          val yellow = playerArea.styledDocument.addStyle("Yellow/Orange", null)
+          StyleConstants.setForeground(yellow,Color.ORANGE)
+          doc.insertString(doc.getLength,playerString, yellow)
         case 3 =>
-          var d = playerArea.styledDocument.addStyle("Blue",null)
-          StyleConstants.setForeground(d,Color.BLUE)
-          doc.insertString(doc.getLength,playerString, d)
+          val blue = playerArea.styledDocument.addStyle("Blue", null)
+          StyleConstants.setForeground(blue,Color.BLUE)
+          doc.insertString(doc.getLength,playerString, blue)
       }
     }
   }
@@ -169,7 +167,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea(): Unit = this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
-
 
   def drawGameBoard(): Unit = {
     for (i <- controller.getCellList) {
@@ -203,7 +200,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   def highlightCells(x: Int, y: Int): Unit = {
     g2d.setStroke(thick)
     g2d.setColor(Color.CYAN)
-    //g2d.drawRect(x-10,y-10 , 10, 10)
     g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
     repaint()
   }

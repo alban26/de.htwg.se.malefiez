@@ -1,16 +1,14 @@
 package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Dimension, Font}
-import com.google.inject.Inject
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 import scala.swing.event.ButtonClicked
 
 class EntryPlayerGui (controller: ControllerInterface) extends Frame {
 
-  visible = false
   title = "Malefiz"
-  background = Color.MAGENTA
+  visible = false
   centerOnScreen()
 
   val playerLabel: Label = new Label("Enter the names")
@@ -105,13 +103,14 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
       }
       controller.execute("start")
       this.visible = false
-      val sgui = new SwingGui(controller)
-      sgui.visible = true
-      sgui.updatePlayerArea()
-      sgui.updatePlayerTurn()
-      sgui.drawGameBoard()
-      sgui.updateInformationArea()
+      val mainGui = new SwingGui(controller)
+      mainGui.visible = true
+      mainGui.updatePlayerArea()
+      mainGui.updatePlayerTurn()
+      mainGui.drawGameBoard()
+      mainGui.updateInformationArea()
   }
+
   size = new Dimension(500, 500)
 
 }
