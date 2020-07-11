@@ -9,6 +9,7 @@ class Tui (controller: ControllerInterface) extends Reactor {
 
   def processInput1(input: String): Unit = {
     input match {
+      case "test" => println("Test positiv")
       case "undo" => controller.undo()
       case "save"=> controller.save()
       case "load" => controller.load()
