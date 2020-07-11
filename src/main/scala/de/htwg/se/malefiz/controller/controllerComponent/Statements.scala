@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.controller.controllerComponent
 object Statements extends Enumeration with InstructionTrait {
 
   type Statements = Value
-  val addPlayer, roll, selectFigure, selectField, wrongField, selectWrongFigure, nextPlayer, wall, wrongWall, won = Value
+  val addPlayer, roll, selectFigure, selectField, wrongField, selectWrongFigure, nextPlayer, wall, wrongWall, won, changeFigure = Value
 
   val value: Handler2 = {
     case StatementRequest(z) if z.getStatement == roll => s"${z.getPlayersTurn} du bist als erstes dran. Klicke auf den Würfel!"
@@ -16,6 +16,7 @@ object Statements extends Enumeration with InstructionTrait {
     case StatementRequest(z) if z.getStatement == wall => s"${z.getPlayersTurn} du bist auf eine Mauer gekommen. Lege Sie bitte um."
     case StatementRequest(z) if z.getStatement == wrongWall => s"${z.getPlayersTurn} du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus."
     case StatementRequest(z) if z.getStatement == won => s"Gratulation ${z.getPlayersTurn} du hast das Spiel gewonnen! "
+    case StatementRequest(z) if z.getStatement == changeFigure => s"${z.getPlayersTurn} du hast deine Figur abgewählt. Wähle bitte erneut eine Figur aus!"
   }
 
 }

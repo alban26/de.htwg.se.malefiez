@@ -1,9 +1,10 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
 
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SetWall, Setup}
-import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SelectFigure, SetWall, Setup}
+import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISelectFigure.Handler0
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
+import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
 object ISetFigure extends InstructionTrait{
 
@@ -13,7 +14,14 @@ object ISetFigure extends InstructionTrait{
       Request(x,y,z)
   }
 
-
+  val select1: Handler1 = {
+    case Request(x, y, z) if x.length == 2 && x.head.toInt == z.getSelectedFigure._1 && x(1).toInt == z.getSelectedFigure._2 =>
+      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.resetPossibleCells()
+      y nextState SelectFigure(z)
+      z.setStatementStatus(changeFigure)
+      Statements.value(StatementRequest(z))
+  }
 
   val set2: Handler0 = {
     case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt) =>
@@ -66,7 +74,8 @@ object ISetFigure extends InstructionTrait{
       Statements.value(StatementRequest(z))
   }
 
-  val set: PartialFunction[Request, String] = (set1 andThen set3 andThen log) orElse (set2 andThen set4 andThen log) orElse
+
+  val set: PartialFunction[Request, String] =  (set1 andThen set3 andThen log) orElse (select1 andThen log ) orElse(set2 andThen set4 andThen log) orElse
     (set5 andThen set6 andThen log) orElse (set7 andThen set8 andThen log)
 
 }
