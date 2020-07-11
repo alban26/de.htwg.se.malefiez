@@ -272,8 +272,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         0,
         gridwidth = 9,
         ipadx = bimage.getWidth(null),
-        ipady = bimage.getHeight(null),
-      ))
+        ipady = bimage.getHeight(null)))
   }
 
   listenTo(cubeButton, controller)

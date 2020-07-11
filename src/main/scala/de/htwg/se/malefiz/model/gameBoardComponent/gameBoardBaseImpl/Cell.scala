@@ -19,6 +19,7 @@ case class Cell (cellNumber: Int, playerNumber: Int, figureNumber: Int, wallPerm
  )
  val stein_or_spieler: String = selects.tail.(_.orElse(_)) {cellNumber}
   */
+
 val stein_or_spieler: String =
   if (cellNumber < 20) {
     if (playerNumber != 0 && !hasWall) {
