@@ -61,6 +61,11 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(22).playerNumber should be(1)
         controller.gameBoard.getCellList(22).figureNumber should be(1)
       }
+      "The controller can undo the last command" in {
+        controller.undo()
+        controller.gameBoard.getCellList(22).playerNumber should be(0)
+        controller.gameBoard.getCellList(22).figureNumber should be(0)
+      }
       "The Controller can reset the the possible Cells of the actual turn" in {
         controller.resetPossibleCells
         controller.gameBoard.getPossibleCells should be (Set().empty)
@@ -69,7 +74,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.save()
         controller.load()
 
-        controller.gameBoard.getCellList(22).playerNumber should be(1)
+        controller.gameBoard.getCellList(22).playerNumber should be(0)
       }
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
         controller.setPosisCellTrue(List(30, 31, 32, 33))

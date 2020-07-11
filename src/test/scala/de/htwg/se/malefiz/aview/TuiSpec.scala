@@ -130,6 +130,11 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("redo")
         controller.statementStatus should be (Statements.wrongField)
       }
+      "We can undo this action " in {
+        tui.processInput1("undo")
+        controller.s.state.toString should be("3")
+
+      }
       "If we want to save the game, we can click on edit in the menubar and save the game." +
         "After that we can load the Game in the entry gui and can play where we left off" in {
         tui.processInput1("save")
@@ -142,6 +147,7 @@ class TuiSpec extends WordSpec with Matchers {
         controller.setPossibleCell(Set(131))
         tui.processInput1("131")
         controller.statementStatus should be (Statements.won)
+        tui.processInput1("exit")
       }
 
     }
