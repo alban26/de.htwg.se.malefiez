@@ -10,14 +10,14 @@
     "playerNumber" : 1,
     "name" : "Robert"
   },
-  "diceNumber" : 0,
+  "diceNumber" : 1,
   "selectedFigure1" : 1,
-  "selectedFigure2" : 5,
-  "gameState" : 1,
-  "possibleCells" : [ ],
+  "selectedFigure2" : 1,
+  "gameState" : 3,
+  "possibleCells" : [ 22 ],
   "cells" : [ {
     "cellNumber" : 0,
-    "playerNumber" : 0,
+    "playerNumber" : 1,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -26,7 +26,7 @@
     }
   }, {
     "cellNumber" : 1,
-    "playerNumber" : 1,
+    "playerNumber" : 0,
     "figureNumber" : 2,
     "hasWall" : false,
     "coordinates" : {
@@ -62,7 +62,7 @@
     }
   }, {
     "cellNumber" : 5,
-    "playerNumber" : 2,
+    "playerNumber" : 0,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -107,7 +107,7 @@
     }
   }, {
     "cellNumber" : 10,
-    "playerNumber" : 0,
+    "playerNumber" : 3,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -216,7 +216,7 @@
   }, {
     "cellNumber" : 22,
     "playerNumber" : 1,
-    "figureNumber" : 1,
+    "figureNumber" : 2,
     "hasWall" : false,
     "coordinates" : {
       "x" : 125,
@@ -431,9 +431,9 @@
     }
   }, {
     "cellNumber" : 46,
-    "playerNumber" : 0,
-    "figureNumber" : 0,
-    "hasWall" : true,
+    "playerNumber" : 2,
+    "figureNumber" : 1,
+    "hasWall" : false,
     "coordinates" : {
       "x" : 210,
       "y" : 490
@@ -451,7 +451,7 @@
     "cellNumber" : 48,
     "playerNumber" : 0,
     "figureNumber" : 0,
-    "hasWall" : false,
+    "hasWall" : true,
     "coordinates" : {
       "x" : 295,
       "y" : 490
@@ -469,7 +469,7 @@
     "cellNumber" : 50,
     "playerNumber" : 0,
     "figureNumber" : 0,
-    "hasWall" : false,
+    "hasWall" : true,
     "coordinates" : {
       "x" : 381,
       "y" : 490

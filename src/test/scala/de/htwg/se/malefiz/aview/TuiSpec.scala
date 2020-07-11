@@ -115,7 +115,7 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("48")
         controller.statementStatus should be (Statements.nextPlayer)
       }
-      "Now it's Roberts turn again. But what happens when he chooses albans Figure after throwing the Cube" in {
+      "Now it's Roberts turn again. But what happens when he chooses Albans figure after throwing the Cube" in {
         tui.processInput1("r")
         controller.setDicedNumber(1)
         tui.processInput1("2 1")
@@ -125,6 +125,13 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput1("1 1")
         tui.processInput1("22")
         controller.statementStatus should be (Statements.wrongField)
+      }
+      "If we want to save the game, we can click on edit in the menubar and save the game." +
+        "After that we can load the Game in the entry gui and can play where we left off" in {
+        tui.processInput1("s")
+        tui.processInput1("load")
+        controller.playersTurn.name should be ("Robert")
+
       }
       "If we want to Test if a player can win the game, we set the possible Cell of this turn to the Cell 131 - The Winner Cell" +
         "Then we set the the figure 1 of player 1 to the winner Cell" in {
