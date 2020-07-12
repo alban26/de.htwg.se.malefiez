@@ -23,8 +23,8 @@ object Malefiz {
   def main(args: Array[String]): Unit = {
     if (args(0) == "test") {
       tui.processInput1("test")
-    } else {
-
+    }
+    else {
       var input: String = ""
       do {
         input = readLine()

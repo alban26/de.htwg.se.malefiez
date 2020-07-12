@@ -74,6 +74,11 @@ class TuiSpec extends WordSpec with Matchers {
         "the dicednumber manually to 1 so we can predict that he only can move to field 22" in {
         controller.getPossibleCells.contains(22) should be(true)
       }
+      "What if Robert wants to take another Figure - He has to klick again on his figure " in {
+        tui.processInput1("1 2")
+        tui.processInput1("1 4")
+        controller.s.state.toString should be("3")
+      }
       "Robert sets his Figure on 22" in {
         controller.s.state.toString should be("3")
         tui.processInput1("22")
@@ -82,7 +87,7 @@ class TuiSpec extends WordSpec with Matchers {
       "After he has set his Figure, it is Albans turn now." in {
         controller.playersTurn.name should be ("Alban")
       }
-      "Like Robert alban will press any key to dice. For this test case we set his diced number to" +
+      "Like Robert Alban will press any key to dice. For this test case we set his diced number to" +
         "5. So he can reach a wall! 1. Diced Number -> 5 " +
         "                           2. Selected figure -> 2 1 : Now he is in state: SetFigure" +
         "                           3. Set figure -> 46 : 46 is a cell which contains a wall" +
