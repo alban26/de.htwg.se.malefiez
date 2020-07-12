@@ -77,6 +77,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controllerNew.load()
 
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)
+        controllerNew.execute("exit")
       }
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
         controller.setPosisCellTrue(List(30, 31, 32, 33))
