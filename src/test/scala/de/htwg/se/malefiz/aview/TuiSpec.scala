@@ -23,7 +23,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      var gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
+      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
@@ -147,6 +147,7 @@ class TuiSpec extends WordSpec with Matchers {
         controller.setPossibleCell(Set(131))
         tui.processInput1("131")
         controller.statementStatus should be (Statements.won)
+        tui.processInput1("exit")
       }
 
     }

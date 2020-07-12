@@ -93,7 +93,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(33).possibleCells should be(false)
       }
       "Reset the GameBoard" in {
-        val newGameBoard = controller.resetGameboard
+        val newGameBoard: Unit = controller.resetGameboard()
         newGameBoard shouldNot be (controller.getGameBoard)
       }
     }
