@@ -3,6 +3,7 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
+
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, StatementRequest, Statements, Winner}
@@ -10,6 +11,8 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 import de.htwg.se.malefiz.Malefiz.entryGui
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
+
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
@@ -107,6 +110,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         } else {
           for (i <- controller.getCellList) {
             if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
+              if(i.playerNumber == controller.getSelectedFigure._1 && i.figureNumber == controller.getSelectedFigure._2){
+                controller.execute(i.playerNumber + " " + i.figureNumber)
+                controller.setStatementStatus(changeFigure)
+                updateInformationArea()
+                drawGameBoard()
+              }
               controller.execute(i.cellNumber.toString)
               drawGameBoard()
               updatePlayerTurn()
