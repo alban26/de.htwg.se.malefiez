@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.aview
 
-
 import de.htwg.se.malefiz.controller.controllerComponent.Statements
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
@@ -8,7 +7,6 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Crea
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
-
 import scala.collection.mutable.Map
 
 class TuiSpec extends WordSpec with Matchers {
@@ -27,6 +25,7 @@ class TuiSpec extends WordSpec with Matchers {
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
+
       "At the beginning you will entry to the Setup-State" +
         "In our case its defined as Number -> 4" +
         "Also the Statement is set which is shown in the GUI and in the TUI" in {
@@ -118,6 +117,12 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "Now he will put his wall on a valid field " in {
         tui.processInput1("48")
+        controller.statementStatus should be (Statements.nextPlayer)
+      }
+      "Now he will undo his step an then redo his last step" in {
+        tui.processInput1("undo")
+        tui.processInput1("redo")
+        controller.getCellList(48).hasWall should be (true)
         controller.statementStatus should be (Statements.nextPlayer)
       }
       "Now it's Roberts turn again. But what happens when he chooses Albans figure after throwing the Cube" in {
