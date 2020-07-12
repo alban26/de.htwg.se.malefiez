@@ -67,14 +67,16 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(22).figureNumber should be(0)
       }
       "The Controller can reset the the possible Cells of the actual turn" in {
-        controller.resetPossibleCells
+        controller.resetPossibleCells()
         controller.gameBoard.getPossibleCells should be (Set().empty)
       }
       "The Controller can save the Game" in {
         controller.save()
-        controller.load()
 
-        controller.gameBoard.getCellList(22).playerNumber should be(0)
+        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty))
+        controllerNew.load()
+
+        controllerNew.gameBoard.getCellList(22).playerNumber should be(0)
       }
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
         controller.setPosisCellTrue(List(30, 31, 32, 33))

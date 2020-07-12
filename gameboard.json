@@ -1,20 +1,20 @@
 {
   "players" : [ {
     "playerNumber" : 1,
-    "name" : "Robert"
+    "name" : "A"
   }, {
     "playerNumber" : 2,
-    "name" : "Alban"
+    "name" : "B"
   } ],
   "playersTurn" : {
     "playerNumber" : 1,
-    "name" : "Robert"
+    "name" : "A"
   },
   "diceNumber" : 1,
   "selectedFigure1" : 1,
   "selectedFigure2" : 1,
   "gameState" : 3,
-  "possibleCells" : [ ],
+  "possibleCells" : [ 22 ],
   "cells" : [ {
     "cellNumber" : 0,
     "playerNumber" : 1,
@@ -26,7 +26,7 @@
     }
   }, {
     "cellNumber" : 1,
-    "playerNumber" : 0,
+    "playerNumber" : 1,
     "figureNumber" : 2,
     "hasWall" : false,
     "coordinates" : {
@@ -62,7 +62,7 @@
     }
   }, {
     "cellNumber" : 5,
-    "playerNumber" : 0,
+    "playerNumber" : 2,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -215,8 +215,8 @@
     }
   }, {
     "cellNumber" : 22,
-    "playerNumber" : 1,
-    "figureNumber" : 2,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
     "hasWall" : false,
     "coordinates" : {
       "x" : 125,
@@ -431,9 +431,9 @@
     }
   }, {
     "cellNumber" : 46,
-    "playerNumber" : 2,
-    "figureNumber" : 1,
-    "hasWall" : false,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true,
     "coordinates" : {
       "x" : 210,
       "y" : 490
