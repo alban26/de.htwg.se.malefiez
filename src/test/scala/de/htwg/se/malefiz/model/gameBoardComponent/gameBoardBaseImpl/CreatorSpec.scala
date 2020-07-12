@@ -52,7 +52,10 @@ class CreatorSpec extends WordSpec with Matchers {
           }
         }
       }
-
+      "What happen if we read a wrong txt file" in {
+        val test = Creator().getCellGraph("/wrong path")
+        test should be (empty)
+      }
     }
   }
 }

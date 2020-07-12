@@ -34,8 +34,8 @@ case class Creator()  extends CreatorInterface {
           list.close()
           inputData
         case Failure(f) => println(f)
-          System.exit(0)
-          Nil
+          //System.exit(0)
+          List.empty
       }
 
   }
@@ -57,7 +57,6 @@ case class Creator()  extends CreatorInterface {
       }
       graph
       case Failure(f) => println(f)
-      System.exit(0)
         Map.empty
 
     }
