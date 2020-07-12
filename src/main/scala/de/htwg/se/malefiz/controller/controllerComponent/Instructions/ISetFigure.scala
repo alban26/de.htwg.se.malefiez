@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SelectFigure, SetWall, Setup}
 import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISelectFigure.Handler0
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
@@ -17,6 +16,7 @@ object ISetFigure extends InstructionTrait{
   val select1: Handler1 = {
     case Request(x, y, z) if x.length == 2 && x.head.toInt == z.getSelectedFigure._1 && x(1).toInt == z.getSelectedFigure._2 =>
       z.setPosisCellFalse(z.getPossibleCells.toList)
+
       z.resetPossibleCells()
       y nextState SelectFigure(z)
       z.setStatementStatus(changeFigure)
