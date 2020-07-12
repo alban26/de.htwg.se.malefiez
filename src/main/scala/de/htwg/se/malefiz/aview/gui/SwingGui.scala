@@ -12,7 +12,6 @@ import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
-
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 

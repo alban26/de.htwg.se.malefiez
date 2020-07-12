@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.controller.controllerComponent.Instructions
 
-
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SelectFigure, SetWall, Setup}
 import de.htwg.se.malefiz.controller.controllerComponent.Instructions.ISelectFigure.Handler0
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
