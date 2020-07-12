@@ -109,8 +109,8 @@ trait CreatorInterface {
 
   def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]) : Map[Int, Set[Int]]
 
-  def execute(callback:(String) => List[Cell], y: String): List[Cell]
+  //def execute(callback:(String) => List[Cell], y: String): List[Cell]
 
-  def execute1(callback: String => Map[Int, Set[Int]],y: String): Map[Int, Set[Int]]
+  //def execute1(callback: String => Map[Int, Set[Int]],y: String): Map[Int, Set[Int]]
 
 }

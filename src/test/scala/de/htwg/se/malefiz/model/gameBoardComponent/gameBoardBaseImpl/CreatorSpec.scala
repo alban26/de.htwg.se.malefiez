@@ -42,18 +42,21 @@ class CreatorSpec extends WordSpec with Matchers {
         testCellList(8).hasWall should be(true)
       }
       "To Generate the Gameborad with a graph we read the cells with links from a txt-file. The graph" when {
-        "is created" should {
-          "have a size of 10 " in {
+        "is created have a size of 10 " in {
             testGraph.size should be(10)
           }
           "to add a Cell link we call the function updateCellGraph" in {
             Creator().updateCellGraph(7, 9, testGraph)
             testGraph.get(7) should be(Some(Set(6, 8, 9)))
           }
-        }
+
       }
-      "What happen if we read a wrong txt file" in {
+      "What happen if we read a wrong txt file for the Graph - The Graph should be empty" in {
         val test = Creator().getCellGraph("/wrong path")
+        test should be (empty)
+      }
+      "What happens if we read a wrong txt file for the Cell-List" in {
+        val test = Creator().getCellList("/wrong path")
         test should be (empty)
       }
     }
