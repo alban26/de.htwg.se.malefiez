@@ -14,7 +14,6 @@ class Tui (controller: ControllerInterface) extends Reactor {
       case "save"=> controller.save()
       case "load" => controller.load()
       case "redo" => controller.redo()
-      case "exit" => System.exit(0)
       case _ =>
         controller.execute(input)
         textPrint("-------")

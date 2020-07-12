@@ -147,7 +147,6 @@ class TuiSpec extends WordSpec with Matchers {
         controller.setPossibleCell(Set(131))
         tui.processInput1("131")
         controller.statementStatus should be (Statements.won)
-        tui.processInput1("exit")
       }
 
     }

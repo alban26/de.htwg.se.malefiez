@@ -21,10 +21,15 @@ object Malefiz {
   controller.publish(new GameBoardChanged)
 
   def main(args: Array[String]): Unit = {
-    var input: String = ""
-    do {
-      input = readLine()
-      tui.processInput1(input)
-    } while (input != "end")
+    if (args(0) == "test") {
+      tui.processInput1("test")
+    } else {
+
+      var input: String = ""
+      do {
+        input = readLine()
+        tui.processInput1(input)
+      } while (input != "end")
+    }
   }
 }
