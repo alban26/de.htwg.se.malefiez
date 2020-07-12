@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.aview.gui
 
+import de.htwg.se.malefiz.Malefiz.swingGui
 import java.awt.{Color, Dimension, Font}
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
@@ -103,12 +104,11 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
       }
       controller.execute("start")
       this.visible = false
-      val mainGui = new SwingGui(controller)
-      mainGui.visible = true
-      mainGui.updatePlayerArea()
-      mainGui.updatePlayerTurn()
-      mainGui.drawGameBoard()
-      mainGui.updateInformationArea()
+      swingGui.visible = true
+      swingGui.updatePlayerArea()
+      swingGui.updatePlayerTurn()
+      swingGui.drawGameBoard()
+      swingGui.updateInformationArea()
   }
 
   size = new Dimension(500, 500)
