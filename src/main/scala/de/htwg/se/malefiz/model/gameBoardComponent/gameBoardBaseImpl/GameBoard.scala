@@ -293,8 +293,6 @@ case class GameBoard (cellList: List[Cell] = Creator().getCellList(cellConfigFil
 
   override def getPlayer: List[Player] = this.players
 
-  override def getGameBoardGraph: mutable.Map[Int, Set[Int]] = this.gameBoardGraph
-
   override def getPossibleCells: Set[Int] = this.possibleCells
 
   def setPossibleCell(pC: Set[Int]) : GameBoard = copy(possibleCells = pC)

@@ -13,8 +13,6 @@ trait GameboardInterface {
 
   def getPlayer: List[Player]
 
-  def getGameBoardGraph: Map[Int, Set[Int]]
-
   def getPossibleCells: Set[Int]
 
   def s(n: Int): Int
