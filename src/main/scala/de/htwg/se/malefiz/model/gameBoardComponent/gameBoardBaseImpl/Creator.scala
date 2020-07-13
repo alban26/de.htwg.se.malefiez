@@ -72,8 +72,4 @@ case class Creator()  extends CreatorInterface {
 
   }
 
-  //def execute(callback:(String) => List[Cell], y: String) = callback(y)
-  //def execute1(callback:String => Map[Int, Set[Int]], y:String)= callback(y)
-
-
 }
