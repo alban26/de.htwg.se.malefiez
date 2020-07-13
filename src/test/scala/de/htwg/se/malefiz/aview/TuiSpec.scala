@@ -33,8 +33,8 @@ class TuiSpec extends WordSpec with Matchers {
         controller.statementStatus should be(Statements.addPlayer)
       }
       "read names from the console" in {
-        tui.processInput1("n Robert")
-        tui.processInput1("n Alban")
+        tui.processInput("n Robert")
+        tui.processInput("n Alban")
 
         val playerList = controller.getPlayer
 
@@ -45,14 +45,14 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "When the game gets started by a full Players List or if typed in start, " +
         "in this case it's Roberts turn. The state's gonna be 'Roll' in our case it's -> 1 " in {
-        tui.processInput1("n start")
+        tui.processInput("n start")
         controller.statementStatus should be(Statements.roll)
         controller.playersTurn.playerNumber should be (1)
         controller.playersTurn.name should be ("Robert")
         controller.state.state.toString should be ("1")
       }
       "So when Robert is pressing any key now, he's going to roll the dice" in {
-        tui.processInput1("k")
+        tui.processInput("k")
         controller.statementStatus should be(Statements.selectFigure)
         controller.dicedNumber should (be >= 1 and be < 7)
         controller.setDicedNumber(1)
@@ -65,7 +65,7 @@ class TuiSpec extends WordSpec with Matchers {
         "he types in '1 2', because he is the first player (1) and wants his second figure(2)" +
         "So when he choose, the variable selectedFigures got filled with these numbers" +
         "Also he gets to the next state SetFigure!" in {
-        tui.processInput1("1 2")
+        tui.processInput("1 2")
         controller.selectedFigure should be(1,2)
         controller.statementStatus should be(Statements.selectField)
       }
@@ -74,13 +74,13 @@ class TuiSpec extends WordSpec with Matchers {
         controller.getPossibleCells.contains(22) should be(true)
       }
       "What if Robert wants to take another Figure - He has to klick again on his figure " in {
-        tui.processInput1("1 2")
-        tui.processInput1("1 4")
+        tui.processInput("1 2")
+        tui.processInput("1 4")
         controller.state.state.toString should be("3")
       }
       "Robert sets his Figure on 22" in {
         controller.state.state.toString should be("3")
-        tui.processInput1("22")
+        tui.processInput("22")
         controller.state.state.toString should be ("1")
       }
       "After he has set his Figure, it is Albans turn now." in {
@@ -91,11 +91,11 @@ class TuiSpec extends WordSpec with Matchers {
         "                           2. Selected figure -> 2 1 : Now he is in state: SetFigure" +
         "                           3. Set figure -> 46 : 46 is a cell which contains a wall" +
         "                           4. Now he is in state 'SetWall' in our case its '5'" in {
-        tui.processInput1("r")
+        tui.processInput("r")
         controller.setDicedNumber(5)
-        tui.processInput1("2 1")
+        tui.processInput("2 1")
         controller.state.state.toString should be("3")
-        tui.processInput1("46")
+        tui.processInput("46")
         controller.statementStatus should be(Statements.wall)
         controller.state.state.toString should be("5")
 
@@ -103,58 +103,58 @@ class TuiSpec extends WordSpec with Matchers {
 
       "Alban decides to set his wall on 24 - what he may forgot - this is a forbidden area for walls" +
         "he gets the message that he should put his wall on another field" in {
-        tui.processInput1("23")
+        tui.processInput("23")
         controller.statementStatus should be(Statements.wrongWall)
       }
       "Now Alban decides to put his wall on Roberts figure ... he should get the last statement again!" in {
-        tui.processInput1("22")
+        tui.processInput("22")
         controller.statementStatus should be(Statements.wrongWall)
       }
       "It seems to be not Albans day today - now he sets his wall on another wall! he will read the statement" +
         "again - 'Alban du darfst die Mauer dort nicht setzen. Bitte wähle ein anderes Feld aus.'" in {
-        tui.processInput1("54")
+        tui.processInput("54")
         controller.statementStatus should be(Statements.wrongWall)
       }
       "Now he will put his wall on a valid field " in {
-        tui.processInput1("48")
+        tui.processInput("48")
         controller.statementStatus should be (Statements.nextPlayer)
       }
       "Now he will undo his step an then redo his last step" in {
-        tui.processInput1("undo")
-        tui.processInput1("redo")
+        tui.processInput("undo")
+        tui.processInput("redo")
         controller.getCellList(48).hasWall should be (true)
         controller.statementStatus should be (Statements.nextPlayer)
       }
       "Now it's Roberts turn again. But what happens when he chooses Albans figure after throwing the Cube" in {
-        tui.processInput1("r")
+        tui.processInput("r")
         controller.setDicedNumber(1)
-        tui.processInput1("2 1")
+        tui.processInput("2 1")
         controller.statementStatus should be (Statements.selectWrongFigure)
       }
       "Now he chooses his right figure but he decides to kick his own other figure." in {
-        tui.processInput1("1 1")
-        tui.processInput1("22")
+        tui.processInput("1 1")
+        tui.processInput("22")
         controller.statementStatus should be (Statements.wrongField)
       }
       "We can do this action with the redo again" in {
-        tui.processInput1("redo")
+        tui.processInput("redo")
         controller.statementStatus should be (Statements.wrongField)
       }
       "We can undo this action " in {
-        tui.processInput1("undo")
+        tui.processInput("undo")
         controller.state.state.toString should be("3")
         controller.playersTurn.name should be ("Robert")
       }
       "If we want to save the game, we can click on edit in the menubar and save the game." +
         "After that we can load the Game in the entry gui and can play where we left off" in {
-        tui.processInput1("save")
-        tui.processInput1("load")
+        tui.processInput("save")
+        tui.processInput("load")
         controller.playersTurn.name should be ("Robert")
       }
       "If we want to Test if a player can win the game, we set the possible Cell of this turn to the Cell 131 - The Winner Cell" +
         "Then we set the the figure 1 of player 1 to the winner Cell" in {
         controller.setPossibleCells(Set(131))
-        tui.processInput1("131")
+        tui.processInput("131")
         controller.statementStatus should be (Statements.won)
       }
 
