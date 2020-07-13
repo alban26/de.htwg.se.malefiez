@@ -21,6 +21,9 @@ class ControllerSpec  extends WordSpec with Matchers {
 
       controller.playersTurn = Player(1,"Robert")
 
+      "Test undo -> Nil case" in {
+        controller.undo() should be (())
+      }
       "Set Players" in {
         controller.createPlayer("Robert")
         controller.createPlayer("Alban")
