@@ -2,11 +2,9 @@ package de.htwg.se.malefiz.controller.controllerComponent
 
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
-import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
-import de.htwg.se.malefiz.util.UndoManager
-import scala.collection.mutable.Map
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
@@ -14,28 +12,30 @@ trait ControllerInterface extends Publisher {
   def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
+
   def getStateNumber: Int
 
-  def execute(string: String): Boolean
+  def execute(string: String): Unit
 
   def createPlayer(name: String): Unit
 
-  def setPosisCellTrue(l: List[Int]): Unit
+  def setPossibleCellsTrue(l: List[Int]): Unit
 
-  def setPosisCellFalse(l: List[Int]): Unit
+  def setPossibleCellsFalse(l: List[Int]): Unit
 
-  def setPosisTrue(n: Int): Unit
+  def setPossibleFiguresTrue(n: Int): Unit
 
-  def setPosisFalse(n: Int): Unit
+  def setPossibleFiguresFalse(n: Int): Unit
 
   def rollCube: Int
+
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
 
-  def getFigure(pn: Int, fn:Int): Int
+  def getFigure(playerNumber: Int, figureNumber: Int): Int
 
-  def getPCells(startCell: Int, cubeNumber: Int): Unit
+  def calculatePath(startCell: Int, cubeNumber: Int): Unit
 
-  def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int): Unit
+  def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): Unit
 
   def setFigure(fN: Int, cN: Int): Unit
 
@@ -43,7 +43,7 @@ trait ControllerInterface extends Publisher {
 
   def setWall(n: Int): Unit
 
-  def rWall(n: Int): Unit
+  def removeWall(n: Int): Unit
 
   def gameBoardToString: String
 
@@ -51,40 +51,45 @@ trait ControllerInterface extends Publisher {
 
   def redo(): Unit
 
-  def resetGameboard(): Unit
+  def resetGameBoard(): Unit
 
   def weHaveAWinner() : Unit
 
   def nextPlayer(list: List[Player], n: Int): Player
 
   def getCellList: List[Cell]
+
   def getPlayer: List[Player]
- // def getGameBoardGraph: Map[Int, Set[Int]]
+
   def getPossibleCells: Set[Int]
 
   def getDicedNumber: Int
+
   def getPlayersTurn: Player
 
   def getSelectedFigure: (Int, Int)
 
   def getGameState: GameState
+
   def getStatement: Statements
 
-  //def getUndoManager: UndoManager
- // def getGui: SwingGui
- // def getEntryGui: EntryGui
+  def setSelectedFigures(n: Int, m: Int): Unit
 
-  def setSelectedFigures(n: Int, m: Int): Boolean
-  def setStatementStatus(statements: Statements): Boolean
-  def setPlayersTurn(player: Player): Boolean
-  def setDicedNumber(n: Int): Boolean
+  def setStatementStatus(statements: Statements): Unit
+
+  def setPlayersTurn(player: Player): Unit
+
+  def setDicedNumber(n: Int): Unit
 
   def save(): Unit
+
   def load(): Unit
 
-  def setGameBoard(gb: GameboardInterface)
-  def getGameBoard: GameboardInterface
-  def setPossibleCell(pC: Set[Int]) : GameboardInterface
+  def setGameBoard(gb: GameBoardInterface)
+
+  def getGameBoard: GameBoardInterface
+
+  def setPossibleCells(pC: Set[Int]) : GameBoardInterface
 
 }
 
@@ -93,6 +98,6 @@ import scala.swing.event.Event
 
 class GameBoardChanged extends Event
 case class ButtonClicked(source: Button) extends Event
-class changeWall extends Event
+class ChangeWall extends Event
 class Winner extends Event
 

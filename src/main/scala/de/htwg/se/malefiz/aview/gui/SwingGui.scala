@@ -295,7 +295,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     case winner: Winner =>
       drawGameBoard()
       Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
-      controller.resetGameboard()
+      controller.resetGameBoard()
       playerArea.text = ""
       visible = false
       entryGui.visible = true

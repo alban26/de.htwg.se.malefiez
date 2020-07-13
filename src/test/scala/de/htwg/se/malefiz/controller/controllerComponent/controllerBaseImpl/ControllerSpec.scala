@@ -40,7 +40,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(50).hasWall should be(true)
       }
       "The Controller has the abililty to remove a wall" in {
-        controller.rWall(50)
+        controller.removeWall(50)
         controller.gameBoard.getCellList(50).hasWall should be(false)
       }
       "The Controller has the ability to save the current selected figure of a player" in {
@@ -48,11 +48,11 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.getSelectedFigure should be ((1,5))
       }
       "The Controller has the ability to save a gamestate" in {
-        controller.s.nextState(Roll(controller))
+        controller.state.nextState(Roll(controller))
         controller.getGameState should be (GameState(controller.getGameState.controller))
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
-        controller.getPCells(20, 5)
+        controller.calculatePath(20, 5)
 
       }
       "The Controller can set a players figure and con remove it " in {
@@ -80,21 +80,21 @@ class ControllerSpec  extends WordSpec with Matchers {
         controllerNew.execute("exit")
       }
       "The Controller can set a List of Cell the Attribut possible Cell true" in {
-        controller.setPosisCellTrue(List(30, 31, 32, 33))
+        controller.setPossibleCellsTrue(List(30, 31, 32, 33))
         controller.gameBoard.getCellList(30).possibleCells should be(true)
         controller.gameBoard.getCellList(31).possibleCells should be(true)
         controller.gameBoard.getCellList(32).possibleCells should be(true)
         controller.gameBoard.getCellList(33).possibleCells should be(true)
       }
       "The Controller can set a List of Cell the Attribut possible Cell false" in {
-        controller.setPosisCellFalse(List(30, 31, 32, 33))
+        controller.setPossibleCellsFalse(List(30, 31, 32, 33))
         controller.gameBoard.getCellList(30).possibleCells should be(false)
         controller.gameBoard.getCellList(31).possibleCells should be(false)
         controller.gameBoard.getCellList(32).possibleCells should be(false)
         controller.gameBoard.getCellList(33).possibleCells should be(false)
       }
       "Reset the GameBoard" in {
-        val newGameBoard: Unit = controller.resetGameboard()
+        val newGameBoard: Unit = controller.resetGameBoard()
         newGameBoard shouldNot be (controller.getGameBoard)
       }
     }

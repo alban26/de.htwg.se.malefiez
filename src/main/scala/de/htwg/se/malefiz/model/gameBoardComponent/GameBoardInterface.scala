@@ -5,7 +5,7 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable.Map
 import scala.util.Try
 
-trait GameboardInterface {
+trait GameBoardInterface {
 
   def clearPossibleCells: GameBoard
 

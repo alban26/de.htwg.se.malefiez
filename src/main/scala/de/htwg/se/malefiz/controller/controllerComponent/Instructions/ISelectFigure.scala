@@ -7,7 +7,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISelectFigure extends InstructionTrait{
 
   val select1: Handler0 = {
-    case Request(x, y, z) if x.head.toInt == z.getPlayersTurn.playerNumber => z.getPCells(z.getFigure(x.head.toInt, x(1).toInt), z.getDicedNumber)
+    case Request(x, y, z) if x.head.toInt == z.getPlayersTurn.playerNumber => z.calculatePath(z.getFigure(x.head.toInt, x(1).toInt), z.getDicedNumber)
       Request(x,y,z)
   }
 
@@ -18,7 +18,7 @@ object ISelectFigure extends InstructionTrait{
 
   val select3: Handler0 = {
     case Request(x, y, z) =>
-      z.setPosisCellTrue(z.getPossibleCells.toList)
+      z.setPossibleCellsTrue(z.getPossibleCells.toList)
       Request(x,y,z)
   }
 

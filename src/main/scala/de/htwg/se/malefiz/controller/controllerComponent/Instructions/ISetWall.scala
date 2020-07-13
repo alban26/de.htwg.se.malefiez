@@ -20,8 +20,8 @@ object ISetWall extends InstructionTrait {
   val set3: Handler1 = {
     case Request(x, y, z) =>
       z.setDicedNumber(0)
-      z.setPosisFalse(z.getPlayersTurn.playerNumber)
-      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.setPossibleFiguresFalse(z.getPlayersTurn.playerNumber)
+      z.setPossibleCellsFalse(z.getPossibleCells.toList)
       z.setPlayersTurn(z.nextPlayer(z.getPlayer,z.getPlayersTurn.playerNumber-1))
       y.nextState(Roll(z))
       z.setStatementStatus(nextPlayer)

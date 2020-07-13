@@ -15,7 +15,7 @@ object ISetFigure extends InstructionTrait{
 
   val select1: Handler1 = {
     case Request(x, y, z) if x.length == 2 && x.head.toInt == z.getSelectedFigure._1 && x(1).toInt == z.getSelectedFigure._2 =>
-      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.setPossibleCellsFalse(z.getPossibleCells.toList)
 
       z.resetPossibleCells()
       y nextState SelectFigure(z)
@@ -32,8 +32,8 @@ object ISetFigure extends InstructionTrait{
   val set3: Handler1 = {
     case Request(x, y, z) =>
       z.setDicedNumber(0)
-      z.setPosisFalse(z.getPlayersTurn.playerNumber)
-      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.setPossibleFiguresFalse(z.getPlayersTurn.playerNumber)
+      z.setPossibleCellsFalse(z.getPossibleCells.toList)
       z.resetPossibleCells()
       z.setPlayersTurn(z.nextPlayer(z.getPlayer,z.getPlayersTurn.playerNumber-1))
       y.nextState(Roll(z))
@@ -45,8 +45,8 @@ object ISetFigure extends InstructionTrait{
     case Request(x, y, z) =>
       y.nextState(SetWall(z))
       z.setStatementStatus(wall)
-      z.setPosisFalse(z.getPlayersTurn.playerNumber)
-      z.setPosisCellFalse(z.getPossibleCells.toList)
+      z.setPossibleFiguresFalse(z.getPlayersTurn.playerNumber)
+      z.setPossibleCellsFalse(z.getPossibleCells.toList)
       z.resetPossibleCells()
       Statements.value(StatementRequest(z))
   }

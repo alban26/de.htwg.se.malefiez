@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import com.google.inject.{Guice, Inject}
@@ -42,7 +42,7 @@ class FileIO @Inject() extends FileIOInterface{
   }
 
 
-  override def load: GameboardInterface = {
+  override def load: GameBoardInterface = {
 
     val source = Source.fromFile("gameboard.json")
     val string = source.getLines.mkString
@@ -50,7 +50,7 @@ class FileIO @Inject() extends FileIOInterface{
     val json: JsValue = Json.parse(string)
 
     val injector = Guice.createInjector(new MalefizModule)
-    var gameboard: GameboardInterface = injector.instance[GameboardInterface]
+    var gameboard: GameBoardInterface = injector.instance[GameBoardInterface]
 
     implicit val pointReader: Reads[Point] = Json.reads[Point]
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
@@ -115,7 +115,7 @@ class FileIO @Inject() extends FileIOInterface{
     )
   }
 
-  override def save(gameBoard: GameboardInterface, controller: ControllerInterface): Unit = {
+  override def save(gameBoard: GameBoardInterface, controller: ControllerInterface): Unit = {
     val jsonGameBoard = gameBoardToJson(gameBoard,controller)
     val jsonFile = Json.prettyPrint(jsonGameBoard)
 
@@ -124,7 +124,7 @@ class FileIO @Inject() extends FileIOInterface{
     pw.close()
   }
 
-  def gameBoardToJson(gameB: GameboardInterface,controller: ControllerInterface): JsObject = {
+  def gameBoardToJson(gameB: GameBoardInterface,controller: ControllerInterface): JsObject = {
     Json.obj(
       "players" -> Json.toJson(
         for {

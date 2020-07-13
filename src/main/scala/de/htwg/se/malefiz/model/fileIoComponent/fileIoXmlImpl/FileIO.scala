@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.GameboardInterface
+import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 
@@ -39,9 +39,9 @@ class FileIO @Inject() extends FileIOInterface{
   }
 
 
-  override def load: GameboardInterface = {
+  override def load: GameBoardInterface = {
     val injector = Guice.createInjector(new MalefizModule)
-    var gameboard: GameboardInterface = injector.instance[GameboardInterface]
+    var gameboard: GameBoardInterface = injector.instance[GameBoardInterface]
     //var gameStateT: GameState = injector.instance[GameState]
     //var controller: ControllerInterface = injector.instance[ControllerInterface]
 
@@ -89,11 +89,11 @@ class FileIO @Inject() extends FileIOInterface{
     gameboard
   }
 
-  override def save(gameboard: GameboardInterface, controller: ControllerInterface): Unit = {
+  override def save(gameboard: GameBoardInterface, controller: ControllerInterface): Unit = {
     saveString(gameboard,controller)
   }
 
-  def saveString(gameboard: GameboardInterface, controller: ControllerInterface): Unit = {
+  def saveString(gameboard: GameBoardInterface, controller: ControllerInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("gameboardList.xml"))
     val prettyPrinter = new PrettyPrinter(80,2)
@@ -102,7 +102,7 @@ class FileIO @Inject() extends FileIOInterface{
     pw.close()
   }
 
-  def gameboardToXml(gameboard: GameboardInterface, controller: ControllerInterface) : Elem= {
+  def gameboardToXml(gameboard: GameBoardInterface, controller: ControllerInterface) : Elem= {
 
 
     <gameboard size={gameboard.getPlayer.size.toString}>
