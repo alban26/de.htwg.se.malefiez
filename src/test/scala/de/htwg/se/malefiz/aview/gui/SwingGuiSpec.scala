@@ -1,5 +1,7 @@
 package de.htwg.se.malefiz.aview.gui
 
+import java.awt.Color
+
 import de.htwg.se.malefiz.Malefiz
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
@@ -13,8 +15,12 @@ class SwingGuiSpec extends WordSpec with Matchers {
 
       newGame.tui.processInput("n Robert")
       newGame.tui.processInput("n Alban")
+      newGame.tui.processInput("n Denis")
+      newGame.tui.processInput("n Dima")
+
       newGame.tui.processInput("start")
       newGame.tui.processInput("r")
+      newGame.tui.processInput("1 1")
       "update player era" in {
         newGame.swingGui.updatePlayerArea() should be (true)
       }
@@ -26,6 +32,14 @@ class SwingGuiSpec extends WordSpec with Matchers {
       }
       "uodate playerTrunArea" in {
         newGame.swingGui.updatePlayerTurn() should be (true)
+      }
+      "draw Circles" in {
+        newGame.swingGui.drawCircle(50,50, Color.CYAN) should be (true)
+      }
+      "calculate x and y coordination" in {
+        val x = newGame.swingGui.getRange(50)
+        x.contains(30) should be (true)
+        x.contains(70) should be (true)
       }
     }
   }

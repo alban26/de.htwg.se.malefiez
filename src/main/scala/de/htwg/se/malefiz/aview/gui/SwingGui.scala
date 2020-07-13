@@ -3,7 +3,6 @@ package de.htwg.se.malefiz.aview.gui
 import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
 import java.io.File
-
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, StatementRequest, Statements, Winner}
@@ -209,17 +208,19 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
   }
 
-  def drawCircle(x: Int, y: Int, color: Color): Unit = {
+  def drawCircle(x: Int, y: Int, color: Color): Boolean = {
     g2d.setColor(color)
     g2d.fillArc(x - 20, y - 20, 35, 35, 0, 360)
     repaint()
+    true
   }
 
-  def highlightCells(x: Int, y: Int): Unit = {
+  def highlightCells(x: Int, y: Int): Boolean = {
     g2d.setStroke(thick)
     g2d.setColor(Color.CYAN)
     g2d.drawArc(x - 16, y - 17, 29, 30, 0, 360)
     repaint()
+    true
   }
 
   menuBar = new MenuBar {
