@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.SetPlayerCommand
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll}
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -64,9 +65,13 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(22).figureNumber should be(1)
       }
       "The controller can undo the last command" in {
+
+        val a = new SetPlayerCommand(2,2,30, controller)
+        a.undoStep() should be (())
         controller.undo()
         controller.gameBoard.getCellList(22).playerNumber should be(0)
         controller.gameBoard.getCellList(22).figureNumber should be(0)
+        controller.statementStatus should be
       }
       "The Controller can reset the the possible Cells of the actual turn" in {
         controller.resetPossibleCells()
@@ -81,7 +86,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)
         controllerNew.execute("exit")
       }
-      "The Controller can set a List of Cell the Attribut possible Cell true" in {
+      "The Controller can set the attribut 'possibleCells' true" in {
         controller.setPossibleCellsTrue(List(30, 31, 32, 33))
         controller.gameBoard.getCellList(30).possibleCells should be(true)
         controller.gameBoard.getCellList(31).possibleCells should be(true)
