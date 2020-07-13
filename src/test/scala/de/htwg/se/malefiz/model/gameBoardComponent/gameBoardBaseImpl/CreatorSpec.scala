@@ -4,6 +4,7 @@ import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
 class CreatorSpec extends WordSpec with Matchers {
+
   "A Gameboard is a graph with 132 Cells. For testing purpose we crated a new config testfile. The new testfile" when {
     "is created " should {
       val testSource = "project/testConfig.txt"

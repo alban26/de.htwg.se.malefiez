@@ -4,6 +4,7 @@ import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
 class CellSpec extends WordSpec with Matchers{
+
   "A Cell" when {
     " is new created" should {
       val cell = Cell(0, 1, 1, false, false, Point(0,0),false,false)
