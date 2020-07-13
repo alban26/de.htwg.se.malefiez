@@ -34,7 +34,7 @@ class GameBoardSpec extends WordSpec with Matchers {
         c.cellList(52).hasWall should be (true)
       }
       "remove Wall on Cell 52" in {
-        var d = main.rWall(52)
+        var d = main.removeWall(52)
         d.cellList(52).hasWall should be (false)
       }
       "hasWall in Cell 55 should be set from false to true "in {
@@ -43,7 +43,7 @@ class GameBoardSpec extends WordSpec with Matchers {
       }
       "hasWall in Cell 55 should be set from true to false" in {
         val y = main.removeWall(55)
-        y.hasWall should be (false)
+        y.cellList(55).hasWall should be (false)
       }
       "hasWall in Cell 77 should be set from false to true" in {
         val y = main.updateListWall(77)

@@ -105,7 +105,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   }
 
   override def removeWall(n: Int): Unit = {
-    gameBoard = gameBoard.rWall(n)
+    gameBoard = gameBoard.removeWall(n)
     publish(new GameBoardChanged)
   }
 

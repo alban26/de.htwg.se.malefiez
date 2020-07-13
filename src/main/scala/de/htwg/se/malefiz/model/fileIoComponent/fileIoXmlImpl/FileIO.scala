@@ -81,7 +81,7 @@ class FileIO @Inject() extends FileIOInterface{
         gameboard = gameboard.setWall(cellNumber)
       }
       if(!hasWall){
-        gameboard = gameboard.rWall(cellNumber)
+        gameboard = gameboard.removeWall(cellNumber)
       }
 
     }
