@@ -4,7 +4,6 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.aview.Tui
 import de.htwg.se.malefiz.aview.gui.{EntryGui, EntryPlayerGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
-
 import scala.io.StdIn.readLine
 
 object Malefiz {
@@ -21,15 +20,10 @@ object Malefiz {
   controller.publish(new GameBoardChanged)
 
   def main(args: Array[String]): Unit = {
-    if (args(0) == "test") {
-      tui.processInput1("test")
-    }
-    else {
-      var input: String = ""
-      do {
-        input = readLine()
-        tui.processInput1(input)
-      } while (input != "end")
-    }
+    var input: String = ""
+    do {
+      input = readLine()
+      tui.processInput(input)
+    } while (input != "end")
   }
 }

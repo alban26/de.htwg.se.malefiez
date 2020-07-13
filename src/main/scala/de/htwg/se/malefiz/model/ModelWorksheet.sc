@@ -1,35 +1,50 @@
+import de.htwg.se.malefiz.aview.Tui
+import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
+import de.htwg.se.malefiz.model.playerComponent.Player
 
+import scala.collection.mutable.Map
 
+val cellConfigFile = "project/mainCellConfiguration"
+val cellLinksFile = "project/mainCellLinks"
 
+val players: List[Player] = List().empty
+val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
+val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
+val possibleCells: Set[Int] = Set().empty
 
+val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
 
+val controller = new Controller(gameBoard)
+val tui = new Tui(controller)
 
-import scala.swing.{Action, BorderPanel, Button, Dimension, Frame, GridPanel, Menu, MenuBar, MenuItem, Orientation, SplitPane}
-import BorderPanel.Position._
+def getPossibleCells(start: Int, cube: Int): Set[Int] = {
 
-class EntryGui extends Frame {
+  var found: Set[Int] = Set[Int]()
+  var needed: Set[Int] = Set[Int]()
 
-  title = "Wilkommen zu Malefiz"
+  def recurse(current: Int, times: Int): Unit = {
 
-  menuBar = new MenuBar{
-    contents += new Menu("Malefiz") {
-      contents += new MenuItem(Action("Quit") {
-        //System.exit(0)
-      })
+    if (times == 0 || cellList(current).hasWall && times == 0) {
+      needed += current
+    }
+    if (times != 0 && cellList(current).hasWall) {
+      return
+    }
+    found += current
+    for (next <- cellGraph(current)) {
+      if (!found.contains(next) && times != 0 ) {
+        recurse(next, times-1)
+      }
     }
   }
-
-  contents = new GridPanel(2, 1) {
-    contents += new BorderPanel {
-      layout += new Button("New Game") -> Center
-      layout += new Button("Quit") -> South
-    }
-  }
+  recurse(start, cube)
 
 
 
 
-  size = new Dimension(200, 300)
+
+
 
 
 }

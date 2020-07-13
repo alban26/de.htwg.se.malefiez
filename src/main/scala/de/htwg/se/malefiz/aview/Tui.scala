@@ -7,9 +7,8 @@ class Tui (controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
-  def processInput1(input: String): Unit = {
+  def processInput(input: String): Unit = {
     input match {
-      case "test" => println("Test positiv")
       case "undo" => controller.undo()
       case "save"=> controller.save()
       case "load" => controller.load()
@@ -30,7 +29,6 @@ class Tui (controller: ControllerInterface) extends Reactor {
   }
 
   def textPrint(str: String): Unit = println(str)
-
 }
 
 
