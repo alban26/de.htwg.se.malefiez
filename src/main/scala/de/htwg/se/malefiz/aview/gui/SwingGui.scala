@@ -125,7 +125,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     }
   }
 
-  def updatePlayerArea(): Unit = {
+  def updatePlayerArea(): Boolean = {
     val doc = playerArea.styledDocument
 
     for (i <- controller.getPlayer.indices) {
@@ -135,20 +135,25 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           val red = playerArea.styledDocument.addStyle("Red", null)
           StyleConstants.setForeground(red,Color.RED)
           doc.insertString(doc.getLength,playerString, red)
+          true
         case 1 =>
           val green = playerArea.styledDocument.addStyle("Green", null)
           StyleConstants.setForeground(green,Color.GREEN)
           doc.insertString(doc.getLength,playerString, green)
+          true
         case 2 =>
           val yellow = playerArea.styledDocument.addStyle("Yellow/Orange", null)
           StyleConstants.setForeground(yellow,Color.ORANGE)
           doc.insertString(doc.getLength,playerString, yellow)
+          true
         case 3 =>
           val blue = playerArea.styledDocument.addStyle("Blue", null)
           StyleConstants.setForeground(blue,Color.BLUE)
           doc.insertString(doc.getLength,playerString, blue)
+          true
       }
     }
+    true
   }
 
   def getRange(u: Int): Set[Int] = {
@@ -166,15 +171,20 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     range
   }
 
-  def updatePlayerTurn(): Unit = {
+  def updatePlayerTurn(): Boolean = {
     playerTurnArea.text = controller.getPlayersTurn.name
+    true
   }
 
-  def updateRandomNumberArea() : Unit = {
+  def updateRandomNumberArea() : Boolean = {
     randomNumberArea.text = controller.getDicedNumber.toString
+    true
   }
 
-  def updateInformationArea(): Unit = this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
+  def updateInformationArea(): Boolean =  {
+    this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
+    true
+  }
 
   def drawGameBoard(): Unit = {
     for (i <- controller.getCellList) {

@@ -1,6 +1,7 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest._
+import org.scalatest.matchers.should.Matchers
 
 class PointSpec extends WordSpec with Matchers {
 
