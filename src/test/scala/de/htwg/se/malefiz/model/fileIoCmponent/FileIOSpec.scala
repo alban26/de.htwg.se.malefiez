@@ -34,6 +34,7 @@ class FileIOSpec extends WordSpec with Matchers {
         fileIO.load.getPossibleCells.head should be (22)
         controller.playersTurn.name should be ("A")
         controller.getDicedNumber should be (1)
+        controller.stateNumber should be (3)
       }
       "save and load with Json" +
         "1. We simulate a new game with the controller variable" +
