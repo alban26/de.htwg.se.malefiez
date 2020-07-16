@@ -163,7 +163,6 @@ case class GameBoard (cellList: List[Cell],
     var needed: Set[Int] = Set[Int]()
 
     def recurse(current: Int, times: Int): Unit = {
-
       if (times == 0 || cellList(current).hasWall && times == 0) {
         needed += current
       }
@@ -171,11 +170,7 @@ case class GameBoard (cellList: List[Cell],
         return
       }
       found += current
-      for (next <- gameBoardGraph(current)) {
-        if (!found.contains(next) && times != 0 ) {
-          recurse(next, times-1)
-        }
-      }
+      gameBoardGraph(current).foreach(x => if (!found.contains(x) && times != 0) recurse(x, times-1))
     }
     recurse(start, cube)
     copy(possibleCells = needed)
