@@ -7,19 +7,19 @@ import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 object IRoll extends InstructionTrait{
 
   val roll1: Handler0 = {
-    case Request(x,y,z) if x != ' ' => z.setDicedNumber(z.rollCube)
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) if inputList.head != " "  => controller.setDicedNumber(controller.rollCube)
+      Request(inputList, gameState, controller)
   }
 
   val roll2: Handler0 = {
-    case Request(x,y,z) => z.setPossibleFiguresTrue(z.getPlayersTurn.playerNumber)
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) => controller.setPossibleFiguresTrue(controller.getPlayersTurn.playerNumber)
+      Request(inputList, gameState, controller)
   }
 
   val roll3: Handler1 = {
-    case Request(x,y,z) => y nextState SelectFigure(z)
-      z.setStatementStatus(selectFigure)
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) => gameState nextState SelectFigure(controller)
+      controller.setStatementStatus(selectFigure)
+      Statements.value(StatementRequest(controller))
   }
 
   val roll: PartialFunction[Request, String] = roll1 andThen roll2 andThen roll3 andThen log

@@ -6,8 +6,8 @@ case class GameState (controller: ControllerInterface) {
 
   var state: State[GameState] = Setup(controller)
 
-  def run(string: String): Unit = {
-    state.handle(string, this)
+  def run(input: String): Unit = {
+    state.handle(input, this)
   }
 
   def nextState(state: State[GameState]): Unit = {

@@ -31,7 +31,7 @@ class FileIO @Inject() extends FileIOInterface{
     val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
 
 
-    controllerNeu.setSelectedFigures(selectedFigure_1,selectedFigure_2)
+    controllerNeu.setSelectedFigure(selectedFigure_1, selectedFigure_2)
     controllerNeu.setStateNumber(stateNumber.toInt)
 
     controllerNeu.playersTurn = controllerNeu.getPlayer(playerZahl-1)

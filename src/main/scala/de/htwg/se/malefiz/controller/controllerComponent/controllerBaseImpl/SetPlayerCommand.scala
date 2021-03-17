@@ -10,8 +10,8 @@ import de.htwg.se.malefiz.util.Command
 class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, controller: Controller) extends Command  {
 
   var memento: GameBoardInterface = controller.gameBoard
-  var mdicedNumber: Int = controller.dicedNumber
-  var mplayersTurn: Player = controller.playersTurn
+  var mDicedNumber: Int = controller.dicedNumber
+  var mPlayersTurn: Player = controller.playersTurn
   var mStatementStatus: Statements = controller.statementStatus
   var mS: State[GameState] = controller.state.state
 
@@ -42,18 +42,17 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     val new_mStatementStatus = controller.statementStatus
 
     controller.gameBoard = memento
-    controller.setDicedNumber(mdicedNumber)
+    controller.setDicedNumber(mDicedNumber)
     controller.state.state = mS
-    controller.playersTurn = mplayersTurn
+    controller.playersTurn = mPlayersTurn
     controller.statementStatus = mStatementStatus
 
     memento = new_memento
-    mdicedNumber = new_mDicedNumber
+    mDicedNumber = new_mDicedNumber
     mS = new_mS.state
-    mplayersTurn = new_mPlayersTurn
+    mPlayersTurn = new_mPlayersTurn
     mStatementStatus = new_mStatementStatus
   }
 
   override def redoStep(): Unit = doStep()
-
 }

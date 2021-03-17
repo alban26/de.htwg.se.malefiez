@@ -34,7 +34,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       }
       "notify its Observer after a players figure is set on cell" in {
         controller.setPlayerFigure(1,1, 10)
-        controller.getFigure(1,1) should be (10)
+        controller.getFigurePosition(1, 1) should be (10)
         controller.removeActualPlayerAndFigureFromCell(1,1)
         controller.getGameBoard.getCellList(10).playerNumber should be (0)
       }
@@ -47,7 +47,7 @@ class ControllerSpec  extends WordSpec with Matchers {
         controller.gameBoard.getCellList(50).hasWall should be(false)
       }
       "The Controller has the ability to save the current selected figure of a player" in {
-        controller.setSelectedFigures(1,5)
+        controller.setSelectedFigure(1, 5)
         controller.getSelectedFigure should be ((1,5))
       }
       "The Controller has the ability to save a gamestate" in {

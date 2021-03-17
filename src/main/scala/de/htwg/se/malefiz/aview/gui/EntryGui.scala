@@ -17,6 +17,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   val welcomeLabel = new Label("Welcome to malefiz")
   welcomeLabel.foreground = Color.WHITE
   welcomeLabel.font = new Font("Sans Serif", Font.BOLD, 22)
+
   val newGameButton = new Button("New Game")
   val loadButton = new Button("Load Game")
   val quitButton = new Button("Quit")
@@ -25,46 +26,48 @@ class EntryGui (controller: ControllerInterface) extends Frame {
 
     background = Color.DARK_GRAY
 
-    def constraints(x: Int, y:Int,
-            gridwidth: Int = 1, gridheight: Int = 1,
-            weightx: Double = 0.0, weighty: Double = 0.0,
-            fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-            ipadx: Int = 0, ipady: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
-
+    def constraints(x: Int,
+                    y: Int,
+                    gridWidth: Int = 1,
+                    gridHeight: Int = 1,
+                    weightX: Double = 0.0,
+                    weightY: Double = 0.0,
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                    ipadX: Int = 0,
+                    ipadY: Int = 0,
+                    anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
       val c = new Constraints
       c.gridx = x
       c.gridy = y
-      c.gridwidth = gridwidth
-      c.gridheight = gridheight
-      c.weightx = weightx
-      c.weighty = weighty
+      c.gridwidth = gridWidth
+      c.gridheight = gridHeight
+      c.weightx = weightX
+      c.weighty = weightY
       c.fill = fill
-      c.ipadx = ipadx
-      c.ipady = ipady
+      c.ipadx = ipadX
+      c.ipady = ipadY
       c.anchor = anchor
       c
     }
 
     add(welcomeLabel,
-      constraints(0, 0, gridheight = 2, ipadx= 50, ipady = 50, anchor = GridBagPanel.Anchor.North, fill = GridBagPanel.Fill.Vertical))
+      constraints(0, 0, gridHeight = 2, ipadX = 50, ipadY = 50, anchor = GridBagPanel.Anchor.North, fill = GridBagPanel.Fill.Vertical))
     add(newGameButton,
-      constraints(0, 2, gridheight = 2,ipadx = 20, ipady = 20))
+      constraints(0, 2, gridHeight = 2, ipadX = 20, ipadY = 20))
     add(loadButton,
-      constraints(0, 4, gridheight = 2, ipadx = 20, ipady = 20))
+      constraints(0, 4, gridHeight = 2, ipadX = 20, ipadY = 20))
     add(quitButton,
-      constraints(0, 6, gridheight = 2, ipadx = 20, ipady = 20))
-
+      constraints(0, 6, gridHeight = 2, ipadX = 20, ipadY = 20))
   }
 
- listenTo(newGameButton, quitButton, loadButton)
+  listenTo(newGameButton, quitButton, loadButton)
 
   reactions += {
     case ButtonClicked(`quitButton`) => System.exit(0)
     case ButtonClicked(`loadButton`) =>
       entryGui.visible = false
-      controller.load
-
+      controller.load()
       swingGui.visible = true
       swingGui.updateInformationArea()
       swingGui.updatePlayerTurn()
@@ -72,13 +75,10 @@ class EntryGui (controller: ControllerInterface) extends Frame {
       swingGui.updateRandomNumberArea()
       swingGui.drawGameBoard()
       swingGui.repaint()
-
-
     case ButtonClicked(`newGameButton`) =>
       visible = false
       entryPlayerGui.visible = true
   }
 
   size = new Dimension(500, 500)
-
 }

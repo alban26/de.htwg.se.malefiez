@@ -243,55 +243,57 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       })
     }
   }
-
-
+  
   contents = new GridBagPanel {
 
     background = Color.DARK_GRAY
 
-    def constraints(x: Int, y:Int,
-                    gridwidth: Int = 1, gridheight: Int = 1,
-                    weightx: Double = 0.0, weighty: Double = 0.0,
+    def constraints(x: Int,
+                    y:Int,
+                    gridWidth: Int = 1,
+                    gridHeight: Int = 1,
+                    weightX: Double = 0.0,
+                    weightY: Double = 0.0,
                     fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-                    ipadx: Int = 0 , ipady: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
+                    ipadX: Int = 0, ipadY: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
       val c = new Constraints
       c.gridx = x
       c.gridy = y
-      c.gridwidth = gridwidth
-      c.gridheight = gridheight
-      c.weightx = weightx
-      c.weighty = weighty
+      c.gridwidth = gridWidth
+      c.gridheight = gridHeight
+      c.weightx = weightX
+      c.weighty = weightY
       c.fill = fill
-      c.ipadx = ipadx
-      c.ipady = ipady
+      c.ipadx = ipadX
+      c.ipady = ipadY
       c.anchor = anchor
       c
     }
     add(playerLabel,
-      constraints(0, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
+      constraints(0, 1, gridWidth = 2, fill=GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
     add(playerArea,
-      constraints(0, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
+      constraints(0, 2, gridWidth = 2, fill=GridBagPanel.Fill.Both))
     add(playerTurnLabel,
-      constraints(2, 1,  gridwidth = 2, fill=GridBagPanel.Fill.Both ,ipadx = 104, ipady =  15))
+      constraints(2, 1,  gridWidth = 2, fill=GridBagPanel.Fill.Both ,ipadX = 104, ipadY =  15))
     add(playerTurnArea,
-      constraints(2, 2,gridwidth = 2, fill=GridBagPanel.Fill.Both ))
+      constraints(2, 2,gridWidth = 2, fill=GridBagPanel.Fill.Both ))
     add(cubeLabel,
-      constraints(4, 1, fill=GridBagPanel.Fill.Both, ipadx = 104, ipady = 15))
+      constraints(4, 1, fill=GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
     add(cubeButton,
       constraints(4, 2))
     add(randomNumberLabel,
-      constraints(6, 1, gridwidth = 2, fill=GridBagPanel.Fill.Both,ipadx= 104, ipady = 15))
+      constraints(6, 1, gridWidth = 2, fill=GridBagPanel.Fill.Both,ipadX= 104, ipadY = 15))
     add(randomNumberArea,
-      constraints(6, 2, gridwidth = 2, fill=GridBagPanel.Fill.Both))
+      constraints(6, 2, gridWidth = 2, fill=GridBagPanel.Fill.Both))
     add(informationArea,
-      constraints(0, 3, gridwidth = 8, fill=GridBagPanel.Fill.Both, ipady = 35))
+      constraints(0, 3, gridWidth = 8, fill=GridBagPanel.Fill.Both, ipadY = 35))
     add(panel,
       constraints(0,
         0,
-        gridwidth = 9,
-        ipadx = bimage.getWidth(null),
-        ipady = bimage.getHeight(null)))
+        gridWidth = 9,
+        ipadX = bimage.getWidth(null),
+        ipadY = bimage.getHeight(null)))
   }
 
   listenTo(cubeButton, controller)
@@ -313,5 +315,4 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   size = new Dimension(900, 1100)
-
 }

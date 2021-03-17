@@ -50,47 +50,51 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
 
     background = Color.DARK_GRAY
 
-    def constraints(x: Int, y:Int,
-                    gridwidth: Int = 1, gridheight: Int = 1,
-                    weightx: Double = 0.0, weighty: Double = 0.0,
+    def constraints(x: Int,
+                    y: Int,
+                    gridWidth: Int = 1,
+                    gridHeight: Int = 1,
+                    weightX: Double = 0.0,
+                    weighty: Double = 0.0,
+                    ipadX: Int = 0,
+                    ipadY: Int = 0,
                     fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-                    ipadx: Int = 0 , ipady: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
+                    anchor: GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
       val c = new Constraints
       c.gridx = x
       c.gridy = y
-      c.gridwidth = gridwidth
-      c.gridheight = gridheight
-      c.weightx = weightx
+      c.gridwidth = gridWidth
+      c.gridheight = gridHeight
+      c.weightx = weightX
       c.weighty = weighty
       c.fill = fill
-      c.ipadx = ipadx
-      c.ipady = ipady
+      c.ipadx = ipadX
+      c.ipady = ipadY
       c.anchor = anchor
       c
     }
 
     add(playerLabel,
-      constraints(0, 0, gridwidth = 2, ipady = 20, fill=GridBagPanel.Fill.Horizontal, anchor = GridBagPanel.Anchor.PageStart))
+      constraints(0, 0, gridWidth = 2, ipadY = 20, fill=GridBagPanel.Fill.Horizontal, anchor = GridBagPanel.Anchor.PageStart))
     add(playerOneLabel,
-      constraints(0, 1, ipady = 20))
+      constraints(0, 1, ipadY = 20))
     add(playerOneName,
-      constraints(1, 1, ipady = 20))
+      constraints(1, 1, ipadY = 20))
     add(playerTwoLabel,
-      constraints(0, 2, ipady = 20))
+      constraints(0, 2, ipadY = 20))
     add(playerTwoName,
-      constraints(1, 2, ipady = 20))
+      constraints(1, 2, ipadY = 20))
     add(playerThreeLabel,
-      constraints(0, 3, ipady = 20))
+      constraints(0, 3, ipadY = 20))
     add(playerThreeName,
-      constraints(1, 3, ipady = 20))
+      constraints(1, 3, ipadY = 20))
     add(playerFourLabel,
-      constraints(0, 4, ipady = 20))
+      constraints(0, 4, ipadY = 20))
     add(playerFourName,
-      constraints(1, 4, ipady = 20))
+      constraints(1, 4, ipadY = 20))
     add(continueButton,
-      constraints(0, 8, gridwidth = 2, ipady = 20, anchor = GridBagPanel.Anchor.South ))
-
+      constraints(0, 8, gridWidth = 2, ipadY = 20, anchor = GridBagPanel.Anchor.South))
   }
 
   listenTo(continueButton)
@@ -112,5 +116,4 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
   }
 
   size = new Dimension(500, 500)
-
 }

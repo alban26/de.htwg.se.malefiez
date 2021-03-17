@@ -1,7 +1,6 @@
 package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
 import java.io.{File, PrintWriter}
-
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
@@ -12,35 +11,33 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
-
 import scala.io.Source
 
 class FileIO @Inject() extends FileIOInterface{
 
   override def loadController: ControllerInterface = {
 
-    val controllerNeu = new Controller(load)
-    val source = Source.fromFile("gameboard.json")
-    val string = source.getLines.mkString
-    source.close()
+    val newController = new Controller(load)
+    val gameBoardSource = Source.fromFile("gameboard.json")
+    val string = gameBoardSource.getLines.mkString
+    gameBoardSource.close()
     val json: JsValue = Json.parse(string)
 
     implicit val playerReader: Reads[Player] = Json.reads[Player]
 
-    val dicenr: Int = (json \ "diceNumber").as[Int]
-    val plTurn: Player = (json \ "playersTurn").as[Player]
+    val diceNumber: Int = (json \ "diceNumber").as[Int]
+    val playersTurn: Player = (json \ "playersTurn").as[Player]
     val f1: Int = (json \ "selectedFigure1").as[Int]
     val f2: Int = (json \ "selectedFigure2").as[Int]
-    val state: Int = (json \ "gameState").as[Int]
+    val gameState: Int = (json \ "gameState").as[Int]
 
-    controllerNeu.setDicedNumber(dicenr)
-    controllerNeu.playersTurn = controllerNeu.getPlayer(plTurn.playerNumber-1)
-    controllerNeu.setSelectedFigures(f1,f2)
-    controllerNeu.setStateNumber(state)
+    newController.setDicedNumber(diceNumber)
+    newController.playersTurn = newController.getPlayer(playersTurn.playerNumber-1)
+    newController.setSelectedFigure(f1, f2)
+    newController.setStateNumber(gameState)
 
-    controllerNeu
+    newController
   }
-
 
   override def load: GameBoardInterface = {
 
@@ -106,7 +103,6 @@ class FileIO @Inject() extends FileIOInterface{
       "y" -> JsNumber(point.y_coordinate)
     )
   }
-
 
   implicit val playerWrites: Writes[Player] = (player: Player) => {
     Json.obj(

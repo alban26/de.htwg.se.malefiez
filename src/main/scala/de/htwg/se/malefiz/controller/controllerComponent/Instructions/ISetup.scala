@@ -7,20 +7,21 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetup extends InstructionTrait {
 
   val setup1: Handler0 = {
-    case Request(x,y,z) if x.contains("start") || z.getPlayer.length == 4 => z.setPlayersTurn(z.getPlayer.head)
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) if inputList.contains("start") ||
+      controller.getPlayer.length == 4 => controller.setPlayersTurn(controller.getPlayer.head)
+      Request(inputList, gameState, controller)
   }
 
   val setup2: Handler1 = {
-    case Request(x,y,z) => y.nextState(Roll(z))
-      z.setStatementStatus(roll)
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) => gameState.nextState(Roll(controller))
+      controller.setStatementStatus(roll)
+      Statements.value(StatementRequest(controller))
   }
 
   val setup3: Handler1 = {
-    case Request(x, y, z) => z.createPlayer(x(1))
-      z.setStatementStatus(addPlayer)
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) => controller.createPlayer(inputList(1))
+      controller.setStatementStatus(addPlayer)
+      Statements.value(StatementRequest(controller))
   }
 
   val setup: PartialFunction[Request, String] = setup1 andThen setup2 orElse setup3 andThen log

@@ -8,70 +8,70 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetFigure extends InstructionTrait{
 
   val set1: Handler0 = {
-    case Request(x, y, z) if !z.getCellList(x.head.toInt).hasWall && (x.head.toInt != 131) && z.getPossibleCells.contains(x.head.toInt) && z.getCellList(x.head.toInt).playerNumber != z.getPlayersTurn.playerNumber =>
-      z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) if !controller.getCellList(inputList.head.toInt).hasWall && (inputList.head.toInt != 131) && controller.getPossibleCells.contains(inputList.head.toInt) && controller.getCellList(inputList.head.toInt).playerNumber != controller.getPlayersTurn.playerNumber =>
+      controller.setPlayerFigure(controller.getSelectedFigure._1,controller.getSelectedFigure._2,inputList.head.toInt)
+      Request(inputList,gameState,controller)
   }
 
   val select1: Handler1 = {
-    case Request(x, y, z) if x.length == 2 && x.head.toInt == z.getSelectedFigure._1 && x(1).toInt == z.getSelectedFigure._2 =>
-      z.setPossibleCellsFalse(z.getPossibleCells.toList)
+    case Request(inputList, gameState, controller) if inputList.length == 2 && inputList.head.toInt == controller.getSelectedFigure._1 && inputList(1).toInt == controller.getSelectedFigure._2 =>
+      controller.setPossibleCellsFalse(controller.getPossibleCells.toList)
 
-      z.resetPossibleCells()
-      y nextState SelectFigure(z)
-      z.setStatementStatus(changeFigure)
-      Statements.value(StatementRequest(z))
+      controller.resetPossibleCells()
+      gameState nextState SelectFigure(controller)
+      controller.setStatementStatus(changeFigure)
+      Statements.value(StatementRequest(controller))
   }
 
   val set2: Handler0 = {
-    case Request(x, y, z) if z.getCellList(x.head.toInt).hasWall && z.getPossibleCells.contains(x.head.toInt) =>
-      z.setPlayerFigure(z.getSelectedFigure._1,z.getSelectedFigure._2,x.head.toInt)
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) if controller.getCellList(inputList.head.toInt).hasWall && controller.getPossibleCells.contains(inputList.head.toInt) =>
+      controller.setPlayerFigure(controller.getSelectedFigure._1,controller.getSelectedFigure._2,inputList.head.toInt)
+      Request(inputList,gameState,controller)
   }
 
   val set3: Handler1 = {
-    case Request(x, y, z) =>
-      z.setDicedNumber(0)
-      z.setPossibleFiguresFalse(z.getPlayersTurn.playerNumber)
-      z.setPossibleCellsFalse(z.getPossibleCells.toList)
-      z.resetPossibleCells()
-      z.setPlayersTurn(z.nextPlayer(z.getPlayer,z.getPlayersTurn.playerNumber-1))
-      y.nextState(Roll(z))
-      z.setStatementStatus(nextPlayer)
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) =>
+      controller.setDicedNumber(0)
+      controller.setPossibleFiguresFalse(controller.getPlayersTurn.playerNumber)
+      controller.setPossibleCellsFalse(controller.getPossibleCells.toList)
+      controller.resetPossibleCells()
+      controller.setPlayersTurn(controller.nextPlayer(controller.getPlayer,controller.getPlayersTurn.playerNumber-1))
+      gameState.nextState(Roll(controller))
+      controller.setStatementStatus(nextPlayer)
+      Statements.value(StatementRequest(controller))
   }
 
   val set4: Handler1 = {
-    case Request(x, y, z) =>
-      y.nextState(SetWall(z))
-      z.setStatementStatus(wall)
-      z.setPossibleFiguresFalse(z.getPlayersTurn.playerNumber)
-      z.setPossibleCellsFalse(z.getPossibleCells.toList)
-      z.resetPossibleCells()
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) =>
+      gameState.nextState(SetWall(controller))
+      controller.setStatementStatus(wall)
+      controller.setPossibleFiguresFalse(controller.getPlayersTurn.playerNumber)
+      controller.setPossibleCellsFalse(controller.getPossibleCells.toList)
+      controller.resetPossibleCells()
+      Statements.value(StatementRequest(controller))
   }
   val set5: Handler0 = {
-    case Request(x, y, z) if x.head.toInt == 131 =>
-      Request(x, y, z)
+    case Request(inputList, gameState, controller) if inputList.head.toInt == 131 =>
+      Request(inputList, gameState, controller)
   }
 
   val set6: Handler1 = {
-    case Request(x, y, z) =>
-      y.nextState(Setup(z))
-      z.setStatementStatus(won)
-      z.weHaveAWinner()
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) =>
+      gameState.nextState(Setup(controller))
+      controller.setStatementStatus(won)
+      controller.weHaveAWinner()
+      Statements.value(StatementRequest(controller))
   }
 
   val set7: Handler0 = {
-    case Request(x, y, z) if !z.getPossibleCells.contains(x.head.toInt) || z.getCellList(x.head.toInt).playerNumber == z.getPlayersTurn.playerNumber =>
-      Request(x,y,z)
+    case Request(inputList, gameState, controller) if !controller.getPossibleCells.contains(inputList.head.toInt) || controller.getCellList(inputList.head.toInt).playerNumber == controller.getPlayersTurn.playerNumber =>
+      Request(inputList, gameState, controller)
   }
 
   val set8: Handler1 = {
-    case Request(x, y, z) =>
-      z.setStatementStatus(wrongField)
-      Statements.value(StatementRequest(z))
+    case Request(inputList, gameState, controller) =>
+      controller.setStatementStatus(wrongField)
+      Statements.value(StatementRequest(controller))
   }
 
 

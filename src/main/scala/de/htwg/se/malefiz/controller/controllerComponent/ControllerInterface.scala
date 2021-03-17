@@ -19,7 +19,7 @@ trait ControllerInterface extends Publisher {
 
   def createPlayer(name: String): Unit
 
-  def setPossibleCellsTrue(l: List[Int]): Unit
+  def setPossibleCellsTrue(availableCells: List[Int]): Unit
 
   def setPossibleCellsFalse(l: List[Int]): Unit
 
@@ -31,19 +31,19 @@ trait ControllerInterface extends Publisher {
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
 
-  def getFigure(playerNumber: Int, figureNumber: Int): Int
+  def getFigurePosition(playerNumber: Int, figureNumber: Int): Int
 
-  def calculatePath(startCell: Int, cubeNumber: Int): Unit
+  def calculatePath(startCell: Int, diceNumber: Int): Unit
 
   def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): Unit
 
-  def setFigure(fN: Int, cN: Int): Unit
+  def setFigure(figureNumber: Int, cellNumber: Int): Unit
 
-  def setPlayer(pN: Int, cN: Int): Unit
+  def setPlayer(playerNumber: Int, cellNumber: Int): Unit
 
-  def setWall(n: Int): Unit
+  def setWall(cellNumber: Int): Unit
 
-  def removeWall(n: Int): Unit
+  def removeWall(cellNumber: Int): Unit
 
   def gameBoardToString: String
 
@@ -55,7 +55,7 @@ trait ControllerInterface extends Publisher {
 
   def weHaveAWinner() : Unit
 
-  def nextPlayer(list: List[Player], n: Int): Player
+  def nextPlayer(playerList: List[Player], playerNumber: Int): Player
 
   def getCellList: List[Cell]
 
@@ -73,23 +73,23 @@ trait ControllerInterface extends Publisher {
 
   def getStatement: Statements
 
-  def setSelectedFigures(n: Int, m: Int): Unit
+  def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
 
-  def setStatementStatus(statements: Statements): Unit
+  def setStatementStatus(statement: Statements): Unit
 
   def setPlayersTurn(player: Player): Unit
 
-  def setDicedNumber(n: Int): Unit
+  def setDicedNumber(number: Int): Unit
 
   def save(): Unit
 
   def load(): Unit
 
-  def setGameBoard(gb: GameBoardInterface)
+  def setGameBoard(gameBoard: GameBoardInterface)
 
   def getGameBoard: GameBoardInterface
 
-  def setPossibleCells(pC: Set[Int]) : GameBoardInterface
+  def setPossibleCells(possibleCells: Set[Int]) : GameBoardInterface
 
 }
 

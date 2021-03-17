@@ -2,11 +2,11 @@ package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.malefiz.util.Command
 
-class SetWallCommand (n: Int, controller: Controller) extends Command{
+class SetWallCommand (cellNumber: Int, controller: Controller) extends Command{
 
   var memento = controller.gameBoard
   override def doStep(): Unit = {
-    controller.gameBoard = controller.gameBoard.setWall(n)
+    controller.gameBoard = controller.gameBoard.setWall(cellNumber)
   }
 
   override def undoStep(): Unit = {

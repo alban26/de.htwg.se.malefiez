@@ -10,7 +10,7 @@ case class GameBoard (cellList: List[Cell],
                       gameBoardGraph: Map[Int, Set[Int]],
                       possibleCells: Set[Int] = Set.empty) extends GameBoardInterface {
 
-  def this() = this(Creator().getCellList(cellConfigFile),List.empty,Creator().getCellGraph(cellLinksFile),Set.empty)
+  def this() = this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty)
 
   override def s(n: Int): Int = n * 4 + 1
 
@@ -123,56 +123,52 @@ case class GameBoard (cellList: List[Cell],
 
   override def removePlayerOnCell(cellNumber : Int) : Cell = cellList(cellNumber).copy(playerNumber = 0)
 
-  override def setPlayerFigureOnCell(fN: Int, cN: Int) : Cell  = cellList(cN).copy(figureNumber = fN)
+  override def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int) : Cell  = cellList(cellNumber).copy(figureNumber = figureNumber)
 
-  override def setPlayerOnCell(pN: Int, cN : Int) : Cell = cellList(cN).copy(playerNumber = pN)
+  override def setPlayerOnCell(playerNumber: Int, cellNumber : Int) : Cell = cellList(cellNumber).copy(playerNumber = playerNumber)
 
-  override def removeActualPlayerAndFigureFromCell(pN: Int, fN: Int): GameBoard = {
-
-    val a = getPlayerFigure(pN, fN)
-    copy(cellList.updated(a, removePlayerFigureOnCell(a)))
-    copy(cellList.updated(a, removePlayerOnCell(a)))
-
+  override def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard = {
+    val cell = getPlayerFigure(playerNumber, figureNumber)
+    copy(cellList.updated(cell, removePlayerFigureOnCell(cell)))
+    copy(cellList.updated(cell, removePlayerOnCell(cell)))
   }
 
-  override def setFigure(fN: Int, cN: Int): GameBoard = copy(cellList.updated(cN, setPlayerFigureOnCell(fN, cN)))
+  override def setFigure(figureNumber: Int, cellNumber: Int): GameBoard =
+    copy(cellList.updated(cellNumber, setPlayerFigureOnCell(figureNumber, cellNumber)))
 
-  override def setPlayer(pN: Int, cN: Int): GameBoard = copy(cellList.updated(cN, setPlayerOnCell(pN, cN)))
+  override def setPlayer(playerNumber: Int, cellNumber: Int): GameBoard =
+    copy(cellList.updated(cellNumber, setPlayerOnCell(playerNumber, cellNumber)))
 
   override def getHomeNr(pN: Int, fN: Int): Int = {
-
     if(pN == 1 && fN == 1) {
       0
     }else {
       (pN - 1) * 5 + fN - 1
     }
-
   }
 
   override def getPlayerFigure(pN: Int, fN: Int) : Int = {
-
     val feldNumber = cellList.filter(cell => cell.playerNumber == pN && cell.figureNumber == fN)
     val feld = feldNumber.head.cellNumber
     feld
-
   }
 
-  override def getPossibleCells(start: Int, cube: Int): GameBoard = {
+  override def getPossibleCells(startCell: Int, diceNumber: Int): GameBoard = {
 
     var found: Set[Int] = Set[Int]()
     var needed: Set[Int] = Set[Int]()
 
-    def recurse(current: Int, times: Int): Unit = {
-      if (times == 0 || cellList(current).hasWall && times == 0) {
-        needed += current
+    def recurse(currentCell: Int, diceNumber: Int): Unit = {
+      if (diceNumber == 0 || cellList(currentCell).hasWall && diceNumber == 0) {
+        needed += currentCell
       }
-      if (times != 0 && cellList(current).hasWall) {
+      if (diceNumber != 0 && cellList(currentCell).hasWall) {
         return
       }
-      found += current
-      gameBoardGraph(current).foreach(x => if (!found.contains(x) && times != 0) recurse(x, times-1))
+      found += currentCell
+      gameBoardGraph(currentCell).foreach(x => if (!found.contains(x) && diceNumber != 0) recurse(x, diceNumber-1))
     }
-    recurse(start, cube)
+    recurse(startCell, diceNumber)
     copy(possibleCells = needed)
 
   }
@@ -182,8 +178,6 @@ case class GameBoard (cellList: List[Cell],
   override def removeListWall(cellNumber: Int): List[Cell] = cellList.updated(cellNumber, setHasWallFalse(cellNumber))
 
   override def setHasWallFalse(cellNumber: Int): Cell = cellList(cellNumber).copy(hasWall = false)
-
-
 
   override def setWall(cellNumber: Int): GameBoard = copy(updateListWall(cellNumber))
 
@@ -199,7 +193,6 @@ case class GameBoard (cellList: List[Cell],
   }
 
   override def placeWall(cellNumber: Int): Cell = cellList(cellNumber).copy(hasWall = true)
-
 
   override def setPosiesCellTrue(n: List[Int]): GameBoard = copy(setPossibleCell1True(cellList.length-1, n, cellList))
 
@@ -236,18 +229,20 @@ case class GameBoard (cellList: List[Cell],
 
   override def setPossibleCellFalse(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleCells = false)
 
-
   override def setPosiesTrue(cellNumber: Int): GameBoard = copy(setPossibleFiguresTrue(cellList.length-1, cellNumber, cellList))
 
-  override def setPossibleFiguresTrue(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+  override def setPossibleFiguresTrue(cellListLength: Int, cellNumber: Int, cellList: List[Cell]): List[Cell] = {
 
-      if (m == -1) {
-        lis
-      } else if (lis(m).playerNumber == n) {
-        setPossibleFiguresTrue(m-1,n,lis.updated(lis(m).cellNumber,setPossibilitiesTrue(m)))
+      if (cellListLength == -1) {
+        cellList
+      } else if (cellList(cellListLength).playerNumber == cellNumber) {
+        setPossibleFiguresTrue(cellListLength-1,
+            cellNumber,
+            cellList.updated(cellList(cellListLength).cellNumber,
+            setPossibilitiesTrue(cellListLength)))
       }
       else {
-        setPossibleFiguresTrue(m-1,n,lis)
+        setPossibleFiguresTrue(cellListLength-1,cellNumber,cellList)
       }
 
   }
@@ -259,27 +254,25 @@ case class GameBoard (cellList: List[Cell],
 
   override def setPossibilitiesFalse(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleFigures = false)
 
-  override def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell] = {
+  override def setPossibleFiguresFalse(m: Int, n: Int, cellList: List[Cell]): List[Cell] = {
     if (m == -1) {
-      lis
-    } else if (lis(m).playerNumber == n) {
-      setPossibleFiguresFalse(m-1,n,lis.updated(lis(m).cellNumber,setPossibilitiesFalse(m)))
+      cellList
+    } else if (cellList(m).playerNumber == n) {
+      setPossibleFiguresFalse(m-1,n,cellList.updated(cellList(m).cellNumber,setPossibilitiesFalse(m)))
     }
     else {
-      setPossibleFiguresFalse(m-1,n,lis)
+      setPossibleFiguresFalse(m-1,n,cellList)
     }
   }
 
-  override def execute(callback: Int => GameBoard, y:Int): GameBoard = callback(y)
+  override def execute(callback: Int => GameBoard, y: Int): GameBoard = callback(y)
 
-  override def nextPlayer(list: List[Player], n: Int): Player = {
-
-    if(n == list.length-1) {
-      list.head
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Player = {
+    if(playerNumber == playerList.length-1) {
+      playerList.head
     } else {
-      list(n+1)
+      playerList(playerNumber+1)
     }
-
   }
 
   override def createPlayer(text: String): GameBoard = copy(players =  players :+ Player(players.length+1, text))
@@ -292,7 +285,7 @@ case class GameBoard (cellList: List[Cell],
 
   override def getPossibleCells: Set[Int] = this.possibleCells
 
-  override def setPossibleCell(pC: Set[Int]) : GameBoard = copy(possibleCells = pC)
+  override def setPossibleCell(possibleCells: Set[Int]) : GameBoard = copy(possibleCells = possibleCells)
 
   override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
 }

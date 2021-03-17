@@ -5,7 +5,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, R
 
 case class Setup(controller: ControllerInterface) extends State[GameState] {
 
-  override def handle(string: String, n: GameState): Unit = ISetup.setup(Request(string.split(" ").toList,n,controller))
+  override def handle(input: String, gameState: GameState): Unit = ISetup.setup(Request(input.split(" ").toList, gameState, controller))
   override def toString: String = "4"
 
 }
