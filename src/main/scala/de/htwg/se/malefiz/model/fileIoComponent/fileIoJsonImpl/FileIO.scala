@@ -13,7 +13,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
 import scala.io.Source
 
-class FileIO @Inject() extends FileIOInterface{
+class FileIO @Inject() extends FileIOInterface {
 
   override def loadController: ControllerInterface = {
 
@@ -32,7 +32,7 @@ class FileIO @Inject() extends FileIOInterface{
     val gameState: Int = (json \ "gameState").as[Int]
 
     newController.setDicedNumber(diceNumber)
-    newController.setPlayersTurn(Option.apply(newController.getPlayer(playersTurn.playerNumber-1)))
+    newController.setPlayersTurn(Option.apply(newController.getPlayer(playersTurn.playerNumber - 1)))
     newController.setSelectedFigure(f1, f2)
     newController.setStateNumber(gameState)
 
@@ -56,7 +56,6 @@ class FileIO @Inject() extends FileIOInterface{
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
 
-
     var found: Set[Int] = Set[Int]()
 
     for (index <- 0 until posCells.size) {
@@ -66,31 +65,27 @@ class FileIO @Inject() extends FileIOInterface{
     }
     gameboard = gameboard.setPossibleCell(found)
 
-
-    for(index <- 0 until 131) {
+    for (index <- 0 until 131) {
 
       val cellNumber: Int = ((json \ "cells")(index) \ "cellNumber").as[Int]
       val playerNumber: Int = ((json \ "cells")(index) \ "playerNumber").as[Int]
       val figureNumber: Int = ((json \ "cells")(index) \ "figureNumber").as[Int]
       val hasWall: Boolean = ((json \ "cells")(index) \ "hasWall").as[Boolean]
 
-      gameboard = gameboard.setPlayer(playerNumber,cellNumber)
-      gameboard = gameboard.setFigure(figureNumber,cellNumber)
+      gameboard = gameboard.setPlayer(playerNumber, cellNumber)
+      gameboard = gameboard.setFigure(figureNumber, cellNumber)
 
-      if(hasWall){
+      if (hasWall)
         gameboard = gameboard.setWall(cellNumber)
-      }
-      if(!hasWall){
+      if (!hasWall)
         gameboard = gameboard.removeWall(cellNumber)
-      }
     }
 
     //players.filter(_.name != "").map(x => gameboard.createPlayer(x.name))
 
-    for (player <- players){
+    for (player <- players)
       if (player != "")
         gameboard = gameboard.createPlayer(player.name)
-    }
 
     gameboard = gameboard.setPossibleCell(posCells)
     gameboard
@@ -106,13 +101,13 @@ class FileIO @Inject() extends FileIOInterface{
 
   implicit val playerWrites: Writes[Player] = (player: Player) => {
     Json.obj(
-      "playerNumber" ->player.playerNumber,
+      "playerNumber" -> player.playerNumber,
       "name" -> player.name
     )
   }
 
   override def save(gameBoard: GameBoardInterface, controller: ControllerInterface): Unit = {
-    val jsonGameBoard = gameBoardToJson(gameBoard,controller)
+    val jsonGameBoard = gameBoardToJson(gameBoard, controller)
     val jsonFile = Json.prettyPrint(jsonGameBoard)
 
     val pw = new PrintWriter(new File("gameboard.json"))
@@ -120,7 +115,7 @@ class FileIO @Inject() extends FileIOInterface{
     pw.close()
   }
 
-  def gameBoardToJson(gameB: GameBoardInterface,controller: ControllerInterface): JsObject = {
+  def gameBoardToJson(gameB: GameBoardInterface, controller: ControllerInterface): JsObject =
     Json.obj(
       "players" -> Json.toJson(
         for {
@@ -128,7 +123,7 @@ class FileIO @Inject() extends FileIOInterface{
         } yield Json.toJson(p)
       ),
       "playersTurn" -> controller.getPlayersTurn,
-      "diceNumber" -> controller.getDicedNumber,
+      "diceNumber" -> controller.getGameBoard.dicedNumber,
       "selectedFigure1" -> controller.getSelectedFigure.get._1,
       "selectedFigure2" -> controller.getSelectedFigure.get._2,
       "gameState" -> controller.getGameState.state.toString.toInt,
@@ -136,17 +131,14 @@ class FileIO @Inject() extends FileIOInterface{
       "cells" -> Json.toJson(
         for {
           c <- gameB.getCellList
-        } yield {
-          Json.obj(
-            "cellNumber" -> c.cellNumber,
-            "playerNumber" -> c.playerNumber,
-            "figureNumber" -> c.figureNumber,
-            "hasWall" -> c.hasWall,
-            "coordinates"-> c.coordinates
-          )
-        }
+        } yield Json.obj(
+          "cellNumber" -> c.cellNumber,
+          "playerNumber" -> c.playerNumber,
+          "figureNumber" -> c.figureNumber,
+          "hasWall" -> c.hasWall,
+          "coordinates" -> c.coordinates
+        )
       )
     )
-  }
 
 }

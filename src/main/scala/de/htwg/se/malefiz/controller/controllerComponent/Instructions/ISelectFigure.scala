@@ -12,7 +12,7 @@ object ISelectFigure extends InstructionTrait {
           controller.getPlayersTurn.get.playerNumber =>
       controller.calculatePath(
         controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt),
-        controller.getDicedNumber
+        controller.getGameBoard.dicedNumber
       )
       Request(inputList, gameState, controller)
   }

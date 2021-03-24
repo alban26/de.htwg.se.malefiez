@@ -9,7 +9,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def getDicedNumber: Int
+  def gameBoard: GameBoardInterface
 
   def setDicedNumber(dicedNumber: Int): Unit
 

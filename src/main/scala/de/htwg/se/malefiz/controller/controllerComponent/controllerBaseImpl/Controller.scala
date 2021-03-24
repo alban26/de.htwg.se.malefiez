@@ -123,42 +123,26 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-  override def getDicedNumber: Int = gameBoard.getDicedNumber
-
   override def setPossibleCells(pC: Set[Int]): GameBoardInterface =
     gameBoard.setPossibleCell(pC)
 
   override def weHaveAWinner(): Unit =
     publish(new Winner)
 
-  override def getCellList: List[Cell] = gameBoard.getCellList
-
-  override def getPlayer: List[Player] = gameBoard.getPlayer
-
-  override def getPossibleCells: Set[Int] = gameBoard.getPossibleCells
-
-  override def getPlayersTurn: Option[Player] = gameBoard.getPlayersTurn
-
   override def setPlayersTurn(player: Option[Player]): Unit = {
     gameBoard = gameBoard.setPlayersTurn(player)
     publish(new GameBoardChanged)
   }
-
-  override def getSelectedFigure: Option[(Int, Int)] = gameBoard.getSelectedFigure
 
   override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
     gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
     publish(new GameBoardChanged)
   }
 
-  override def getStateNumber: Option[Int] = gameBoard.getStateNumber
-
   override def setStateNumber(stateNumber: Int): Unit = {
     gameBoard = gameBoard.setStateNumber(stateNumber)
     publish(new GameBoardChanged)
   }
-
-  override def getStatementStatus: Option[Statements] = gameBoard.getStatementStatus
 
   override def setStatementStatus(statement: Statements): Unit = {
     gameBoard = gameBoard.setStatementStatus(statement)

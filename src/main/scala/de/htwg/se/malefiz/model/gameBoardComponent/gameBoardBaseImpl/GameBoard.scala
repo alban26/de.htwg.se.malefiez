@@ -283,35 +283,18 @@ case class GameBoard(
 
   override def createGameBoard(): String = buildString(cellList)
 
-  override def getCellList: List[Cell] = this.cellList
-
-  override def getPlayer: List[Player] = this.players
-
-  override def getPossibleCells: Set[Int] = this.possibleCells
-
   override def setPossibleCell(possibleCells: Set[Int]): GameBoard = copy(possibleCells = possibleCells)
 
   override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
 
   override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = dicedNumber)
 
-  override def getDicedNumber: Int = this.dicedNumber
-
   override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
-
-  override def getPlayersTurn: Option[Player] = this.playersTurn
 
   override def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard =
     copy(selectedFigure = Option.apply((playerNumber, figureNumber)))
 
-  override def getSelectedFigure: Option[(Int, Int)] = this.selectedFigure
-
   override def setStateNumber(stateNumber: Int): GameBoard = copy(stateNumber = Option.apply(stateNumber))
-
-  override def getStateNumber: Option[Int] = this.stateNumber
-
   override def setStatementStatus(statement: Statements): GameBoard = copy(statementStatus = Option.apply(statement))
-
-  override def getStatementStatus: Option[Statements] = this.statementStatus
 
 }

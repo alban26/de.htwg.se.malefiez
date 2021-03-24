@@ -5,7 +5,13 @@ import java.awt.image.BufferedImage
 import java.io.File
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, StatementRequest, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{
+  ControllerInterface,
+  GameBoardChanged,
+  StatementRequest,
+  Statements,
+  Winner
+}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
@@ -30,7 +36,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val playerLabel = new Label("Player")
   playerLabel.foreground = Color.WHITE
-  playerLabel.background= Color.DARK_GRAY
+  playerLabel.background = Color.DARK_GRAY
   playerLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   playerLabel.border = Swing.EmptyBorder(3)
 
@@ -42,13 +48,13 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val playerTurnLabel = new Label("Turn")
   playerTurnLabel.foreground = Color.WHITE
-  playerTurnLabel.background= Color.DARK_GRAY
+  playerTurnLabel.background = Color.DARK_GRAY
   playerTurnLabel.border = Swing.EmptyBorder(3)
   playerTurnLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
 
   val playerTurnArea = new Label("")
   playerTurnArea.foreground = Color.WHITE
-  playerTurnArea.background= Color.DARK_GRAY
+  playerTurnArea.background = Color.DARK_GRAY
   playerTurnArea.border = Swing.EmptyBorder(3)
   playerTurnArea.font = new Font("Sans Serif", Font.ITALIC, 16)
 
@@ -71,7 +77,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val randomNumberArea = new Label("")
   randomNumberArea.foreground = Color.WHITE
-  randomNumberArea.background= Color.DARK_GRAY
+  randomNumberArea.background = Color.DARK_GRAY
   randomNumberArea.font = new Font("Sans Serif", Font.ITALIC, 16)
   randomNumberArea.border = Swing.EmptyBorder(3)
 
@@ -84,9 +90,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val panel: Panel = new Panel {
 
-    override def paint(g: Graphics2D): Unit = {
+    override def paint(g: Graphics2D): Unit =
       g.drawImage(bimage, 0, 0, null)
-    }
 
     preferredSize = new Dimension(bimage.getWidth(null), bimage.getHeight())
     listenTo(mouse.clicks)
@@ -97,7 +102,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         mouseX = getRange(p.x)
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
-        if (state.isInstanceOf[SelectFigure]) {
+        if (state.isInstanceOf[SelectFigure])
           controller.getCellList.map(cell =>
             if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
               controller.execute(cell.playerNumber + " " + cell.figureNumber)
@@ -105,10 +110,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
               updateInformationArea()
             }
           )
-        } else {
+        else
           controller.getCellList.map(cell =>
             if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
-              if(cell.playerNumber == controller.getSelectedFigure.get._1 && cell.figureNumber == controller.getSelectedFigure.get._2){
+              if (
+                cell.playerNumber == controller.getSelectedFigure.get._1 && cell.figureNumber == controller.getSelectedFigure.get._2
+              ) {
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
                 updateInformationArea()
@@ -120,14 +127,13 @@ class SwingGui(controller: ControllerInterface) extends Frame {
               updateInformationArea()
             }
           )
-        }
     }
   }
 
   def updatePlayerArea(): Boolean = {
     val doc = playerArea.styledDocument
 
-    controller.getPlayer.indices.map(i => {
+    controller.getPlayer.indices.map { i =>
       val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
       i match {
         case 0 =>
@@ -150,9 +156,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           StyleConstants.setForeground(blue, Color.BLUE)
           doc.insertString(doc.getLength, playerString, blue)
           true
-        }
       }
-    )
+    }
     true
   }
 
@@ -176,37 +181,35 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     true
   }
 
-  def updateRandomNumberArea() : Boolean = {
-    randomNumberArea.text = controller.getDicedNumber.toString
+  def updateRandomNumberArea(): Boolean = {
+    randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
     true
   }
 
-  def updateInformationArea(): Boolean =  {
+  def updateInformationArea(): Boolean = {
     this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
     true
   }
 
   def drawGameBoard(): Unit = {
     controller.getCellList.map(cell =>
-      if (cell.hasWall) {
+      if (cell.hasWall)
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.WHITE)
-      } else if (cell.playerNumber == 1) {
+      else if (cell.playerNumber == 1)
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.RED)
-      } else if (cell.playerNumber == 2) {
+      else if (cell.playerNumber == 2)
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.GREEN)
-      } else if (cell.playerNumber == 3) {
+      else if (cell.playerNumber == 3)
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.YELLOW)
-      } else if (cell.playerNumber == 4) {
+      else if (cell.playerNumber == 4)
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLUE)
-      } else {
+      else
         this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLACK)
-      }
     )
 
     controller.getCellList.map(cell =>
-        if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.get.playerNumber) {
-          this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
-        }
+      if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.get.playerNumber)
+        this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
     )
   }
 
@@ -245,20 +248,23 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       })
     }
   }
-  
+
   contents = new GridBagPanel {
 
     background = Color.DARK_GRAY
 
-    def constraints(x: Int,
-                    y:Int,
-                    gridWidth: Int = 1,
-                    gridHeight: Int = 1,
-                    weightX: Double = 0.0,
-                    weightY: Double = 0.0,
-                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-                    ipadX: Int = 0, ipadY: Int = 0, anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
-    : Constraints = {
+    def constraints(
+        x: Int,
+        y: Int,
+        gridWidth: Int = 1,
+        gridHeight: Int = 1,
+        weightX: Double = 0.0,
+        weightY: Double = 0.0,
+        fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+        ipadX: Int = 0,
+        ipadY: Int = 0,
+        anchor: GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center
+    ): Constraints = {
       val c = new Constraints
       c.gridx = x
       c.gridy = y
@@ -272,30 +278,16 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       c.anchor = anchor
       c
     }
-    add(playerLabel,
-      constraints(0, 1, gridWidth = 2, fill=GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
-    add(playerArea,
-      constraints(0, 2, gridWidth = 2, fill=GridBagPanel.Fill.Both))
-    add(playerTurnLabel,
-      constraints(2, 1,  gridWidth = 2, fill=GridBagPanel.Fill.Both ,ipadX = 104, ipadY =  15))
-    add(playerTurnArea,
-      constraints(2, 2,gridWidth = 2, fill=GridBagPanel.Fill.Both ))
-    add(cubeLabel,
-      constraints(4, 1, fill=GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
-    add(cubeButton,
-      constraints(4, 2))
-    add(randomNumberLabel,
-      constraints(6, 1, gridWidth = 2, fill=GridBagPanel.Fill.Both,ipadX= 104, ipadY = 15))
-    add(randomNumberArea,
-      constraints(6, 2, gridWidth = 2, fill=GridBagPanel.Fill.Both))
-    add(informationArea,
-      constraints(0, 3, gridWidth = 8, fill=GridBagPanel.Fill.Both, ipadY = 35))
-    add(panel,
-      constraints(0,
-        0,
-        gridWidth = 9,
-        ipadX = bimage.getWidth(null),
-        ipadY = bimage.getHeight(null)))
+    add(playerLabel, constraints(0, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(playerArea, constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(playerTurnLabel, constraints(2, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(playerTurnArea, constraints(2, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(cubeLabel, constraints(4, 1, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(cubeButton, constraints(4, 2))
+    add(randomNumberLabel, constraints(6, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(randomNumberArea, constraints(6, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(informationArea, constraints(0, 3, gridWidth = 8, fill = GridBagPanel.Fill.Both, ipadY = 35))
+    add(panel, constraints(0, 0, gridWidth = 9, ipadX = bimage.getWidth(null), ipadY = bimage.getHeight(null)))
   }
 
   listenTo(cubeButton, controller)
@@ -303,13 +295,17 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = controller.getDicedNumber.toString
+      randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
     case winner: Winner =>
       drawGameBoard()
-      Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
+      Dialog.showConfirmation(
+        contents.head,
+        Statements.value(StatementRequest(controller)),
+        optionType = Dialog.Options.Default
+      )
       controller.resetGameBoard()
       playerArea.text = ""
       visible = false
