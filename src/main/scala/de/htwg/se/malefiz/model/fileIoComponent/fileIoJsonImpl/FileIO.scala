@@ -1,17 +1,23 @@
 package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
 import java.io.{File, PrintWriter}
+
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
+  Cell,
+  Point
+}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
+
 import scala.io.Source
+import scala.reflect.ClassManifestFactory.Nothing
 
 class FileIO @Inject() extends FileIOInterface {
 
@@ -32,7 +38,10 @@ class FileIO @Inject() extends FileIOInterface {
     val gameState: Int = (json \ "gameState").as[Int]
 
     newController.setDicedNumber(diceNumber)
-    newController.setPlayersTurn(Option.apply(newController.getPlayer(playersTurn.playerNumber - 1)))
+    newController.setPlayersTurn(
+      Option
+        .apply(newController.getGameBoard.players(playersTurn.playerNumber - 1))
+    )
     newController.setSelectedFigure(f1, f2)
     newController.setStateNumber(gameState)
 
@@ -106,7 +115,10 @@ class FileIO @Inject() extends FileIOInterface {
     )
   }
 
-  override def save(gameBoard: GameBoardInterface, controller: ControllerInterface): Unit = {
+  override def save(
+      gameBoard: GameBoardInterface,
+      controller: ControllerInterface
+  ): Unit = {
     val jsonGameBoard = gameBoardToJson(gameBoard, controller)
     val jsonFile = Json.prettyPrint(jsonGameBoard)
 
@@ -115,22 +127,25 @@ class FileIO @Inject() extends FileIOInterface {
     pw.close()
   }
 
-  def gameBoardToJson(gameB: GameBoardInterface, controller: ControllerInterface): JsObject =
+  def gameBoardToJson(
+      gameBoard: GameBoardInterface,
+      controller: ControllerInterface
+  ): JsObject =
     Json.obj(
       "players" -> Json.toJson(
         for {
-          p <- gameB.getPlayer
+          p <- gameBoard.players
         } yield Json.toJson(p)
       ),
-      "playersTurn" -> controller.getPlayersTurn,
+      "playersTurn" -> controller.getGameBoard.playersTurn,
       "diceNumber" -> controller.getGameBoard.dicedNumber,
-      "selectedFigure1" -> controller.getSelectedFigure.get._1,
-      "selectedFigure2" -> controller.getSelectedFigure.get._2,
+      "selectedFigure1" -> controller.gameBoard.selectedFigure.get._1,
+      "selectedFigure2" -> controller.gameBoard.selectedFigure.get._2,
       "gameState" -> controller.getGameState.state.toString.toInt,
-      "possibleCells" -> gameB.getPossibleCells,
+      "possibleCells" -> gameBoard.possibleCells,
       "cells" -> Json.toJson(
         for {
-          c <- gameB.getCellList
+          c <- gameBoard.cellList
         } yield Json.obj(
           "cellNumber" -> c.cellNumber,
           "playerNumber" -> c.playerNumber,

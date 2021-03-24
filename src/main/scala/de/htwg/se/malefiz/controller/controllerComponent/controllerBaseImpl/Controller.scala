@@ -5,10 +5,18 @@ import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
+import de.htwg.se.malefiz.controller.controllerComponent.{
+  ControllerInterface,
+  GameBoardChanged,
+  Statements,
+  Winner
+}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
+  Cell,
+  Cube
+}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{
@@ -21,7 +29,9 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{
 }
 import scala.swing.Publisher
 
-class Controller @Inject() (var gameBoard: GameBoardInterface) extends ControllerInterface with Publisher {
+class Controller @Inject() (var gameBoard: GameBoardInterface)
+    extends ControllerInterface
+    with Publisher {
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
@@ -35,7 +45,8 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def execute(input: String): Unit = state.run(input)
 
-  override def resetPossibleCells(): Unit = gameBoard = gameBoard.clearPossibleCells
+  override def resetPossibleCells(): Unit =
+    gameBoard = gameBoard.clearPossibleCells
 
   override def resetGameBoard(): Unit = gameBoard = mementoGameboard
 
@@ -66,8 +77,14 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def rollCube: Int = Cube().getRandomNumber
 
-  override def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
-    undoManager.doStep(new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this))
+  override def setPlayerFigure(
+      playerNumber: Int,
+      playerFigure: Int,
+      cellNumber: Int
+  ): Unit = {
+    undoManager.doStep(
+      new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this)
+    )
     publish(new GameBoardChanged)
   }
 
@@ -81,8 +98,12 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-  override def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): Unit = {
-    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, figureNumber)
+  override def removeActualPlayerAndFigureFromCell(
+      playerNumber: Int,
+      figureNumber: Int
+  ): Unit = {
+    gameBoard =
+      gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, figureNumber)
     publish(new GameBoardChanged)
   }
 
@@ -151,22 +172,28 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def getGameState: GameState = this.state
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
+  override def nextPlayer(
+      playerList: List[Player],
+      playerNumber: Int
+  ): Option[Player] =
     gameBoard.nextPlayer(playerList, playerNumber)
 
   override def save(): Unit = {
-    fileIo.save(gameBoard, this)
+    fileIo.save(this.gameBoard, this)
     publish(new GameBoardChanged)
   }
 
   override def load(): Unit = {
     val newController = fileIo.loadController
-    val stateNr = newController.getStateNumber.get
+    val stateNr = newController.getGameBoard.stateNumber.get
 
     this.setGameBoard(newController.getGameBoard)
-    this.setPossibleCells(newController.getPossibleCells)
-    this.setPlayersTurn(newController.getPlayersTurn)
-    this.setSelectedFigure(newController.getSelectedFigure.get._1, newController.getSelectedFigure.get._2)
+    this.setPossibleCells(newController.getGameBoard.possibleCells)
+    this.setPlayersTurn(newController.getGameBoard.playersTurn)
+    this.setSelectedFigure(
+      newController.getGameBoard.selectedFigure.get._1,
+      newController.getGameBoard.selectedFigure.get._2
+    )
 
     stateNr match {
       case 1 =>

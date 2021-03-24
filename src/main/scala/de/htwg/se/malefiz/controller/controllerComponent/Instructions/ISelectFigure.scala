@@ -9,7 +9,7 @@ object ISelectFigure extends InstructionTrait {
   val select1: Handler0 = {
     case Request(inputList, gameState, controller)
         if inputList.head.toInt ==
-          controller.getPlayersTurn.get.playerNumber =>
+          controller.getGameBoard.playersTurn.get.playerNumber =>
       controller.calculatePath(
         controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt),
         controller.getGameBoard.dicedNumber
@@ -27,7 +27,7 @@ object ISelectFigure extends InstructionTrait {
   // Für die ausgewhäte werden die Cellen markiert auf die er springen kann
   val select3: Handler0 = {
     case Request(inputList, gameState, controller) =>
-      controller.setPossibleCellsTrue(controller.getPossibleCells.toList)
+      controller.setPossibleCellsTrue(controller.getGameBoard.possibleCells.toList)
       Request(inputList, gameState, controller)
   }
 
@@ -41,7 +41,7 @@ object ISelectFigure extends InstructionTrait {
   /*wenn nicht eigener Spieler ausgewählt wird*/
   val select5: Handler0 = {
     case Request(inputList, gameState, controller)
-        if inputList.head.toInt != controller.getPlayersTurn.get.playerNumber =>
+        if inputList.head.toInt != controller.getGameBoard.playersTurn.get.playerNumber =>
       Request(inputList, gameState, controller)
   }
 

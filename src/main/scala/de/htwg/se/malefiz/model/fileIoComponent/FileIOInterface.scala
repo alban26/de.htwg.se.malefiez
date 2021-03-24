@@ -7,6 +7,6 @@ trait FileIOInterface {
 
   def loadController: ControllerInterface
   def load: GameBoardInterface
-  def save(gameBoard: GameBoardInterface,controller: ControllerInterface): Unit
+  def save(gameBoard: GameBoardInterface, controller: ControllerInterface): Unit
 
 }

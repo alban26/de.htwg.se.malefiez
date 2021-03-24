@@ -22,7 +22,9 @@ import scala.swing.event.{ButtonClicked, _}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
 
-  val bimage: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
+  val bimage: BufferedImage = ImageIO.read(
+    new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png")
+  )
   val g2d: Graphics2D = bimage.createGraphics()
 
   title = "Malefiz"
@@ -65,7 +67,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   cubeLabel.border = Swing.EmptyBorder(3)
 
   val cubeButton = new Button()
-  val cubeIcon = new ImageIcon("src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png")
+  val cubeIcon = new ImageIcon(
+    "src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png"
+  )
   cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EmptyBorder(3)
 
@@ -103,18 +107,24 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
         if (state.isInstanceOf[SelectFigure])
-          controller.getCellList.map(cell =>
-            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
+          controller.getGameBoard.cellList.map(cell =>
+            if (
+              mouseX.contains(cell.coordinates.x_coordinate) && mouseY
+                .contains(cell.coordinates.y_coordinate)
+            ) {
               controller.execute(cell.playerNumber + " " + cell.figureNumber)
               drawGameBoard()
               updateInformationArea()
             }
           )
         else
-          controller.getCellList.map(cell =>
-            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
+          controller.gameBoard.cellList.map(cell =>
+            if (
+              mouseX.contains(cell.coordinates.x_coordinate) && mouseY
+                .contains(cell.coordinates.y_coordinate)
+            ) {
               if (
-                cell.playerNumber == controller.getSelectedFigure.get._1 && cell.figureNumber == controller.getSelectedFigure.get._2
+                cell.playerNumber == controller.getGameBoard.selectedFigure.get._1 && cell.figureNumber == controller.getGameBoard.selectedFigure.get._2
               ) {
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
@@ -133,8 +143,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   def updatePlayerArea(): Boolean = {
     val doc = playerArea.styledDocument
 
-    controller.getPlayer.indices.map { i =>
-      val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
+    controller.getGameBoard.players.indices.map { i =>
+      val playerString =
+        " Spieler" + (i + 1) + ": " + controller.getGameBoard.players(i) + "\n"
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)
@@ -177,7 +188,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Boolean = {
-    playerTurnArea.text = controller.getPlayersTurn.get.name
+    playerTurnArea.text = controller.getGameBoard.playersTurn.get.name
     true
   }
 
@@ -187,29 +198,59 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea(): Boolean = {
-    this.informationArea.text = Statements.value(controllerComponent.StatementRequest(controller))
+    this.informationArea.text =
+      Statements.value(controllerComponent.StatementRequest(controller))
     true
   }
 
   def drawGameBoard(): Unit = {
-    controller.getCellList.map(cell =>
+    controller.getGameBoard.cellList.map(cell =>
       if (cell.hasWall)
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.WHITE)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.WHITE
+        )
       else if (cell.playerNumber == 1)
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.RED)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.RED
+        )
       else if (cell.playerNumber == 2)
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.GREEN)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.GREEN
+        )
       else if (cell.playerNumber == 3)
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.YELLOW)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.YELLOW
+        )
       else if (cell.playerNumber == 4)
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLUE)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.BLUE
+        )
       else
-        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLACK)
+        this.drawCircle(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate,
+          Color.BLACK
+        )
     )
 
-    controller.getCellList.map(cell =>
-      if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.get.playerNumber)
-        this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
+    controller.gameBoard.cellList.map(cell =>
+      if (
+        cell.possibleCells && cell.playerNumber != controller.getGameBoard.playersTurn.get.playerNumber
+      )
+        this.highlightCells(
+          cell.coordinates.x_coordinate,
+          cell.coordinates.y_coordinate
+        )
     )
   }
 
@@ -278,16 +319,76 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       c.anchor = anchor
       c
     }
-    add(playerLabel, constraints(0, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
-    add(playerArea, constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
-    add(playerTurnLabel, constraints(2, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
-    add(playerTurnArea, constraints(2, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
-    add(cubeLabel, constraints(4, 1, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(
+      playerLabel,
+      constraints(
+        0,
+        1,
+        gridWidth = 2,
+        fill = GridBagPanel.Fill.Both,
+        ipadX = 104,
+        ipadY = 15
+      )
+    )
+    add(
+      playerArea,
+      constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
+    )
+    add(
+      playerTurnLabel,
+      constraints(
+        2,
+        1,
+        gridWidth = 2,
+        fill = GridBagPanel.Fill.Both,
+        ipadX = 104,
+        ipadY = 15
+      )
+    )
+    add(
+      playerTurnArea,
+      constraints(2, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
+    )
+    add(
+      cubeLabel,
+      constraints(4, 1, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15)
+    )
     add(cubeButton, constraints(4, 2))
-    add(randomNumberLabel, constraints(6, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
-    add(randomNumberArea, constraints(6, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
-    add(informationArea, constraints(0, 3, gridWidth = 8, fill = GridBagPanel.Fill.Both, ipadY = 35))
-    add(panel, constraints(0, 0, gridWidth = 9, ipadX = bimage.getWidth(null), ipadY = bimage.getHeight(null)))
+    add(
+      randomNumberLabel,
+      constraints(
+        6,
+        1,
+        gridWidth = 2,
+        fill = GridBagPanel.Fill.Both,
+        ipadX = 104,
+        ipadY = 15
+      )
+    )
+    add(
+      randomNumberArea,
+      constraints(6, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
+    )
+    add(
+      informationArea,
+      constraints(
+        0,
+        3,
+        gridWidth = 8,
+        fill = GridBagPanel.Fill.Both,
+        ipadY = 35
+      )
+    )
+    add(
+      panel,
+      constraints(
+        0,
+        0,
+        gridWidth = 9,
+        ipadX = bimage.getWidth(null),
+        ipadY = bimage.getHeight(null)
+      )
+    )
   }
 
   listenTo(cubeButton, controller)

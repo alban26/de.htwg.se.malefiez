@@ -3,7 +3,6 @@ package de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.swing.Publisher
 
@@ -16,8 +15,6 @@ trait ControllerInterface extends Publisher {
   def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
-
-  def getStateNumber: Option[Int]
 
   def execute(string: String): Unit
 
@@ -61,19 +58,9 @@ trait ControllerInterface extends Publisher {
 
   def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
 
-  def getCellList: List[Cell]
-
-  def getPlayer: List[Player]
-
-  def getPossibleCells: Set[Int]
-
-  def getSelectedFigure: Option[(Int, Int)]
-
   def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
 
   def getGameState: GameState
-
-  def getStatementStatus: Option[Statements]
 
   def setStatementStatus(statement: Statements): Unit
 
@@ -86,8 +73,6 @@ trait ControllerInterface extends Publisher {
   def getGameBoard: GameBoardInterface
 
   def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
-
-  def getPlayersTurn: Option[Player]
 
   def setPlayersTurn(player: Option[Player]): Unit
 

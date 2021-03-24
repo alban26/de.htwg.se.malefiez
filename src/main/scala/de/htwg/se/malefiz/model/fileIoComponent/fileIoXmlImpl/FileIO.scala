@@ -18,10 +18,10 @@ class FileIO @Inject() extends FileIOInterface {
     val file = scala.xml.XML.loadFile("gameboardList.xml")
 
     val gameStateNodes = file \\ "gameState"
-    val controllerNeu = new Controller(load)
+    val newController = new Controller(load)
 
     val dice = (file \\ "dicedNumber" \ "@number").text.toInt
-    controllerNeu.setDicedNumber(dice)
+    newController.setDicedNumber(dice)
 
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
     //val playerName = (file \\ "playersTurn" \ "@turnN").text
@@ -29,11 +29,11 @@ class FileIO @Inject() extends FileIOInterface {
     val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
     val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
 
-    controllerNeu.setSelectedFigure(selectedFigure_1, selectedFigure_2)
-    controllerNeu.setStateNumber(stateNumber.toInt)
+    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
+    newController.setStateNumber(stateNumber.toInt)
 
-    controllerNeu.setPlayersTurn(Option.apply(controllerNeu.getPlayer(playerZahl - 1)))
-    controllerNeu
+    newController.setPlayersTurn(Option.apply(newController.getGameBoard.players(playerZahl - 1)))
+    newController
   }
 
   override def load: GameBoardInterface = {
@@ -88,41 +88,41 @@ class FileIO @Inject() extends FileIOInterface {
     import java.io._
     val pw = new PrintWriter(new File("gameboardList.xml"))
     val prettyPrinter = new PrettyPrinter(80, 2)
-    val xml = prettyPrinter.format(gameboardToXml(gameboard, controller))
+    val xml = prettyPrinter.format(gameBoardToXml(gameboard, controller))
     pw.write(xml)
     pw.close()
   }
 
-  def gameboardToXml(gameboard: GameBoardInterface, controller: ControllerInterface): Elem =
-    <gameboard size={gameboard.getPlayer.size.toString}>
+  def gameBoardToXml(gameBoard: GameBoardInterface, controller: ControllerInterface): Elem =
+    <gameboard size={gameBoard.players.size.toString}>
       {
 
       for {
-        l1 <- gameboard.getCellList.indices
-      } yield cellToXml(l1, gameboard.getCellList(l1))
+        l1 <- gameBoard.cellList.indices
+      } yield cellToXml(l1, gameBoard.cellList(l1))
     }
       <player>
         {
       for {
-        l1 <- gameboard.getPlayer.indices
-      } yield playerToXml(l1, gameboard.getPlayer(l1))
+        l1 <- gameBoard.players.indices
+      } yield playerToXml(l1, gameBoard.players(l1))
     }
       </player>
       <possibleCells>
         {
       for {
-        l1 <- gameboard.getPossibleCells
+        l1 <- gameBoard.possibleCells
       } yield possibleCellsToXml(l1)
     }
       </possibleCells>
-      <playersTurn turnZ={controller.getPlayersTurn.get.playerNumber.toString} turnN ={
-      controller.getPlayersTurn.get.name
+      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN ={
+      controller.gameBoard.playersTurn.get.name
     }></playersTurn>
 
       <dicedNumber number={controller.getGameBoard.dicedNumber.toString}></dicedNumber>
 
-      <selectedFigure sPlayer={controller.getSelectedFigure.get._1.toString} sFigure={
-      controller.getSelectedFigure.get._2.toString
+      <selectedFigure sPlayer={controller.getGameBoard.selectedFigure.get._1.toString} sFigure={
+      controller.getGameBoard.selectedFigure.get._2.toString
     } ></selectedFigure>
 
       <gameState state={controller.getGameState.state.toString}></gameState>
