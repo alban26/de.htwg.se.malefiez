@@ -98,28 +98,28 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
         if (state.isInstanceOf[SelectFigure]) {
-          for (i <- controller.getCellList) {
-            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
-              controller.execute(i.playerNumber + " " + i.figureNumber)
+          controller.getCellList.map(cell =>
+            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
+              controller.execute(cell.playerNumber + " " + cell.figureNumber)
               drawGameBoard()
               updateInformationArea()
             }
-          }
+          )
         } else {
-          for (i <- controller.getCellList) {
-            if (mouseX.contains(i.coordinates.x_coordinate) && mouseY.contains(i.coordinates.y_coordinate)) {
-              if(i.playerNumber == controller.getSelectedFigure._1 && i.figureNumber == controller.getSelectedFigure._2){
-                controller.execute(i.playerNumber + " " + i.figureNumber)
+          controller.getCellList.map(cell =>
+            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
+              if(cell.playerNumber == controller.getSelectedFigure._1 && cell.figureNumber == controller.getSelectedFigure._2){
+                controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
                 updateInformationArea()
                 drawGameBoard()
               }
-              controller.execute(i.cellNumber.toString)
+              controller.execute(cell.cellNumber.toString)
               drawGameBoard()
               updatePlayerTurn()
               updateInformationArea()
             }
-          }
+          )
         }
     }
   }
@@ -127,31 +127,32 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   def updatePlayerArea(): Boolean = {
     val doc = playerArea.styledDocument
 
-    for (i <- controller.getPlayer.indices) {
+    controller.getPlayer.indices.map(i => {
       val playerString = " Spieler" + (i + 1) + ": " + controller.getPlayer(i) + "\n"
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)
-          StyleConstants.setForeground(red,Color.RED)
-          doc.insertString(doc.getLength,playerString, red)
+          StyleConstants.setForeground(red, Color.RED)
+          doc.insertString(doc.getLength, playerString, red)
           true
         case 1 =>
           val green = playerArea.styledDocument.addStyle("Green", null)
-          StyleConstants.setForeground(green,Color.GREEN)
-          doc.insertString(doc.getLength,playerString, green)
+          StyleConstants.setForeground(green, Color.GREEN)
+          doc.insertString(doc.getLength, playerString, green)
           true
         case 2 =>
           val yellow = playerArea.styledDocument.addStyle("Yellow/Orange", null)
-          StyleConstants.setForeground(yellow,Color.ORANGE)
-          doc.insertString(doc.getLength,playerString, yellow)
+          StyleConstants.setForeground(yellow, Color.ORANGE)
+          doc.insertString(doc.getLength, playerString, yellow)
           true
         case 3 =>
           val blue = playerArea.styledDocument.addStyle("Blue", null)
-          StyleConstants.setForeground(blue,Color.BLUE)
-          doc.insertString(doc.getLength,playerString, blue)
+          StyleConstants.setForeground(blue, Color.BLUE)
+          doc.insertString(doc.getLength, playerString, blue)
           true
+        }
       }
-    }
+    )
     true
   }
 
@@ -186,26 +187,27 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def drawGameBoard(): Unit = {
-    for (i <- controller.getCellList) {
-      if (i.hasWall) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.WHITE)
-      } else if (i.playerNumber == 1) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.RED)
-      } else if (i.playerNumber == 2) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.GREEN)
-      } else if (i.playerNumber == 3) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.YELLOW)
-      } else if (i.playerNumber == 4) {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLUE)
+    controller.getCellList.map(cell =>
+      if (cell.hasWall) {
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.WHITE)
+      } else if (cell.playerNumber == 1) {
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.RED)
+      } else if (cell.playerNumber == 2) {
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.GREEN)
+      } else if (cell.playerNumber == 3) {
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.YELLOW)
+      } else if (cell.playerNumber == 4) {
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLUE)
       } else {
-        this.drawCircle(i.coordinates.x_coordinate, i.coordinates.y_coordinate, Color.BLACK)
+        this.drawCircle(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate, Color.BLACK)
       }
-    }
-    for (i <- controller.getCellList) {
-      if (i.possibleCells && i.playerNumber != controller.getPlayersTurn.playerNumber) {
-        this.highlightCells(i.coordinates.x_coordinate, i.coordinates.y_coordinate)
-      }
-    }
+    )
+
+    controller.getCellList.map(cell =>
+        if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.playerNumber) {
+          this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
+        }
+    )
   }
 
   def drawCircle(x: Int, y: Int, color: Color): Boolean = {
