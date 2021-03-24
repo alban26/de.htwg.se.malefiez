@@ -3,6 +3,7 @@ package de.htwg.se.malefiz.model.gameBoardComponent
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable.Map
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import scala.util.Try
 
 trait GameBoardInterface {
@@ -99,6 +100,19 @@ trait GameBoardInterface {
   def getPlayersTurn: Option[Player]
 
   def setPlayersTurn(player: Option[Player]): GameBoard
+
+  def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard
+
+  def getSelectedFigure: Option[(Int, Int)]
+
+  def setStateNumber(stateNumber: Int): GameBoard
+
+  def getStateNumber: Option[Int]
+
+  def setStatementStatus(statement: Statements): GameBoard
+
+  def getStatementStatus: Option[Statements]
+
 }
 
 trait CubeInterface {

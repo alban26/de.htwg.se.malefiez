@@ -11,24 +11,23 @@ import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Cube}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure, SetFigure, SetWall, Setup}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{
+  GameState,
+  Roll,
+  SelectFigure,
+  SetFigure,
+  SetWall,
+  Setup
+}
 import scala.swing.Publisher
 
 class Controller @Inject() (var gameBoard: GameBoardInterface) extends ControllerInterface with Publisher {
-
-  var statementStatus: Statements = addPlayer
-  var stateNumber: Int = _
-  var selectedFigure: (Int, Int) = _
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
   val mementoGameboard: GameBoardInterface = gameBoard
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
-
-  override def setStateNumber(n: Int): Unit = this.stateNumber = n
-
-  override def getStateNumber: Int = stateNumber
 
   override def setGameBoard(gb: GameBoardInterface): Unit = this.gameBoard = gb
 
@@ -68,16 +67,16 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   override def rollCube: Int = Cube().getRandomNumber
 
   override def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
-    undoManager.doStep(new SetPlayerCommand(playerNumber,playerFigure,cellNumber,this))
+    undoManager.doStep(new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this))
     publish(new GameBoardChanged)
   }
 
-  override def getFigurePosition(playerNumber: Int, figureNumber: Int) : Int = {
+  override def getFigurePosition(playerNumber: Int, figureNumber: Int): Int = {
     val position = gameBoard.getPlayerFigure(playerNumber, figureNumber)
     position
   }
 
-  override def calculatePath(startCell: Int, diceNumber: Int) : Unit = {
+  override def calculatePath(startCell: Int, diceNumber: Int): Unit = {
     gameBoard = gameBoard.getPossibleCells(startCell, diceNumber)
     publish(new GameBoardChanged)
   }
@@ -88,7 +87,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   }
 
   override def setFigure(figureNumber: Int, cellNumber: Int): Unit = {
-    gameBoard = gameBoard.setFigure(figureNumber,cellNumber)
+    gameBoard = gameBoard.setFigure(figureNumber, cellNumber)
     publish(new GameBoardChanged)
   }
 
@@ -97,10 +96,8 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-
-
   override def setWall(n: Int): Unit = {
-    undoManager.doStep(new SetWallCommand(n,this))
+    undoManager.doStep(new SetWallCommand(n, this))
     publish(new GameBoardChanged)
   }
 
@@ -128,13 +125,11 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def getDicedNumber: Int = gameBoard.getDicedNumber
 
-  override def setPossibleCells(pC: Set[Int]): GameBoardInterface = {
+  override def setPossibleCells(pC: Set[Int]): GameBoardInterface =
     gameBoard.setPossibleCell(pC)
-  }
 
-  override def weHaveAWinner() : Unit = {
+  override def weHaveAWinner(): Unit =
     publish(new Winner)
-  }
 
   override def getCellList: List[Cell] = gameBoard.getCellList
 
@@ -149,19 +144,31 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-  override def getSelectedFigure: (Int, Int) = this.selectedFigure
+  override def getSelectedFigure: Option[(Int, Int)] = gameBoard.getSelectedFigure
+
+  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
+    gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
+    publish(new GameBoardChanged)
+  }
+
+  override def getStateNumber: Option[Int] = gameBoard.getStateNumber
+
+  override def setStateNumber(stateNumber: Int): Unit = {
+    gameBoard = gameBoard.setStateNumber(stateNumber)
+    publish(new GameBoardChanged)
+  }
+
+  override def getStatementStatus: Option[Statements] = gameBoard.getStatementStatus
+
+  override def setStatementStatus(statement: Statements): Unit = {
+    gameBoard = gameBoard.setStatementStatus(statement)
+    publish(new GameBoardChanged)
+  }
 
   override def getGameState: GameState = this.state
 
-  override def getStatement: Statements = statementStatus
-
-  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = this.selectedFigure = (playerNumber, figureNumber)
-
-  override def setStatementStatus(statement: Statements): Unit = this.statementStatus = statement
-
-
-
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] = gameBoard.nextPlayer(playerList, playerNumber)
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
+    gameBoard.nextPlayer(playerList, playerNumber)
 
   override def save(): Unit = {
     fileIo.save(gameBoard, this)
@@ -170,24 +177,29 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def load(): Unit = {
     val newController = fileIo.loadController
-    val stateNr = newController.getStateNumber
+    val stateNr = newController.getStateNumber.get
 
     this.setGameBoard(newController.getGameBoard)
     this.setPossibleCells(newController.getPossibleCells)
     this.setPlayersTurn(newController.getPlayersTurn)
-    this.setSelectedFigure(newController.getSelectedFigure._1, newController.getSelectedFigure._2)
+    this.setSelectedFigure(newController.getSelectedFigure.get._1, newController.getSelectedFigure.get._2)
 
     stateNr match {
-      case 1 => this.state.nextState(Roll(this))
-        this.statementStatus = Statements.nextPlayer
-      case 2 => this.state.nextState(SelectFigure(this))
-        this.statementStatus = selectFigure
-      case 3 => this.state.nextState(SetFigure(this))
-        this.statementStatus = selectField
-      case 4 => this.state.nextState(Setup(this))
-        this.statementStatus = addPlayer
-      case 5 => this.state.nextState(SetWall(this))
-        this.statementStatus = wall
+      case 1 =>
+        this.state.nextState(Roll(this))
+        this.setStatementStatus(Statements.nextPlayer)
+      case 2 =>
+        this.state.nextState(SelectFigure(this))
+        this.setStatementStatus(Statements.selectFigure)
+      case 3 =>
+        this.state.nextState(SetFigure(this))
+        this.setStatementStatus(Statements.selectField)
+      case 4 =>
+        this.state.nextState(Setup(this))
+        this.setStatementStatus(Statements.addPlayer)
+      case 5 =>
+        this.state.nextState(SetWall(this))
+        this.setStatementStatus(Statements.wall)
     }
 
     publish(new GameBoardChanged)

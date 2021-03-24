@@ -108,7 +108,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         } else {
           controller.getCellList.map(cell =>
             if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
-              if(cell.playerNumber == controller.getSelectedFigure._1 && cell.figureNumber == controller.getSelectedFigure._2){
+              if(cell.playerNumber == controller.getSelectedFigure.get._1 && cell.figureNumber == controller.getSelectedFigure.get._2){
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
                 updateInformationArea()

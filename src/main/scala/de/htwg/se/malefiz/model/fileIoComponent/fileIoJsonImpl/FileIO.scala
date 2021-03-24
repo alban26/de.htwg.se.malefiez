@@ -32,7 +32,7 @@ class FileIO @Inject() extends FileIOInterface{
     val gameState: Int = (json \ "gameState").as[Int]
 
     newController.setDicedNumber(diceNumber)
-    newController.playersTurn = newController.getPlayer(playersTurn.playerNumber-1)
+    newController.setPlayersTurn(Option.apply(newController.getPlayer(playersTurn.playerNumber-1)))
     newController.setSelectedFigure(f1, f2)
     newController.setStateNumber(gameState)
 
@@ -129,8 +129,8 @@ class FileIO @Inject() extends FileIOInterface{
       ),
       "playersTurn" -> controller.getPlayersTurn,
       "diceNumber" -> controller.getDicedNumber,
-      "selectedFigure1" -> controller.getSelectedFigure._1,
-      "selectedFigure2" -> controller.getSelectedFigure._2,
+      "selectedFigure1" -> controller.getSelectedFigure.get._1,
+      "selectedFigure2" -> controller.getSelectedFigure.get._2,
       "gameState" -> controller.getGameState.state.toString.toInt,
       "possibleCells" -> gameB.getPossibleCells,
       "cells" -> Json.toJson(

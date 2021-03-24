@@ -17,7 +17,7 @@ trait ControllerInterface extends Publisher {
 
   def setStateNumber(n: Int): Unit
 
-  def getStateNumber: Int
+  def getStateNumber: Option[Int]
 
   def execute(string: String): Unit
 
@@ -57,7 +57,7 @@ trait ControllerInterface extends Publisher {
 
   def resetGameBoard(): Unit
 
-  def weHaveAWinner() : Unit
+  def weHaveAWinner(): Unit
 
   def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
 
@@ -67,13 +67,13 @@ trait ControllerInterface extends Publisher {
 
   def getPossibleCells: Set[Int]
 
-  def getSelectedFigure: (Int, Int)
+  def getSelectedFigure: Option[(Int, Int)]
+
+  def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
 
   def getGameState: GameState
 
-  def getStatement: Statements
-
-  def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
+  def getStatementStatus: Option[Statements]
 
   def setStatementStatus(statement: Statements): Unit
 
@@ -85,7 +85,7 @@ trait ControllerInterface extends Publisher {
 
   def getGameBoard: GameBoardInterface
 
-  def setPossibleCells(possibleCells: Set[Int]) : GameBoardInterface
+  def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
 
   def getPlayersTurn: Option[Player]
 
@@ -100,4 +100,3 @@ class GameBoardChanged extends Event
 case class ButtonClicked(source: Button) extends Event
 class ChangeWall extends Event
 class Winner extends Event
-

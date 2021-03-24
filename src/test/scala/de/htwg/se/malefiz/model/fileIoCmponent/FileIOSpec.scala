@@ -32,7 +32,7 @@ class FileIOSpec extends WordSpec with Matchers {
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
         fileIO.load.getPossibleCells.head should be (22)
-        controller.playersTurn.name should be ("A")
+        controller.getPlayersTurn.get.name should be ("A")
 
 
       }
@@ -59,7 +59,7 @@ class FileIOSpec extends WordSpec with Matchers {
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
         fileIO.load.getPossibleCells.head should be (22)
-        controller.playersTurn.name should be ("A")
+        controller.getPlayersTurn.get.name should be ("A")
         controller.getDicedNumber should be (1)
 
       }

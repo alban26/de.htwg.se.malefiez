@@ -34,7 +34,7 @@ class FileIO @Inject() extends FileIOInterface{
     controllerNeu.setSelectedFigure(selectedFigure_1, selectedFigure_2)
     controllerNeu.setStateNumber(stateNumber.toInt)
 
-    controllerNeu.playersTurn = controllerNeu.getPlayer(playerZahl-1)
+    controllerNeu.setPlayersTurn(Option.apply(controllerNeu.getPlayer(playerZahl-1)))
     controllerNeu
   }
 
@@ -130,7 +130,7 @@ class FileIO @Inject() extends FileIOInterface{
 
       <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
 
-      <selectedFigure sPlayer={controller.getSelectedFigure._1.toString} sFigure={controller.getSelectedFigure._2.toString} ></selectedFigure>
+      <selectedFigure sPlayer={controller.getSelectedFigure.get._1.toString} sFigure={controller.getSelectedFigure.get._2.toString} ></selectedFigure>
 
       <gameState state={controller.getGameState.state.toString}></gameState>
 

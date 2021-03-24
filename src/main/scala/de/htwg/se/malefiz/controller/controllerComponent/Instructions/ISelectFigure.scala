@@ -4,18 +4,23 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SetFigure
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
-object ISelectFigure extends InstructionTrait{
+object ISelectFigure extends InstructionTrait {
 
   val select1: Handler0 = {
-    case Request(inputList, gameState, controller) if inputList.head.toInt ==
-      controller.getPlayersTurn.get.playerNumber =>
-      controller.calculatePath(controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt), controller.getDicedNumber)
-      Request(inputList,gameState,controller)
+    case Request(inputList, gameState, controller)
+        if inputList.head.toInt ==
+          controller.getPlayersTurn.get.playerNumber =>
+      controller.calculatePath(
+        controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt),
+        controller.getDicedNumber
+      )
+      Request(inputList, gameState, controller)
   }
 
   // Man wählt seine Figur aus
   val select2: Handler0 = {
-    case Request(inputList, gameState, controller) => controller.setSelectedFigure(inputList.head.toInt, inputList(1).toInt)
+    case Request(inputList, gameState, controller) =>
+      controller.setSelectedFigure(inputList.head.toInt, inputList(1).toInt)
       Request(inputList, gameState, controller)
   }
 
@@ -28,14 +33,15 @@ object ISelectFigure extends InstructionTrait{
 
   val select4: Handler1 = {
     case Request(inputList, gameState, controller) =>
-      gameState nextState SetFigure(controller)
+      gameState.nextState(SetFigure(controller))
       controller.setStatementStatus(selectField)
       Statements.value(StatementRequest(controller))
   }
 
   /*wenn nicht eigener Spieler ausgewählt wird*/
   val select5: Handler0 = {
-    case Request(inputList, gameState, controller) if inputList.head.toInt != controller.getPlayersTurn.get.playerNumber =>
+    case Request(inputList, gameState, controller)
+        if inputList.head.toInt != controller.getPlayersTurn.get.playerNumber =>
       Request(inputList, gameState, controller)
   }
 
@@ -45,6 +51,11 @@ object ISelectFigure extends InstructionTrait{
       Statements.value(StatementRequest(controller))
   }
 
-  val select: PartialFunction[Request, String] = (select1 andThen select2 andThen select3 andThen select4 andThen log) orElse (select5 andThen select6 andThen log)
+  val select: PartialFunction[Request, String] = (select1
+    .andThen(select2)
+    .andThen(select3)
+    .andThen(select4)
+    .andThen(log))
+    .orElse(select5.andThen(select6).andThen(log))
 
 }
