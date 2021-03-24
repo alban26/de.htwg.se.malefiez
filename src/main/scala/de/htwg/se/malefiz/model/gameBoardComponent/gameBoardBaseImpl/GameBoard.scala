@@ -8,9 +8,10 @@ import de.htwg.se.malefiz.Malefiz._
 case class GameBoard (cellList: List[Cell],
                       players: List[Player],
                       gameBoardGraph: Map[Int, Set[Int]],
-                      possibleCells: Set[Int] = Set.empty) extends GameBoardInterface {
+                      possibleCells: Set[Int] = Set.empty,
+                      dicedNumber: Int) extends GameBoardInterface {
 
-  def this() = this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty)
+  def this() = this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty, 1)
 
   override def s(n: Int): Int = n * 4 + 1
 
@@ -211,7 +212,6 @@ case class GameBoard (cellList: List[Cell],
 
   override def setPossibleCellTrue(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleCells = true)
 
-
   override def setPosiesCellFalse(n: List[Int]): GameBoard = copy(setPossibleCell1False(cellList.length-1, n, cellList))
 
   override def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell] = {
@@ -288,4 +288,9 @@ case class GameBoard (cellList: List[Cell],
   override def setPossibleCell(possibleCells: Set[Int]) : GameBoard = copy(possibleCells = possibleCells)
 
   override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
+
+  override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = dicedNumber)
+
+  override def getDicedNumber: Int = this.dicedNumber
+
 }

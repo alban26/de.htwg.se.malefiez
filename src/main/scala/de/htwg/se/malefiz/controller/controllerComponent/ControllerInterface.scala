@@ -9,6 +9,10 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def getDicedNumber: Int
+
+  def setDicedNumber(dicedNumber: Int): Unit
+
   def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
@@ -63,8 +67,6 @@ trait ControllerInterface extends Publisher {
 
   def getPossibleCells: Set[Int]
 
-  def getDicedNumber: Int
-
   def getPlayersTurn: Player
 
   def getSelectedFigure: (Int, Int)
@@ -78,8 +80,6 @@ trait ControllerInterface extends Publisher {
   def setStatementStatus(statement: Statements): Unit
 
   def setPlayersTurn(player: Player): Unit
-
-  def setDicedNumber(number: Int): Unit
 
   def save(): Unit
 

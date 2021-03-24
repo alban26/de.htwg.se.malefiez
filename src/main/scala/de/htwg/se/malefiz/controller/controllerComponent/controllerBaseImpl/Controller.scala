@@ -20,7 +20,6 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   var stateNumber: Int = _
   var selectedFigure: (Int, Int) = _
   var playersTurn: Player = _
-  var dicedNumber: Int = _
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
@@ -99,6 +98,13 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
+  override def setDicedNumber(dicedNumber: Int): Unit = {
+    gameBoard = gameBoard.setDicedNumber(dicedNumber)
+    publish(new GameBoardChanged)
+  }
+
+  override def getDicedNumber: Int = gameBoard.getDicedNumber
+
   override def setWall(n: Int): Unit = {
     undoManager.doStep(new SetWallCommand(n,this))
     publish(new GameBoardChanged)
@@ -135,9 +141,9 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def getPossibleCells: Set[Int] = gameBoard.getPossibleCells
 
-  override def getDicedNumber: Int = this.dicedNumber
-
   override def getPlayersTurn: Player = this.playersTurn
+
+  override def setPlayersTurn(player: Player): Unit = this.playersTurn = player
 
   override def getSelectedFigure: (Int, Int) = this.selectedFigure
 
@@ -149,9 +155,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def setStatementStatus(statement: Statements): Unit = this.statementStatus = statement
 
-  override def setPlayersTurn(player: Player): Unit = this.playersTurn = player
 
-  override def setDicedNumber(number: Int): Unit = this.dicedNumber = number
 
   override def nextPlayer(playerList: List[Player], playerNumber: Int): Player = gameBoard.nextPlayer(playerList, playerNumber)
 
@@ -166,7 +170,6 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
     this.setGameBoard(cNeu.getGameBoard)
     this.setPossibleCells(cNeu.getPossibleCells)
-    this.setDicedNumber(cNeu.getDicedNumber)
     this.setPlayersTurn(cNeu.getPlayersTurn)
     this.setSelectedFigure(cNeu.getSelectedFigure._1, cNeu.getSelectedFigure._2)
 

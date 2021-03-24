@@ -19,7 +19,6 @@ object ISelectFigure extends InstructionTrait{
       Request(inputList, gameState, controller)
   }
 
-
   // Für die ausgewhäte werden die Cellen markiert auf die er springen kann
   val select3: Handler0 = {
     case Request(inputList, gameState, controller) =>

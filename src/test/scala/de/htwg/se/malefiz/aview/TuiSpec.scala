@@ -21,7 +21,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells)
+      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells, 1)
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
@@ -54,7 +54,7 @@ class TuiSpec extends WordSpec with Matchers {
       "So when Robert is pressing any key now, he's going to roll the dice" in {
         tui.processInput("k")
         controller.statementStatus should be(Statements.selectFigure)
-        controller.dicedNumber should (be >= 1 and be < 7)
+        controller.getDicedNumber should (be >= 1 and be < 7)
         controller.setDicedNumber(1)
       }
       "Now Robert needs to select his Figure. In this case he gets to the next State " +

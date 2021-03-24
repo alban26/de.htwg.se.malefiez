@@ -91,6 +91,10 @@ trait GameBoardInterface {
   def createGameBoard(): String
 
   def setPossibleCell(pC: Set[Int]) : GameBoard
+
+  def setDicedNumber(dicedNumber: Int): GameBoard
+
+  def getDicedNumber: Int
 }
 
 trait CubeInterface {

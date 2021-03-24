@@ -18,7 +18,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
-      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty))
+      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
 
       controller.playersTurn = Player(1,"Robert")
 
@@ -80,7 +80,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       "The Controller can save the Game" in {
         controller.save()
 
-        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty))
+        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
         controllerNew.load()
 
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)
