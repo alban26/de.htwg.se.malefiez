@@ -6,7 +6,11 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Crea
 import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+
 import scala.collection.mutable.Map
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
+
+import java.lang.StackWalker
 
 class ControllerSpec extends WordSpec with Matchers {
   "A Controller" when {
@@ -18,7 +22,8 @@ class ControllerSpec extends WordSpec with Matchers {
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
-      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None, None, None, None))
+      val controller =
+        new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None, None, None, Option(addPlayer)))
 
       controller.setPlayersTurn(Option.apply(Player(1, "Robert")))
 
@@ -48,7 +53,7 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "The Controller has the ability to save the current selected figure of a player" in {
         controller.setSelectedFigure(1, 5)
-        controller.getSelectedFigure should be((1, 5))
+        controller.getSelectedFigure.get should be((1, 5))
       }
       "The Controller has the ability to save a gamestate" in {
         controller.state.nextState(Roll(controller))
@@ -81,7 +86,19 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.save()
 
         val controllerNew =
-          new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None, None, None, None))
+          new Controller(
+            GameBoard(
+              cellList,
+              players,
+              cellGraph,
+              Set().empty,
+              1,
+              None,
+              Option((2, 1)),
+              Option(4),
+              Option(addPlayer)
+            )
+          )
         controllerNew.load()
 
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)

@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
@@ -16,13 +17,24 @@ class GameBoardSpec extends WordSpec with Matchers {
       val mainSourceConfig = "project/mainCellConfiguration"
       val mainSourceLinks = "project/mainCellLinks"
       val testPlayerList = List()
-      val testGameBoard = GameBoard(testCellList, testPlayerList, testGraph, Set().empty, 1, None, None, None, None)
+      val testGameBoard =
+        GameBoard(testCellList, testPlayerList, testGraph, Set().empty, 1, None, None, None, Option(addPlayer))
 
       val mainCellList = Creator().getCellList(mainSourceConfig)
       val mainCellGraph = Creator().getCellGraph(mainSourceLinks)
 
       val main =
-        gameBoardBaseImpl.GameBoard(mainCellList, testPlayerList, mainCellGraph, Set().empty, 1, None, None, None, None)
+        gameBoardBaseImpl.GameBoard(
+          mainCellList,
+          testPlayerList,
+          mainCellGraph,
+          Set().empty,
+          1,
+          None,
+          None,
+          None,
+          Option(addPlayer)
+        )
 
       "Length of the testList" in {
         testGameBoard.cellList.length should be(10)
@@ -80,7 +92,17 @@ class GameBoardSpec extends WordSpec with Matchers {
 
         val testCellList = Creator().getCellList(mainSourceConfig)
         val testGameBoard =
-          gameBoardBaseImpl.GameBoard(testCellList, testPlayerList, testGraph, Set().empty, 1, None, None, None, None)
+          gameBoardBaseImpl.GameBoard(
+            testCellList,
+            testPlayerList,
+            testGraph,
+            Set().empty,
+            1,
+            None,
+            None,
+            None,
+            Option(addPlayer)
+          )
 
         val gameBoardString =
           """|                                [ ]

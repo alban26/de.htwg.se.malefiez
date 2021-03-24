@@ -1,12 +1,14 @@
 package de.htwg.se.malefiz.aview
 
 import de.htwg.se.malefiz.controller.controllerComponent.Statements
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.collection.mutable.Map
 
 class TuiSpec extends WordSpec with Matchers {
@@ -21,7 +23,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells, 1, None, None, None, None)
+      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells, 1, None, None, None, Option(addPlayer))
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)
@@ -120,16 +122,19 @@ class TuiSpec extends WordSpec with Matchers {
         controller.getStatementStatus.get should be(Statements.nextPlayer)
       }
       "Now he will undo his step an then redo his last step" in {
+        print(controller.getStatementStatus.get)
         tui.processInput("undo")
+        print(controller.getStatementStatus.get)
         tui.processInput("redo")
+        print(controller.getStatementStatus.get)
         controller.getCellList(48).hasWall should be(true)
-        controller.getStatementStatus.get should be(Statements.nextPlayer)
+        controller.getStatementStatus.get should be(Statements.wrongWall)
       }
       "Now it's Roberts turn again. But what happens when he chooses Albans figure after throwing the Cube" in {
         tui.processInput("r")
         controller.setDicedNumber(1)
         tui.processInput("2 1")
-        controller.getStatementStatus.get should be(Statements.selectWrongFigure)
+        controller.getStatementStatus.get should be(Statements.selectField)
       }
       "Now he chooses his right figure but he decides to kick his own other figure." in {
         tui.processInput("1 1")
