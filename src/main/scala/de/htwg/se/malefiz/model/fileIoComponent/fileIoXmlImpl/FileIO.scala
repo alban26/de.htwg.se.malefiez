@@ -126,7 +126,7 @@ class FileIO @Inject() extends FileIOInterface{
         } yield possibleCellsToXml(l1)
         }
       </possibleCells>
-      <playersTurn turnZ={controller.getPlayersTurn.playerNumber.toString} turnN ={controller.getPlayersTurn.name}></playersTurn>
+      <playersTurn turnZ={controller.getPlayersTurn.get.playerNumber.toString} turnN ={controller.getPlayersTurn.get.name}></playersTurn>
 
       <dicedNumber number={controller.getDicedNumber.toString}></dicedNumber>
 

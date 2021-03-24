@@ -21,7 +21,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
 
-      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells, 1)
+      val gameBoard = GameBoard(cellList, players, cellGraph, possibleCells, 1, None)
 
       val controller = new Controller(gameBoard)
       val tui = new Tui(controller)

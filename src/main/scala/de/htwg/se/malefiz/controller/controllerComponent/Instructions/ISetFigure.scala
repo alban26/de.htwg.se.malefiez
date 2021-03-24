@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.{InstructionTrait, Requ
 object ISetFigure extends InstructionTrait{
 
   val set1: Handler0 = {
-    case Request(inputList, gameState, controller) if !controller.getCellList(inputList.head.toInt).hasWall && (inputList.head.toInt != 131) && controller.getPossibleCells.contains(inputList.head.toInt) && controller.getCellList(inputList.head.toInt).playerNumber != controller.getPlayersTurn.playerNumber =>
+    case Request(inputList, gameState, controller) if !controller.getCellList(inputList.head.toInt).hasWall && (inputList.head.toInt != 131) && controller.getPossibleCells.contains(inputList.head.toInt) && controller.getCellList(inputList.head.toInt).playerNumber != controller.getPlayersTurn.get.playerNumber =>
       controller.setPlayerFigure(controller.getSelectedFigure._1,controller.getSelectedFigure._2,inputList.head.toInt)
       Request(inputList,gameState,controller)
   }
@@ -32,10 +32,10 @@ object ISetFigure extends InstructionTrait{
   val set3: Handler1 = {
     case Request(inputList, gameState, controller) =>
       controller.setDicedNumber(0)
-      controller.setPossibleFiguresFalse(controller.getPlayersTurn.playerNumber)
+      controller.setPossibleFiguresFalse(controller.getPlayersTurn.get.playerNumber)
       controller.setPossibleCellsFalse(controller.getPossibleCells.toList)
       controller.resetPossibleCells()
-      controller.setPlayersTurn(controller.nextPlayer(controller.getPlayer,controller.getPlayersTurn.playerNumber-1))
+      controller.setPlayersTurn(controller.nextPlayer(controller.getPlayer,controller.getPlayersTurn.get.playerNumber-1))
       gameState.nextState(Roll(controller))
       controller.setStatementStatus(nextPlayer)
       Statements.value(StatementRequest(controller))
@@ -45,7 +45,7 @@ object ISetFigure extends InstructionTrait{
     case Request(inputList, gameState, controller) =>
       gameState.nextState(SetWall(controller))
       controller.setStatementStatus(wall)
-      controller.setPossibleFiguresFalse(controller.getPlayersTurn.playerNumber)
+      controller.setPossibleFiguresFalse(controller.getPlayersTurn.get.playerNumber)
       controller.setPossibleCellsFalse(controller.getPossibleCells.toList)
       controller.resetPossibleCells()
       Statements.value(StatementRequest(controller))
@@ -64,7 +64,7 @@ object ISetFigure extends InstructionTrait{
   }
 
   val set7: Handler0 = {
-    case Request(inputList, gameState, controller) if !controller.getPossibleCells.contains(inputList.head.toInt) || controller.getCellList(inputList.head.toInt).playerNumber == controller.getPlayersTurn.playerNumber =>
+    case Request(inputList, gameState, controller) if !controller.getPossibleCells.contains(inputList.head.toInt) || controller.getCellList(inputList.head.toInt).playerNumber == controller.getPlayersTurn.get.playerNumber =>
       Request(inputList, gameState, controller)
   }
 

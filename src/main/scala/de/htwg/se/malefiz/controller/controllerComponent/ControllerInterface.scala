@@ -59,15 +59,13 @@ trait ControllerInterface extends Publisher {
 
   def weHaveAWinner() : Unit
 
-  def nextPlayer(playerList: List[Player], playerNumber: Int): Player
+  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
 
   def getCellList: List[Cell]
 
   def getPlayer: List[Player]
 
   def getPossibleCells: Set[Int]
-
-  def getPlayersTurn: Player
 
   def getSelectedFigure: (Int, Int)
 
@@ -79,8 +77,6 @@ trait ControllerInterface extends Publisher {
 
   def setStatementStatus(statement: Statements): Unit
 
-  def setPlayersTurn(player: Player): Unit
-
   def save(): Unit
 
   def load(): Unit
@@ -90,6 +86,10 @@ trait ControllerInterface extends Publisher {
   def getGameBoard: GameBoardInterface
 
   def setPossibleCells(possibleCells: Set[Int]) : GameBoardInterface
+
+  def getPlayersTurn: Option[Player]
+
+  def setPlayersTurn(player: Option[Player]): Unit
 
 }
 

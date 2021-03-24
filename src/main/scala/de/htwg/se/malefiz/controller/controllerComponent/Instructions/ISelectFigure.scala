@@ -8,7 +8,7 @@ object ISelectFigure extends InstructionTrait{
 
   val select1: Handler0 = {
     case Request(inputList, gameState, controller) if inputList.head.toInt ==
-      controller.getPlayersTurn.playerNumber =>
+      controller.getPlayersTurn.get.playerNumber =>
       controller.calculatePath(controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt), controller.getDicedNumber)
       Request(inputList,gameState,controller)
   }
@@ -35,7 +35,7 @@ object ISelectFigure extends InstructionTrait{
 
   /*wenn nicht eigener Spieler ausgewählt wird*/
   val select5: Handler0 = {
-    case Request(inputList, gameState, controller) if inputList.head.toInt != controller.getPlayersTurn.playerNumber =>
+    case Request(inputList, gameState, controller) if inputList.head.toInt != controller.getPlayersTurn.get.playerNumber =>
       Request(inputList, gameState, controller)
   }
 

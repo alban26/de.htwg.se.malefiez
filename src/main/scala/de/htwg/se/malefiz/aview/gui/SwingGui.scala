@@ -172,7 +172,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Boolean = {
-    playerTurnArea.text = controller.getPlayersTurn.name
+    playerTurnArea.text = controller.getPlayersTurn.get.name
     true
   }
 
@@ -204,7 +204,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     )
 
     controller.getCellList.map(cell =>
-        if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.playerNumber) {
+        if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.get.playerNumber) {
           this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
         }
     )

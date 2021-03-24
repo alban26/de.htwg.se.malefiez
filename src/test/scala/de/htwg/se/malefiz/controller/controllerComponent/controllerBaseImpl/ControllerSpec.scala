@@ -18,9 +18,9 @@ class ControllerSpec  extends WordSpec with Matchers {
       val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
-      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
+      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None))
 
-      controller.playersTurn = Player(1,"Robert")
+      controller.setPlayersTurn(Option.apply(Player(1,"Robert")))
 
       "Test undo -> Nil case" in {
         controller.undo() should be (())
@@ -80,7 +80,7 @@ class ControllerSpec  extends WordSpec with Matchers {
       "The Controller can save the Game" in {
         controller.save()
 
-        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
+        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None))
         controllerNew.load()
 
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)

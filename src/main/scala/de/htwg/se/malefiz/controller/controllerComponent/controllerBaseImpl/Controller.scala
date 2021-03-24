@@ -19,7 +19,6 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   var statementStatus: Statements = addPlayer
   var stateNumber: Int = _
   var selectedFigure: (Int, Int) = _
-  var playersTurn: Player = _
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
@@ -98,12 +97,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
-  override def setDicedNumber(dicedNumber: Int): Unit = {
-    gameBoard = gameBoard.setDicedNumber(dicedNumber)
-    publish(new GameBoardChanged)
-  }
 
-  override def getDicedNumber: Int = gameBoard.getDicedNumber
 
   override def setWall(n: Int): Unit = {
     undoManager.doStep(new SetWallCommand(n,this))
@@ -127,6 +121,13 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
     publish(new GameBoardChanged)
   }
 
+  override def setDicedNumber(dicedNumber: Int): Unit = {
+    gameBoard = gameBoard.setDicedNumber(dicedNumber)
+    publish(new GameBoardChanged)
+  }
+
+  override def getDicedNumber: Int = gameBoard.getDicedNumber
+
   override def setPossibleCells(pC: Set[Int]): GameBoardInterface = {
     gameBoard.setPossibleCell(pC)
   }
@@ -141,9 +142,12 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
   override def getPossibleCells: Set[Int] = gameBoard.getPossibleCells
 
-  override def getPlayersTurn: Player = this.playersTurn
+  override def getPlayersTurn: Option[Player] = gameBoard.getPlayersTurn
 
-  override def setPlayersTurn(player: Player): Unit = this.playersTurn = player
+  override def setPlayersTurn(player: Option[Player]): Unit = {
+    gameBoard = gameBoard.setPlayersTurn(player)
+    publish(new GameBoardChanged)
+  }
 
   override def getSelectedFigure: (Int, Int) = this.selectedFigure
 
@@ -157,7 +161,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
 
 
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Player = gameBoard.nextPlayer(playerList, playerNumber)
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] = gameBoard.nextPlayer(playerList, playerNumber)
 
   override def save(): Unit = {
     fileIo.save(gameBoard, this)
@@ -165,13 +169,13 @@ class Controller @Inject() (var gameBoard: GameBoardInterface) extends Controlle
   }
 
   override def load(): Unit = {
-    val cNeu = fileIo.loadController
-    val stateNr = cNeu.getStateNumber
+    val newController = fileIo.loadController
+    val stateNr = newController.getStateNumber
 
-    this.setGameBoard(cNeu.getGameBoard)
-    this.setPossibleCells(cNeu.getPossibleCells)
-    this.setPlayersTurn(cNeu.getPlayersTurn)
-    this.setSelectedFigure(cNeu.getSelectedFigure._1, cNeu.getSelectedFigure._2)
+    this.setGameBoard(newController.getGameBoard)
+    this.setPossibleCells(newController.getPossibleCells)
+    this.setPlayersTurn(newController.getPlayersTurn)
+    this.setSelectedFigure(newController.getSelectedFigure._1, newController.getSelectedFigure._2)
 
     stateNr match {
       case 1 => this.state.nextState(Roll(this))

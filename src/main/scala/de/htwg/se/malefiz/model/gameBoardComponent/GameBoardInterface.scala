@@ -84,7 +84,7 @@ trait GameBoardInterface {
 
   def execute(callback: Int => GameBoard, y:Int): GameBoard
 
-  def nextPlayer(list: List[Player], n: Int): Player
+  def nextPlayer(list: List[Player], n: Int): Option[Player]
 
   def createPlayer(text: String): GameBoard
 
@@ -95,6 +95,10 @@ trait GameBoardInterface {
   def setDicedNumber(dicedNumber: Int): GameBoard
 
   def getDicedNumber: Int
+
+  def getPlayersTurn: Option[Player]
+
+  def setPlayersTurn(player: Option[Player]): GameBoard
 }
 
 trait CubeInterface {

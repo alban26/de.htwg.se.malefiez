@@ -9,9 +9,10 @@ case class GameBoard (cellList: List[Cell],
                       players: List[Player],
                       gameBoardGraph: Map[Int, Set[Int]],
                       possibleCells: Set[Int] = Set.empty,
-                      dicedNumber: Int) extends GameBoardInterface {
+                      dicedNumber: Int,
+                      playersTurn: Option[Player]) extends GameBoardInterface {
 
-  def this() = this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty, 1)
+  def this() = this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty, 1, None)
 
   override def s(n: Int): Int = n * 4 + 1
 
@@ -267,11 +268,11 @@ case class GameBoard (cellList: List[Cell],
 
   override def execute(callback: Int => GameBoard, y: Int): GameBoard = callback(y)
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Player = {
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] = {
     if(playerNumber == playerList.length-1) {
-      playerList.head
+      Option.apply(playerList.head)
     } else {
-      playerList(playerNumber+1)
+      Option.apply(playerList(playerNumber+1))
     }
   }
 
@@ -292,5 +293,11 @@ case class GameBoard (cellList: List[Cell],
   override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = dicedNumber)
 
   override def getDicedNumber: Int = this.dicedNumber
+
+  override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
+
+  override def getPlayersTurn: Option[Player] = this.playersTurn
+
+
 
 }
