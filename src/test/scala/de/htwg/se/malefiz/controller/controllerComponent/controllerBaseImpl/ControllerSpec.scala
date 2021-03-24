@@ -6,37 +6,42 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Crea
 import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-import scala.collection.mutable.Map
 
-class ControllerSpec  extends WordSpec with Matchers {
+import scala.collection.mutable.Map
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
+
+import java.lang.StackWalker
+
+class ControllerSpec extends WordSpec with Matchers {
   "A Controller" when {
 
     "observed by an Observer" should {
       val cellConfigFile = "project/mainCellConfiguration"
       val cellLinksFile = "project/mainCellLinks"
-      val players : List[Player] = List().empty
-      val cellList : List[Cell] = Creator().getCellList(cellConfigFile)
-      val cellGraph : Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
+      val players: List[Player] = List().empty
+      val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
+      val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
 
-      val controller = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
+      val controller =
+        new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1, None, None, None, Option(addPlayer)))
 
-      controller.playersTurn = Player(1,"Robert")
+      controller.setPlayersTurn(Option.apply(Player(1, "Robert")))
 
       "Test undo -> Nil case" in {
-        controller.undo() should be (())
+        controller.undo() should be(())
       }
       "Set Players" in {
         controller.createPlayer("Robert")
         controller.createPlayer("Alban")
 
-        controller.getPlayer.head.name should be ("Robert")
-        controller.getPlayer(1).name should be ("Alban")
+        controller.getPlayer.head.name should be("Robert")
+        controller.getPlayer(1).name should be("Alban")
       }
       "notify its Observer after a players figure is set on cell" in {
-        controller.setPlayerFigure(1,1, 10)
-        controller.getFigurePosition(1, 1) should be (10)
-        controller.removeActualPlayerAndFigureFromCell(1,1)
-        controller.getGameBoard.getCellList(10).playerNumber should be (0)
+        controller.setPlayerFigure(1, 1, 10)
+        controller.getFigurePosition(1, 1) should be(10)
+        controller.removeActualPlayerAndFigureFromCell(1, 1)
+        controller.getGameBoard.getCellList(10).playerNumber should be(0)
       }
       "notify its Observer after setting a Wall on a Cell" in {
         controller.setWall(50)
@@ -48,39 +53,52 @@ class ControllerSpec  extends WordSpec with Matchers {
       }
       "The Controller has the ability to save the current selected figure of a player" in {
         controller.setSelectedFigure(1, 5)
-        controller.getSelectedFigure should be ((1,5))
+        controller.getSelectedFigure.get should be((1, 5))
       }
       "The Controller has the ability to save a gamestate" in {
         controller.state.nextState(Roll(controller))
-        controller.getGameState should be (GameState(controller.getGameState.controller))
+        controller.getGameState should be(GameState(controller.getGameState.controller))
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
         controller.calculatePath(20, 5)
 
       }
       "The Controller can set a players figure and con remove it " in {
-        controller.setPlayer(1,22)
-        controller.setFigure(1,22)
+        controller.setPlayer(1, 22)
+        controller.setFigure(1, 22)
         controller.gameBoard.getCellList(22).playerNumber should be(1)
         controller.gameBoard.getCellList(22).figureNumber should be(1)
       }
       "The controller can undo the last command" in {
-        val a = new SetPlayerCommand(2,2,30, controller)
-        a.undoStep() should be (())
-        a.redoStep() should be (())
+        val a = new SetPlayerCommand(2, 2, 30, controller)
+        a.undoStep() should be(())
+        a.redoStep() should be(())
         controller.undo()
         controller.gameBoard.getCellList(22).playerNumber should be(0)
         controller.gameBoard.getCellList(22).figureNumber should be(0)
-        controller.statementStatus should be
+        controller.getStatementStatus should be
       }
       "The Controller can reset the the possible Cells of the actual turn" in {
         controller.resetPossibleCells()
-        controller.gameBoard.getPossibleCells should be (Set().empty)
+        controller.gameBoard.getPossibleCells should be(Set().empty)
       }
       "The Controller can save the Game" in {
         controller.save()
 
-        val controllerNew = new Controller(GameBoard(cellList, players, cellGraph, Set().empty, 1))
+        val controllerNew =
+          new Controller(
+            GameBoard(
+              cellList,
+              players,
+              cellGraph,
+              Set().empty,
+              1,
+              None,
+              Option((2, 1)),
+              Option(4),
+              Option(addPlayer)
+            )
+          )
         controllerNew.load()
 
         controllerNew.gameBoard.getCellList(22).playerNumber should be(0)
@@ -102,9 +120,8 @@ class ControllerSpec  extends WordSpec with Matchers {
       }
       "Reset the GameBoard" in {
         val newGameBoard: Unit = controller.resetGameBoard()
-        newGameBoard shouldNot be (controller.getGameBoard)
+        newGameBoard shouldNot be(controller.getGameBoard)
       }
     }
   }
 }
-

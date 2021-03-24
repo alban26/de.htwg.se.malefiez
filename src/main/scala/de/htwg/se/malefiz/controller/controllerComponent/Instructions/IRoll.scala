@@ -12,7 +12,7 @@ object IRoll extends InstructionTrait{
   }
 
   val roll2: Handler0 = {
-    case Request(inputList, gameState, controller) => controller.setPossibleFiguresTrue(controller.getPlayersTurn.playerNumber)
+    case Request(inputList, gameState, controller) => controller.setPossibleFiguresTrue(controller.getPlayersTurn.get.playerNumber)
       Request(inputList, gameState, controller)
   }
 

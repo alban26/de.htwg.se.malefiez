@@ -2,19 +2,35 @@ package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.collection.mutable.Map
 import de.htwg.se.malefiz.Malefiz._
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
 
 case class GameBoard(
     cellList: List[Cell],
     players: List[Player],
     gameBoardGraph: Map[Int, Set[Int]],
     possibleCells: Set[Int] = Set.empty,
-    dicedNumber: Int
+    dicedNumber: Int,
+    playersTurn: Option[Player],
+    selectedFigure: Option[(Int, Int)],
+    stateNumber: Option[Int],
+    statementStatus: Option[Statements]
 ) extends GameBoardInterface {
 
   def this() =
-    this(Creator().getCellList(cellConfigFile), List.empty, Creator().getCellGraph(cellLinksFile), Set.empty, 1)
+    this(
+      Creator().getCellList(cellConfigFile),
+      List.empty,
+      Creator().getCellGraph(cellLinksFile),
+      Set.empty,
+      1,
+      None,
+      None,
+      None,
+      Option(addPlayer)
+    )
 
   override def s(n: Int): Int = n * 4 + 1
 
@@ -125,9 +141,10 @@ case class GameBoard(
       s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
           |${gapLeftU}${ul1.mkString("-")}
           |""".stripMargin
-    else createStringValues(list, n, sliceEndO, z, i + 1, l) + s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
-                                                             |${gapLeftU}${ul1.mkString("-")}
-                                                             |""".stripMargin
+    else
+      createStringValues(list, n, sliceEndO, z, i + 1, l) + s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
+                                                        |${gapLeftU}${ul1.mkString("-")}
+                                                        |""".stripMargin
 
   }
 
@@ -256,21 +273,15 @@ case class GameBoard(
 
   override def execute(callback: Int => GameBoard, y: Int): GameBoard = callback(y)
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Player =
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
     if (playerNumber == playerList.length - 1)
-      playerList.head
+      Option.apply(playerList.head)
     else
-      playerList(playerNumber + 1)
+      Option.apply(playerList(playerNumber + 1))
 
   override def createPlayer(text: String): GameBoard = copy(players = players :+ Player(players.length + 1, text))
 
   override def createGameBoard(): String = buildString(cellList)
-
-  override def getCellList: List[Cell] = this.cellList
-
-  override def getPlayer: List[Player] = this.players
-
-  override def getPossibleCells: Set[Int] = this.possibleCells
 
   override def setPossibleCell(possibleCells: Set[Int]): GameBoard = copy(possibleCells = possibleCells)
 
@@ -278,6 +289,12 @@ case class GameBoard(
 
   override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = dicedNumber)
 
-  override def getDicedNumber: Int = this.dicedNumber
+  override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
+
+  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard =
+    copy(selectedFigure = Option.apply((playerNumber, figureNumber)))
+
+  override def setStateNumber(stateNumber: Int): GameBoard = copy(stateNumber = Option.apply(stateNumber))
+  override def setStatementStatus(statement: Statements): GameBoard = copy(statementStatus = Option.apply(statement))
 
 }

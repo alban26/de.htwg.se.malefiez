@@ -9,7 +9,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def getDicedNumber: Int
+  def gameBoard: GameBoardInterface
 
   def setDicedNumber(dicedNumber: Int): Unit
 
@@ -17,7 +17,7 @@ trait ControllerInterface extends Publisher {
 
   def setStateNumber(n: Int): Unit
 
-  def getStateNumber: Int
+  def getStateNumber: Option[Int]
 
   def execute(string: String): Unit
 
@@ -57,9 +57,9 @@ trait ControllerInterface extends Publisher {
 
   def resetGameBoard(): Unit
 
-  def weHaveAWinner() : Unit
+  def weHaveAWinner(): Unit
 
-  def nextPlayer(playerList: List[Player], playerNumber: Int): Player
+  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
 
   def getCellList: List[Cell]
 
@@ -67,19 +67,15 @@ trait ControllerInterface extends Publisher {
 
   def getPossibleCells: Set[Int]
 
-  def getPlayersTurn: Player
-
-  def getSelectedFigure: (Int, Int)
-
-  def getGameState: GameState
-
-  def getStatement: Statements
+  def getSelectedFigure: Option[(Int, Int)]
 
   def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
 
-  def setStatementStatus(statement: Statements): Unit
+  def getGameState: GameState
 
-  def setPlayersTurn(player: Player): Unit
+  def getStatementStatus: Option[Statements]
+
+  def setStatementStatus(statement: Statements): Unit
 
   def save(): Unit
 
@@ -89,7 +85,11 @@ trait ControllerInterface extends Publisher {
 
   def getGameBoard: GameBoardInterface
 
-  def setPossibleCells(possibleCells: Set[Int]) : GameBoardInterface
+  def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
+
+  def getPlayersTurn: Option[Player]
+
+  def setPlayersTurn(player: Option[Player]): Unit
 
 }
 
@@ -100,4 +100,3 @@ class GameBoardChanged extends Event
 case class ButtonClicked(source: Button) extends Event
 class ChangeWall extends Event
 class Winner extends Event
-

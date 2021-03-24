@@ -27,13 +27,12 @@ class FileIOSpec extends WordSpec with Matchers {
         controller.execute("r")
         controller.setDicedNumber(1)
         controller.execute("1 1")
-    
+
         val fileIO = new FileIO()
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
-        fileIO.load.getPossibleCells.head should be (22)
-        controller.playersTurn.name should be ("A")
-
+        fileIO.load.getPossibleCells.head should be(22)
+        controller.getPlayersTurn.get.name should be("A")
 
       }
       "save and load with Json" +
@@ -58,9 +57,9 @@ class FileIOSpec extends WordSpec with Matchers {
         val fileIO = new FileIO()
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.getPlayer.head.name should be("A")
-        fileIO.load.getPossibleCells.head should be (22)
-        controller.playersTurn.name should be ("A")
-        controller.getDicedNumber should be (1)
+        fileIO.load.getPossibleCells.head should be(22)
+        controller.getPlayersTurn.get.name should be("A")
+        controller.gameBoard.dicedNumber should be(1)
 
       }
     }

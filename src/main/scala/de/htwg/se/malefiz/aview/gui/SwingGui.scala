@@ -114,7 +114,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           controller.getCellList.map(cell =>
             if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
               if (
-                cell.playerNumber == controller.getSelectedFigure._1 && cell.figureNumber == controller.getSelectedFigure._2
+                cell.playerNumber == controller.getSelectedFigure.get._1 && cell.figureNumber == controller.getSelectedFigure.get._2
               ) {
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
@@ -177,12 +177,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Boolean = {
-    playerTurnArea.text = controller.getPlayersTurn.name
+    playerTurnArea.text = controller.getPlayersTurn.get.name
     true
   }
 
   def updateRandomNumberArea(): Boolean = {
-    randomNumberArea.text = controller.getDicedNumber.toString
+    randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
     true
   }
 
@@ -208,7 +208,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     )
 
     controller.getCellList.map(cell =>
-      if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.playerNumber)
+      if (cell.possibleCells && cell.playerNumber != controller.getPlayersTurn.get.playerNumber)
         this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
     )
   }
@@ -295,7 +295,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = controller.getDicedNumber.toString
+      randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()

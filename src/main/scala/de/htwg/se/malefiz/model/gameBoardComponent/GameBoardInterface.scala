@@ -3,17 +3,24 @@ package de.htwg.se.malefiz.model.gameBoardComponent
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable.Map
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import scala.util.Try
 
 trait GameBoardInterface {
 
+  def cellList: List[Cell]
+  def players: List[Player]
+  def gameBoardGraph: Map[Int, Set[Int]]
+  def possibleCells: Set[Int]
+  def dicedNumber: Int
+  def playersTurn: Option[Player]
+  def selectedFigure: Option[(Int, Int)]
+  def stateNumber: Option[Int]
+  def statementStatus: Option[Statements]
+
+  //++++++++++++++++++++++++++++++++
+
   def clearPossibleCells: GameBoard
-
-  def getCellList: List[Cell]
-
-  def getPlayer: List[Player]
-
-  def getPossibleCells: Set[Int]
 
   def s(n: Int): Int
 
@@ -21,18 +28,30 @@ trait GameBoardInterface {
 
   def buildString(list: List[Cell]): String
 
-  def createStringValues(list: List[Cell],n: Int,O: Int,z: Int,i: Int,l: Int): String
+  def createStringValues(list: List[Cell], n: Int, O: Int, z: Int, i: Int, l: Int): String
 
-  def createString(list: List[Cell],n: Int,sliceBeginU: Int, sliceEndU: Int,sliceBeginO: Int,
-                   sliceEndO: Int,gapLeftO: String,gapLeftU: String, gapBetween: String, z: Int,i: Int,l: Int): String
+  def createString(
+      list: List[Cell],
+      n: Int,
+      sliceBeginU: Int,
+      sliceEndU: Int,
+      sliceBeginO: Int,
+      sliceEndO: Int,
+      gapLeftO: String,
+      gapLeftU: String,
+      gapBetween: String,
+      z: Int,
+      i: Int,
+      l: Int
+  ): String
 
-  def removePlayerFigureOnCell(cellNumber: Int) :Cell
+  def removePlayerFigureOnCell(cellNumber: Int): Cell
 
-  def removePlayerOnCell(cellNumber: Int) : Cell
+  def removePlayerOnCell(cellNumber: Int): Cell
 
-  def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int) : Cell
+  def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int): Cell
 
-  def setPlayerOnCell(playerNumber: Int, cellNumber : Int) : Cell
+  def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
 
   def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard
 
@@ -42,7 +61,7 @@ trait GameBoardInterface {
 
   def getHomeNr(playerNumber: Int, figureNumber: Int): Int
 
-  def getPlayerFigure(playerNumber: Int, figureNumber: Int) : Int
+  def getPlayerFigure(playerNumber: Int, figureNumber: Int): Int
 
   def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
 
@@ -82,24 +101,31 @@ trait GameBoardInterface {
 
   def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell]
 
-  def execute(callback: Int => GameBoard, y:Int): GameBoard
+  def execute(callback: Int => GameBoard, y: Int): GameBoard
 
-  def nextPlayer(list: List[Player], n: Int): Player
+  def nextPlayer(list: List[Player], n: Int): Option[Player]
 
   def createPlayer(text: String): GameBoard
 
   def createGameBoard(): String
 
-  def setPossibleCell(pC: Set[Int]) : GameBoard
+  def setPossibleCell(pC: Set[Int]): GameBoard
 
   def setDicedNumber(dicedNumber: Int): GameBoard
 
-  def getDicedNumber: Int
+  def setPlayersTurn(player: Option[Player]): GameBoard
+
+  def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard
+
+  def setStateNumber(stateNumber: Int): GameBoard
+
+  def setStatementStatus(statement: Statements): GameBoard
+
 }
 
 trait CubeInterface {
 
-  def getRandomNumber : Int
+  def getRandomNumber: Int
 
 }
 
@@ -111,6 +137,6 @@ trait CreatorInterface {
 
   def getCellGraph(fileInput: String): Map[Int, Set[Int]]
 
-  def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]) : Map[Int, Set[Int]]
+  def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]): Map[Int, Set[Int]]
 
 }
