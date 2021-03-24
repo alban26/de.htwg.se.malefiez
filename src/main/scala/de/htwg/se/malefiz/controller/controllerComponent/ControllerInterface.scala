@@ -85,7 +85,7 @@ trait ControllerInterface extends Publisher {
 
   def load(): Unit
 
-  def setGameBoard(gameBoard: GameBoardInterface)
+  def setGameBoard(gameBoard: GameBoardInterface): Unit
 
   def getGameBoard: GameBoardInterface
 
