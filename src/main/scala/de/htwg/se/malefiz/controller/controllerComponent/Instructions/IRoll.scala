@@ -8,7 +8,7 @@ object IRoll extends InstructionTrait {
 
   val roll1: Handler0 = {
     case Request(inputList, gameState, controller) if inputList.head != " " =>
-      controller.setDicedNumber(controller.rollCube)
+      controller.setDicedNumber(controller.rollCube.get)
       Request(inputList, gameState, controller)
   }
 

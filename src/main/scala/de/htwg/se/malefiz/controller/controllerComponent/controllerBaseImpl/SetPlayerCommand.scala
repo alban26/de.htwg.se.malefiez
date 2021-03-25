@@ -10,7 +10,7 @@ import de.htwg.se.malefiz.util.Command
 class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, controller: Controller) extends Command {
 
   var memento: GameBoardInterface = controller.gameBoard
-  var mDicedNumber: Int = controller.gameBoard.dicedNumber
+  var mDicedNumber: Int = controller.gameBoard.dicedNumber.get
   var mPlayersTurn: Player = controller.getGameBoard.playersTurn.get
   var mStatementStatus: Statements = controller.getGameBoard.statementStatus.get
   var mS: State[GameState] = controller.state.state
@@ -57,7 +57,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     controller.setStatementStatus(mStatementStatus)
 
     memento = new_memento
-    mDicedNumber = new_mDicedNumber
+    mDicedNumber = new_mDicedNumber.get
     mS = new_mS.state
     mPlayersTurn = new_mPlayersTurn
     mStatementStatus = new_mStatementStatus

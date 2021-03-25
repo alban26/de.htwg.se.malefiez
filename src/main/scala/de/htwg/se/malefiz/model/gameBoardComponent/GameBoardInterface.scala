@@ -1,49 +1,38 @@
 package de.htwg.se.malefiz.model.gameBoardComponent
 
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.collection.mutable.Map
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import scala.util.Try
 
 trait GameBoardInterface {
 
   def cellList: List[Cell]
+
   def players: List[Player]
+
   def gameBoardGraph: Map[Int, Set[Int]]
+
   def possibleCells: Set[Int]
-  def dicedNumber: Int
+
+  def dicedNumber: Option[Int]
+
   def playersTurn: Option[Player]
+
   def selectedFigure: Option[(Int, Int)]
+
   def stateNumber: Option[Int]
+
   def statementStatus: Option[Statements]
 
   //++++++++++++++++++++++++++++++++
+  def returnGameBoardAsString(): String
+
+  def setDicedNumber(dicedNumber: Int): GameBoard
 
   def clearPossibleCells: GameBoard
-
-  def s(n: Int): Int
-
-  def buildPlayerString(list: List[Cell]): String
-
-  def buildString(list: List[Cell]): String
-
-  def createStringValues(list: List[Cell], n: Int, O: Int, z: Int, i: Int, l: Int): String
-
-  def createString(
-      list: List[Cell],
-      n: Int,
-      sliceBeginU: Int,
-      sliceEndU: Int,
-      sliceBeginO: Int,
-      sliceEndO: Int,
-      gapLeftO: String,
-      gapLeftU: String,
-      gapBetween: String,
-      z: Int,
-      i: Int,
-      l: Int
-  ): String
 
   def removePlayerFigureOnCell(cellNumber: Int): Cell
 
@@ -107,11 +96,9 @@ trait GameBoardInterface {
 
   def createPlayer(text: String): GameBoard
 
-  def createGameBoard(): String
-
   def setPossibleCell(pC: Set[Int]): GameBoard
 
-  def setDicedNumber(dicedNumber: Int): GameBoard
+  def rollDice(): GameBoard
 
   def setPlayersTurn(player: Option[Player]): GameBoard
 
@@ -123,9 +110,9 @@ trait GameBoardInterface {
 
 }
 
-trait CubeInterface {
+trait DiceInterface {
 
-  def getRandomNumber: Int
+  def rollDice: Option[Int]
 
 }
 

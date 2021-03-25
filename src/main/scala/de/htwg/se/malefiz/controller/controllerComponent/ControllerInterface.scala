@@ -4,19 +4,18 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
+
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def gameBoard: GameBoardInterface
+  def execute(string: String): Unit
 
-  def setDicedNumber(dicedNumber: Int): Unit
+  def gameBoard: GameBoardInterface
 
   def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
-
-  def execute(string: String): Unit
 
   def createPlayer(name: String): Unit
 
@@ -27,8 +26,6 @@ trait ControllerInterface extends Publisher {
   def setPossibleFiguresTrue(n: Int): Unit
 
   def setPossibleFiguresFalse(n: Int): Unit
-
-  def rollCube: Int
 
   def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
 
@@ -76,12 +73,18 @@ trait ControllerInterface extends Publisher {
 
   def setPlayersTurn(player: Option[Player]): Unit
 
+  def rollCube: Option[Int]
+
+  def setDicedNumber(dicedNumber: Int): Unit
 }
 
 import scala.swing.Button
 import scala.swing.event.Event
 
 class GameBoardChanged extends Event
+
 case class ButtonClicked(source: Button) extends Event
+
 class ChangeWall extends Event
+
 class Winner extends Event

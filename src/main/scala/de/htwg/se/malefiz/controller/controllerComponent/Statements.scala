@@ -20,7 +20,8 @@ object Statements extends Enumeration with InstructionTrait {
     case StatementRequest(controller)
         if controller.getGameBoard.statementStatus.get ==
           selectFigure =>
-      s"${controller.getGameBoard.playersTurn.get} du hast eine ${controller.getGameBoard.dicedNumber} gewürfelt. Wähle deine gewünschte Figur aus!"
+      s"${controller.getGameBoard.playersTurn.get} du hast eine ${controller.getGameBoard.dicedNumber.get} gewürfelt. " +
+        s"Wähle deine gewünschte Figur aus!"
     case StatementRequest(controller)
         if controller.getGameBoard.statementStatus.get ==
           selectField =>

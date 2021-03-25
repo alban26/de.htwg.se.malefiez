@@ -2,6 +2,7 @@ package de.htwg.se.malefiz.model.fileIoCmponent
 
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
+import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 
@@ -58,8 +59,8 @@ class FileIOSpec extends WordSpec with Matchers {
         fileIO.save(controller.gameBoard, controller)
         fileIO.load.players.head.name should be("A")
         fileIO.load.possibleCells.head should be(22)
-        controller.gameBoard.playersTurn.get.name should be("A")
-        controller.gameBoard.dicedNumber should be(1)
+        controller.gameBoard.playersTurn.getOrElse(Player(1, "Robert")).name should be("A")
+        controller.gameBoard.dicedNumber.getOrElse(0) should be(1)
 
       }
     }

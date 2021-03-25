@@ -21,7 +21,7 @@ class FileIO @Inject() extends FileIOInterface {
     val newController = new Controller(load)
 
     val dice = (file \\ "dicedNumber" \ "@number").text.toInt
-    newController.setDicedNumber(dice)
+    newController.gameBoard.rollDice()
 
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
     //val playerName = (file \\ "playersTurn" \ "@turnN").text

@@ -1,23 +1,22 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
+import de.htwg.se.malefiz.Malefiz._
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.collection.mutable.Map
-import de.htwg.se.malefiz.Malefiz._
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
 
-case class GameBoard(
-    cellList: List[Cell],
-    players: List[Player],
-    gameBoardGraph: Map[Int, Set[Int]],
-    possibleCells: Set[Int] = Set.empty,
-    dicedNumber: Int,
-    playersTurn: Option[Player],
-    selectedFigure: Option[(Int, Int)],
-    stateNumber: Option[Int],
-    statementStatus: Option[Statements]
-) extends GameBoardInterface {
+case class GameBoard(cellList: List[Cell],
+                     players: List[Player],
+                     gameBoardGraph: Map[Int, Set[Int]],
+                     possibleCells: Set[Int] = Set.empty,
+                     dicedNumber: Option[Int],
+                     playersTurn: Option[Player],
+                     selectedFigure: Option[(Int, Int)],
+                     stateNumber: Option[Int],
+                     statementStatus: Option[Statements]
+                    ) extends GameBoardInterface {
 
   def this() =
     this(
@@ -25,128 +24,12 @@ case class GameBoard(
       List.empty,
       Creator().getCellGraph(cellLinksFile),
       Set.empty,
-      1,
+      Option.empty,
       None,
       None,
       None,
       Option(addPlayer)
     )
-
-  override def s(n: Int): Int = n * 4 + 1
-
-  override def buildPlayerString(list: List[Cell]): String = {
-
-    val abstand1 = ""
-    val abstand = "    "
-    val l = list.slice(0, 20)
-    s"""|$abstand${l.mkString(s"${abstand1}")}
-        |""".stripMargin
-
-  }
-
-  override def buildString(list: List[Cell]): String =
-    createStringValues(list, 20, 0, 6, 0, 4) + buildPlayerString(list)
-
-  override def createStringValues(list: List[Cell], n: Int, O: Int, z: Int, i: Int, l: Int): String = {
-
-    val abstand = " "
-    val strecke = s(l)
-    val gapBetween = abstand * 13
-
-    if (i == z) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + strecke
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l - 3
-      val gapLeftU = abstand * 0
-      val gapLeftO = abstand * 32
-      val gapBetween = abstand * 20
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else if (i == 1) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + strecke
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l
-      val gapLeftU = abstand * 0
-      val gapLeftO = abstand * 8
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else if (i == 2) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + strecke - 4
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l - 2
-      val gapLeftU = abstand * 8
-      val gapLeftO = abstand * 16
-      val gapBetween = abstand * 29
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else if (i == 3) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + strecke - 8
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l - 2
-      val gapLeftU = abstand * 16
-      val gapLeftO = abstand * 24
-      val gapBetween = abstand * 13
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else if (i == 4) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + strecke - 12
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l - 3
-      val gapLeftU = abstand * 24
-      val gapLeftO = abstand * 32
-      val gapBetween = abstand * 13
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else if (i == 5) {
-      val sliceBeginU = O
-      val sliceEndU = sliceBeginU + s(l)
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l - 2
-      val gapLeftU = abstand * 0
-      val gapLeftO = abstand * 0
-      val gapBetween = abstand * 61
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    } else {
-      val gapLeftO = abstand * 0
-      val gapLeftU = abstand * 0
-      val sliceBeginU = n
-      val sliceEndU = sliceBeginU + strecke
-      val sliceBeginO = sliceEndU
-      val sliceEndO = sliceBeginO + l + 1
-      createString(list, n, sliceBeginU, sliceEndU, sliceBeginO, sliceEndO, gapLeftO, gapLeftU, gapBetween, z, i, l)
-    }
-
-  }
-
-  override def createString(
-      list: List[Cell],
-      n: Int,
-      sliceBeginU: Int,
-      sliceEndU: Int,
-      sliceBeginO: Int,
-      sliceEndO: Int,
-      gapLeftO: String,
-      gapLeftU: String,
-      gapBetween: String,
-      z: Int,
-      i: Int,
-      l: Int
-  ): String = {
-
-    val ol = list.slice(sliceBeginO, sliceEndO)
-    val ul = list.slice(sliceBeginU, sliceEndU)
-    val ol1 = for (t <- ol) yield t
-    val ul1 = for (t <- ul) yield t
-    if (i == z)
-      s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
-          |${gapLeftU}${ul1.mkString("-")}
-          |""".stripMargin
-    else
-      createStringValues(list, n, sliceEndO, z, i + 1, l) + s"""|${gapLeftO}${ol1.mkString(s"${gapBetween}")}
-                                                        |${gapLeftU}${ul1.mkString("-")}
-                                                        |""".stripMargin
-
-  }
 
   override def removePlayerFigureOnCell(cellNumber: Int): Cell = cellList(cellNumber).copy(figureNumber = 0)
 
@@ -195,6 +78,7 @@ case class GameBoard(
       found += currentCell
       gameBoardGraph(currentCell).foreach(x => if (!found.contains(x) && diceNumber != 0) recurse(x, diceNumber - 1))
     }
+
     recurse(startCell, diceNumber)
     copy(possibleCells = needed)
 
@@ -275,19 +159,29 @@ case class GameBoard(
 
   override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
     if (playerNumber == playerList.length - 1)
-      Option.apply(playerList.head)
+      Option(playerList.head)
     else
-      Option.apply(playerList(playerNumber + 1))
+      Option(playerList(playerNumber + 1))
 
   override def createPlayer(text: String): GameBoard = copy(players = players :+ Player(players.length + 1, text))
 
-  override def createGameBoard(): String = buildString(cellList)
-
   override def setPossibleCell(possibleCells: Set[Int]): GameBoard = copy(possibleCells = possibleCells)
+
+  override def returnGameBoardAsString(): String = {
+    val string = new StringBuilder("Malefiz-GameBoard\n\n")
+    string.append("Players: ")
+    players.map(player => string.append(player.toString + " / "))
+    string.append("\n" + "Playersturn: " + playersTurn.getOrElse("No registered players").toString + "\n")
+    string.append("Dice: " + dicedNumber.getOrElse("Dice is not rolled yet").toString + "\n")
+    string.append("Status: " + statementStatus.get.toString + "\n")
+    string.toString()
+  }
+
+  override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = Option(dicedNumber))
 
   override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
 
-  override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = dicedNumber)
+  override def rollDice(): GameBoard = copy(dicedNumber = Dice().rollDice)
 
   override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
 
@@ -295,6 +189,7 @@ case class GameBoard(
     copy(selectedFigure = Option.apply((playerNumber, figureNumber)))
 
   override def setStateNumber(stateNumber: Int): GameBoard = copy(stateNumber = Option.apply(stateNumber))
+
   override def setStatementStatus(statement: Statements): GameBoard = copy(statementStatus = Option.apply(statement))
 
 }

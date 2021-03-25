@@ -1,59 +1,47 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
-import com.google.inject.Injector
-import com.google.inject.{Guice, Inject}
-import net.codingwell.scalaguice.InjectorExtensions._
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.malefiz.MalefizModule
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates._
 import de.htwg.se.malefiz.controller.controllerComponent.Statements._
-import de.htwg.se.malefiz.controller.controllerComponent.{
-  ControllerInterface,
-  GameBoardChanged,
-  Statements,
-  Winner
-}
+import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
-  Cell,
-  Cube
-}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{
-  GameState,
-  Roll,
-  SelectFigure,
-  SetFigure,
-  SetWall,
-  Setup
-}
+import net.codingwell.scalaguice.InjectorExtensions._
+
 import scala.swing.Publisher
 
-class Controller @Inject() (var gameBoard: GameBoardInterface)
-    extends ControllerInterface
-    with Publisher {
+class Controller @Inject()(var gameBoard: GameBoardInterface) extends ControllerInterface with Publisher {
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
-  val mementoGameboard: GameBoardInterface = gameBoard
+  val mementoGameBoard: GameBoardInterface = gameBoard
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
 
-  override def setGameBoard(gb: GameBoardInterface): Unit = this.gameBoard = gb
-
-  override def getGameBoard: GameBoardInterface = gameBoard
-
   override def execute(input: String): Unit = state.run(input)
 
-  override def resetPossibleCells(): Unit =
-    gameBoard = gameBoard.clearPossibleCells
-
-  override def resetGameBoard(): Unit = gameBoard = mementoGameboard
+  override def getGameBoard: GameBoardInterface = gameBoard
 
   override def createPlayer(name: String): Unit = {
     gameBoard = gameBoard.createPlayer(name)
     publish(new GameBoardChanged)
   }
+
+  override def rollCube: Option[Int] = {
+    gameBoard = gameBoard.rollDice()
+    gameBoard.dicedNumber
+  }
+
+  override def setDicedNumber(dicedNumber: Int): Unit = {
+    gameBoard = gameBoard.setDicedNumber(dicedNumber)
+  }
+
+  override def resetPossibleCells(): Unit = gameBoard = gameBoard.clearPossibleCells
+
+  override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
 
   override def setPossibleCellsTrue(availableCells: List[Int]): Unit = {
     gameBoard = gameBoard.setPosiesCellTrue(availableCells)
@@ -75,16 +63,9 @@ class Controller @Inject() (var gameBoard: GameBoardInterface)
     publish(new GameBoardChanged)
   }
 
-  override def rollCube: Int = Cube().getRandomNumber
 
-  override def setPlayerFigure(
-      playerNumber: Int,
-      playerFigure: Int,
-      cellNumber: Int
-  ): Unit = {
-    undoManager.doStep(
-      new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this)
-    )
+  override def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
+    undoManager.doStep(new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this))
     publish(new GameBoardChanged)
   }
 
@@ -99,9 +80,9 @@ class Controller @Inject() (var gameBoard: GameBoardInterface)
   }
 
   override def removeActualPlayerAndFigureFromCell(
-      playerNumber: Int,
-      figureNumber: Int
-  ): Unit = {
+                                                    playerNumber: Int,
+                                                    figureNumber: Int
+                                                  ): Unit = {
     gameBoard =
       gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, figureNumber)
     publish(new GameBoardChanged)
@@ -127,7 +108,7 @@ class Controller @Inject() (var gameBoard: GameBoardInterface)
     publish(new GameBoardChanged)
   }
 
-  override def gameBoardToString: String = gameBoard.createGameBoard()
+  override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
 
   override def undo(): Unit = {
     undoManager.undoStep()
@@ -139,43 +120,20 @@ class Controller @Inject() (var gameBoard: GameBoardInterface)
     publish(new GameBoardChanged)
   }
 
-  override def setDicedNumber(dicedNumber: Int): Unit = {
-    gameBoard = gameBoard.setDicedNumber(dicedNumber)
-    publish(new GameBoardChanged)
-  }
-
-  override def setPossibleCells(pC: Set[Int]): GameBoardInterface =
-    gameBoard.setPossibleCell(pC)
-
   override def weHaveAWinner(): Unit =
     publish(new Winner)
-
-  override def setPlayersTurn(player: Option[Player]): Unit = {
-    gameBoard = gameBoard.setPlayersTurn(player)
-    publish(new GameBoardChanged)
-  }
-
-  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
-    gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
-    publish(new GameBoardChanged)
-  }
 
   override def setStateNumber(stateNumber: Int): Unit = {
     gameBoard = gameBoard.setStateNumber(stateNumber)
     publish(new GameBoardChanged)
   }
 
-  override def setStatementStatus(statement: Statements): Unit = {
-    gameBoard = gameBoard.setStatementStatus(statement)
-    publish(new GameBoardChanged)
-  }
-
   override def getGameState: GameState = this.state
 
   override def nextPlayer(
-      playerList: List[Player],
-      playerNumber: Int
-  ): Option[Player] =
+                           playerList: List[Player],
+                           playerNumber: Int
+                         ): Option[Player] =
     gameBoard.nextPlayer(playerList, playerNumber)
 
   override def save(): Unit = {
@@ -213,6 +171,26 @@ class Controller @Inject() (var gameBoard: GameBoardInterface)
         this.setStatementStatus(Statements.wall)
     }
 
+    publish(new GameBoardChanged)
+  }
+
+  override def setGameBoard(gb: GameBoardInterface): Unit = this.gameBoard = gb
+
+  override def setPossibleCells(pC: Set[Int]): GameBoardInterface =
+    gameBoard.setPossibleCell(pC)
+
+  override def setPlayersTurn(player: Option[Player]): Unit = {
+    gameBoard = gameBoard.setPlayersTurn(player)
+    publish(new GameBoardChanged)
+  }
+
+  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
+    gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
+    publish(new GameBoardChanged)
+  }
+
+  override def setStatementStatus(statement: Statements): Unit = {
+    gameBoard = gameBoard.setStatementStatus(statement)
     publish(new GameBoardChanged)
   }
 

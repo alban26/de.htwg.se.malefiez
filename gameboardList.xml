@@ -403,7 +403,7 @@
     <pCells posCell="22"> 22 </pCells>
   </possibleCells>
   <playersTurn turnZ="1" turnN="A"></playersTurn>
-  <dicedNumber number="1"></dicedNumber>
+  <dicedNumber number="Some(1)"></dicedNumber>
   <selectedFigure sPlayer="1" sFigure="1"></selectedFigure>
   <gameState state="3"></gameState>
 </gameboard>

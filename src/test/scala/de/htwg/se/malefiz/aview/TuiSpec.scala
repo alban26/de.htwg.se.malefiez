@@ -32,7 +32,7 @@ class TuiSpec extends WordSpec with Matchers {
         players,
         cellGraph,
         possibleCells,
-        1,
+        Option(1),
         None,
         None,
         None,
@@ -72,7 +72,7 @@ class TuiSpec extends WordSpec with Matchers {
         controller.gameBoard.statementStatus.get should be(
           Statements.selectFigure
         )
-        controller.gameBoard.dicedNumber should ((be >= 1).and(be < 7))
+        controller.gameBoard.dicedNumber.get should ((be >= 1).and(be < 7))
         controller.setDicedNumber(1)
       }
       "Now Robert needs to select his Figure. In this case he gets to the next State " +

@@ -22,12 +22,12 @@ class Tui(controller: ControllerInterface) extends Reactor {
     }
 
   reactions += {
-    case event: GameBoardChanged => update()
+    case _: GameBoardChanged => update()
   }
 
   def update(): Unit = {
     textPrint(controller.gameBoardToString)
-    textPrint(controller.getGameBoard.players.mkString("\n"))
+    // textPrint(controller.getGameBoard.players.mkString("\n"))
   }
 
   def textPrint(str: String): Unit = println(str)
