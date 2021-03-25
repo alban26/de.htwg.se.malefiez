@@ -18,17 +18,16 @@ case class GameBoard(cellList: List[Cell],
                      statementStatus: Option[Statements]
                     ) extends GameBoardInterface {
 
-  def this() =
-    this(
-      Creator().getCellList(cellConfigFile),
-      List.empty,
-      Creator().getCellGraph(cellLinksFile),
-      Set.empty,
-      Option.empty,
-      None,
-      None,
-      None,
-      Option(addPlayer)
+  def this() = this(
+    Creator().getCellList(cellConfigFile),
+    List.empty,
+    Creator().getCellGraph(cellLinksFile),
+    Set.empty,
+    Option.empty,
+    None,
+    None,
+    None,
+    Option(addPlayer)
     )
 
   override def removePlayerFigureOnCell(cellNumber: Int): Cell = cellList(cellNumber).copy(figureNumber = 0)

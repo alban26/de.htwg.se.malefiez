@@ -58,8 +58,8 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def setPossibleFiguresFalse(n: Int): Unit = {
-    gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, n)
+  override def setPossibleFiguresFalse(playerNumber: Int): Unit = {
+    gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
     publish(new GameBoardChanged)
   }
 
@@ -79,12 +79,8 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def removeActualPlayerAndFigureFromCell(
-                                                    playerNumber: Int,
-                                                    figureNumber: Int
-                                                  ): Unit = {
-    gameBoard =
-      gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, figureNumber)
+  override def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): Unit = {
+    gameBoard = gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, figureNumber)
     publish(new GameBoardChanged)
   }
 
@@ -130,9 +126,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def getGameState: GameState = this.state
 
-  override def nextPlayer(
-                           playerList: List[Player],
-                           playerNumber: Int
+  override def nextPlayer(playerList: List[Player], playerNumber: Int
                          ): Option[Player] =
     gameBoard.nextPlayer(playerList, playerNumber)
 
@@ -193,5 +187,4 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard = gameBoard.setStatementStatus(statement)
     publish(new GameBoardChanged)
   }
-
 }
