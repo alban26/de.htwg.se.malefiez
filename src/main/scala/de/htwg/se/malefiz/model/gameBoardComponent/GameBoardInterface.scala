@@ -27,78 +27,10 @@ trait GameBoardInterface {
 
   def statementStatus: Option[Statements]
 
-  //++++++++++++++++++++++++++++++++
+
   def returnGameBoardAsString(): String
 
-  def setDicedNumber(dicedNumber: Int): GameBoard
-
-  def clearPossibleCells: GameBoard
-
-  def removePlayerFigureOnCell(cellNumber: Int): Cell
-
-  def removePlayerOnCell(cellNumber: Int): Cell
-
-  def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int): Cell
-
-  def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
-
-  def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard
-
-  def setFigure(figureNumber: Int, cellNumber: Int): GameBoard
-
-  def setPlayer(playerNumber: Int, cellNumber: Int): GameBoard
-
-  def getHomeNr(playerNumber: Int, figureNumber: Int): Int
-
-  def getPlayerFigure(playerNumber: Int, figureNumber: Int): Int
-
-  def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
-
-  def setHasWallFalse(cellNumber: Int): Cell
-
-  def removeWall(cellNumber: Int): GameBoard
-
-  def removeListWall(cellNumber: Int): List[Cell]
-
-  def placeWall(cellNumber: Int): Cell
-
-  def setWall(cellNumber: Int): GameBoard
-
-  def updateListWall(cellNumber: Int): List[Cell]
-
-  def setPosiesCellTrue(n: List[Int]): GameBoard
-
-  def setPossibleCell1True(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
-
-  def setPossibleCellTrue(cellNumber: Int): Cell
-
-  def setPosiesCellFalse(cellList: List[Int]): GameBoard
-
-  def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
-
-  def setPossibleCellFalse(cellNumber: Int): Cell
-
-  def setPosiesTrue(cellNumber: Int): GameBoard
-
-  def setPossibilitiesTrue(cellNumber: Int): Cell
-
-  def setPossibleFiguresTrue(m: Int, n: Int, lis: List[Cell]): List[Cell]
-
-  def setPosiesFalse(cellNumber: Int): GameBoard
-
-  def setPossibilitiesFalse(cellNumber: Int): Cell
-
-  def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell]
-
   def execute(callback: Int => GameBoard, y: Int): GameBoard
-
-  def nextPlayer(list: List[Player], n: Int): Option[Player]
-
-  def createPlayer(text: String): GameBoard
-
-  def setPossibleCell(pC: Set[Int]): GameBoard
-
-  def rollDice(): GameBoard
 
   def setPlayersTurn(player: Option[Player]): GameBoard
 
@@ -107,6 +39,82 @@ trait GameBoardInterface {
   def setStateNumber(stateNumber: Int): GameBoard
 
   def setStatementStatus(statement: Statements): GameBoard
+
+  def setPossibleCell(pC: Set[Int]): GameBoard
+
+  def rollDice(): GameBoard
+
+  def setDicedNumber(dicedNumber: Int): GameBoard
+
+  def clearPossibleCells: GameBoard
+
+  def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
+
+
+  def setPosiesCellTrue(n: List[Int]): GameBoard
+
+  def setPossibleCell1True(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
+
+  def setPossibleCellTrue(cellNumber: Int): Cell
+
+
+  def setPosiesCellFalse(cellList: List[Int]): GameBoard
+
+  def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
+
+  def setPossibleCellFalse(cellNumber: Int): Cell
+
+
+  def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard
+
+  def removePlayerFigureOnCell(cellNumber: Int): Cell
+
+  def removePlayerOnCell(cellNumber: Int): Cell
+
+
+  def setWall(cellNumber: Int): GameBoard
+
+  def updateListWall(cellNumber: Int): List[Cell]
+
+  def placeWall(cellNumber: Int): Cell
+
+
+  def removeWall(cellNumber: Int): GameBoard
+
+  def removeListWall(cellNumber: Int): List[Cell]
+
+  def setHasWallFalse(cellNumber: Int): Cell
+
+
+  def createPlayer(text: String): GameBoard
+
+  def nextPlayer(list: List[Player], n: Int): Option[Player]
+
+  def setFigure(figureNumber: Int, cellNumber: Int): GameBoard
+
+  def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int): Cell
+
+  def getPlayerFigure(playerNumber: Int, figureNumber: Int): Int
+
+  def getHomeNr(playerNumber: Int, figureNumber: Int): Int
+
+  def setPlayer(playerNumber: Int, cellNumber: Int): GameBoard
+
+  def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
+
+
+  def setPosiesTrue(cellNumber: Int): GameBoard
+
+  def setPossibleFiguresTrue(m: Int, n: Int, lis: List[Cell]): List[Cell]
+
+  def setPossibilitiesTrue(cellNumber: Int): Cell
+
+
+  def setPosiesFalse(cellNumber: Int): GameBoard
+
+  def setPossibleFiguresFalse(m: Int, n: Int, lis: List[Cell]): List[Cell]
+
+  def setPossibilitiesFalse(cellNumber: Int): Cell
 
 }
 
