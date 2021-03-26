@@ -9,19 +9,39 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def execute(string: String): Unit
-
   def gameBoard: GameBoardInterface
+
+  def gameBoardToString: String
+
+  def resetGameBoard(): Unit
+
+  def setGameBoard(gameBoard: GameBoardInterface): Unit
+
+  def undo(): Unit
+
+  def redo(): Unit
+
+  def weHaveAWinner(): Unit
+
+  def rollCube: Option[Int]
+
+  def setDicedNumber(dicedNumber: Int): Unit
+
+  def createPlayer(name: String): Unit
+
+  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
+
+  def setPlayersTurn(player: Option[Player]): Unit
+
+  def placePlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
+
+  def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
+
+  def getFigurePosition(playerNumber: Int, figureNumber: Int): Int
 
   def resetPossibleCells(): Unit
 
   def setStateNumber(n: Int): Unit
-
-  def createPlayer(name: String): Unit
-
-  def placePlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
-
-  def getFigurePosition(playerNumber: Int, figureNumber: Int): Int
 
   def calculatePath(startCell: Int, diceNumber: Int): Unit
 
@@ -31,43 +51,23 @@ trait ControllerInterface extends Publisher {
 
   def placePlayer(playerNumber: Int, cellNumber: Int): Unit
 
-  def gameBoardToString: String
-
-  def undo(): Unit
-
-  def redo(): Unit
-
-  def resetGameBoard(): Unit
-
-  def weHaveAWinner(): Unit
-
-  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
-
-  def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit
+  def placeOrRemoveWall(n: Int, boolean: Boolean): Unit
 
   def getGameState: GameState
 
   def setStatementStatus(statement: Statements): Unit
 
-  def save(): Unit
-
-  def load(): Unit
-
-  def setGameBoard(gameBoard: GameBoardInterface): Unit
-
   def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
-
-  def setPlayersTurn(player: Option[Player]): Unit
-
-  def rollCube: Option[Int]
-
-  def setDicedNumber(dicedNumber: Int): Unit
 
   def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit
 
   def setPossibleCellsTrueOrFalse(toList: List[Int], bool: Boolean): Unit
 
-  def placeOrRemoveWall(n: Int, boolean: Boolean): Unit
+  def execute(string: String): Unit
+
+  def save(): Unit
+
+  def load(): Unit
 
 }
 

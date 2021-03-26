@@ -21,39 +21,41 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
 
-  override def execute(input: String): Unit = state.run(input)
+  override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
 
-  override def createPlayer(name: String): Unit = {
-    gameBoard = gameBoard.createPlayer(name)
+  override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
+
+  override def setGameBoard(gb: GameBoardInterface): Unit = this.gameBoard = gb
+
+  override def undo(): Unit = {
+    undoManager.undoStep()
     publish(new GameBoardChanged)
   }
+
+  override def redo(): Unit = {
+    undoManager.redoStep()
+    publish(new GameBoardChanged)
+  }
+
+  override def weHaveAWinner(): Unit = publish(new Winner)
 
   override def rollCube: Option[Int] = {
     gameBoard = gameBoard.rollDice()
     gameBoard.dicedNumber
   }
 
-  override def setDicedNumber(dicedNumber: Int): Unit = {
-    gameBoard = gameBoard.setDicedNumber(dicedNumber)
-  }
+  override def setDicedNumber(dicedNumber: Int): Unit = gameBoard = gameBoard.setDicedNumber(dicedNumber)
 
-  override def resetPossibleCells(): Unit = gameBoard = gameBoard.clearPossibleCells
-
-  override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
-
-  override def setPossibleCellsTrueOrFalse(availableCells: List[Int], boolean: Boolean): Unit = {
-    boolean match {
-      case true => gameBoard = gameBoard.setPosiesCellTrue(availableCells)
-      case false => gameBoard = gameBoard.setPosiesCellFalse(availableCells)
-    }
+  override def createPlayer(name: String): Unit = {
+    gameBoard = gameBoard.createPlayer(name)
     publish(new GameBoardChanged)
   }
 
-  override def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit = {
-    boolean match {
-      case true => gameBoard = gameBoard.execute(gameBoard.setPosiesTrue, playerNumber)
-      case false => gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
-    }
+  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
+    gameBoard.nextPlayer(playerList, playerNumber)
+
+  override def setPlayersTurn(player: Option[Player]): Unit = {
+    gameBoard = gameBoard.setPlayersTurn(player)
     publish(new GameBoardChanged)
   }
 
@@ -62,9 +64,21 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
+  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
+    gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
+    publish(new GameBoardChanged)
+  }
+
   override def getFigurePosition(playerNumber: Int, figureNumber: Int): Int = {
     val position = gameBoard.getPlayerFigure(playerNumber, figureNumber)
     position
+  }
+
+  override def resetPossibleCells(): Unit = gameBoard = gameBoard.clearPossibleCells
+
+  override def setStateNumber(stateNumber: Int): Unit = {
+    gameBoard = gameBoard.setStateNumber(stateNumber)
+    publish(new GameBoardChanged)
   }
 
   override def calculatePath(startCell: Int, diceNumber: Int): Unit = {
@@ -95,31 +109,32 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
-
-  override def undo(): Unit = {
-    undoManager.undoStep()
-    publish(new GameBoardChanged)
-  }
-
-  override def redo(): Unit = {
-    undoManager.redoStep()
-    publish(new GameBoardChanged)
-  }
-
-  override def weHaveAWinner(): Unit =
-    publish(new Winner)
-
-  override def setStateNumber(stateNumber: Int): Unit = {
-    gameBoard = gameBoard.setStateNumber(stateNumber)
-    publish(new GameBoardChanged)
-  }
-
   override def getGameState: GameState = this.state
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int
-                         ): Option[Player] =
-    gameBoard.nextPlayer(playerList, playerNumber)
+  override def setStatementStatus(statement: Statements): Unit = {
+    gameBoard = gameBoard.setStatementStatus(statement)
+    publish(new GameBoardChanged)
+  }
+
+  override def setPossibleCells(pC: Set[Int]): GameBoardInterface = gameBoard.setPossibleCell(pC)
+
+  override def setPossibleCellsTrueOrFalse(availableCells: List[Int], boolean: Boolean): Unit = {
+    boolean match {
+      case true => gameBoard = gameBoard.setPosiesCellTrue(availableCells)
+      case false => gameBoard = gameBoard.setPosiesCellFalse(availableCells)
+    }
+    publish(new GameBoardChanged)
+  }
+
+  override def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit = {
+    boolean match {
+      case true => gameBoard = gameBoard.execute(gameBoard.setPosiesTrue, playerNumber)
+      case false => gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
+    }
+    publish(new GameBoardChanged)
+  }
+
+  override def execute(input: String): Unit = state.run(input)
 
   override def save(): Unit = {
     fileIo.save(this.gameBoard, this)
@@ -159,23 +174,4 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def setGameBoard(gb: GameBoardInterface): Unit = this.gameBoard = gb
-
-  override def setPossibleCells(pC: Set[Int]): GameBoardInterface =
-    gameBoard.setPossibleCell(pC)
-
-  override def setPlayersTurn(player: Option[Player]): Unit = {
-    gameBoard = gameBoard.setPlayersTurn(player)
-    publish(new GameBoardChanged)
-  }
-
-  override def setSelectedFigure(playerNumber: Int, figureNumber: Int): Unit = {
-    gameBoard = gameBoard.setSelectedFigure(playerNumber, figureNumber)
-    publish(new GameBoardChanged)
-  }
-
-  override def setStatementStatus(statement: Statements): Unit = {
-    gameBoard = gameBoard.setStatementStatus(statement)
-    publish(new GameBoardChanged)
-  }
 }
