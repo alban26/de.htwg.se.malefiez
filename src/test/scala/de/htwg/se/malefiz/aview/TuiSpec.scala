@@ -186,7 +186,7 @@ class TuiSpec extends WordSpec with Matchers {
         "Then we set the the figure 1 of player 1 to the winner Cell" in {
         controller.setPossibleCells(Set(131))
         tui.processInput("131")
-        controller.getGameBoard.statementStatus.get should be(Statements.won)
+        controller.gameBoard.statementStatus.get should be(Statements.won)
       }
 
     }

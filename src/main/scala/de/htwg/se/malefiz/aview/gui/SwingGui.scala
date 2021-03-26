@@ -107,7 +107,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         mouseY = getRange(p.y)
         val state = controller.getGameState.state
         if (state.isInstanceOf[SelectFigure])
-          controller.getGameBoard.cellList.map(cell =>
+          controller.gameBoard.cellList.map(cell =>
             if (
               mouseX.contains(cell.coordinates.x_coordinate) && mouseY
                 .contains(cell.coordinates.y_coordinate)
@@ -124,7 +124,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
                 .contains(cell.coordinates.y_coordinate)
             ) {
               if (
-                cell.playerNumber == controller.getGameBoard.selectedFigure.get._1 && cell.figureNumber == controller.getGameBoard.selectedFigure.get._2
+                cell.playerNumber == controller.gameBoard.selectedFigure.get._1 && cell.figureNumber == controller.gameBoard.selectedFigure.get._2
               ) {
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
@@ -143,9 +143,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   def updatePlayerArea(): Boolean = {
     val doc = playerArea.styledDocument
 
-    controller.getGameBoard.players.indices.map { i =>
+    controller.gameBoard.players.indices.map { i =>
       val playerString =
-        " Spieler" + (i + 1) + ": " + controller.getGameBoard.players(i) + "\n"
+        " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)
@@ -188,12 +188,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Boolean = {
-    playerTurnArea.text = controller.getGameBoard.playersTurn.get.name
+    playerTurnArea.text = controller.gameBoard.playersTurn.get.name
     true
   }
 
   def updateRandomNumberArea(): Boolean = {
-    randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
+    randomNumberArea.text = controller.gameBoard.dicedNumber.toString
     true
   }
 
@@ -204,7 +204,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def drawGameBoard(): Unit = {
-    controller.getGameBoard.cellList.map(cell =>
+    controller.gameBoard.cellList.map(cell =>
       if (cell.hasWall)
         this.drawCircle(
           cell.coordinates.x_coordinate,
@@ -245,7 +245,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
     controller.gameBoard.cellList.map(cell =>
       if (
-        cell.possibleCells && cell.playerNumber != controller.getGameBoard.playersTurn.get.playerNumber
+        cell.possibleCells && cell.playerNumber != controller.gameBoard.playersTurn.get.playerNumber
       )
         this.highlightCells(
           cell.coordinates.x_coordinate,
@@ -396,7 +396,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = controller.getGameBoard.dicedNumber.toString
+      randomNumberArea.text = controller.gameBoard.dicedNumber.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()

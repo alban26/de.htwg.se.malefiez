@@ -60,17 +60,17 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.players(1).name should be("Alban")
       }
       "notify its Observer after a players figure is set on cell" in {
-        controller.setPlayerFigure(1, 1, 10)
+        controller.placePlayerFigure(1, 1, 10)
         controller.getFigurePosition(1, 1) should be(10)
         controller.removeActualPlayerAndFigureFromCell(1, 1)
-        controller.getGameBoard.cellList(10).playerNumber should be(0)
+        controller.gameBoard.cellList(10).playerNumber should be(0)
       }
       "notify its Observer after setting a Wall on a Cell" in {
-        controller.setWall(50)
+        controller.placeOrRemoveWall(50, true)
         controller.gameBoard.cellList(50).hasWall should be(true)
       }
       "The Controller has the abililty to remove a wall" in {
-        controller.removeWall(50)
+        controller.placeOrRemoveWall(50, false)
         controller.gameBoard.cellList(50).hasWall should be(false)
       }
       "The Controller has the ability to save the current selected figure of a player" in {
@@ -88,8 +88,8 @@ class ControllerSpec extends WordSpec with Matchers {
 
       }
       "The Controller can set a players figure and con remove it " in {
-        controller.setPlayer(1, 22)
-        controller.setFigure(1, 22)
+        controller.placePlayer(1, 22)
+        controller.placeFigure(1, 22)
         controller.gameBoard.cellList(22).playerNumber should be(1)
         controller.gameBoard.cellList(22).figureNumber should be(1)
       }
@@ -100,11 +100,11 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.undo()
         controller.gameBoard.cellList(22).playerNumber should be(0)
         controller.gameBoard.cellList(22).figureNumber should be(0)
-        controller.getGameBoard.statementStatus should be
+        controller.gameBoard.statementStatus should be
       }
       "The Controller can reset the the possible Cells of the actual turn" in {
         controller.resetPossibleCells()
-        controller.getGameBoard.possibleCells should be(Set().empty)
+        controller.gameBoard.possibleCells should be(Set().empty)
       }
       "The Controller can save the Game" in {
         controller.setSelectedFigure(1, 3)
@@ -132,14 +132,14 @@ class ControllerSpec extends WordSpec with Matchers {
         controllerNew.execute("exit")
       }
       "The Controller can set the attribut 'possibleCells' true" in {
-        controller.setPossibleCellsTrue(List(30, 31, 32, 33))
+        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33), true)
         controller.gameBoard.cellList(30).possibleCells should be(true)
         controller.gameBoard.cellList(31).possibleCells should be(true)
         controller.gameBoard.cellList(32).possibleCells should be(true)
         controller.gameBoard.cellList(33).possibleCells should be(true)
       }
       "The Controller can set a List of Cell the Attribut possible Cell false" in {
-        controller.setPossibleCellsFalse(List(30, 31, 32, 33))
+        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33), false)
         controller.gameBoard.cellList(30).possibleCells should be(false)
         controller.gameBoard.cellList(31).possibleCells should be(false)
         controller.gameBoard.cellList(32).possibleCells should be(false)
@@ -147,7 +147,7 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "Reset the GameBoard" in {
         val newGameBoard: Unit = controller.resetGameBoard()
-        newGameBoard shouldNot be(controller.getGameBoard)
+        newGameBoard shouldNot be(controller.gameBoard)
       }
     }
   }

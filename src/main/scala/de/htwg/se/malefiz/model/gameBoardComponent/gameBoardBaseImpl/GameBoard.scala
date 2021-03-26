@@ -34,23 +34,26 @@ case class GameBoard(cellList: List[Cell],
 
   override def removePlayerOnCell(cellNumber: Int): Cell = cellList(cellNumber).copy(playerNumber = 0)
 
-  override def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int): Cell =
-    cellList(cellNumber).copy(figureNumber = figureNumber)
-
-  override def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell =
-    cellList(cellNumber).copy(playerNumber = playerNumber)
-
   override def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard = {
     val cell = getPlayerFigure(playerNumber, figureNumber)
     copy(cellList.updated(cell, removePlayerFigureOnCell(cell)))
     copy(cellList.updated(cell, removePlayerOnCell(cell)))
   }
 
-  override def setFigure(figureNumber: Int, cellNumber: Int): GameBoard =
+  // setFigure
+  override def setFigure(figureNumber: Int, cellNumber: Int): GameBoard = {
     copy(cellList.updated(cellNumber, setPlayerFigureOnCell(figureNumber, cellNumber)))
+  }
 
+  override def setPlayerFigureOnCell(figureNumber: Int, cellNumber: Int): Cell =
+    cellList(cellNumber).copy(figureNumber = figureNumber)
+
+  // Setplayer
   override def setPlayer(playerNumber: Int, cellNumber: Int): GameBoard =
     copy(cellList.updated(cellNumber, setPlayerOnCell(playerNumber, cellNumber)))
+
+  override def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell =
+    cellList(cellNumber).copy(playerNumber = playerNumber)
 
   override def getHomeNr(pN: Int, fN: Int): Int =
     if (pN == 1 && fN == 1)

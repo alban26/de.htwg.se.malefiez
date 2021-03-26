@@ -9,8 +9,8 @@ object ISetup extends InstructionTrait {
   val setup1: Handler0 = {
     case Request(inputList, gameState, controller)
         if inputList.contains("start") ||
-          controller.getGameBoard.players.length == 4 =>
-      controller.setPlayersTurn(Option.apply(controller.getGameBoard.players.head))
+          controller.gameBoard.players.length == 4 =>
+      controller.setPlayersTurn(Option.apply(controller.gameBoard.players.head))
       Request(inputList, gameState, controller)
   }
 

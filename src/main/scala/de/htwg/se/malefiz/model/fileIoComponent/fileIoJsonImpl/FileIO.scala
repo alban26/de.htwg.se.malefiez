@@ -40,7 +40,7 @@ class FileIO @Inject() extends FileIOInterface {
     newController.setDicedNumber(diceNumber)
     newController.setPlayersTurn(
       Option
-        .apply(newController.getGameBoard.players(playersTurn.playerNumber - 1))
+        .apply(newController.gameBoard.players(playersTurn.playerNumber - 1))
     )
     newController.setSelectedFigure(f1, f2)
     newController.setStateNumber(gameState)
@@ -137,8 +137,8 @@ class FileIO @Inject() extends FileIOInterface {
           p <- gameBoard.players
         } yield Json.toJson(p)
       ),
-      "playersTurn" -> controller.getGameBoard.playersTurn,
-      "diceNumber" -> controller.getGameBoard.dicedNumber,
+      "playersTurn" -> controller.gameBoard.playersTurn,
+      "diceNumber" -> controller.gameBoard.dicedNumber,
       "selectedFigure1" -> controller.gameBoard.selectedFigure.get._1,
       "selectedFigure2" -> controller.gameBoard.selectedFigure.get._2,
       "gameState" -> controller.getGameState.state.toString.toInt,

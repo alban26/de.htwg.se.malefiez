@@ -32,7 +32,7 @@ class FileIO @Inject() extends FileIOInterface {
     newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
     newController.setStateNumber(stateNumber.toInt)
 
-    newController.setPlayersTurn(Option.apply(newController.getGameBoard.players(playerZahl - 1)))
+    newController.setPlayersTurn(Option.apply(newController.gameBoard.players(playerZahl - 1)))
     newController
   }
 
@@ -119,10 +119,10 @@ class FileIO @Inject() extends FileIOInterface {
       controller.gameBoard.playersTurn.get.name
     }></playersTurn>
 
-      <dicedNumber number={controller.getGameBoard.dicedNumber.toString}></dicedNumber>
+      <dicedNumber number={controller.gameBoard.dicedNumber.toString}></dicedNumber>
 
-      <selectedFigure sPlayer={controller.getGameBoard.selectedFigure.get._1.toString} sFigure={
-      controller.getGameBoard.selectedFigure.get._2.toString
+      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={
+      controller.gameBoard.selectedFigure.get._2.toString
     } ></selectedFigure>
 
       <gameState state={controller.getGameState.state.toString}></gameState>

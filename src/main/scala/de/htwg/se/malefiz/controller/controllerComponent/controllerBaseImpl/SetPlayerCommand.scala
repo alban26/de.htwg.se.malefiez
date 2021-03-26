@@ -11,33 +11,33 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
   var memento: GameBoardInterface = controller.gameBoard
   var mDicedNumber: Int = controller.gameBoard.dicedNumber.get
-  var mPlayersTurn: Player = controller.getGameBoard.playersTurn.get
-  var mStatementStatus: Statements = controller.getGameBoard.statementStatus.get
+  var mPlayersTurn: Player = controller.gameBoard.playersTurn.get
+  var mStatementStatus: Statements = controller.gameBoard.statementStatus.get
   var mS: State[GameState] = controller.state.state
 
   override def doStep(): Unit = {
     controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure)
 
-    if (controller.getGameBoard.cellList(cellNumber).playerNumber != 0) {
+    if (controller.gameBoard.cellList(cellNumber).playerNumber != 0) {
       controller.gameBoard = controller.gameBoard.setPlayer(
-        controller.getGameBoard.cellList(cellNumber).playerNumber,
+        controller.gameBoard.cellList(cellNumber).playerNumber,
         controller.gameBoard
           .getHomeNr(
-            controller.getGameBoard.cellList(cellNumber).playerNumber,
-            controller.getGameBoard.cellList(cellNumber).figureNumber
+            controller.gameBoard.cellList(cellNumber).playerNumber,
+            controller.gameBoard.cellList(cellNumber).figureNumber
           )
       )
       controller.gameBoard = controller.gameBoard.setFigure(
-        controller.getGameBoard.cellList(cellNumber).figureNumber,
+        controller.gameBoard.cellList(cellNumber).figureNumber,
         controller.gameBoard
           .getHomeNr(
-            controller.getGameBoard.cellList(cellNumber).playerNumber,
-            controller.getGameBoard.cellList(cellNumber).figureNumber
+            controller.gameBoard.cellList(cellNumber).playerNumber,
+            controller.gameBoard.cellList(cellNumber).figureNumber
           )
       )
     }
-    if (controller.getGameBoard.cellList(cellNumber).hasWall)
-      controller.removeWall(cellNumber)
+    if (controller.gameBoard.cellList(cellNumber).hasWall)
+      controller.placeOrRemoveWall(cellNumber, false)
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
   }
@@ -48,7 +48,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     val new_mDicedNumber = controller.gameBoard.dicedNumber
     val new_mPlayersTurn = controller.gameBoard.playersTurn.get
     val new_mS = controller.state
-    val new_mStatementStatus = controller.getGameBoard.statementStatus.get
+    val new_mStatementStatus = controller.gameBoard.statementStatus.get
 
     controller.gameBoard = memento
     controller.setDicedNumber(mDicedNumber)

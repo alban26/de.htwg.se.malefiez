@@ -23,8 +23,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def execute(input: String): Unit = state.run(input)
 
-  override def getGameBoard: GameBoardInterface = gameBoard
-
   override def createPlayer(name: String): Unit = {
     gameBoard = gameBoard.createPlayer(name)
     publish(new GameBoardChanged)
@@ -43,28 +41,23 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
 
-  override def setPossibleCellsTrue(availableCells: List[Int]): Unit = {
-    gameBoard = gameBoard.setPosiesCellTrue(availableCells)
+  override def setPossibleCellsTrueOrFalse(availableCells: List[Int], boolean: Boolean): Unit = {
+    boolean match {
+      case true => gameBoard = gameBoard.setPosiesCellTrue(availableCells)
+      case false => gameBoard = gameBoard.setPosiesCellFalse(availableCells)
+    }
     publish(new GameBoardChanged)
   }
 
-  override def setPossibleCellsFalse(l: List[Int]): Unit = {
-    gameBoard = gameBoard.setPosiesCellFalse(l)
+  override def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit = {
+    boolean match {
+      case true => gameBoard = gameBoard.execute(gameBoard.setPosiesTrue, playerNumber)
+      case false => gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
+    }
     publish(new GameBoardChanged)
   }
 
-  override def setPossibleFiguresTrue(playerNumber: Int): Unit = {
-    gameBoard = gameBoard.execute(gameBoard.setPosiesTrue, playerNumber)
-    publish(new GameBoardChanged)
-  }
-
-  override def setPossibleFiguresFalse(playerNumber: Int): Unit = {
-    gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
-    publish(new GameBoardChanged)
-  }
-
-
-  override def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
+  override def placePlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit = {
     undoManager.doStep(new SetPlayerCommand(playerNumber, playerFigure, cellNumber, this))
     publish(new GameBoardChanged)
   }
@@ -84,23 +77,21 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def setFigure(figureNumber: Int, cellNumber: Int): Unit = {
+  override def placeFigure(figureNumber: Int, cellNumber: Int): Unit = {
     gameBoard = gameBoard.setFigure(figureNumber, cellNumber)
     publish(new GameBoardChanged)
   }
 
-  override def setPlayer(playerNumber: Int, cellNumber: Int): Unit = {
+  override def placePlayer(playerNumber: Int, cellNumber: Int): Unit = {
     gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
     publish(new GameBoardChanged)
   }
 
-  override def setWall(n: Int): Unit = {
-    undoManager.doStep(new SetWallCommand(n, this))
-    publish(new GameBoardChanged)
-  }
-
-  override def removeWall(n: Int): Unit = {
-    gameBoard = gameBoard.removeWall(n)
+  override def placeOrRemoveWall(n: Int, boolean: Boolean): Unit = {
+    boolean match {
+      case true => undoManager.doStep(new SetWallCommand(n, this))
+      case false => gameBoard = gameBoard.removeWall(n)
+    }
     publish(new GameBoardChanged)
   }
 
@@ -137,14 +128,14 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def load(): Unit = {
     val newController = fileIo.loadController
-    val stateNr = newController.getGameBoard.stateNumber.get
+    val stateNr = newController.gameBoard.stateNumber.get
 
-    this.setGameBoard(newController.getGameBoard)
-    this.setPossibleCells(newController.getGameBoard.possibleCells)
-    this.setPlayersTurn(newController.getGameBoard.playersTurn)
+    this.setGameBoard(newController.gameBoard)
+    this.setPossibleCells(newController.gameBoard.possibleCells)
+    this.setPlayersTurn(newController.gameBoard.playersTurn)
     this.setSelectedFigure(
-      newController.getGameBoard.selectedFigure.get._1,
-      newController.getGameBoard.selectedFigure.get._2
+      newController.gameBoard.selectedFigure.get._1,
+      newController.gameBoard.selectedFigure.get._2
     )
 
     stateNr match {

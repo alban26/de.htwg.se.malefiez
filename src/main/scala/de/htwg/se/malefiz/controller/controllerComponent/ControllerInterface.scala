@@ -19,15 +19,7 @@ trait ControllerInterface extends Publisher {
 
   def createPlayer(name: String): Unit
 
-  def setPossibleCellsTrue(availableCells: List[Int]): Unit
-
-  def setPossibleCellsFalse(l: List[Int]): Unit
-
-  def setPossibleFiguresTrue(n: Int): Unit
-
-  def setPossibleFiguresFalse(n: Int): Unit
-
-  def setPlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
+  def placePlayerFigure(playerNumber: Int, playerFigure: Int, cellNumber: Int): Unit
 
   def getFigurePosition(playerNumber: Int, figureNumber: Int): Int
 
@@ -35,13 +27,9 @@ trait ControllerInterface extends Publisher {
 
   def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): Unit
 
-  def setFigure(figureNumber: Int, cellNumber: Int): Unit
+  def placeFigure(figureNumber: Int, cellNumber: Int): Unit
 
-  def setPlayer(playerNumber: Int, cellNumber: Int): Unit
-
-  def setWall(cellNumber: Int): Unit
-
-  def removeWall(cellNumber: Int): Unit
+  def placePlayer(playerNumber: Int, cellNumber: Int): Unit
 
   def gameBoardToString: String
 
@@ -67,8 +55,6 @@ trait ControllerInterface extends Publisher {
 
   def setGameBoard(gameBoard: GameBoardInterface): Unit
 
-  def getGameBoard: GameBoardInterface
-
   def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
 
   def setPlayersTurn(player: Option[Player]): Unit
@@ -76,6 +62,13 @@ trait ControllerInterface extends Publisher {
   def rollCube: Option[Int]
 
   def setDicedNumber(dicedNumber: Int): Unit
+
+  def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit
+
+  def setPossibleCellsTrueOrFalse(toList: List[Int], bool: Boolean): Unit
+
+  def placeOrRemoveWall(n: Int, boolean: Boolean): Unit
+
 }
 
 import scala.swing.Button
