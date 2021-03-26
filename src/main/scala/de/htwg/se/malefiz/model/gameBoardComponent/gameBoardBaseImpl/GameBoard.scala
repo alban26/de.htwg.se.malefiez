@@ -46,7 +46,7 @@ case class GameBoard(cellList: List[Cell],
   override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
 
   override def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard =
-    copy(selectedFigure = Option.apply((playerNumber, figureNumber)))
+    copy(selectedFigure = Option(playerNumber, figureNumber))
 
   override def setStateNumber(stateNumber: Int): GameBoard = copy(stateNumber = Option(stateNumber))
 
@@ -179,7 +179,6 @@ case class GameBoard(cellList: List[Cell],
       setPossibleFiguresTrue(cellListLength - 1, cellNumber, cellList)
 
   override def setPossibilitiesTrue(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleFigures = true)
-
 
   override def setPosiesFalse(cellNumber: Int): GameBoard =
     copy(setPossibleFiguresFalse(cellList.length - 1, cellNumber, cellList))
