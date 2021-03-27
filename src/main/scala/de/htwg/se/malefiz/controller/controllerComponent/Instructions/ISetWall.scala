@@ -26,7 +26,7 @@ object ISetWall extends InstructionTrait {
   val set3: Handler1 = {
     case Request(inputList, gameState, controller) =>
       controller.setDicedNumber(0)
-      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber, false)
+      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
       controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
       controller.setPlayersTurn(
         controller.nextPlayer(controller.gameBoard.players, controller.gameBoard.playersTurn.get.playerNumber - 1)

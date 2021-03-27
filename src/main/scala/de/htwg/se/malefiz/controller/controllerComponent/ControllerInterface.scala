@@ -59,7 +59,7 @@ trait ControllerInterface extends Publisher {
 
   def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface
 
-  def setPossibleFiguresTrueOrFalse(playerNumber: Int, boolean: Boolean): Unit
+  def setPossibleFiguresTrueOrFalse(playerNumber: Int): Unit
 
   def setPossibleCellsTrueOrFalse(toList: List[Int], bool: Boolean): Unit
 

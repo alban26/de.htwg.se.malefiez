@@ -46,7 +46,7 @@ object ISetFigure extends InstructionTrait {
   val set3: Handler1 = {
     case Request(inputList, gameState, controller) =>
       controller.setDicedNumber(0)
-      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber, false)
+      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
       controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
       controller.resetPossibleCells()
       controller.setPlayersTurn(
@@ -61,7 +61,7 @@ object ISetFigure extends InstructionTrait {
     case Request(inputList, gameState, controller) =>
       gameState.nextState(SetWall(controller))
       controller.setStatementStatus(wall)
-      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber, false)
+      controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
       controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
       controller.resetPossibleCells()
       Statements.value(StatementRequest(controller))
