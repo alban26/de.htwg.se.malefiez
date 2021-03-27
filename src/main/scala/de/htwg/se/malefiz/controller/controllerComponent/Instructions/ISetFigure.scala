@@ -25,7 +25,7 @@ object ISetFigure extends InstructionTrait {
         if inputList.length == 2 && inputList.head.toInt == controller.gameBoard.selectedFigure.get._1 && inputList(
           1
         ).toInt == controller.gameBoard.selectedFigure.get._2 =>
-      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
+      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
 
       controller.resetPossibleCells()
       gameState.nextState(SelectFigure(controller))
@@ -47,7 +47,7 @@ object ISetFigure extends InstructionTrait {
     case Request(inputList, gameState, controller) =>
       controller.setDicedNumber(0)
       controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
-      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
+      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
       controller.resetPossibleCells()
       controller.setPlayersTurn(
         controller.nextPlayer(controller.gameBoard.players, controller.gameBoard.playersTurn.get.playerNumber - 1)
@@ -62,7 +62,7 @@ object ISetFigure extends InstructionTrait {
       gameState.nextState(SetWall(controller))
       controller.setStatementStatus(wall)
       controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
-      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
+      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
       controller.resetPossibleCells()
       Statements.value(StatementRequest(controller))
   }

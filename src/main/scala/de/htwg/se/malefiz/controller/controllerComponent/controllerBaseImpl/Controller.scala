@@ -118,10 +118,10 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def setPossibleCells(pC: Set[Int]): GameBoardInterface = gameBoard.setPossibleCell(pC)
 
-  override def setPossibleCellsTrueOrFalse(availableCells: List[Int], boolean: Boolean): Unit = {
-    boolean match {
-      case true => gameBoard = gameBoard.setPosiesCellTrue(availableCells)
-      case false => gameBoard = gameBoard.setPosiesCellFalse(availableCells)
+  override def setPossibleCellsTrueOrFalse(availableCells: List[Int]): Unit = {
+    state.state match {
+      case SelectFigure(controller) => gameBoard = gameBoard.setPosiesCellTrue(availableCells)
+      case _ => gameBoard = gameBoard.setPosiesCellFalse(availableCells)
     }
     publish(new GameBoardChanged)
   }

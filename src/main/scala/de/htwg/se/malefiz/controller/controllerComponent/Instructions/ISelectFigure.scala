@@ -27,7 +27,7 @@ object ISelectFigure extends InstructionTrait {
   // Für die ausgewhäte werden die Cellen markiert auf die er springen kann
   val select3: Handler0 = {
     case Request(inputList, gameState, controller) =>
-      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, true)
+      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
       Request(inputList, gameState, controller)
   }
 

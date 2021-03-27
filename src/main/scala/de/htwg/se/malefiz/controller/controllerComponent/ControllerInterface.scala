@@ -61,7 +61,7 @@ trait ControllerInterface extends Publisher {
 
   def setPossibleFiguresTrueOrFalse(playerNumber: Int): Unit
 
-  def setPossibleCellsTrueOrFalse(toList: List[Int], bool: Boolean): Unit
+  def setPossibleCellsTrueOrFalse(toList: List[Int]): Unit
 
   def execute(string: String): Unit
 

@@ -132,14 +132,14 @@ class ControllerSpec extends WordSpec with Matchers {
         controllerNew.execute("exit")
       }
       "The Controller can set the attribut 'possibleCells' true" in {
-        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33), true)
+        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(true)
         controller.gameBoard.cellList(31).possibleCells should be(true)
         controller.gameBoard.cellList(32).possibleCells should be(true)
         controller.gameBoard.cellList(33).possibleCells should be(true)
       }
       "The Controller can set a List of Cell the Attribut possible Cell false" in {
-        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33), false)
+        controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(false)
         controller.gameBoard.cellList(31).possibleCells should be(false)
         controller.gameBoard.cellList(32).possibleCells should be(false)

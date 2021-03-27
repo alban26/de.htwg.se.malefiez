@@ -27,7 +27,7 @@ object ISetWall extends InstructionTrait {
     case Request(inputList, gameState, controller) =>
       controller.setDicedNumber(0)
       controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
-      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList, false)
+      controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
       controller.setPlayersTurn(
         controller.nextPlayer(controller.gameBoard.players, controller.gameBoard.playersTurn.get.playerNumber - 1)
       )
