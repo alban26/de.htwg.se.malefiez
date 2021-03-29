@@ -1,5 +1,6 @@
 package de.htwg.se.malefiz.model.gameBoardComponent
 
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -40,7 +41,7 @@ trait GameBoardInterface {
 
   def setStatementStatus(statement: Statements): GameBoard
 
-  def setPossibleCell(possibleCells: Set[Int]): GameBoard
+  def setPossibleCell(pC: Set[Int]): GameBoard
 
   def rollDice(): GameBoard
 
@@ -51,16 +52,16 @@ trait GameBoardInterface {
   def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
 
 
-  def setPosiesCellTrue(listOfCellNumbers: List[Int]): GameBoard
+  def setPosiesCellTrue(n: List[Int]): GameBoard
 
-  def setPossibleCell1True(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
+  def setPossibleCell1True(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
 
   def setPossibleCellTrue(cellNumber: Int): Cell
 
 
   def setPosiesCellFalse(cellList: List[Int]): GameBoard
 
-  def setPossibleCell1False(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
+  def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
 
   def setPossibleCellFalse(cellNumber: Int): Cell
 
@@ -88,7 +89,7 @@ trait GameBoardInterface {
 
   def createPlayer(text: String): GameBoard
 
-  def nextPlayer(list: List[Player], playerNumber: Int): Option[Player]
+  def nextPlayer(list: List[Player], n: Int): Option[Player]
 
   def setFigure(figureNumber: Int, cellNumber: Int): GameBoard
 
@@ -102,19 +103,13 @@ trait GameBoardInterface {
 
   def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
 
+  def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell
 
-  def setPosiesTrue(cellNumber: Int): GameBoard
+  def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard
 
-  def setPossibleFiguresTrue(cellListLength: Int, cellNumber: Int, list: List[Cell]): List[Cell]
+  def setPossibleFiguresTrueOrFalse(cellListLength: Int, cellNumber: Int, cellList: List[Cell], state: GameState): List[Cell]
 
-  def setPossibilitiesTrue(cellNumber: Int): Cell
-
-
-  def setPosiesFalse(cellNumber: Int): GameBoard
-
-  def setPossibleFiguresFalse(cellListLength: Int, cellNumber: Int, list: List[Cell]): List[Cell]
-
-  def setPossibilitiesFalse(cellNumber: Int): Cell
+  def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
 }
 

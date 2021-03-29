@@ -127,10 +127,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
   override def setPossibleFiguresTrueOrFalse(playerNumber: Int): Unit = {
-    state.state match {
-    case Roll(controller) => gameBoard = gameBoard.execute(gameBoard.setPosiesTrue, playerNumber)
-    case _ => gameBoard = gameBoard.execute(gameBoard.setPosiesFalse, playerNumber)
-    }
+    gameBoard = gameBoard.setPosiesTrueOrFalse(playerNumber, state)
     publish(new GameBoardChanged)
   }
 
