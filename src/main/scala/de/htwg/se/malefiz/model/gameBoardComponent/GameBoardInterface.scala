@@ -31,8 +31,6 @@ trait GameBoardInterface {
 
   def returnGameBoardAsString(): String
 
-  def execute(callback: Int => GameBoard, y: Int): GameBoard
-
   def setPlayersTurn(player: Option[Player]): GameBoard
 
   def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard
@@ -103,14 +101,13 @@ trait GameBoardInterface {
 
   def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
 
-  def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell
-
   def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard
 
   def setPossibleFiguresTrueOrFalse(cellListLength: Int, cellNumber: Int, cellList: List[Cell], state: GameState): List[Cell]
 
   def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
+  def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell
 }
 
 trait DiceInterface {

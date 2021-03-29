@@ -42,8 +42,6 @@ case class GameBoard(cellList: List[Cell],
     string.toString()
   }
 
-  override def execute(callback: Int => GameBoard, y: Int): GameBoard = callback(y)
-
   override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
 
   override def setSelectedFigure(playerNumber: Int, figureNumber: Int): GameBoard =
