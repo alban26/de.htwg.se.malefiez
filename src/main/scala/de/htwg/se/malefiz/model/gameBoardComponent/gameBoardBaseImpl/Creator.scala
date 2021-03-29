@@ -45,7 +45,6 @@ case class Creator() extends CreatorInterface {
         inputData
       case Failure(f) =>
         println(f)
-        //System.exit(0)
         List.empty
     }
 
@@ -60,24 +59,22 @@ case class Creator() extends CreatorInterface {
         while (lines.hasNext) {
           val input = lines.next()
           val inputArray: Array[String] = input.split(" ")
-          for (i <- 1 until inputArray.length)
-            updateCellGraph(inputArray(0).toInt, inputArray(i).toInt, graph)
+          inputArray.map(input => updateCellGraph(inputArray(0).toInt, input.toInt, graph))
+          //for (i <- 1 until inputArray.length)
+          //  updateCellGraph(inputArray(0).toInt, inputArray(i).toInt, graph)
         }
         graph
       case Failure(f) =>
         println(f)
         Map.empty
-
     }
 
   def updateCellGraph(key: Int, value: Int, map: Map[Int, Set[Int]]): Map[Int, Set[Int]] = {
-
     map
       .get(key)
       .map(_ => map(key) += value)
       .getOrElse(map(key) = Set[Int](value))
     map
-
   }
 
 }

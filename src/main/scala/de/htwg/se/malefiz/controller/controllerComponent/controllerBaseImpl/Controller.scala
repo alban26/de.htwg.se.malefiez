@@ -116,7 +116,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def setPossibleCells(pC: Set[Int]): GameBoardInterface = gameBoard.setPossibleCell(pC)
+  override def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface = gameBoard.setPossibleCell(possibleCells)
 
   override def setPossibleCellsTrueOrFalse(availableCells: List[Int]): Unit = {
     state.state match {

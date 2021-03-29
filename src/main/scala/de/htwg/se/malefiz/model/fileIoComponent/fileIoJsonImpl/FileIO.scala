@@ -2,22 +2,18 @@ package de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl
 
 import java.io.{File, PrintWriter}
 
+import com.google.inject.{Guice, Inject}
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
-  Cell,
-  Point
-}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import de.htwg.se.malefiz.model.playerComponent.Player
-import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
 
-import scala.io.Source
-import scala.reflect.ClassManifestFactory.Nothing
+import scala.io.{BufferedSource, Source}
 
 class FileIO @Inject() extends FileIOInterface {
 
@@ -50,13 +46,15 @@ class FileIO @Inject() extends FileIOInterface {
 
   override def load: GameBoardInterface = {
 
-    val source = Source.fromFile("gameboard.json")
+    val source: BufferedSource = {
+      Source.fromFile("gameboard.json")
+    }
     val string = source.getLines.mkString
     source.close()
     val json: JsValue = Json.parse(string)
 
     val injector = Guice.createInjector(new MalefizModule)
-    var gameboard: GameBoardInterface = injector.instance[GameBoardInterface]
+    var gameBoard: GameBoardInterface = injector.instance[GameBoardInterface]
 
     implicit val pointReader: Reads[Point] = Json.reads[Point]
     implicit val cellReader: Reads[Cell] = Json.reads[Cell]
@@ -69,10 +67,10 @@ class FileIO @Inject() extends FileIOInterface {
 
     for (index <- 0 until posCells.size) {
       val possCell = (json \ "possibleCells")(index).as[Int]
-      gameboard = gameboard.setPosiesCellTrue(List(possCell))
+      gameBoard = gameBoard.setPosiesCellTrue(List(possCell))
       found += possCell
     }
-    gameboard = gameboard.setPossibleCell(found)
+    gameBoard = gameBoard.setPossibleCell(found)
 
     for (index <- 0 until 131) {
 
@@ -81,23 +79,27 @@ class FileIO @Inject() extends FileIOInterface {
       val figureNumber: Int = ((json \ "cells")(index) \ "figureNumber").as[Int]
       val hasWall: Boolean = ((json \ "cells")(index) \ "hasWall").as[Boolean]
 
-      gameboard = gameboard.setPlayer(playerNumber, cellNumber)
-      gameboard = gameboard.setFigure(figureNumber, cellNumber)
+      gameBoard = gameBoard setPlayer(playerNumber, cellNumber)
+      gameBoard = gameBoard setFigure(figureNumber, cellNumber)
 
       if (hasWall)
-        gameboard = gameboard.setWall(cellNumber)
+        gameBoard = gameBoard.setWall(cellNumber)
       if (!hasWall)
-        gameboard = gameboard.removeWall(cellNumber)
+        gameBoard = gameBoard.removeWall(cellNumber)
     }
 
     //players.filter(_.name != "").map(x => gameboard.createPlayer(x.name))
 
+    players.foreach(player => if (player.name != "") gameBoard = gameBoard.createPlayer(player.name))
+
+    /*
     for (player <- players)
       if (player != "")
         gameboard = gameboard.createPlayer(player.name)
+    */
 
-    gameboard = gameboard.setPossibleCell(posCells)
-    gameboard
+    gameBoard = gameBoard.setPossibleCell(posCells)
+    gameBoard
 
   }
 

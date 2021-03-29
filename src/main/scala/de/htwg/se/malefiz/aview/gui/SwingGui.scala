@@ -22,10 +22,10 @@ import scala.swing.event.{ButtonClicked, _}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
 
-  val bimage: BufferedImage = ImageIO.read(
+  val image: BufferedImage = ImageIO.read(
     new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png")
   )
-  val g2d: Graphics2D = bimage.createGraphics()
+  val g2d: Graphics2D = image.createGraphics()
 
   title = "Malefiz"
   centerOnScreen()
@@ -95,9 +95,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   val panel: Panel = new Panel {
 
     override def paint(g: Graphics2D): Unit =
-      g.drawImage(bimage, 0, 0, null)
+      g.drawImage(image, 0, 0, null)
 
-    preferredSize = new Dimension(bimage.getWidth(null), bimage.getHeight())
+    preferredSize = new Dimension(image.getWidth(null), image.getHeight())
     listenTo(mouse.clicks)
 
     reactions += {
@@ -172,10 +172,19 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     true
   }
 
-  def getRange(u: Int): Set[Int] = {
-    var lowR = u
-    var highR = u
+  def getRange(pixel: Int): Set[Int] = {
+    var lowR = pixel
+    var highR = pixel
     var range: Set[Int] = Set().empty
+
+    LazyList.range(0, 20).foreach(i => {
+      lowR = lowR - 1
+      range += lowR
+      highR = highR + 1
+      range += highR
+    })
+
+    /*
     for (i <- 0 to 20) {
       lowR = lowR - 1
       range += lowR
@@ -184,6 +193,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       highR = highR + 1
       range += highR
     }
+     */
     range
   }
 
@@ -244,13 +254,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     )
 
     controller.gameBoard.cellList.map(cell =>
-      if (
-        cell.possibleCells && cell.playerNumber != controller.gameBoard.playersTurn.get.playerNumber
-      )
-        this.highlightCells(
-          cell.coordinates.x_coordinate,
-          cell.coordinates.y_coordinate
-        )
+      if (cell.possibleCells && cell.playerNumber != controller.gameBoard.playersTurn.get.playerNumber)
+        this.highlightCells(cell.coordinates.x_coordinate, cell.coordinates.y_coordinate)
     )
   }
 
@@ -319,76 +324,16 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       c.anchor = anchor
       c
     }
-    add(
-      playerLabel,
-      constraints(
-        0,
-        1,
-        gridWidth = 2,
-        fill = GridBagPanel.Fill.Both,
-        ipadX = 104,
-        ipadY = 15
-      )
-    )
-    add(
-      playerArea,
-      constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
-    )
-    add(
-      playerTurnLabel,
-      constraints(
-        2,
-        1,
-        gridWidth = 2,
-        fill = GridBagPanel.Fill.Both,
-        ipadX = 104,
-        ipadY = 15
-      )
-    )
-    add(
-      playerTurnArea,
-      constraints(2, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
-    )
-    add(
-      cubeLabel,
-      constraints(4, 1, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15)
-    )
+    add(playerLabel, constraints(0, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(playerArea, constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(playerTurnLabel, constraints(2, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(playerTurnArea, constraints(2, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(cubeLabel, constraints(4, 1, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
     add(cubeButton, constraints(4, 2))
-    add(
-      randomNumberLabel,
-      constraints(
-        6,
-        1,
-        gridWidth = 2,
-        fill = GridBagPanel.Fill.Both,
-        ipadX = 104,
-        ipadY = 15
-      )
-    )
-    add(
-      randomNumberArea,
-      constraints(6, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both)
-    )
-    add(
-      informationArea,
-      constraints(
-        0,
-        3,
-        gridWidth = 8,
-        fill = GridBagPanel.Fill.Both,
-        ipadY = 35
-      )
-    )
-    add(
-      panel,
-      constraints(
-        0,
-        0,
-        gridWidth = 9,
-        ipadX = bimage.getWidth(null),
-        ipadY = bimage.getHeight(null)
-      )
-    )
+    add(randomNumberLabel, constraints(6, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
+    add(randomNumberArea, constraints(6, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
+    add(informationArea, constraints(0, 3, gridWidth = 8, fill = GridBagPanel.Fill.Both, ipadY = 35))
+    add(panel, constraints(0, 0, gridWidth = 9, ipadX = image.getWidth(null), ipadY = image.getHeight(null)))
   }
 
   listenTo(cubeButton, controller)
@@ -396,7 +341,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`cubeButton`) =>
       controller.execute("r")
-      randomNumberArea.text = controller.gameBoard.dicedNumber.toString
+      randomNumberArea.text = controller.gameBoard.dicedNumber.get.toString
       updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()

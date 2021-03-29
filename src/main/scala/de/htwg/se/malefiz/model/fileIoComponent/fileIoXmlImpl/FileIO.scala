@@ -38,7 +38,7 @@ class FileIO @Inject() extends FileIOInterface {
 
   override def load: GameBoardInterface = {
     val injector = Guice.createInjector(new MalefizModule)
-    var gameboard: GameBoardInterface = injector.instance[GameBoardInterface]
+    var gameBoard: GameBoardInterface = injector.instance[GameBoardInterface]
     //var gameStateT: GameState = injector.instance[GameState]
     //var controller: ControllerInterface = injector.instance[ControllerInterface]
 
@@ -50,15 +50,15 @@ class FileIO @Inject() extends FileIOInterface {
     var found: Set[Int] = Set[Int]()
     for (pos <- pCellNodes) {
       val possCell = (pos \ "@posCell").text.toInt
-      gameboard = gameboard.setPosiesCellTrue(List(possCell))
+      gameBoard = gameBoard.setPosiesCellTrue(List(possCell))
       found += possCell
     }
-    gameboard = gameboard.setPossibleCell(found)
+    gameBoard = gameBoard.setPossibleCell(found)
 
     for (player <- playerNodes) {
       val playerName: String = (player \ "@playername").text
       if (playerName != "")
-        gameboard = gameboard.createPlayer(playerName)
+        gameBoard = gameBoard.createPlayer(playerName)
     }
 
     for (cell <- cellNodes) {
@@ -68,17 +68,17 @@ class FileIO @Inject() extends FileIOInterface {
       val figureNumber: Int = (cell \ "@figurenumber").text.toInt
       val hasWall: Boolean = (cell \ "@haswall").text.toBoolean
 
-      gameboard = gameboard.setPlayer(playerNumber, cellNumber)
-      gameboard = gameboard.setFigure(figureNumber, cellNumber)
+      gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
+      gameBoard = gameBoard.setFigure(figureNumber, cellNumber)
 
       if (hasWall)
-        gameboard = gameboard.setWall(cellNumber)
+        gameBoard = gameBoard.setWall(cellNumber)
       if (!hasWall)
-        gameboard = gameboard.removeWall(cellNumber)
+        gameBoard = gameBoard.removeWall(cellNumber)
 
     }
 
-    gameboard
+    gameBoard
   }
 
   override def save(gameboard: GameBoardInterface, controller: ControllerInterface): Unit =

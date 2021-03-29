@@ -37,18 +37,18 @@ class EntryGui (controller: ControllerInterface) extends Frame {
                     ipadY: Int = 0,
                     anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
-      val c = new Constraints
-      c.gridx = x
-      c.gridy = y
-      c.gridwidth = gridWidth
-      c.gridheight = gridHeight
-      c.weightx = weightX
-      c.weighty = weightY
-      c.fill = fill
-      c.ipadx = ipadX
-      c.ipady = ipadY
-      c.anchor = anchor
-      c
+      val contraint = new Constraints
+      contraint.gridx = x
+      contraint.gridy = y
+      contraint.gridwidth = gridWidth
+      contraint.gridheight = gridHeight
+      contraint.weightx = weightX
+      contraint.weighty = weightY
+      contraint.fill = fill
+      contraint.ipadx = ipadX
+      contraint.ipady = ipadY
+      contraint.anchor = anchor
+      contraint
     }
 
     add(welcomeLabel,
