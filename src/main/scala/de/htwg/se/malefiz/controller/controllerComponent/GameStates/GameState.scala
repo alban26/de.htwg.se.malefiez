@@ -4,14 +4,14 @@ import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, S
 
 case class GameState (controller: ControllerInterface) {
 
-  var state: State[GameState] = Setup(controller)
+  var currentState: State[GameState] = Setup(controller)
 
   def run(input: String): Unit = {
-    state.handle(input, this)
+    currentState.handle(input, this)
   }
 
   def nextState(state: State[GameState]): Unit = {
-    this.state = state
+    this.currentState = state
   }
 
 }

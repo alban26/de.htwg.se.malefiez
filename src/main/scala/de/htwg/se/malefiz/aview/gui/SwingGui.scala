@@ -105,7 +105,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       case MouseClicked(_, p, _, 1, _) =>
         mouseX = getRange(p.x)
         mouseY = getRange(p.y)
-        val state = controller.getGameState.state
+        val state = controller.getGameState.currentState
         if (state.isInstanceOf[SelectFigure])
           controller.gameBoard.cellList.map(cell =>
             if (

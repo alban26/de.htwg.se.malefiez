@@ -143,7 +143,7 @@ class FileIO @Inject() extends FileIOInterface {
       "diceNumber" -> controller.gameBoard.dicedNumber,
       "selectedFigure1" -> controller.gameBoard.selectedFigure.get._1,
       "selectedFigure2" -> controller.gameBoard.selectedFigure.get._2,
-      "gameState" -> controller.getGameState.state.toString.toInt,
+      "gameState" -> controller.getGameState.currentState.toString.toInt,
       "possibleCells" -> gameBoard.possibleCells,
       "cells" -> Json.toJson(
         for {

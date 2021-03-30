@@ -45,7 +45,7 @@ class TuiSpec extends WordSpec with Matchers {
       "At the beginning you will entry to the Setup-State" +
         "In our case its defined as Number -> 4" +
         "Also the Statement is set which is shown in the GUI and in the TUI" in {
-        controller.state.state.toString should be("4")
+        controller.state.currentState.toString should be("4")
         controller.gameBoard.statementStatus.get should be(Statements.addPlayer)
       }
       "read names from the console" in {
@@ -65,7 +65,7 @@ class TuiSpec extends WordSpec with Matchers {
         controller.gameBoard.statementStatus.get should be(Statements.roll)
         controller.gameBoard.playersTurn.get.playerNumber should be(1)
         controller.gameBoard.playersTurn.get.name should be("Robert")
-        controller.state.state.toString should be("1")
+        controller.state.currentState.toString should be("1")
       }
       "So when Robert is pressing any key now, he's going to roll the dice" in {
         tui.processInput("k")
@@ -77,7 +77,7 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "Now Robert needs to select his Figure. In this case he gets to the next State " +
         "The 'Select Figure State' is the Number 2" in {
-        controller.state.state.toString should be("2")
+        controller.state.currentState.toString should be("2")
       }
       "Well so let's say he chooses his second Figure. In this case " +
         "he types in '1 2', because he is the first player (1) and wants his second figure(2)" +
@@ -96,12 +96,12 @@ class TuiSpec extends WordSpec with Matchers {
       "What if Robert wants to take another Figure - He has to klick again on his figure " in {
         tui.processInput("1 2")
         tui.processInput("1 4")
-        controller.state.state.toString should be("3")
+        controller.state.currentState.toString should be("3")
       }
       "Robert sets his Figure on 22" in {
-        controller.state.state.toString should be("3")
+        controller.state.currentState.toString should be("3")
         tui.processInput("22")
-        controller.state.state.toString should be("1")
+        controller.state.currentState.toString should be("1")
       }
       "After he has set his Figure, it is Albans turn now." in {
         controller.gameBoard.playersTurn.get.name should be("Alban")
@@ -114,10 +114,10 @@ class TuiSpec extends WordSpec with Matchers {
         tui.processInput("r")
         controller.setDicedNumber(5)
         tui.processInput("2 1")
-        controller.state.state.toString should be("3")
+        controller.state.currentState.toString should be("3")
         tui.processInput("46")
         controller.gameBoard.statementStatus.get should be(Statements.wall)
-        controller.state.state.toString should be("5")
+        controller.state.currentState.toString should be("5")
 
       }
 
@@ -173,7 +173,7 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "We can undo this action " in {
         tui.processInput("undo")
-        controller.state.state.toString should be("3")
+        controller.state.currentState.toString should be("3")
         controller.gameBoard.playersTurn.get.name should be("Robert")
       }
       "If we want to save the game, we can click on edit in the menubar and save the game." +

@@ -125,7 +125,7 @@ class FileIO @Inject() extends FileIOInterface {
       controller.gameBoard.selectedFigure.get._2.toString
     } ></selectedFigure>
 
-      <gameState state={controller.getGameState.state.toString}></gameState>
+      <gameState state={controller.getGameState.currentState.toString}></gameState>
 
     </gameboard>
 

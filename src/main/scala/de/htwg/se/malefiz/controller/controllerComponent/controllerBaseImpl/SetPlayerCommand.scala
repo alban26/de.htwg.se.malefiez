@@ -13,7 +13,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
   var mDicedNumber: Int = controller.gameBoard.dicedNumber.get
   var mPlayersTurn: Player = controller.gameBoard.playersTurn.get
   var mStatementStatus: Statements = controller.gameBoard.statementStatus.get
-  var mS: State[GameState] = controller.state.state
+  var mS: State[GameState] = controller.state.currentState
 
   override def doStep(): Unit = {
     controller.gameBoard = controller.gameBoard.removeActualPlayerAndFigureFromCell(playerNumber, playerFigure)
@@ -52,13 +52,13 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
 
     controller.gameBoard = memento
     controller.setDicedNumber(mDicedNumber)
-    controller.state.state = mS
+    controller.state.currentState = mS
     controller.setPlayersTurn(Option(mPlayersTurn))
     controller.setStatementStatus(mStatementStatus)
 
     memento = new_memento
     mDicedNumber = new_mDicedNumber.get
-    mS = new_mS.state
+    mS = new_mS.currentState
     mPlayersTurn = new_mPlayersTurn
     mStatementStatus = new_mStatementStatus
   }

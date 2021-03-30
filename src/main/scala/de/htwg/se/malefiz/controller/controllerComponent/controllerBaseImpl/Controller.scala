@@ -119,12 +119,12 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   override def setPossibleCells(possibleCells: Set[Int]): GameBoardInterface = gameBoard.setPossibleCell(possibleCells)
 
   override def setPossibleCellsTrueOrFalse(availableCells: List[Int]): Unit = {
-    gameBoard = gameBoard.setPossibleCellsTrueOrFalse(availableCells, state.state.toString)
+    gameBoard = gameBoard.setPossibleCellsTrueOrFalse(availableCells, state.currentState.toString)
     publish(new GameBoardChanged)
   }
 
   override def setPossibleFiguresTrueOrFalse(playerNumber: Int): Unit = {
-    gameBoard = gameBoard.setPossibleFiguresTrueOrFalse(playerNumber, state.state.toString)
+    gameBoard = gameBoard.setPossibleFiguresTrueOrFalse(playerNumber, state.currentState.toString)
     publish(new GameBoardChanged)
   }
 
