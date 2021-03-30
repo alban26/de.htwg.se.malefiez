@@ -105,7 +105,7 @@ trait GameBoardInterface {
 
   def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
-  def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell
+  def markFigure(boolean: Boolean)(cellNumber: Int): Cell
 }
 
 trait DiceInterface {

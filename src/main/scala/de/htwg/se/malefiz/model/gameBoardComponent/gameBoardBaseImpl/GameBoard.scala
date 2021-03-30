@@ -166,23 +166,23 @@ case class GameBoard(cellList: List[Cell],
 
   override def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard = {
     state.state.toString match {
-      case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(setPossibilitiesTrueOrFalse(true)))
-      case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(setPossibilitiesTrueOrFalse(false)))
+      case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(true)))
+      case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(false)))
     }
   }
 
-  override def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(markCells: Int => Cell): List[Cell] =
+  override def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(markFigures: Int => Cell): List[Cell] =
     if (cellListLength == -1)
       cellList
     else if (cellList(cellListLength).playerNumber == cellNumber)
       setPossibleFigures(
         cellListLength - 1,
         cellNumber,
-        cellList.updated(cellList(cellListLength).cellNumber, markCells(cellListLength))
-      )(markCells)
+        cellList.updated(cellList(cellListLength).cellNumber, markFigures(cellListLength))
+      )(markFigures)
     else
-      setPossibleFigures(cellListLength - 1, cellNumber, cellList)(markCells)
+      setPossibleFigures(cellListLength - 1, cellNumber, cellList)(markFigures)
 
-  override def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleFigures = boolean)
+  override def markFigure(boolean: Boolean)(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleFigures = boolean)
 
 }
