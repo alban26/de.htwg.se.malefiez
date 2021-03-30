@@ -1,6 +1,8 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
+
+
 import scala.collection.mutable.Map
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
@@ -59,9 +61,12 @@ case class Creator() extends CreatorInterface {
         while (lines.hasNext) {
           val input = lines.next()
           val inputArray: Array[String] = input.split(" ")
-          inputArray.map(input => updateCellGraph(inputArray(0).toInt, input.toInt, graph))
-          //for (i <- 1 until inputArray.length)
-          //  updateCellGraph(inputArray(0).toInt, inputArray(i).toInt, graph)
+          val keyValue = inputArray(0)
+          inputArray.update(0, "")
+          inputArray.map(input =>
+            if (input != "") {
+              updateCellGraph(keyValue.toInt, input.toInt, graph)
+            })
         }
         graph
       case Failure(f) =>

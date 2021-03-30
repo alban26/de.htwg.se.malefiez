@@ -1,25 +1,14 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.SetPlayerCommand
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{
-  GameState,
-  Roll
-}
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
-  Cell,
-  Creator,
-  GameBoard
-}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure}
+import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 
 import scala.collection.mutable.Map
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.{
-  Statements,
-  addPlayer
-}
-
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer, selectField, selectFigure}
 import java.lang.StackWalker
 
 class ControllerSpec extends WordSpec with Matchers {
@@ -77,11 +66,9 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.setSelectedFigure(1, 5)
         controller.gameBoard.selectedFigure.get should be((1, 5))
       }
-      "The Controller has the ability to save a gamestate" in {
+      "The Controller has the ability to save a gameState" in {
         controller.state.nextState(Roll(controller))
-        controller.getGameState should be(
-          GameState(controller.getGameState.controller)
-        )
+        controller.getGameState.currentState.toString should be("1")
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
         controller.calculatePath(20, 5)
@@ -94,13 +81,10 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.cellList(22).figureNumber should be(1)
       }
       "The controller can undo the last command" in {
-        val a = new SetPlayerCommand(2, 2, 30, controller)
-        a.undoStep() should be(())
-        a.redoStep() should be(())
         controller.undo()
         controller.gameBoard.cellList(22).playerNumber should be(0)
         controller.gameBoard.cellList(22).figureNumber should be(0)
-        controller.gameBoard.statementStatus should be
+
       }
       "The Controller can reset the the possible Cells of the actual turn" in {
         controller.resetPossibleCells()
@@ -122,7 +106,7 @@ class ControllerSpec extends WordSpec with Matchers {
               dicedNumber = Option(1),
               playersTurn = Option(newPlayerList.head),
               selectedFigure = Option((2, 1)),
-              stateNumber = Option(4),
+              stateNumber = Option(2),
               statementStatus = Option(addPlayer)
             )
           )
@@ -132,6 +116,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controllerNew.execute("exit")
       }
       "The Controller can set the attribut 'possibleCells' true" in {
+        controller.state.currentState = SelectFigure(controller)
         controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(true)
         controller.gameBoard.cellList(31).possibleCells should be(true)
@@ -139,6 +124,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.cellList(33).possibleCells should be(true)
       }
       "The Controller can set a List of Cell the Attribut possible Cell false" in {
+        controller.state.currentState = Roll(controller)
         controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(false)
         controller.gameBoard.cellList(31).possibleCells should be(false)
