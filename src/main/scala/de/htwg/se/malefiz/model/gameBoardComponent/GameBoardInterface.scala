@@ -103,8 +103,6 @@ trait GameBoardInterface {
 
   def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard
 
-  def setPossibleFiguresTrueOrFalse(cellListLength: Int, cellNumber: Int, cellList: List[Cell], state: GameState): List[Cell]
-
   def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
   def setPossibilitiesTrueOrFalse(boolean: Boolean)(cellNumber: Int): Cell
