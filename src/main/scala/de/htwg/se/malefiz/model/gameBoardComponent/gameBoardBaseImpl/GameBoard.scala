@@ -1,7 +1,6 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.Malefiz._
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.playerComponent.Player
@@ -80,8 +79,8 @@ case class GameBoard(cellList: List[Cell],
 
   override def setPossibleCellsTrueOrFalse(cellNumbers: List[Int], state: String): GameBoard = {
     state match {
-      case "2" => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(true)))
-      case _ => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(false)))
+      case "2" => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(boolean = true)))
+      case _ => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(boolean = false)))
     }
   }
 
@@ -157,8 +156,8 @@ case class GameBoard(cellList: List[Cell],
 
   override def setPossibleFiguresTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard = {
     stateNr match {
-      case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(true)))
-      case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(false)))
+      case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(boolean = true)))
+      case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(boolean = false)))
     }
   }
 

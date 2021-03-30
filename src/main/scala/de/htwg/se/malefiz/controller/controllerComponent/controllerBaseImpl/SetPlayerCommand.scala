@@ -21,11 +21,8 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     if (controller.gameBoard.cellList(cellNumber).playerNumber != 0) {
       controller.gameBoard = controller.gameBoard.setPlayer(
         controller.gameBoard.cellList(cellNumber).playerNumber,
-        controller.gameBoard
-          .getHomeNr(
-            controller.gameBoard.cellList(cellNumber).playerNumber,
-            controller.gameBoard.cellList(cellNumber).figureNumber
-          )
+        controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,
+            controller.gameBoard.cellList(cellNumber).figureNumber)
       )
       controller.gameBoard = controller.gameBoard.setFigure(
         controller.gameBoard.cellList(cellNumber).figureNumber,
@@ -37,7 +34,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
       )
     }
     if (controller.gameBoard.cellList(cellNumber).hasWall)
-      controller.placeOrRemoveWall(cellNumber, false)
+      controller.placeOrRemoveWall(cellNumber, boolean = false)
     controller.gameBoard = controller.gameBoard.setPlayer(playerNumber, cellNumber)
     controller.gameBoard = controller.gameBoard.setFigure(playerFigure, cellNumber)
   }

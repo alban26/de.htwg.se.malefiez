@@ -13,3 +13,4 @@ libraryDependencies += "com.typesafe.play" %% "play-json-joda" % "2.9.0"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.9.0"
 
 coverageExcludedPackages := "<empty>;.*gui.*;.*Malefiz"
+coverageExcludedPackages := "<empty>;.*fileIoXmlImpl.*;.*Malefiz"

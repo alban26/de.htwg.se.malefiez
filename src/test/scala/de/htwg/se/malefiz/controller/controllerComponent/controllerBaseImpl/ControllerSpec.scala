@@ -1,15 +1,13 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.SetPlayerCommand
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{GameState, Roll, SelectFigure}
+import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SelectFigure}
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.model.playerComponent.Player
-import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+import org.scalatest.matchers.should.Matchers
 
 import scala.collection.mutable.Map
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer, selectField, selectFigure}
-import java.lang.StackWalker
 
 class ControllerSpec extends WordSpec with Matchers {
   "A Controller" when {
@@ -55,11 +53,11 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.cellList(10).playerNumber should be(0)
       }
       "notify its Observer after setting a Wall on a Cell" in {
-        controller.placeOrRemoveWall(50, true)
+        controller.placeOrRemoveWall(50, boolean = true)
         controller.gameBoard.cellList(50).hasWall should be(true)
       }
-      "The Controller has the abililty to remove a wall" in {
-        controller.placeOrRemoveWall(50, false)
+      "The Controller has the ability to remove a wall" in {
+        controller.placeOrRemoveWall(50, boolean = false)
         controller.gameBoard.cellList(50).hasWall should be(false)
       }
       "The Controller has the ability to save the current selected figure of a player" in {
@@ -72,7 +70,6 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "notify its Observer after the cube is thrown which cells are possible to go" in {
         controller.calculatePath(20, 5)
-
       }
       "The Controller can set a players figure and con remove it " in {
         controller.placePlayer(1, 22)
@@ -115,7 +112,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controllerNew.gameBoard.cellList(22).playerNumber should be(0)
         controllerNew.execute("exit")
       }
-      "The Controller can set the attribut 'possibleCells' true" in {
+      "The Controller can set the attribute 'possibleCells' true" in {
         controller.state.currentState = SelectFigure(controller)
         controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(true)
@@ -123,7 +120,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.cellList(32).possibleCells should be(true)
         controller.gameBoard.cellList(33).possibleCells should be(true)
       }
-      "The Controller can set a List of Cell the Attribut possible Cell false" in {
+      "The Controller can set a List of Cell the Attribute possible Cell false" in {
         controller.state.currentState = Roll(controller)
         controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
         controller.gameBoard.cellList(30).possibleCells should be(false)
