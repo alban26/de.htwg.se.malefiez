@@ -78,6 +78,7 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.gameBoard.cellList(22).figureNumber should be(1)
       }
       "The controller can undo the last command" in {
+        val a = new SetPlayerCommand(2,2,30, controller)
         controller.undo()
         controller.gameBoard.cellList(22).playerNumber should be(0)
         controller.gameBoard.cellList(22).figureNumber should be(0)
