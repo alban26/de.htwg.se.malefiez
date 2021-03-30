@@ -78,32 +78,23 @@ case class GameBoard(cellList: List[Cell],
 
   }
 
+  override def setPossibleCellsTrueOrFalse(cellNumbers: List[Int], state: String): GameBoard = {
+    state match {
+      case "2" => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(true)))
+      case _ => copy(setPossibleCells(cellList.length - 1, cellNumbers, cellList)(markCell(false)))
+    }
+  }
 
-  override def setPosiesCellTrue(listOfCellNumbers: List[Int]): GameBoard = copy(setPossibleCell1True(cellList.length - 1, listOfCellNumbers, cellList))
-
-  override def setPossibleCell1True(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell] =
+  override def setPossibleCells(cellListLength: Int, listOfCellNumbers: List[Int], listOfCells: List[Cell])(markCells: Int => Cell): List[Cell] =
     if (cellListLength == -1)
-      list
-    else if (listOfCellNumbers contains list(cellListLength).cellNumber)
-      setPossibleCell1True(cellListLength - 1, listOfCellNumbers, list.updated(list(cellListLength).cellNumber, setPossibleCellTrue(cellListLength)))
+      listOfCells
+    else if (listOfCellNumbers contains listOfCells(cellListLength).cellNumber)
+      setPossibleCells(cellListLength - 1, listOfCellNumbers, listOfCells.updated(listOfCells(cellListLength).cellNumber, markCells(cellListLength)))(markCells)
     else
-      setPossibleCell1True(cellListLength - 1, listOfCellNumbers, list)
+      setPossibleCells(cellListLength - 1, listOfCellNumbers, listOfCells)(markCells)
 
+  override def markCell(boolean: Boolean)(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleCells = boolean)
 
-  override def setPossibleCellTrue(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleCells = true)
-
-  override def setPosiesCellFalse(listOfCellNumbers: List[Int]): GameBoard =
-    copy(setPossibleCell1False(cellList.length - 1, listOfCellNumbers, cellList))
-
-  override def setPossibleCell1False(cellListLength: Int, listOfCells: List[Int], list: List[Cell]): List[Cell] =
-    if (cellListLength == -1)
-      list
-    else if (listOfCells contains list(cellListLength).cellNumber)
-      setPossibleCell1False(cellListLength - 1, listOfCells, list.updated(list(cellListLength).cellNumber, setPossibleCellFalse(cellListLength)))
-    else
-      setPossibleCell1False(cellListLength - 1, listOfCells, list)
-
-  override def setPossibleCellFalse(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleCells = false)
 
   override def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard = {
     val cell = getPlayerFigure(playerNumber, figureNumber)
@@ -164,7 +155,7 @@ case class GameBoard(cellList: List[Cell],
   override def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell =
     cellList(cellNumber).copy(playerNumber = playerNumber)
 
-  override def setPosiesTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard = {
+  override def setPossibleFiguresTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard = {
     stateNr match {
       case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(true)))
       case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(false)))

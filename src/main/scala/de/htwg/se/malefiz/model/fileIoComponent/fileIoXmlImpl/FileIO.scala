@@ -50,7 +50,7 @@ class FileIO @Inject() extends FileIOInterface {
     var found: Set[Int] = Set[Int]()
     for (pos <- pCellNodes) {
       val possCell = (pos \ "@posCell").text.toInt
-      gameBoard = gameBoard.setPosiesCellTrue(List(possCell))
+      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
       found += possCell
     }
     gameBoard = gameBoard.setPossibleCell(found)

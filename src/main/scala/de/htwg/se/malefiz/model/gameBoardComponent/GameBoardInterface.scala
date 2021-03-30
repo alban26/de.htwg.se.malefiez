@@ -50,18 +50,11 @@ trait GameBoardInterface {
   def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
 
 
-  def setPosiesCellTrue(listOfCellNumbers: List[Int]): GameBoard
+  def setPossibleCellsTrueOrFalse(listOfCellNumbers: List[Int], state: String): GameBoard
 
-  def setPossibleCell1True(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
+  def setPossibleCells(cellListLength: Int, listOfCellNumbers: List[Int], listOfCells: List[Cell])(markCells: Int => Cell): List[Cell]
 
-  def setPossibleCellTrue(cellNumber: Int): Cell
-
-
-  def setPosiesCellFalse(cellList: List[Int]): GameBoard
-
-  def setPossibleCell1False(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
-
-  def setPossibleCellFalse(cellNumber: Int): Cell
+  def markCell(boolean: Boolean)(cellNumber: Int): Cell
 
 
   def removeActualPlayerAndFigureFromCell(playerNumber: Int, figureNumber: Int): GameBoard
@@ -101,7 +94,7 @@ trait GameBoardInterface {
 
   def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
 
-  def setPosiesTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard
+  def setPossibleFiguresTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard
 
   def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
