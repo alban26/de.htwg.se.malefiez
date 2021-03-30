@@ -39,7 +39,7 @@ trait GameBoardInterface {
 
   def setStatementStatus(statement: Statements): GameBoard
 
-  def setPossibleCell(pC: Set[Int]): GameBoard
+  def setPossibleCell(possibleCells: Set[Int]): GameBoard
 
   def rollDice(): GameBoard
 
@@ -50,16 +50,16 @@ trait GameBoardInterface {
   def getPossibleCells(startCellNumber: Int, cube: Int): GameBoard
 
 
-  def setPosiesCellTrue(n: List[Int]): GameBoard
+  def setPosiesCellTrue(listOfCellNumbers: List[Int]): GameBoard
 
-  def setPossibleCell1True(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
+  def setPossibleCell1True(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
 
   def setPossibleCellTrue(cellNumber: Int): Cell
 
 
   def setPosiesCellFalse(cellList: List[Int]): GameBoard
 
-  def setPossibleCell1False(m: Int, n: List[Int], lis: List[Cell]): List[Cell]
+  def setPossibleCell1False(cellListLength: Int, listOfCellNumbers: List[Int], list: List[Cell]): List[Cell]
 
   def setPossibleCellFalse(cellNumber: Int): Cell
 
@@ -87,7 +87,7 @@ trait GameBoardInterface {
 
   def createPlayer(text: String): GameBoard
 
-  def nextPlayer(list: List[Player], n: Int): Option[Player]
+  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
 
   def setFigure(figureNumber: Int, cellNumber: Int): GameBoard
 
