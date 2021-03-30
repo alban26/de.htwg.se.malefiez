@@ -164,8 +164,8 @@ case class GameBoard(cellList: List[Cell],
   override def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell =
     cellList(cellNumber).copy(playerNumber = playerNumber)
 
-  override def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard = {
-    state.state.toString match {
+  override def setPosiesTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard = {
+    stateNr match {
       case "1" => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(true)))
       case _ => copy(setPossibleFigures(cellList.length - 1, cellNumber, cellList)(markFigure(false)))
     }

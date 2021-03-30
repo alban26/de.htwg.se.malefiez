@@ -101,7 +101,7 @@ trait GameBoardInterface {
 
   def setPlayerOnCell(playerNumber: Int, cellNumber: Int): Cell
 
-  def setPosiesTrueOrFalse(cellNumber: Int, state: GameState): GameBoard
+  def setPosiesTrueOrFalse(cellNumber: Int, stateNr: String): GameBoard
 
   def setPossibleFigures(cellListLength: Int, cellNumber: Int, cellList: List[Cell])(function: Int => Cell): List[Cell]
 
