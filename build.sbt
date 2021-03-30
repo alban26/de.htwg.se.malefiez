@@ -12,3 +12,4 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1"
 libraryDependencies += "com.typesafe.play" %% "play-json-joda" % "2.9.0"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.9.0"
 
+coverageExcludedPackages := "<empty>;.*gui.*;.*Malefiz"
