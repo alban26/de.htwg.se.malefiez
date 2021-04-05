@@ -12,7 +12,7 @@ trait GameBoardInterface {
 
   def cellList: List[Cell]
 
-  def players: List[Player]
+  def players: List[Option[Player]]
 
   def gameBoardGraph: Map[Int, Set[Int]]
 
@@ -29,7 +29,15 @@ trait GameBoardInterface {
   def statementStatus: Option[Statements]
 
 
-  def returnGameBoardAsString(): String
+  def buildGameboardInfo(): Option[String]
+
+  def buildPlayerString(): Option[String]
+
+  //def buildGameBoardString(cellList: List[Cell]): Option[String]
+
+  def buildCompleteBoard(cellList: List[Cell]): Option[String]
+
+  //def gameBoardToString(playersString: String, gameBoardString: String): Option[String]
 
   def setPlayersTurn(player: Option[Player]): GameBoard
 
@@ -43,7 +51,7 @@ trait GameBoardInterface {
 
   def rollDice(): GameBoard
 
-  def setDicedNumber(dicedNumber: Int): GameBoard
+  def setDicedNumber(dicedNumber: Option[Int]): GameBoard
 
   def clearPossibleCells: GameBoard
 
@@ -80,7 +88,7 @@ trait GameBoardInterface {
 
   def createPlayer(text: String): GameBoard
 
-  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
+  def nextPlayer(playerList: List[Option[Player]], playerNumber: Int): Option[Player]
 
   def setFigure(figureNumber: Int, cellNumber: Int): GameBoard
 

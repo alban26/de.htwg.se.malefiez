@@ -12,7 +12,7 @@ class GameBoardSpec extends WordSpec with Matchers {
 
       val cellConfigFile = "project/mainCellConfiguration"
       val cellLinksFile = "project/mainCellLinks"
-      val players: List[Player] = List(Player(1, "Robert"))
+      val players: List[Option[Player]] = List(Some(Player(1, "Robert")))
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph = Creator().getCellGraph(cellLinksFile)
 

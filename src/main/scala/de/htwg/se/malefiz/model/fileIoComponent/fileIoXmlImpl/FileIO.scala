@@ -32,7 +32,7 @@ class FileIO @Inject() extends FileIOInterface {
     newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
     newController.setStateNumber(stateNumber.toInt)
 
-    newController.setPlayersTurn(Option.apply(newController.gameBoard.players(playerZahl - 1)))
+    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
     newController
   }
 
@@ -105,7 +105,7 @@ class FileIO @Inject() extends FileIOInterface {
         {
       for {
         l1 <- gameBoard.players.indices
-      } yield playerToXml(l1, gameBoard.players(l1))
+      } yield playerToXml(l1, gameBoard.players(l1).get)
     }
       </player>
       <possibleCells>

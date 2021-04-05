@@ -8,13 +8,12 @@ object IRoll extends InstructionTrait {
 
   val roll1: Handler0 = {
     case Request(inputList, gameState, controller) if inputList.head != " " =>
-      controller.setDicedNumber(controller.rollCube.get)
+      controller.setDicedNumber(controller.rollCube)
       Request(inputList, gameState, controller)
   }
 
   val roll2: Handler0 = {
     case Request(inputList, gameState, controller) =>
-      //controller.setPossibleFiguresTrue(controller.gameBoard.playersTurn.get.playerNumber)
       controller.setPossibleFiguresTrueOrFalse(controller.gameBoard.playersTurn.get.playerNumber)
       Request(inputList, gameState, controller)
   }

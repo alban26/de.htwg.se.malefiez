@@ -26,8 +26,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   def update(): Unit = {
-    textPrint(controller.gameBoardToString)
-    // textPrint(controller.gameBoard.players.mkString("\n"))
+    textPrint(controller.gameBoardToString.get)
   }
 
   def textPrint(str: String): Unit = println(str)

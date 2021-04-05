@@ -33,10 +33,9 @@ class FileIO @Inject() extends FileIOInterface {
     val f2: Int = (json \ "selectedFigure2").as[Int]
     val gameState: Int = (json \ "gameState").as[Int]
 
-    newController.setDicedNumber(diceNumber)
+    newController.setDicedNumber(Some(diceNumber))
     newController.setPlayersTurn(
-      Option
-        .apply(newController.gameBoard.players(playersTurn.playerNumber - 1))
+      newController.gameBoard.players(playersTurn.playerNumber - 1)
     )
     newController.setSelectedFigure(f1, f2)
     newController.setStateNumber(gameState)

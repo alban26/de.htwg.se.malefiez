@@ -48,7 +48,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
     val new_mStatementStatus = controller.gameBoard.statementStatus.get
 
     controller.gameBoard = memento
-    controller.setDicedNumber(mDicedNumber)
+    controller.setDicedNumber(Some(mDicedNumber))
     controller.state.currentState = mS
     controller.setPlayersTurn(Option(mPlayersTurn))
     controller.setStatementStatus(mStatementStatus)

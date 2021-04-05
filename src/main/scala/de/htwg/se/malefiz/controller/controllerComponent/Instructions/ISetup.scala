@@ -10,7 +10,7 @@ object ISetup extends InstructionTrait {
     case Request(inputList, gameState, controller)
         if inputList.contains("start") ||
           controller.gameBoard.players.length == 4 =>
-      controller.setPlayersTurn(Option.apply(controller.gameBoard.players.head))
+      controller.setPlayersTurn(controller.gameBoard.players.head)
       Request(inputList, gameState, controller)
   }
 

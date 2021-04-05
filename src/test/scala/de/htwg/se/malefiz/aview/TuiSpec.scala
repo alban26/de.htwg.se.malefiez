@@ -22,7 +22,7 @@ class TuiSpec extends WordSpec with Matchers {
       val cellConfigFile = "project/mainCellConfiguration"
       val cellLinksFile = "project/mainCellLinks"
 
-      val players: List[Player] = List().empty
+      val players: List[Option[Player]] = List().empty
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
       val possibleCells: Set[Int] = Set().empty
@@ -54,10 +54,10 @@ class TuiSpec extends WordSpec with Matchers {
 
         val playerList = controller.gameBoard.players
 
-        playerList.head.playerNumber should be(1)
-        playerList.head.name should be("Robert")
-        playerList(1).playerNumber should be(2)
-        playerList(1).name should be("Alban")
+        playerList.head.get.playerNumber should be(1)
+        playerList.head.get.name should be("Robert")
+        playerList(1).get.playerNumber should be(2)
+        playerList(1).get.name should be("Alban")
       }
       "When the game gets started by a full Players List or if typed in start, " +
         "in this case it's Roberts turn. The state's gonna be 'Roll' in our case it's -> 1 " in {
@@ -73,7 +73,7 @@ class TuiSpec extends WordSpec with Matchers {
           Statements.selectFigure
         )
         controller.gameBoard.dicedNumber.get should ((be >= 1).and(be < 7))
-        controller.setDicedNumber(1)
+        controller.setDicedNumber(Some(1))
       }
       "Now Robert needs to select his Figure. In this case he gets to the next State " +
         "The 'Select Figure State' is the Number 2" in {
@@ -112,7 +112,7 @@ class TuiSpec extends WordSpec with Matchers {
         "                           3. Set figure -> 46 : 46 is a cell which contains a wall" +
         "                           4. Now he is in state 'SetWall' in our case its '5'" in {
         tui.processInput("r")
-        controller.setDicedNumber(5)
+        controller.setDicedNumber(Some(5))
         tui.processInput("2 1")
         controller.state.currentState.toString should be("3")
         tui.processInput("46")
@@ -152,7 +152,7 @@ class TuiSpec extends WordSpec with Matchers {
       }
       "Now it's Roberts turn again. But what happens when he chooses Albans figure after throwing the Cube" in {
         tui.processInput("r")
-        controller.setDicedNumber(1)
+        controller.setDicedNumber(Some(1))
         tui.processInput("2 1")
         controller.gameBoard.statementStatus.get should be(
           Statements.selectField

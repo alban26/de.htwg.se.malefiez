@@ -21,7 +21,10 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
 
-  override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
+  //override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
+
+  override def gameBoardToString: Option[String] = gameBoard.buildCompleteBoard(gameBoard.cellList)
+
 
   override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
 
@@ -44,14 +47,14 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard.dicedNumber
   }
 
-  override def setDicedNumber(dicedNumber: Int): Unit = gameBoard = gameBoard.setDicedNumber(dicedNumber)
+  override def setDicedNumber(dicedNumber: Option[Int]): Unit = gameBoard = gameBoard.setDicedNumber(dicedNumber)
 
   override def createPlayer(name: String): Unit = {
     gameBoard = gameBoard.createPlayer(name)
     publish(new GameBoardChanged)
   }
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
+  override def nextPlayer(playerList: List[Option[Player]], playerNumber: Int): Option[Player] =
     gameBoard.nextPlayer(playerList, playerNumber)
 
   override def setPlayersTurn(player: Option[Player]): Unit = {

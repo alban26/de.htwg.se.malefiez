@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.model.playerComponent.Player
 import scala.collection.mutable.Map
 
 case class GameBoard(cellList: List[Cell],
-                     players: List[Player],
+                     players: List[Option[Player]],
                      gameBoardGraph: Map[Int, Set[Int]],
                      possibleCells: Set[Int] = Set.empty,
                      dicedNumber: Option[Int],
@@ -30,16 +30,60 @@ case class GameBoard(cellList: List[Cell],
     Option(addPlayer)
   )
 
+  //--- Spieler
+  override def buildPlayerString(): Option[String] = {
+    Some(s"""|${cellList.slice(0,20).mkString("")}
+             |""".stripMargin)
+  }
 
-  override def returnGameBoardAsString(): String = {
+
+  //--- Gameboard
+  val buildRow = (start: Int, stop: Int) => start match {
+    case 130 => s"""|${cellList.slice(start, stop).mkString("")}
+                    |""".stripMargin
+    case _ => buildGameboardString(stop) + s"""|${cellList.slice(start, stop).mkString("")}
+                                               |""".stripMargin
+  }
+
+  def buildGameboardString(start: Int): String = {
+    start match {
+      case 20 | 42 | 94 | 113 => buildRow(start, start + 17)
+      case 37 => buildRow(start, start + 5)
+      case 59 => buildRow(start, start + 4)
+      case 63 => buildRow(start, start + 13)
+      case 76 | 87 | 111 => buildRow(start, start + 2)
+      case 78 => buildRow(start, start + 9)
+      case 89 => buildRow(start, start + 5)
+      case 93 => buildRow(start, start + 1)
+      case 130 => buildRow(start, start + 1)
+    }
+  }
+
+  def buildGameboard(): Option[String] = Some(buildGameboardString(20))
+
+  override def buildGameboardInfo(): Option[String] = {
     val string = new StringBuilder("Malefiz-GameBoard\n\n")
     string.append("Players: ")
     players.map(player => string.append(player.toString + " / "))
     string.append("\n" + "Players turn: " + playersTurn.getOrElse("No registered players").toString + "\n")
     string.append("Dice: " + dicedNumber.getOrElse("Dice is not rolled yet").toString + "\n")
     string.append("Status: " + statementStatus.get.toString + "\n")
-    string.toString()
+    Some(string.toString())
   }
+
+
+  override def buildCompleteBoard(cellList: List[Cell]): Option[String] = {
+    /*
+    val a = buildGameboard().flatMap(x => buildPlayerString()
+    .flatMap(y => buildGameboardInfo().map(z => x + y + z)))
+     */
+    for {
+      gameboardString <- buildGameboard()
+      playerString <- buildPlayerString()
+      infoString <- buildGameboardInfo()
+    } yield gameboardString + playerString + infoString
+  }
+
 
   override def setPlayersTurn(player: Option[Player]): GameBoard = copy(playersTurn = player)
 
@@ -54,7 +98,7 @@ case class GameBoard(cellList: List[Cell],
 
   override def rollDice(): GameBoard = copy(dicedNumber = Dice().rollDice)
 
-  override def setDicedNumber(dicedNumber: Int): GameBoard = copy(dicedNumber = Option(dicedNumber))
+  override def setDicedNumber(dicedNumber: Option[Int]): GameBoard = copy(dicedNumber = dicedNumber)
 
   override def clearPossibleCells: GameBoard = copy(possibleCells = Set.empty)
 
@@ -71,10 +115,8 @@ case class GameBoard(cellList: List[Cell],
       found += currentCell
       gameBoardGraph(currentCell).foreach(x => if (!found.contains(x) && diceNumber != 0) recurse(x, diceNumber - 1))
     }
-
     recurse(startCell, diceNumber)
     copy(possibleCells = needed)
-
   }
 
   override def setPossibleCellsTrueOrFalse(cellNumbers: List[Int], state: String): GameBoard = {
@@ -121,13 +163,13 @@ case class GameBoard(cellList: List[Cell],
 
   override def setHasWallFalse(cellNumber: Int): Cell = cellList(cellNumber).copy(hasWall = false)
 
-  override def createPlayer(text: String): GameBoard = copy(players = players :+ Player(players.length + 1, text))
+  override def createPlayer(text: String): GameBoard = copy(players = players :+ Some(Player(players.length + 1, text)))
 
-  override def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player] =
+  override def nextPlayer(playerList: List[Option[Player]], playerNumber: Int): Option[Player] =
     if (playerNumber == playerList.length - 1)
-      Option(playerList.head)
+        playerList.head
     else
-      Option(playerList(playerNumber + 1))
+        playerList(playerNumber + 1)
 
   override def setFigure(figureNumber: Int, cellNumber: Int): GameBoard = {
     copy(cellList.updated(cellNumber, setPlayerFigureOnCell(figureNumber, cellNumber)))

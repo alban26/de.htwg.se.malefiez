@@ -11,7 +11,9 @@ trait ControllerInterface extends Publisher {
 
   def gameBoard: GameBoardInterface
 
-  def gameBoardToString: String
+  //def gameBoardToString: String
+
+  def gameBoardToString: Option[String]
 
   def resetGameBoard(): Unit
 
@@ -25,11 +27,11 @@ trait ControllerInterface extends Publisher {
 
   def rollCube: Option[Int]
 
-  def setDicedNumber(dicedNumber: Int): Unit
+  def setDicedNumber(dicedNumber: Option[Int]): Unit
 
   def createPlayer(name: String): Unit
 
-  def nextPlayer(playerList: List[Player], playerNumber: Int): Option[Player]
+  def nextPlayer(playerList: List[Option[Player]], playerNumber: Int): Option[Player]
 
   def setPlayersTurn(player: Option[Player]): Unit
 
