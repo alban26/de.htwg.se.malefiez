@@ -64,7 +64,7 @@ case class GameBoard(cellList: List[Cell],
   override def buildGameBoardInfo(): Option[String] = {
     val string = new StringBuilder("Malefiz-GameBoard\n\n")
     string.append("Players: ")
-    players.map(player => string.append(player.toString + " / "))
+    players.flatMap(player => player.map(x => string.append(x.toString + " / ")))
     string.append("\n" + "Players turn: " + playersTurn.getOrElse("No registered players").toString + "\n")
     string.append("Dice: " + dicedNumber.getOrElse("Dice is not rolled yet").toString + "\n")
     string.append("Status: " + statementStatus.get.toString + "\n")
