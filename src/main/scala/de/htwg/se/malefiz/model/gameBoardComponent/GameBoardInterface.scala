@@ -30,15 +30,18 @@ trait GameBoardInterface {
   def statementStatus: Option[Statements]
 
 
-  def buildGameboardInfo(): Option[String]
+
+
 
   def buildPlayerString(): Option[String]
 
-  //def buildGameBoardString(cellList: List[Cell]): Option[String]
+  def buildGameBoardString(start: Int): String
+
+  def buildGameBoard(): Option[String]
+
+  def buildGameBoardInfo(): Option[String]
 
   def buildCompleteBoard(cellList: List[Cell]): Option[String]
-
-  //def gameBoardToString(playersString: String, gameBoardString: String): Option[String]
 
   def setPlayersTurn(player: Option[Player]): GameBoard
 

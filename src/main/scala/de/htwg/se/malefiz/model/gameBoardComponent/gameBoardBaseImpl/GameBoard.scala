@@ -41,11 +41,11 @@ case class GameBoard(cellList: List[Cell],
   val buildRow = (start: Int, stop: Int) => start match {
     case 130 => s"""|${cellList.slice(start, stop).mkString("")}
                     |""".stripMargin
-    case _ => buildGameboardString(stop) + s"""|${cellList.slice(start, stop).mkString("")}
+    case _ => buildGameBoardString(stop) + s"""|${cellList.slice(start, stop).mkString("")}
                                                |""".stripMargin
   }
 
-  def buildGameboardString(start: Int): String = {
+  override def buildGameBoardString(start: Int): String = {
     start match {
       case 20 | 42 | 94 | 113 => buildRow(start, start + 17)
       case 37 => buildRow(start, start + 5)
@@ -59,9 +59,9 @@ case class GameBoard(cellList: List[Cell],
     }
   }
 
-  def buildGameboard(): Option[String] = Some(buildGameboardString(20))
+  override def buildGameBoard(): Option[String] = Some(buildGameBoardString(20))
 
-  override def buildGameboardInfo(): Option[String] = {
+  override def buildGameBoardInfo(): Option[String] = {
     val string = new StringBuilder("Malefiz-GameBoard\n\n")
     string.append("Players: ")
     players.map(player => string.append(player.toString + " / "))
@@ -78,10 +78,10 @@ case class GameBoard(cellList: List[Cell],
     .flatMap(y => buildGameboardInfo().map(z => x + y + z)))
      */
     for {
-      gameboardString <- buildGameboard()
+      gameBoardString <- buildGameBoard()
       playerString <- buildPlayerString()
-      infoString <- buildGameboardInfo()
-    } yield gameboardString + playerString + infoString
+      infoString <- buildGameBoardInfo()
+    } yield gameBoardString + playerString + infoString
   }
 
 
