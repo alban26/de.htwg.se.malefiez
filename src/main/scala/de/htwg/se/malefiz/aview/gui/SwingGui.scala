@@ -132,7 +132,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     val doc = playerArea.styledDocument
 
     controller.gameBoard.players.indices.map { i =>
-      val playerString = " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
+      val playerString = " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i).getOrElse("") + "\n"
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)

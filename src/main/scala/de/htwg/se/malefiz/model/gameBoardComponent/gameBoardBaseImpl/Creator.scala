@@ -2,48 +2,49 @@ package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
 
-
 import scala.collection.mutable.Map
-import scala.io.Source
+import scala.io.{BufferedSource, Source}
 import scala.util.{Failure, Success, Try}
 
 case class Creator() extends CreatorInterface {
 
-  def readTextFile(filename: String): Try[List[String]] =
-    Try(Source.fromFile(filename).getLines().toList)
+  def readTextFile(filename: String): Try[Option[BufferedSource]] =
+    Try(Option(Source.fromFile(filename)))
 
   def getCellList(inputFile: String): List[Cell] =
     readTextFile(inputFile) match {
-      case Success(line) =>
-        val list = Source.fromFile(inputFile)
-        val inputData = list.getLines
+      case Success(lines) =>
+        val listOfCells = lines
+          .get
+          .getLines()
           .map(line => line.split(" "))
           .map {
-            case Array(
-                  cellNumber,
-                  playerNumber,
-                  figureNumber,
-                  wallPermission,
-                  hasWall,
-                  x,
-                  y,
-                  possibleFigures,
-                  possibleCells
+                case Array(
+                cellNumber,
+                playerNumber,
+                figureNumber,
+                wallPermission,
+                hasWall,
+                x,
+                y,
+                possibleFigures,
+                possibleCells
                 ) =>
-              gameBoardBaseImpl.Cell(
-                cellNumber.toInt,
-                playerNumber.toInt,
-                figureNumber.toInt,
-                wallPermission.toBoolean,
-                hasWall.toBoolean,
-                Point(x.toInt, y.toInt),
-                possibleFigures.toBoolean,
-                possibleCells.toBoolean
-              )
-          }
+                  gameBoardBaseImpl.Cell(
+                    cellNumber.toInt,
+                    playerNumber.toInt,
+                    figureNumber.toInt,
+                    wallPermission.toBoolean,
+                    hasWall.toBoolean,
+                    Point(x.toInt, y.toInt),
+                    possibleFigures.toBoolean,
+                    possibleCells.toBoolean
+                  )
+              }
           .toList
-        list.close()
-        inputData
+        lines.get.close()
+        listOfCells
+
       case Failure(f) =>
         println(f)
         List.empty
@@ -63,7 +64,9 @@ case class Creator() extends CreatorInterface {
           val keyValue = inputArray(0)
           inputArray.update(0, "")
           inputArray.map(input =>
-            if (input != "") {updateCellGraph(keyValue.toInt, input.toInt, graph)})
+            if (input != "") {
+              updateCellGraph(keyValue.toInt, input.toInt, graph)
+            })
         }
         graph
       case Failure(f) =>

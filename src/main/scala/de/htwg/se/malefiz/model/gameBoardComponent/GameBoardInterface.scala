@@ -6,6 +6,7 @@ import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Game
 import de.htwg.se.malefiz.model.playerComponent.Player
 
 import scala.collection.mutable.Map
+import scala.io.BufferedSource
 import scala.util.Try
 
 trait GameBoardInterface {
@@ -117,7 +118,7 @@ trait DiceInterface {
 
 trait CreatorInterface {
 
-  def readTextFile(filename: String): Try[List[String]]
+  def readTextFile(filename: String): Try[Option[BufferedSource]]
 
   def getCellList(inputFile: String): List[Cell]
 
