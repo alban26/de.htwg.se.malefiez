@@ -67,6 +67,8 @@ trait ControllerInterface extends Publisher {
 
   def execute(string: String): Unit
 
+  def checkInput(input: String): Either[String, String]
+
   def save(): Unit
 
   def load(): Unit
