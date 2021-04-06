@@ -17,14 +17,12 @@ object ISelectFigure extends InstructionTrait {
       Request(inputList, gameState, controller)
   }
 
-  // Man wählt seine Figur aus
   val select2: Handler0 = {
     case Request(inputList, gameState, controller) =>
       controller.setSelectedFigure(inputList.head.toInt, inputList(1).toInt)
       Request(inputList, gameState, controller)
   }
 
-  // Für die ausgewhäte werden die Cellen markiert auf die er springen kann
   val select3: Handler0 = {
     case Request(inputList, gameState, controller) =>
       controller.setPossibleCellsTrueOrFalse(controller.gameBoard.possibleCells.toList)
@@ -38,7 +36,7 @@ object ISelectFigure extends InstructionTrait {
       Statements.value(StatementRequest(controller))
   }
 
-  /*wenn nicht eigener Spieler ausgewählt wird*/
+
   val select5: Handler0 = {
     case Request(inputList, gameState, controller)
         if inputList.head.toInt != controller.gameBoard.playersTurn.get.playerNumber =>

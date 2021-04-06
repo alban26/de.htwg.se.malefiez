@@ -1,30 +1,24 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
+import java.awt.{BasicStroke, Color, Font}
 import java.io.File
+
+import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.{
-  ControllerInterface,
-  GameBoardChanged,
-  StatementRequest,
-  Statements,
-  Winner
-}
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
+import de.htwg.se.malefiz.controller.controllerComponent._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
-import de.htwg.se.malefiz.Malefiz.entryGui
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
+
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
 
-  val image: BufferedImage = ImageIO.read(
-    new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png")
-  )
+  val image: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
   val g2d: Graphics2D = image.createGraphics()
 
   title = "Malefiz"
@@ -108,10 +102,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         val state = controller.getGameState.currentState
         if (state.isInstanceOf[SelectFigure])
           controller.gameBoard.cellList.map(cell =>
-            if (
-              mouseX.contains(cell.coordinates.x_coordinate) && mouseY
-                .contains(cell.coordinates.y_coordinate)
-            ) {
+            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)) {
               controller.execute(cell.playerNumber + " " + cell.figureNumber)
               drawGameBoard()
               updateInformationArea()
@@ -119,13 +110,10 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           )
         else
           controller.gameBoard.cellList.map(cell =>
-            if (
-              mouseX.contains(cell.coordinates.x_coordinate) && mouseY
-                .contains(cell.coordinates.y_coordinate)
+            if (mouseX.contains(cell.coordinates.x_coordinate) && mouseY.contains(cell.coordinates.y_coordinate)
             ) {
-              if (
-                cell.playerNumber == controller.gameBoard.selectedFigure.get._1 && cell.figureNumber == controller.gameBoard.selectedFigure.get._2
-              ) {
+              if (cell.playerNumber == controller.gameBoard.selectedFigure.get._1
+                && cell.figureNumber == controller.gameBoard.selectedFigure.get._2) {
                 controller.execute(cell.playerNumber + " " + cell.figureNumber)
                 controller.setStatementStatus(changeFigure)
                 updateInformationArea()
@@ -144,8 +132,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     val doc = playerArea.styledDocument
 
     controller.gameBoard.players.indices.map { i =>
-      val playerString =
-        " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
+      val playerString = " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i) + "\n"
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)
@@ -184,16 +171,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       range += highR
     })
 
-    /*
-    for (i <- 0 to 20) {
-      lowR = lowR - 1
-      range += lowR
-    }
-    for (i <- 0 to 20) {
-      highR = highR + 1
-      range += highR
-    }
-     */
     range
   }
 
@@ -300,17 +277,17 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     background = Color.DARK_GRAY
 
     def constraints(
-        x: Int,
-        y: Int,
-        gridWidth: Int = 1,
-        gridHeight: Int = 1,
-        weightX: Double = 0.0,
-        weightY: Double = 0.0,
-        fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-        ipadX: Int = 0,
-        ipadY: Int = 0,
-        anchor: GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center
-    ): Constraints = {
+                     x: Int,
+                     y: Int,
+                     gridWidth: Int = 1,
+                     gridHeight: Int = 1,
+                     weightX: Double = 0.0,
+                     weightY: Double = 0.0,
+                     fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                     ipadX: Int = 0,
+                     ipadY: Int = 0,
+                     anchor: GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center
+                   ): Constraints = {
       val c = new Constraints
       c.gridx = x
       c.gridy = y
@@ -324,6 +301,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       c.anchor = anchor
       c
     }
+
     add(playerLabel, constraints(0, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))
     add(playerArea, constraints(0, 2, gridWidth = 2, fill = GridBagPanel.Fill.Both))
     add(playerTurnLabel, constraints(2, 1, gridWidth = 2, fill = GridBagPanel.Fill.Both, ipadX = 104, ipadY = 15))

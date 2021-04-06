@@ -9,13 +9,12 @@ import scala.util.{Failure, Success, Try}
 
 case class Creator() extends CreatorInterface {
 
-  def readTextFile(filename: String): Try[Iterator[String]] =
-    Try(Source.fromFile(filename).getLines)
+  def readTextFile(filename: String): Try[List[String]] =
+    Try(Source.fromFile(filename).getLines().toList)
 
   def getCellList(inputFile: String): List[Cell] =
     readTextFile(inputFile) match {
       case Success(line) =>
-        println("Welcome")
         val list = Source.fromFile(inputFile)
         val inputData = list.getLines
           .map(line => line.split(" "))
@@ -64,9 +63,7 @@ case class Creator() extends CreatorInterface {
           val keyValue = inputArray(0)
           inputArray.update(0, "")
           inputArray.map(input =>
-            if (input != "") {
-              updateCellGraph(keyValue.toInt, input.toInt, graph)
-            })
+            if (input != "") {updateCellGraph(keyValue.toInt, input.toInt, graph)})
         }
         graph
       case Failure(f) =>

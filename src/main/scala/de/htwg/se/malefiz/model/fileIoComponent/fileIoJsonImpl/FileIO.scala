@@ -71,6 +71,23 @@ class FileIO @Inject() extends FileIOInterface {
     }
     gameBoard = gameBoard.setPossibleCell(found)
 
+    LazyList.range(0, 131).foreach(index => {
+      val cellNumber: Int = ((json \ "cells")(index) \ "cellNumber").as[Int]
+      val playerNumber: Int = ((json \ "cells")(index) \ "playerNumber").as[Int]
+      val figureNumber: Int = ((json \ "cells")(index) \ "figureNumber").as[Int]
+      val hasWall: Boolean = ((json \ "cells")(index) \ "hasWall").as[Boolean]
+
+      gameBoard = gameBoard setPlayer(playerNumber, cellNumber)
+      gameBoard = gameBoard setFigure(figureNumber, cellNumber)
+
+      if (hasWall)
+        gameBoard = gameBoard.setWall(cellNumber)
+      if (!hasWall)
+        gameBoard = gameBoard.removeWall(cellNumber)
+    })
+
+
+    /*
     for (index <- 0 until 131) {
 
       val cellNumber: Int = ((json \ "cells")(index) \ "cellNumber").as[Int]
@@ -86,7 +103,7 @@ class FileIO @Inject() extends FileIOInterface {
       if (!hasWall)
         gameBoard = gameBoard.removeWall(cellNumber)
     }
-
+    */
     //players.filter(_.name != "").map(x => gameboard.createPlayer(x.name))
 
     players.foreach(player => if (player.name != "") gameBoard = gameBoard.createPlayer(player.name))

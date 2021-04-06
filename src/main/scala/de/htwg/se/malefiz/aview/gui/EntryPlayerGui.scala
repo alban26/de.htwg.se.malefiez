@@ -103,12 +103,6 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
     case ButtonClicked(`continueButton`) =>
       val pList = List(playerOneName.text, playerTwoName.text, playerThreeName.text, playerFourName.text)
       pList.indices.foreach(x => if(pList(x) != "") controller.execute("n " + pList(x)))
-      /*
-      for(i <- pList.indices) {
-        if (pList(i) != "")
-          controller.execute("n "+ pList(i))
-      }
-       */
       controller.execute("start")
       this.visible = false
       swingGui.visible = true
