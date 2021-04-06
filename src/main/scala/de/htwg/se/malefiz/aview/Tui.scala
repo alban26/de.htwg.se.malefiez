@@ -10,6 +10,9 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
+  def runInput(input: String): Unit =
+    controller.checkInput(input).fold(l => println(l), r => processInput(input))
+
   def processInput(input: String): Unit =
     input match {
       case "undo" => controller.undo()

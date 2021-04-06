@@ -21,10 +21,8 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
 
-  //override def gameBoardToString: String = gameBoard.returnGameBoardAsString()
 
   override def gameBoardToString: Option[String] = gameBoard.buildCompleteBoard(gameBoard.cellList)
-
 
   override def resetGameBoard(): Unit = gameBoard = mementoGameBoard
 
@@ -132,6 +130,17 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
   override def execute(input: String): Unit = state.run(input)
+
+  override def checkInput(input: String): Either[String, String] = {
+    if (state.currentState.toString == "4")
+      if(input.split(" ").toList.size != 2)
+        return Left("Bitte Spieler in Form von : 'n Spielername' eintippen \n " +
+          "und mit 'n start' dann starten!")
+      else
+        return Right(input)
+    else
+      Right(input)
+  }
 
   override def save(): Unit = {
     fileIo.save(this.gameBoard, this)

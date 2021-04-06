@@ -25,7 +25,7 @@ object Malefiz {
     var input: String = ""
     do {
       input = readLine()
-      tui.processInput(input)
+      tui.runInput(input)
     } while (input != "end")
   }
 }
