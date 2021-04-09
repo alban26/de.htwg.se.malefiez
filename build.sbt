@@ -1,3 +1,6 @@
+lazy val root = (project in file(".")).aggregate(fileio)
+lazy val fileio = project in file("FileIO")
+
 name          := "Malefiz in Scala"
 organization  := "de.htwg.se"
 version       := "0.0.1"

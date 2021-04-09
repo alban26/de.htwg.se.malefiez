@@ -10,11 +10,11 @@
     "playerNumber" : 1,
     "name" : "A"
   },
-  "diceNumber" : 1,
-  "selectedFigure1" : 1,
+  "diceNumber" : 0,
+  "selectedFigure1" : 2,
   "selectedFigure2" : 1,
-  "gameState" : 3,
-  "possibleCells" : [ 22 ],
+  "gameState" : 1,
+  "possibleCells" : [ ],
   "cells" : [ {
     "cellNumber" : 0,
     "playerNumber" : 1,
@@ -26,7 +26,7 @@
     }
   }, {
     "cellNumber" : 1,
-    "playerNumber" : 1,
+    "playerNumber" : 0,
     "figureNumber" : 2,
     "hasWall" : false,
     "coordinates" : {
@@ -62,7 +62,7 @@
     }
   }, {
     "cellNumber" : 5,
-    "playerNumber" : 2,
+    "playerNumber" : 0,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -215,8 +215,8 @@
     }
   }, {
     "cellNumber" : 22,
-    "playerNumber" : 0,
-    "figureNumber" : 0,
+    "playerNumber" : 1,
+    "figureNumber" : 2,
     "hasWall" : false,
     "coordinates" : {
       "x" : 125,
@@ -242,8 +242,8 @@
     }
   }, {
     "cellNumber" : 25,
-    "playerNumber" : 0,
-    "figureNumber" : 0,
+    "playerNumber" : 2,
+    "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
       "x" : 253,

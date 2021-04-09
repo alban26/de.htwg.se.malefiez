@@ -14,7 +14,7 @@ class MalefizModule extends AbstractModule with ScalaModule{
     bind[GameBoardInterface].to[model.gameBoardComponent.gameBoardBaseImpl.GameBoard]
     bind[CreatorInterface].to[model.gameBoardComponent.gameBoardBaseImpl.Creator]
     bind[FileIOInterface].to[model.fileIoComponent.fileIoJsonImpl.FileIO]
-    //bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
+    //bind[FileIOInterface].to[model.fileIoComponent.de.htwg.se.malefiz.model.fileIoComponent.fileIoJsonImpl.fileIoXmlImpl.FileIO]
   }
 
 }
