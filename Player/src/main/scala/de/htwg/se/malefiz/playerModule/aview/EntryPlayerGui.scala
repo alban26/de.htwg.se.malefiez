@@ -1,4 +1,4 @@
-package de.htwg.se.malefiz.aview
+package de.htwg.se.malefiz.playerModule.aview
 
 import java.awt.{Color, Dimension, Font}
 

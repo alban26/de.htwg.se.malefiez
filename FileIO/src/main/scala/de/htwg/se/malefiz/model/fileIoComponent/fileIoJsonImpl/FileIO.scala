@@ -9,9 +9,10 @@ import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
-import de.htwg.se.malefiz.model.playerComponent.Player
-
 import java.io.{File, PrintWriter}
+
+import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+
 import scala.io.{BufferedSource, Source}
 
 class FileIO @Inject() extends FileIOInterface {

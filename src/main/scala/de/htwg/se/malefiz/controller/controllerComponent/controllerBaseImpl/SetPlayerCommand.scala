@@ -4,7 +4,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.State
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
 import de.htwg.se.malefiz.util.Command
 
 class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, controller: Controller) extends Command {
