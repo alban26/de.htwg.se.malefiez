@@ -62,7 +62,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val cubeButton = new Button()
   val cubeIcon = new ImageIcon(
-    "src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png"
+    "src/main/scala/de/htwg/se/malefiz/de.htwg.se.malefiz.model.aview/gui/dice.png"
   )
   cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EmptyBorder(3)

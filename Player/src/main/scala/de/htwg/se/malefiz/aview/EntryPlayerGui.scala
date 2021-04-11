@@ -1,12 +1,14 @@
-package de.htwg.se.malefiz.aview.gui
+package de.htwg.se.malefiz.aview
+
+import java.awt.{Color, Dimension, Font}
 
 import de.htwg.se.malefiz.Malefiz.swingGui
-import java.awt.{Color, Dimension, Font}
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
-import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
-import scala.swing.event.ButtonClicked
 
-class EntryPlayerGui (controller: ControllerInterface) extends Frame {
+import scala.swing.event.ButtonClicked
+import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
+
+class EntryPlayerGui(controller: ControllerInterface) extends Frame {
 
   title = "Malefiz"
   visible = false

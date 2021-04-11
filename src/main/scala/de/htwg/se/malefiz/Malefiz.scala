@@ -1,9 +1,10 @@
 package de.htwg.se.malefiz
 
 import com.google.inject.{Guice, Injector}
-import de.htwg.se.malefiz.aview.Tui
-import de.htwg.se.malefiz.aview.gui.{EntryGui, EntryPlayerGui, SwingGui}
+import de.htwg.se.malefiz.aview.{EntryPlayerGui, Tui}
+import de.htwg.se.malefiz.aview.gui.{EntryGui, SwingGui}
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged}
+
 import scala.io.StdIn.readLine
 
 object Malefiz {
