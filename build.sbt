@@ -1,5 +1,7 @@
-lazy val root = (project in file(".")).aggregate(fileio)
+lazy val root = (project in file(".")).aggregate(fileio, player, gameboard)
+lazy val player = project in file("Player")
 lazy val fileio = project in file("FileIO")
+lazy val gameboard = project in file("GameBoard")
 
 name          := "Malefiz in Scala"
 organization  := "de.htwg.se"
