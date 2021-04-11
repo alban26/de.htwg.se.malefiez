@@ -11,7 +11,7 @@ import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import java.io.{File, PrintWriter}
 
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 
 import scala.io.{BufferedSource, Source}
 

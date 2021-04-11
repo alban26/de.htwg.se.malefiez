@@ -7,7 +7,7 @@ import org.scalatest._
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 
 import scala.collection.mutable.Map
 

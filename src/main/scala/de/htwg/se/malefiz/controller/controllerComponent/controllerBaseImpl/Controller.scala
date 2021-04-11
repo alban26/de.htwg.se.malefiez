@@ -7,7 +7,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.Statements._
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.model.fileIoComponent.FileIOInterface
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 import de.htwg.se.malefiz.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
 

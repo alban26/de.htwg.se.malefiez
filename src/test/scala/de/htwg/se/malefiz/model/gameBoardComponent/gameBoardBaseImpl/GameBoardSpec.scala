@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 

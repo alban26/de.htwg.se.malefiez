@@ -3,18 +3,14 @@ package de.htwg.se.malefiz.model.gameBoardComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 
 import scala.collection.mutable.Map
 import scala.io.BufferedSource
 import scala.util.Try
 
 
-trait DiceInterface {
 
-  def rollDice: Option[Int]
-
-}
 
 trait CreatorInterface {
 

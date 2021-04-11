@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl
 import de.htwg.se.malefiz.Malefiz.{cellConfigFile, cellLinksFile}
 import de.htwg.se.malefiz.controller.controllerComponent.Statements.{Statements, addPlayer}
 import de.htwg.se.malefiz.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.{Dice, Player}
 
 import scala.collection.mutable.Map
 

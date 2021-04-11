@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.model.fileIoCmponent
 
 import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 

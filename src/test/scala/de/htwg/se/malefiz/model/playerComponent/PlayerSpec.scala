@@ -1,6 +1,6 @@
 package de.htwg.se.malefiz.model.playerComponent
 
-import de.htwg.se.malefiz.playerModule.model.playerComponent.Player
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
