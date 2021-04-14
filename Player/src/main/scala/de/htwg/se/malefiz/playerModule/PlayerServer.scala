@@ -1,22 +1,23 @@
 package de.htwg.se.malefiz.playerModule
+
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
-
-import scala.io.StdIn
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import com.google.inject.{Guice, Injector}
-
 import de.htwg.se.malefiz.playerModule.controller.controllerComponent.ControllerInterface
-import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.{Dice, Player, PlayerService}
+import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.{Player, PlayerService}
 import spray.json._
+
+import scala.concurrent.ExecutionContextExecutor
+import scala.io.StdIn
 
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 
-  implicit val playerFormat = jsonFormat2(Player)
-  implicit val playerListFormat = jsonFormat4(PlayerService) // contains List[Item]
+  implicit val playerFormat: RootJsonFormat[Player] = jsonFormat2(Player)
+  implicit val playerListFormat: RootJsonFormat[PlayerService] = jsonFormat4(PlayerService)
 }
 
 object PlayerServer extends JsonSupport{
@@ -26,25 +27,22 @@ object PlayerServer extends JsonSupport{
 
   def main(args: Array[String]): Unit = {
 
-
-
-    implicit val system = ActorSystem(Behaviors.empty, "Player-Service")
-    // needed for the future flatMap/onComplete in the end
-    implicit val executionContext = system.executionContext
+    implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "Player-Service")
+    implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
     val route = concat(
-      (path("player") & post) {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http</h1>"))
-      },
       (path("players") & post) {
-        entity(as[List[Player]]) { playerList => //
-
-          val player_1 = playerList.toString()
-          print(player_1)
-          complete(s"got $player_1")
+        entity(as[List[String]]) { playerList => //
+          println("LOGGER: ", playerList.toString())
+          controller.updatePlayerList(playerList)
+          complete(playerList)
+        }},
+      (path("rollDice") & get) {
+        extractRequest { request =>
+          println("LOGGER: Dice rolled")
+          complete(controller.rollDice.get.toString)
         }},
       (path("playersTurn") & get) {
-         // will unmarshal JSON to Order
           val playerTurn = controller.getPlayerTurn
           complete(playerTurn)
         }

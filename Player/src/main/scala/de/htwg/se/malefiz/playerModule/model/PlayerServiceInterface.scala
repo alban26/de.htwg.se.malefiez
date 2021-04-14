@@ -10,7 +10,7 @@ trait PlayerServiceInterface {
   def selectedFigure: Option[(Int, Int)]
   def rollDice: PlayerService
 
-  def updatePlayerList(players: List[Option[Player]]): PlayerService
+  def updatePlayerList(players: List[String]): PlayerService
 
   def updatePlayersTurn(player: Option[Player]): PlayerService
 

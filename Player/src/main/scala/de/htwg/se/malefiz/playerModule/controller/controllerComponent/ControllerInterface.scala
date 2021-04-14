@@ -1,11 +1,12 @@
 package de.htwg.se.malefiz.playerModule.controller.controllerComponent
 
-import com.google.inject.Inject
 import de.htwg.se.malefiz.playerModule.model.playerServiceComponent.Player
 
 trait ControllerInterface {
 
-  def rollCube: Option[Int]
+  def updatePlayerList(playerList: List[String]): Unit
+
+  def rollDice: Option[Int]
 
   def getPlayerTurn: Option[Player]
 

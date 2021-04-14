@@ -4,19 +4,33 @@ import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color, Font}
 import java.io.File
 
-import de.htwg.se.malefiz.Malefiz.entryGui
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.scaladsl.Behaviors
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.client.RequestBuilding.Get
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse}
+import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.stream.scaladsl.Sink
+import akka.util.ByteString
+import de.htwg.se.malefiz.Malefiz.{entryGui, swingGui}
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.{changeFigure, value}
 import de.htwg.se.malefiz.controller.controllerComponent._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.DurationInt
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
+import scala.util.{Failure, Success}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
+
+  implicit val system = ActorSystem(Behaviors.empty, "Player-Service")
+  implicit val executionContext = system.executionContext
 
   val image: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
   val g2d: Graphics2D = image.createGraphics()
@@ -318,9 +332,17 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   reactions += {
     case ButtonClicked(`cubeButton`) =>
+
+      val getDicedNumberRequest = HttpRequest(
+        method = HttpMethods.GET,
+        uri = "http://localhost:8080/rollDice",
+      )
+      sendRequest(getDicedNumberRequest).foreach(println)
+
       controller.execute("r")
-      randomNumberArea.text = controller.gameBoard.dicedNumber.get.toString
-      updateInformationArea()
+
+      // randomNumberArea.text = controller.gameBoard.dicedNumber.get.toString
+      // updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
     case winner: Winner =>
@@ -334,6 +356,24 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       playerArea.text = ""
       visible = false
       entryGui.visible = true
+  }
+
+  def sendRequest(request: HttpRequest): Future[String] = {
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(request)
+    responseFuture.onComplete {
+      case Success(value) =>
+        //Get("http://localhost:8080/rollDice")
+        val entityFuture =  value.entity.dataBytes.map(_.utf8String).runWith(Sink.lastOption)
+        randomNumberArea.text = Await.result(entityFuture, 2.seconds).getOrElse("Dicing")
+          //entityFuture.map(entity => entity.data.utf8String).value.reduceLeft
+        //randomNumberArea.text = value.entity.toStrict(2.seconds).map(entity => entity.data.utf8String).value
+        //  .getOrElse("dicing").toString
+        updateInformationArea()
+      case Failure(_) => sys.error("something went wrong while dice")
+    }
+    val entityFuture: Future[HttpEntity.Strict] = responseFuture.flatMap(response => response.entity.toStrict(2.seconds))
+    entityFuture
+      .map(entity => entity.data.utf8String)
   }
 
   size = new Dimension(900, 1100)
