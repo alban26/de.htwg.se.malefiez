@@ -4,7 +4,6 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.playerModule.controller.controllerComponent.ControllerInterface
@@ -18,9 +17,10 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 
   implicit val playerFormat: RootJsonFormat[Player] = jsonFormat2(Player)
   implicit val playerListFormat: RootJsonFormat[PlayerService] = jsonFormat4(PlayerService)
+
 }
 
-object PlayerServer extends JsonSupport{
+object PlayerServer extends JsonSupport {
 
   val injector: Injector = Guice.createInjector(new PlayerServerModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
@@ -33,20 +33,32 @@ object PlayerServer extends JsonSupport{
     val route = concat(
       (path("players") & post) {
         entity(as[List[String]]) { playerList => //
-          println("LOGGER: ", playerList.toString())
-          controller.updatePlayerList(playerList)
-          complete(playerList)
-        }},
+          println("LOGGER: Erhalte Spielerliste:", playerList.toString())
+
+          complete(controller.updatePlayerList(playerList).toString)
+        }
+      },
+      (path("player" / IntNumber) & get) {
+        playerNumber => //
+          println("LOGGER: Get Player by number: " , controller.getPlayerName(playerNumber-1))
+          complete(controller.getPlayerName(playerNumber-1))
+      },
+      (path("numberOfPlayers") & get) {
+        extractRequest { _ =>
+          complete(controller.getNumberOfPlayers.toString)
+        }
+      },
+
       (path("rollDice") & get) {
-        extractRequest { request =>
+        extractRequest { _ =>
           println("LOGGER: Dice rolled")
           complete(controller.rollDice.get.toString)
-        }},
-      (path("playersTurn") & get) {
-          val playerTurn = controller.getPlayerTurn
-          complete(playerTurn)
         }
-      )
+      },
+      (path("playersTurn") & get) {
+        complete(controller.getPlayerTurn.get.name)
+      }
+    )
 
     val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
 

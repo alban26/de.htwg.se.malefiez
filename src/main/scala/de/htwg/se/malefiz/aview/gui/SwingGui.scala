@@ -7,21 +7,17 @@ import java.io.File
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.client.RequestBuilding.Get
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse}
-import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.scaladsl.Sink
-import akka.util.ByteString
-import de.htwg.se.malefiz.Malefiz.{entryGui, swingGui}
+import akka.http.scaladsl.model.{HttpEntity, HttpMethods, HttpRequest, HttpResponse}
+import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.{changeFigure, value}
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
 import de.htwg.se.malefiz.controller.controllerComponent._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.swing._
 import scala.swing.event.{ButtonClicked, _}
@@ -143,34 +139,61 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerArea(): Boolean = {
-    val doc = playerArea.styledDocument
-
-    controller.gameBoard.players.indices.map { i =>
-      val playerString = " Spieler" + (i + 1) + ": " + controller.gameBoard.players(i).getOrElse("") + "\n"
-      i match {
-        case 0 =>
-          val red = playerArea.styledDocument.addStyle("Red", null)
-          StyleConstants.setForeground(red, Color.RED)
-          doc.insertString(doc.getLength, playerString, red)
-          true
-        case 1 =>
-          val green = playerArea.styledDocument.addStyle("Green", null)
-          StyleConstants.setForeground(green, Color.GREEN)
-          doc.insertString(doc.getLength, playerString, green)
-          true
-        case 2 =>
-          val yellow = playerArea.styledDocument.addStyle("Yellow/Orange", null)
-          StyleConstants.setForeground(yellow, Color.ORANGE)
-          doc.insertString(doc.getLength, playerString, yellow)
-          true
-        case 3 =>
-          val blue = playerArea.styledDocument.addStyle("Blue", null)
-          StyleConstants.setForeground(blue, Color.BLUE)
-          doc.insertString(doc.getLength, playerString, blue)
-          true
-      }
-    }
+    updatePlayerRequest( )
     true
+  }
+
+  private def updatePlayerRequest(): Unit = {
+
+    val URI_PLAYER_1 = "http://localhost:8080/player/1"
+    val URI_PLAYER_2 = "http://localhost:8080/player/2"
+    val URI_PLAYER_3 = "http://localhost:8080/player/3"
+    val URI_PLAYER_4 = "http://localhost:8080/player/4"
+
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8080/numberOfPlayers"))
+    responseFuture.onComplete {
+      case Success(value) =>
+        val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
+        entityFuture.onComplete {
+          case Success(value) =>
+            println("Erhalte Spieleranzahl von PLayerservice: " + value)
+            if (value == "2") {
+              getPlayerRequest(URI_PLAYER_1, "red", Color.RED)
+              getPlayerRequest(URI_PLAYER_2, "green", Color.GREEN)
+            } else if (value == "3") {
+              getPlayerRequest(URI_PLAYER_1, "red", Color.RED)
+              getPlayerRequest(URI_PLAYER_2, "green", Color.GREEN)
+              getPlayerRequest(URI_PLAYER_3, "yellow", Color.YELLOW)
+            } else {
+              getPlayerRequest(URI_PLAYER_1, "red", Color.RED)
+              getPlayerRequest(URI_PLAYER_2, "green", Color.GREEN)
+              getPlayerRequest(URI_PLAYER_3, "yellow", Color.YELLOW)
+              getPlayerRequest(URI_PLAYER_4, "blue", Color.BLUE)
+            }
+          case Failure(exception) => println("Fehler beim Spieler holen")
+        }
+      case Failure(exception) => println(" Spieler Excepton" + exception)
+    }
+
+  }
+
+
+  private def getPlayerRequest(URI: String, style: String, color: Color): Unit = {
+    val doc = playerArea.styledDocument
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = URI))
+    responseFuture.onComplete {
+      case Success(value) =>
+        val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
+        entityFuture.onComplete {
+          case Success(value) =>
+            println("Erhalte Spieler von PLayerservice: " + value)
+            val newStyle = playerArea.styledDocument.addStyle(style, null)
+            StyleConstants.setForeground(newStyle, color)
+            doc.insertString(doc.getLength, " " + value + "\n", newStyle)
+          case Failure(exception) => println("Fehler beim Spieler holen")
+        }
+      case Failure(exception) => println(" Spieler Excepton" + exception)
+    }
   }
 
   def getRange(pixel: Int): Set[Int] = {
@@ -189,8 +212,26 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updatePlayerTurn(): Boolean = {
-    playerTurnArea.text = controller.gameBoard.playersTurn.get.name
+
+    getPlayersTurnRequest("http://localhost:8080/playersTurn")
+    //playerTurnArea.text = controller.gameBoard.playersTurn.get.name
     true
+  }
+
+  private def getPlayersTurnRequest(URI: String): Unit= {
+
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = URI))
+    responseFuture.onComplete {
+      case Success(value) =>
+        val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
+        entityFuture.onComplete {
+          case Success(value) =>
+            println("Erhalte Spieler am ZUG: " + value )
+            playerTurnArea.text = value
+          case Failure(exception) => exception.toString
+        }
+      case Failure(exception) => exception.toString
+    }
   }
 
   def updateRandomNumberArea(): Boolean = {
@@ -199,6 +240,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def updateInformationArea(): Boolean = {
+
+
     this.informationArea.text =
       Statements.value(controllerComponent.StatementRequest(controller))
     true
@@ -341,8 +384,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
       controller.execute("r")
 
-      // randomNumberArea.text = controller.gameBoard.dicedNumber.get.toString
-      // updateInformationArea()
+    // randomNumberArea.text = controller.gameBoard.dicedNumber.get.toString
+    // updateInformationArea()
     case gameBoardChanged: GameBoardChanged =>
       drawGameBoard()
     case winner: Winner =>
@@ -363,9 +406,17 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     responseFuture.onComplete {
       case Success(value) =>
         //Get("http://localhost:8080/rollDice")
-        val entityFuture =  value.entity.dataBytes.map(_.utf8String).runWith(Sink.lastOption)
-        randomNumberArea.text = Await.result(entityFuture, 2.seconds).getOrElse("Dicing")
-          //entityFuture.map(entity => entity.data.utf8String).value.reduceLeft
+        val entityFuture = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
+        entityFuture.onComplete {
+          case Success(value) =>
+            randomNumberArea.text = value
+          //controller.execute()
+          case Failure(exception) => println("Fehler beim würfeln")
+        }
+
+
+        //randomNumberArea.text = Await.result(entityFuture, 2.seconds).getOrElse("Dicing")
+        //entityFuture.map(entity => entity.data.utf8String).value.reduceLeft
         //randomNumberArea.text = value.entity.toStrict(2.seconds).map(entity => entity.data.utf8String).value
         //  .getOrElse("dicing").toString
         updateInformationArea()

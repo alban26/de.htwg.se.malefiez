@@ -2,7 +2,6 @@ package de.htwg.se.malefiz.playerModule.model.playerServiceComponent
 
 import de.htwg.se.malefiz.playerModule.model.PlayerServiceInterface
 
-
 case class PlayerService(playerList: List[Option[Player]],
                          playersTurn: Option[Player],
                          selectedFigure: Option[(Int, Int)],
@@ -16,13 +15,13 @@ case class PlayerService(playerList: List[Option[Player]],
     Option.empty,
   )
 
-
-
   override def updatePlayersTurn(player: Option[Player]): PlayerService = copy(playersTurn = player)
 
   override def rollDice: PlayerService = copy(dicedNumber = Dice().rollDice)
 
-  override def updatePlayerList(players: List[String]): PlayerService = copy(playerList = createPlayerList(players, 0))
+  override def updatePlayerList(players: List[String]): PlayerService = {
+    copy(playerList = createPlayerList(players, 0))
+  }
 
   def createPlayerList(pList: List[String], n: Int): List[Option[Player]] = {
     if (n > pList.length - 1)

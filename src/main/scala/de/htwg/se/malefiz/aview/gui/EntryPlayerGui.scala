@@ -166,8 +166,8 @@ class EntryPlayerGui(controller: ControllerInterface) extends Frame with JsonSup
         this.visible = false
         swingGui.visible = true
         swingGui.updatePlayerArea()
-        swingGui.updatePlayerTurn()
         swingGui.drawGameBoard()
+        swingGui.updatePlayerTurn()
         swingGui.updateInformationArea()
       case Failure(_) => sys.error("something went wrong")
     }
