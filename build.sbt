@@ -1,4 +1,8 @@
-name          := "Malefiz in Scala"
+lazy val root = (project in file(".")).aggregate(fileio, gameboard)
+lazy val fileio = project in file("FileIO")
+lazy val gameboard = project in file("GameBoard")
+
+name          := "Malefiz"
 organization  := "de.htwg.se"
 version       := "0.0.1"
 scalaVersion  := "2.13.1"
@@ -11,5 +15,15 @@ libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.10"
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1"
 libraryDependencies += "com.typesafe.play" %% "play-json-joda" % "2.9.0"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.9.0"
+
+
+val AkkaVersion = "2.6.8"
+val AkkaHttpVersion = "10.2.4"
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
+  "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
+  "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
+  "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
+)
 
 coverageExcludedPackages := "<empty>;.*gui.*;.*Malefiz"

@@ -1,16 +1,9 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
-
-import de.htwg.se.malefiz.controller.controllerComponent.GameStates.{Roll, SelectFigure}
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard}
-import de.htwg.se.malefiz.model.playerComponent.Player
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
-import scala.collection.mutable.Map
-
 class ControllerSpec extends WordSpec with Matchers {
-  "A Controller" when {
+ /* "A Controller" when {
 
     "observed by an Observer" should {
       val cellConfigFile = "project/mainCellConfiguration"
@@ -135,4 +128,6 @@ class ControllerSpec extends WordSpec with Matchers {
       }
     }
   }
+
+  */
 }

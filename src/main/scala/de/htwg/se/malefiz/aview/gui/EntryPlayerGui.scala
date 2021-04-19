@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.aview.gui
 
-import de.htwg.se.malefiz.Malefiz.swingGui
 import java.awt.{Color, Dimension, Font}
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
@@ -102,14 +101,8 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
   reactions += {
     case ButtonClicked(`continueButton`) =>
       val pList = List(playerOneName.text, playerTwoName.text, playerThreeName.text, playerFourName.text)
-      pList.indices.foreach(x => if(pList(x) != "") controller.execute("n " + pList(x)))
-      controller.execute("start")
+      controller.sendPlayersToGameService(pList)
       this.visible = false
-      swingGui.visible = true
-      swingGui.updatePlayerArea()
-      swingGui.updatePlayerTurn()
-      swingGui.drawGameBoard()
-      swingGui.updateInformationArea()
   }
 
   size = new Dimension(500, 500)

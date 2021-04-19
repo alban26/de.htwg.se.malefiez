@@ -9,7 +9,7 @@ import org.scalatest._
 import scala.swing.event.MouseClicked
 
 class SwingGuiSpec extends WordSpec with Matchers {
-
+/*
   "The Swing Gui" when {
     "the Game is started" should {
 
@@ -48,5 +48,7 @@ class SwingGuiSpec extends WordSpec with Matchers {
       }
     }
   }
+
+ */
 
 }

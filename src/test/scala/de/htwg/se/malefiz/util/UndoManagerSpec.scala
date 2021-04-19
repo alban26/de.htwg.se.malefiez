@@ -5,7 +5,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest._
 
 class UndoManagerSpec extends WordSpec with Matchers {
-
+/*
   "An UndoManager" should {
     val undoManager = new UndoManager
 
@@ -35,4 +35,6 @@ class UndoManagerSpec extends WordSpec with Matchers {
       command.state should be(1)
     }
   }
+
+ */
 }

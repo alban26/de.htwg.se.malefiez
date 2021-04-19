@@ -8,29 +8,15 @@ import scala.swing.Reactor
 
 class Tui(controller: ControllerInterface) extends Reactor {
 
-  listenTo(controller)
 
-  def runInput(input: String): Unit =
-    controller.checkInput(input).fold(l => println(l), r => processInput(input))
-
-  def processInput(input: String): Unit =
+  def runInput(input: String): Unit = {
     input match {
-      case "undo" => controller.undo()
-      case "save" => controller.save()
+
       case "load" => controller.load()
-      case "redo" => controller.redo()
-      case _ =>
-        controller.execute(input)
-        textPrint("-------")
+      case "start" => controller.startGame()
+      case _ => controller
+        .checkInput(input)
+        .fold(l => println(l), r => controller.execute(input))
     }
-
-  reactions += {
-    case _: GameBoardChanged => update()
   }
-
-  def update(): Unit = {
-    textPrint(controller.gameBoardToString.get)
-  }
-
-  def textPrint(str: String): Unit = println(str)
 }

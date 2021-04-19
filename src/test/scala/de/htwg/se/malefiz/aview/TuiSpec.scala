@@ -1,22 +1,9 @@
 package de.htwg.se.malefiz.aview
-
-import de.htwg.se.malefiz.controller.controllerComponent.Statements
-import de.htwg.se.malefiz.controller.controllerComponent.Statements.addPlayer
-import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.{
-  Cell,
-  Creator,
-  GameBoard
-}
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.Cell
-import de.htwg.se.malefiz.model.playerComponent.Player
-
-import scala.collection.mutable.Map
+import org.scalatest.matchers.should.Matchers
 
 class TuiSpec extends WordSpec with Matchers {
-
+/*
   "A Malefiz Tui" when {
     "when a new game start" should {
       val cellConfigFile = "project/mainCellConfiguration"
@@ -191,4 +178,6 @@ class TuiSpec extends WordSpec with Matchers {
 
     }
   }
+
+ */
 }

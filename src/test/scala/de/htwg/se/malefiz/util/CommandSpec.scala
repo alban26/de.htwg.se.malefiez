@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.util
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest._
-
+/*
 class incrCommand extends Command {
   var state:Int =0
   override def doStep: Unit = state+=1
@@ -44,3 +44,5 @@ class CommandSpec extends WordSpec with Matchers {
     }
   }
 }
+
+ */

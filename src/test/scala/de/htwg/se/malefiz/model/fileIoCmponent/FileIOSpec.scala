@@ -1,13 +1,10 @@
 package de.htwg.se.malefiz.model.fileIoCmponent
 
-import de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.malefiz.model.gameBoardComponent.gameBoardBaseImpl.GameBoard
-import de.htwg.se.malefiz.model.playerComponent.Player
-import org.scalatest.matchers.should.Matchers
 import org.scalatest._
+import org.scalatest.matchers.should.Matchers
 
 class FileIOSpec extends WordSpec with Matchers {
-
+/*
   "FilIO" when {
     "called playing a Game" should {
       "save and load with XML" +
@@ -65,4 +62,6 @@ class FileIOSpec extends WordSpec with Matchers {
       }
     }
   }
+
+ */
 }
