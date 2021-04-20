@@ -322,37 +322,32 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
 
+//  override def loadController: ControllerInterface = {
+//    val file = scala.xml.XML.loadFile("gameboardList.xml")
+//
+//    val gameStateNodes = file \\ "gameState"
+//    val newController = new Controller(load)
+//
+//    val dice = (file \\ "dicedNumber" \ "@number").text.toInt
+//    newController.gameBoard.rollDice()
+//
+//    val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
+//    //val playerName = (file \\ "playersTurn" \ "@turnN").text
+//    val stateNumber = (file \\ "gameState" \ "@state").text.toInt
+//    val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
+//    val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
+//
+//    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
+//    newController.setStateNumber(stateNumber.toInt)
+//
+//    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
+//    newController
+//  }
 
-  /*
-  override def loadController: ControllerInterface = {
-    val file = scala.xml.XML.loadFile("gameboardList.xml")
+  override def loadGameBoardXml(result: String): GameBoardInterface = {
 
-    val gameStateNodes = file \\ "gameState"
-    val newController = new Controller(load)
 
-    val dice = (file \\ "dicedNumber" \ "@number").text.toInt
-    newController.gameBoard.rollDice()
-
-    val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
-    //val playerName = (file \\ "playersTurn" \ "@turnN").text
-    val stateNumber = (file \\ "gameState" \ "@state").text.toInt
-    val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
-    val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
-
-    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
-    newController.setStateNumber(stateNumber.toInt)
-
-    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
-    newController
-  }
-
-  override def load: GameBoardInterface = {
-    val injector = Guice.createInjector(new MalefizModule)
-    var gameBoard: GameBoardInterface = injector.instance[GameBoardInterface]
-    //var gameStateT: GameState = injector.instance[GameState]
-    //var controller: ControllerInterface = injector.instance[ControllerInterface]
-
-    val file = scala.xml.XML.loadFile("gameboardList.xml")
+    val file = scala.xml.XML.loadString(result)
     val cellNodes = file \\ "cell"
     val playerNodes = file \\ "player"
     val pCellNodes = file \\ "pCells"
@@ -391,71 +386,126 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard
   }
 
-  override def save(gameboard: GameBoardInterface, controller: ControllerInterface): Unit =
-    saveString(gameboard, controller)
+//  override def save(gameboard: GameBoardInterface, controller: ControllerInterface): Unit =
+//    saveString(gameboard, controller)
+//
+//  def saveString(gameboard: GameBoardInterface, controller: ControllerInterface): Unit = {
+//    import java.io._
+//    val pw = new PrintWriter(new File("gameboardList.xml"))
+//    val prettyPrinter = new PrettyPrinter(80, 2)
+//    val xml = prettyPrinter.format(gameBoardToXml(gameboard, controller))
+//    pw.write(xml)
+//    pw.close()
+//  }
+//
+//
+//  def gameBoardToXml(gameBoard: GameBoardInterface, controller: ControllerInterface): Elem =
+//    <gameboard size={gameBoard.players.size.toString}>
+//      {
+//
+//      for {
+//        l1 <- gameBoard.cellList.indices
+//      } yield cellToXml(l1, gameBoard.cellList(l1))
+//    }
+//      <player>
+//        {
+//      for {
+//        l1 <- gameBoard.players.indices
+//      } yield playerToXml(l1, gameBoard.players(l1).get)
+//    }
+//      </player>
+//      <possibleCells>
+//        {
+//      for {
+//        l1 <- gameBoard.possibleCells
+//      } yield possibleCellsToXml(l1)
+//    }
+//      </possibleCells>
+//      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN ={
+//      controller.gameBoard.playersTurn.get.name
+//    }></playersTurn>
+//
+//      <dicedNumber number={controller.gameBoard.dicedNumber.toString}></dicedNumber>
+//
+//      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={
+//      controller.gameBoard.selectedFigure.get._2.toString
+//    } ></selectedFigure>
+//
+//      <gameState state={controller.getGameState.currentState.toString}></gameState>
+//
+//    </gameboard>
+//
+//  def possibleCellsToXml(l1: Int): Elem =
+//    <pCells posCell={l1.toString}>
+//      {l1}
+//    </pCells>
+//
+//  def playerToXml(i: Int, player: Player): Elem =
+//    <player playernumber={player.playerNumber.toString} playername={player.name}>
+// {player}
+// </player>
+//
+//  def cellToXml(l1: Int, cell: Cell): Elem =
+//    <cell cellnumber={cell.cellNumber.toString} playernumber={cell.playerNumber.toString}
+//         figurenumber={cell.figureNumber.toString} haswall={cell.hasWall.toString}>
+//     {cell}
+//   </cell>
 
-  def saveString(gameboard: GameBoardInterface, controller: ControllerInterface): Unit = {
-    import java.io._
-    val pw = new PrintWriter(new File("gameboardList.xml"))
-    val prettyPrinter = new PrettyPrinter(80, 2)
-    val xml = prettyPrinter.format(gameBoardToXml(gameboard, controller))
-    pw.write(xml)
-    pw.close()
+
+
+  override def evalXml(resulta: String): Unit = {
+
+
+
+    val newController = new Controller(loadGameBoardXml(resulta))
+
+    val result = scala.xml.XML.loadString(resulta)
+
+    val gameStateNodes = result \\ "gameState"
+
+    val dice = (result \\ "dicedNumber" \ "@number").text.toInt
+    //newController.gameBoard.rollDice()
+
+    val playerZahl = (result \\ "playersTurn" \ "@turnZ").text.toInt
+    //val playerName = (file \\ "playersTurn" \ "@turnN").text
+    val stateNumber = (result \\ "gameState" \ "@state").text.toInt
+    val selectedFigure_1 = (result \\ "selectedFigure" \ "@sPlayer").text.toInt
+    val selectedFigure_2 = (result \\ "selectedFigure" \ "@sFigure").text.toInt
+
+    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
+    newController.setStateNumber(stateNumber.toInt)
+
+    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
+
+
+    val stateNr = newController.gameBoard.stateNumber.get
+
+    this.setGameBoard(newController.gameBoard)
+    this.setPossibleCells(newController.gameBoard.possibleCells)
+    this.setPlayersTurn(newController.gameBoard.playersTurn)
+    this.setSelectedFigure(
+      newController.gameBoard.selectedFigure.get._1,
+      newController.gameBoard.selectedFigure.get._2
+    )
+
+    stateNr match {
+      case 1 =>
+        this.state.nextState(Roll(this))
+        this.setStatementStatus(Statements.nextPlayer)
+      case 2 =>
+        this.state.nextState(SelectFigure(this))
+        this.setStatementStatus(Statements.selectFigure)
+      case 3 =>
+        this.state.nextState(SetFigure(this))
+        this.setStatementStatus(Statements.selectField)
+      case 4 =>
+        this.state.nextState(Setup(this))
+        this.setStatementStatus(Statements.addPlayer)
+      case 5 =>
+        this.state.nextState(SetWall(this))
+        this.setStatementStatus(Statements.wall)
+    }
+    publish(new GameBoardChanged)
   }
 
-  def gameBoardToXml(gameBoard: GameBoardInterface, controller: ControllerInterface): Elem =
-    <gameboard size={gameBoard.players.size.toString}>
-      {
-
-      for {
-        l1 <- gameBoard.cellList.indices
-      } yield cellToXml(l1, gameBoard.cellList(l1))
-    }
-      <player>
-        {
-      for {
-        l1 <- gameBoard.players.indices
-      } yield playerToXml(l1, gameBoard.players(l1).get)
-    }
-      </player>
-      <possibleCells>
-        {
-      for {
-        l1 <- gameBoard.possibleCells
-      } yield possibleCellsToXml(l1)
-    }
-      </possibleCells>
-      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN ={
-      controller.gameBoard.playersTurn.get.name
-    }></playersTurn>
-
-      <dicedNumber number={controller.gameBoard.dicedNumber.toString}></dicedNumber>
-
-      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={
-      controller.gameBoard.selectedFigure.get._2.toString
-    } ></selectedFigure>
-
-      <gameState state={controller.getGameState.currentState.toString}></gameState>
-
-    </gameboard>
-
-  def possibleCellsToXml(l1: Int): Elem =
-    <pCells posCell={l1.toString}>
-      {l1}
-    </pCells>
-
-  def playerToXml(i: Int, player: Player): Elem =
-    <player playernumber={player.playerNumber.toString} playername={player.name}>
- {player}
- </player>
-
-  def cellToXml(l1: Int, cell: Cell): Elem =
-    <cell cellnumber={cell.cellNumber.toString} playernumber={cell.playerNumber.toString}
-         figurenumber={cell.figureNumber.toString} haswall={cell.hasWall.toString}>
-     {cell}
-   </cell>
-
-
-   */
-  override def evalXml(): Unit = println("ha")
 }

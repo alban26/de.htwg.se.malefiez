@@ -76,7 +76,9 @@ trait ControllerInterface extends Publisher {
 
   def evalJson(gameString: String): Unit
 
-  def evalXml(): Unit
+  def evalXml(result: String): Unit
+
+  def loadGameBoardXml(result: String): GameBoardInterface
 
 }
 

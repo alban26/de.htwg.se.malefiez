@@ -76,11 +76,11 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
           complete(HttpEntity("Laden von Json war erfolgreich!"))
         }
       },
-      path("gameXML") {
-        post {
-          logger.info("Swingui wird gestartet")
-          controller.evalXml()
-          complete(HttpEntity("Laden von XML war erfolgreich!"))
+      (path("gameBoardXml") & post) {
+        entity(as[String]) { gameXmlString => //
+
+          controller.evalXml(gameXmlString)
+          complete(HttpEntity("Laden von Xml war erfolgreich!"))
         }
       }
     )
