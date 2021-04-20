@@ -1,5 +1,5 @@
 package de.htwg.se.malefiz.fileIoModule.model.fileIOComponent.fileIoXmlImpl
-/*
+
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 
@@ -151,4 +151,3 @@ class FileIO @Inject() extends FileIOInterface {
      {cell}
    </cell>
 }
-*/
