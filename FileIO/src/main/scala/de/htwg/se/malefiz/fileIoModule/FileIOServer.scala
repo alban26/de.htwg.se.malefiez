@@ -5,7 +5,8 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
-import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
+import de.htwg.se.malefiz.fileIoModule.model.fileIOComponent.fileIoJsonImpl.FileIO
+
 
 object FileIOServer extends App{
 

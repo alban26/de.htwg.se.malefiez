@@ -9,15 +9,12 @@ import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 
 import scala.swing.Publisher
 
-class Controller @Inject() extends ControllerInterface with Publisher {
+class Controller @Inject() extends ControllerInterface {
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val rest: RestControllerInterface = injector.instance[RestController]
 
-  override def execute(input: String): Unit = {
-    sendPlayersToGameService(input.split(" ").toList)
-
-  }
+  override def execute(input: String): Unit = sendPlayersToGameService(input.split(" ").toList)
 
   def sendPlayersToGameService(playerList: List[String]): Unit = rest.sendPlayerListRequest(playerList)
 

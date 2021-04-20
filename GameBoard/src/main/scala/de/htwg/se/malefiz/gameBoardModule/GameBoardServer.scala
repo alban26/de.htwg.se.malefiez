@@ -14,15 +14,7 @@ import spray.json.DefaultJsonProtocol
 
 import scala.io.StdIn
 
-case class Player(playerNumber: Int, playerName: String)
-
-trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
-
-  //implicit val playerFormat: RootJsonFormat[Player] = jsonFormat2(Player)
-
-}
-
-object GameBoardServer extends JsonSupport {
+object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
 
   val cellConfigFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellConfiguration"
   val cellLinksFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellLinks"
@@ -79,8 +71,6 @@ object GameBoardServer extends JsonSupport {
       }
     )
 
-
-
     val bindingFuture = Http().newServerAt("localhost", 8080).bind(route)
 
     println(s" GameBoard Server online at http://localhost:8081/\nPress RETURN to stop...")
@@ -89,4 +79,5 @@ object GameBoardServer extends JsonSupport {
       .flatMap(_.unbind()) // trigger unbinding from the port
       .onComplete(_ => system.terminate()) // and shutdown when done
   }
+
 }

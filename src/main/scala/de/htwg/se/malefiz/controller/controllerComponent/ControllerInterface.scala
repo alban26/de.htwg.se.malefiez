@@ -15,14 +15,3 @@ trait ControllerInterface extends Publisher {
   def checkInput(input: String): Either[String, String]
 
 }
-
-import scala.swing.Button
-import scala.swing.event.Event
-
-class GameBoardChanged extends Event
-
-case class ButtonClicked(source: Button) extends Event
-
-class ChangeWall extends Event
-
-class Winner extends Event

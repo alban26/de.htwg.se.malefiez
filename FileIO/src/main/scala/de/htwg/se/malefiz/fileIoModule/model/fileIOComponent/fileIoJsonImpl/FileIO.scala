@@ -1,11 +1,9 @@
-package de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl
+package de.htwg.se.malefiz.fileIoModule.model.fileIOComponent.fileIoJsonImpl
 
-import de.htwg.se.malefiz.fileIoModule.model.de.htwg.se.malefiz.fileIoModule.model.FileIOInterface
+import de.htwg.se.malefiz.fileIoModule.model.FileIOInterface
 import scala.io.Source
 import scala.util.control.Breaks.break
 import scala.util.{Failure, Success, Try}
-
-
 
 class FileIO extends FileIOInterface {
 
