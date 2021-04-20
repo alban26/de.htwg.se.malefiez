@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.fileIoModule.model
 
 trait FileIOInterface {
 
-  def load: String
+  def load: Unit
 
   def save(gameBoard: String): Unit
 

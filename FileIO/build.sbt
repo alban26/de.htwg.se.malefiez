@@ -1,7 +1,7 @@
 name          := "FileIO"
 organization  := "de.htwg.se"
 version       := "0.0.1"
-scalaVersion  := "2.13.1"
+scalaVersion  := "2.13.5"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"

@@ -10,6 +10,7 @@ class FileIOServerModule extends AbstractModule with ScalaModule {
   override def configure(): Unit = {
     bind[ControllerInterface].to[controller.controllerComponent.controllerBaseImpl.Controller]
     bind[FileIOInterface].to[model.fileIOComponent.fileIoJsonImpl.FileIO]
+
     //bind[FileIOInterface].to[model.fileIoComponent.fileIoXmlImpl.FileIO]
   }
 

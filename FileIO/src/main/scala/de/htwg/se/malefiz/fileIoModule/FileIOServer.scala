@@ -21,12 +21,13 @@ object FileIOServer extends App{
   val route =
     concat (
       get {
-        path("json") {
-          complete(HttpEntity(ContentTypes.`application/json`, controller.load()))
+        path("load") {
+          controller.load()
+          complete("Request succeded")
         }
       },
       post {
-        path("json") {
+        path("save") {
           entity(as[String]) { game =>
             controller.save(game)
             println("GAME SAVED")

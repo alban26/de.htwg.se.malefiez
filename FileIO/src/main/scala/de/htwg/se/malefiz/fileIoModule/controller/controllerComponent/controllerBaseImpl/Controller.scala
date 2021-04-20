@@ -15,7 +15,7 @@ class Controller @Inject() extends ControllerInterface with Publisher {
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
 
-  override def load(): String = fileIo.load
+  override def load(): Unit = fileIo.load
 
   override def save(s: String): Unit = fileIo.save(s)
 }

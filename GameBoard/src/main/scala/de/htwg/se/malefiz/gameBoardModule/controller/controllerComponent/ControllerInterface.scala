@@ -74,6 +74,10 @@ trait ControllerInterface extends Publisher {
 
   def load(): Unit
 
+  def evalJson(gameString: String): Unit
+
+  def evalXml(): Unit
+
 }
 
 class GameBoardChanged extends Event
