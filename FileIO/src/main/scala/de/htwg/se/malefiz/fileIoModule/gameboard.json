@@ -1,20 +1,17 @@
 {
   "players" : [ {
     "playerNumber" : 1,
-    "name" : "Robert"
-  }, {
-    "playerNumber" : 2,
     "name" : "Alban"
   }, {
-    "playerNumber" : 3,
-    "name" : "Wirbser"
+    "playerNumber" : 2,
+    "name" : "Robert"
   }, {
-    "playerNumber" : 4,
+    "playerNumber" : 3,
     "name" : "Knirbser"
   } ],
   "playersTurn" : {
     "playerNumber" : 2,
-    "name" : "Alban"
+    "name" : "Robert"
   },
   "diceNumber" : 0,
   "selectedFigure1" : 1,
@@ -68,7 +65,7 @@
     }
   }, {
     "cellNumber" : 5,
-    "playerNumber" : 0,
+    "playerNumber" : 2,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -113,7 +110,7 @@
     }
   }, {
     "cellNumber" : 10,
-    "playerNumber" : 0,
+    "playerNumber" : 3,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -158,7 +155,7 @@
     }
   }, {
     "cellNumber" : 15,
-    "playerNumber" : 0,
+    "playerNumber" : 4,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -212,8 +209,8 @@
     }
   }, {
     "cellNumber" : 21,
-    "playerNumber" : 2,
-    "figureNumber" : 1,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
     "hasWall" : false,
     "coordinates" : {
       "x" : 82,
@@ -266,7 +263,7 @@
     }
   }, {
     "cellNumber" : 27,
-    "playerNumber" : 0,
+    "playerNumber" : 1,
     "figureNumber" : 1,
     "hasWall" : false,
     "coordinates" : {
@@ -302,8 +299,8 @@
     }
   }, {
     "cellNumber" : 31,
-    "playerNumber" : 3,
-    "figureNumber" : 1,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
     "hasWall" : false,
     "coordinates" : {
       "x" : 509,
@@ -320,8 +317,8 @@
     }
   }, {
     "cellNumber" : 33,
-    "playerNumber" : 4,
-    "figureNumber" : 1,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
     "hasWall" : false,
     "coordinates" : {
       "x" : 594,
@@ -437,9 +434,9 @@
     }
   }, {
     "cellNumber" : 46,
-    "playerNumber" : 1,
-    "figureNumber" : 1,
-    "hasWall" : false,
+    "playerNumber" : 0,
+    "figureNumber" : 0,
+    "hasWall" : true,
     "coordinates" : {
       "x" : 210,
       "y" : 490
@@ -1132,7 +1129,7 @@
     "cellNumber" : 123,
     "playerNumber" : 0,
     "figureNumber" : 0,
-    "hasWall" : true,
+    "hasWall" : false,
     "coordinates" : {
       "x" : 423,
       "y" : 76

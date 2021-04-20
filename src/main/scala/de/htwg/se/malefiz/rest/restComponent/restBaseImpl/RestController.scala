@@ -60,7 +60,7 @@ class RestController extends RestControllerInterface {
         val entityFuture: Future[String] = value.entity.toStrict(1.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
           case Success(value) =>
-            println("Laderequest an FileIO erfolgreich: " + value)
+            println("Laderequest an GameBoard: " + value)
             println("Spiel wird geladen...")
             val deadline = 2.seconds.fromNow
             while (deadline.hasTimeLeft) {}

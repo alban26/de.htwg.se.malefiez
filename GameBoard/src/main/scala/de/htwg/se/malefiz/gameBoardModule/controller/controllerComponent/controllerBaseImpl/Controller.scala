@@ -12,6 +12,7 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Stateme
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Player, Point}
+import de.htwg.se.malefiz.gameBoardModule.rest.restComponent.RestControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 import play.api.libs.json._
@@ -24,7 +25,7 @@ import scala.util.{Failure, Success}
 class Controller @Inject()(var gameBoard: GameBoardInterface) extends ControllerInterface with Publisher {
 
   val injector: Injector = Guice.createInjector(new GameBoardServerModule)
-  //val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+  val rest: RestControllerInterface = injector.instance[RestControllerInterface]
   val mementoGameBoard: GameBoardInterface = gameBoard
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
@@ -153,6 +154,20 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
       Right(input)
   }
 
+  override def saveAsJson(): Unit = {
+    rest.saveAsJson(gameBoard, this)
+  }
+
+  override def saveAsXML(): Unit = {
+    rest.saveAsXML(gameBoard, this)
+  }
+
+
+
+
+
+
+
 
   override def load(): Unit = {
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8081/load"))
@@ -262,90 +277,115 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard
   }
 
-  implicit val pointWrites: Writes[Point] = (point: Point) => {
-    Json.obj(
-      "x" -> JsNumber(point.x_coordinate),
-      "y" -> JsNumber(point.y_coordinate)
-    )
-  }
-
-  implicit val playerWrites: Writes[Player] = (player: Player) => {
-    Json.obj(
-      "playerNumber" -> player.playerNumber,
-      "name" -> player.name
-    )
-  }
 
 
+  override def evalXml(resulta: String): Unit = {
 
-  def gameBoardToJson(gameBoard: GameBoardInterface, controller: ControllerInterface): JsObject = Json.obj(
-      "players" -> Json.toJson(
-        for {
-          p <- gameBoard.players
-        } yield Json.toJson(p)
-      ),
-      "playersTurn" -> controller.gameBoard.playersTurn,
-      "diceNumber" -> controller.gameBoard.dicedNumber,
-      "selectedFigure1" -> controller.gameBoard.selectedFigure.get._1,
-      "selectedFigure2" -> controller.gameBoard.selectedFigure.get._2,
-      "gameState" -> controller.getGameState.currentState.toString.toInt,
-      "possibleCells" -> gameBoard.possibleCells,
-      "cells" -> Json.toJson(
-        for {
-          c <- gameBoard.cellList
-        } yield Json.obj(
-          "cellNumber" -> c.cellNumber,
-          "playerNumber" -> c.playerNumber,
-          "figureNumber" -> c.figureNumber,
-          "hasWall" -> c.hasWall,
-          "coordinates" -> c.coordinates
-        )
-      )
+    val newController = new Controller(loadController(resulta).gameBoard)
+    val stateNr = newController.gameBoard.stateNumber.get
+
+    this.setGameBoard(newController.gameBoard)
+    this.setPossibleCells(newController.gameBoard.possibleCells)
+    this.setPlayersTurn(newController.gameBoard.playersTurn)
+    //this.setDicedNumber(newController.gameBoard.dicedNumber)
+    this.setSelectedFigure(
+      newController.gameBoard.selectedFigure.get._1,
+      newController.gameBoard.selectedFigure.get._2
     )
 
-  override def save(): Unit = {
-    val jsonGameBoard = gameBoardToJson(gameBoard, this)
-    val jsonFile = Json.prettyPrint(jsonGameBoard)
-
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri =
-      "http://localhost:8081/save", entity = jsonFile))
-    responseFuture.onComplete {
-      case Success(value) =>
-        val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
-        entityFuture.onComplete {
-          case Success(value) =>  println("Spiel wurde erfolgreich gespeichert: " + value)
-          case Failure(exception) =>  println("Fehler beim Speichern: " + exception )
-        }
-      case Failure(exception) => println(" Fehler beim Speichern: " + exception)
+    stateNr match {
+      case 1 =>
+        this.state.nextState(Roll(this))
+        this.setStatementStatus(Statements.nextPlayer)
+      case 2 =>
+        this.state.nextState(SelectFigure(this))
+        this.setStatementStatus(Statements.selectFigure)
+      case 3 =>
+        this.state.nextState(SetFigure(this))
+        this.setStatementStatus(Statements.selectField)
+      case 4 =>
+        this.state.nextState(Setup(this))
+        this.setStatementStatus(Statements.addPlayer)
+      case 5 =>
+        this.state.nextState(SetWall(this))
+        this.setStatementStatus(Statements.wall)
     }
 
+    publish(new GameBoardChanged)
   }
 
+  def loadController(xmlString: String) : ControllerInterface = {
+    val file = scala.xml.XML.loadString(xmlString)
 
-//  override def loadController: ControllerInterface = {
-//    val file = scala.xml.XML.loadFile("gameboardList.xml")
-//
-//    val gameStateNodes = file \\ "gameState"
-//    val newController = new Controller(load)
-//
-//    val dice = (file \\ "dicedNumber" \ "@number").text.toInt
-//    newController.gameBoard.rollDice()
-//
-//    val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
-//    //val playerName = (file \\ "playersTurn" \ "@turnN").text
-//    val stateNumber = (file \\ "gameState" \ "@state").text.toInt
-//    val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
-//    val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
-//
-//    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
-//    newController.setStateNumber(stateNumber.toInt)
-//
-//    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
-//    newController
-//  }
+    val gameStateNodes = file \\ "gameState"
+    val newController = new Controller(loadR(xmlString))
 
+    val dice = (file \\ "dicedNumber" \ "@number").text.toIntOption
+    //newController.gameBoard.rollDice()
+
+    val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
+    //val playerName = (file \\ "playersTurn" \ "@turnN").text
+    val stateNumber = (file \\ "gameState" \ "@state").text.toInt
+    val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
+    val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt
+
+    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
+    newController.setStateNumber(stateNumber.toInt)
+
+    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
+    newController
+  }
+
+  def loadR(xmlString: String): GameBoardInterface = {
+    val injector = Guice.createInjector(new GameBoardServerModule)
+    var gameBoard: GameBoardInterface = injector.instance[GameBoardInterface]
+    //var gameStateT: GameState = injector.instance[GameState]
+    //var controller: ControllerInterface = injector.instance[ControllerInterface]
+
+    val file = scala.xml.XML.loadString(xmlString)
+    val cellNodes = file \\ "cell"
+    val playerNodes = file \\ "player"
+    val pCellNodes = file \\ "pCells"
+
+    var found: Set[Int] = Set[Int]()
+    for (pos <- pCellNodes) {
+      val possCell = (pos \ "@posCell").text.toInt
+      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
+      found += possCell
+    }
+    gameBoard = gameBoard.setPossibleCell(found)
+
+    for (player <- playerNodes) {
+      val playerName: String = (player \ "@playername").text
+      if (playerName != "")
+        gameBoard = gameBoard.createPlayer(playerName)
+    }
+
+    for (cell <- cellNodes) {
+
+      val cellNumber: Int = (cell \ "@cellnumber").text.toInt
+      val playerNumber: Int = (cell \ "@playernumber").text.toInt
+      val figureNumber: Int = (cell \ "@figurenumber").text.toInt
+      val hasWall: Boolean = (cell \ "@haswall").text.toBoolean
+
+      gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
+      gameBoard = gameBoard.setFigure(figureNumber, cellNumber)
+
+      if (hasWall)
+        gameBoard = gameBoard.setWall(cellNumber)
+      if (!hasWall)
+        gameBoard = gameBoard.removeWall(cellNumber)
+
+    }
+
+    gameBoard
+  }
+
+  /*
   override def loadGameBoardXml(result: String): GameBoardInterface = {
 
+    val injector = Guice.createInjector(new GameBoardServerModule)
+    var gameBoard: GameBoard = injector.instance[GameBoard]
 
     val file = scala.xml.XML.loadString(result)
     val cellNodes = file \\ "cell"
@@ -386,126 +426,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard
   }
 
-//  override def save(gameboard: GameBoardInterface, controller: ControllerInterface): Unit =
-//    saveString(gameboard, controller)
-//
-//  def saveString(gameboard: GameBoardInterface, controller: ControllerInterface): Unit = {
-//    import java.io._
-//    val pw = new PrintWriter(new File("gameboardList.xml"))
-//    val prettyPrinter = new PrettyPrinter(80, 2)
-//    val xml = prettyPrinter.format(gameBoardToXml(gameboard, controller))
-//    pw.write(xml)
-//    pw.close()
-//  }
-//
-//
-//  def gameBoardToXml(gameBoard: GameBoardInterface, controller: ControllerInterface): Elem =
-//    <gameboard size={gameBoard.players.size.toString}>
-//      {
-//
-//      for {
-//        l1 <- gameBoard.cellList.indices
-//      } yield cellToXml(l1, gameBoard.cellList(l1))
-//    }
-//      <player>
-//        {
-//      for {
-//        l1 <- gameBoard.players.indices
-//      } yield playerToXml(l1, gameBoard.players(l1).get)
-//    }
-//      </player>
-//      <possibleCells>
-//        {
-//      for {
-//        l1 <- gameBoard.possibleCells
-//      } yield possibleCellsToXml(l1)
-//    }
-//      </possibleCells>
-//      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN ={
-//      controller.gameBoard.playersTurn.get.name
-//    }></playersTurn>
-//
-//      <dicedNumber number={controller.gameBoard.dicedNumber.toString}></dicedNumber>
-//
-//      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={
-//      controller.gameBoard.selectedFigure.get._2.toString
-//    } ></selectedFigure>
-//
-//      <gameState state={controller.getGameState.currentState.toString}></gameState>
-//
-//    </gameboard>
-//
-//  def possibleCellsToXml(l1: Int): Elem =
-//    <pCells posCell={l1.toString}>
-//      {l1}
-//    </pCells>
-//
-//  def playerToXml(i: Int, player: Player): Elem =
-//    <player playernumber={player.playerNumber.toString} playername={player.name}>
-// {player}
-// </player>
-//
-//  def cellToXml(l1: Int, cell: Cell): Elem =
-//    <cell cellnumber={cell.cellNumber.toString} playernumber={cell.playerNumber.toString}
-//         figurenumber={cell.figureNumber.toString} haswall={cell.hasWall.toString}>
-//     {cell}
-//   </cell>
-
-
-
-  override def evalXml(resulta: String): Unit = {
-
-
-
-    val newController = new Controller(loadGameBoardXml(resulta))
-
-    val result = scala.xml.XML.loadString(resulta)
-
-    val gameStateNodes = result \\ "gameState"
-
-    val dice = (result \\ "dicedNumber" \ "@number").text.toInt
-    //newController.gameBoard.rollDice()
-
-    val playerZahl = (result \\ "playersTurn" \ "@turnZ").text.toInt
-    //val playerName = (file \\ "playersTurn" \ "@turnN").text
-    val stateNumber = (result \\ "gameState" \ "@state").text.toInt
-    val selectedFigure_1 = (result \\ "selectedFigure" \ "@sPlayer").text.toInt
-    val selectedFigure_2 = (result \\ "selectedFigure" \ "@sFigure").text.toInt
-
-    newController.setSelectedFigure(selectedFigure_1, selectedFigure_2)
-    newController.setStateNumber(stateNumber.toInt)
-
-    newController.setPlayersTurn(newController.gameBoard.players(playerZahl - 1))
-
-
-    val stateNr = newController.gameBoard.stateNumber.get
-
-    this.setGameBoard(newController.gameBoard)
-    this.setPossibleCells(newController.gameBoard.possibleCells)
-    this.setPlayersTurn(newController.gameBoard.playersTurn)
-    this.setSelectedFigure(
-      newController.gameBoard.selectedFigure.get._1,
-      newController.gameBoard.selectedFigure.get._2
-    )
-
-    stateNr match {
-      case 1 =>
-        this.state.nextState(Roll(this))
-        this.setStatementStatus(Statements.nextPlayer)
-      case 2 =>
-        this.state.nextState(SelectFigure(this))
-        this.setStatementStatus(Statements.selectFigure)
-      case 3 =>
-        this.state.nextState(SetFigure(this))
-        this.setStatementStatus(Statements.selectField)
-      case 4 =>
-        this.state.nextState(Setup(this))
-        this.setStatementStatus(Statements.addPlayer)
-      case 5 =>
-        this.state.nextState(SetWall(this))
-        this.setStatementStatus(Statements.wall)
-    }
-    publish(new GameBoardChanged)
-  }
+   */
 
 }

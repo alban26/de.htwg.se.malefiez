@@ -8,12 +8,10 @@ import de.htwg.se.malefiz.fileIoModule.model.FileIOInterface
 
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
-import scala.io.Source
-import scala.util.control.Breaks.break
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 class FileIO extends FileIOInterface {
-  implicit val system = ActorSystem(Behaviors.empty, "GameBoard")
+  implicit val system = ActorSystem(Behaviors.empty, "FileIO")
   implicit val executionContext = system.executionContext
 
   def load: Unit = {
@@ -32,22 +30,23 @@ class FileIO extends FileIOInterface {
   }
 
   def getXmlString: String = {
-    fileNotFound("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml") match {
+    /*fileNotFound("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml") match {
       case Success(v) => println("File Found")
       case Failure(v) => println("File not Found")
         break
-    }
-    val file = scala.xml.XML.load("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml").mkString
-    file
+    }*/
+    scala.xml.XML.load("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml").mkString
   }
 
+  /*
   def fileNotFound(filename: String): Try[String] = {
     Try(Source.fromFile(filename).getLines().mkString)
-  }
+  }*/
 
-  def save(gamestate_json: String): Unit = {
+  override def save(gamestate_json: String, suffix: String): Unit = {
     import java.io._
-    val print_writer = new PrintWriter(new File("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml"))
+    val print_writer = new PrintWriter(new File(s"FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard" +
+      s".$suffix"))
     print_writer.write(gamestate_json)
     print_writer.close()
   }

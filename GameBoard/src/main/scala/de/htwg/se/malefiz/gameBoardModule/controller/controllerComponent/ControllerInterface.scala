@@ -70,7 +70,9 @@ trait ControllerInterface extends Publisher {
 
   def checkInput(input: String): Either[String, String]
 
-  def save(): Unit
+  def saveAsJson(): Unit
+
+  def saveAsXML(): Unit
 
   def load(): Unit
 
@@ -78,7 +80,7 @@ trait ControllerInterface extends Publisher {
 
   def evalXml(result: String): Unit
 
-  def loadGameBoardXml(result: String): GameBoardInterface
+  //def loadGameBoardXml(result: String): GameBoardInterface
 
 }
 

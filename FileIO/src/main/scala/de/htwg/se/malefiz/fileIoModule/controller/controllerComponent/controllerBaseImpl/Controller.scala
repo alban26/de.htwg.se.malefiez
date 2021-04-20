@@ -17,5 +17,6 @@ class Controller @Inject() extends ControllerInterface with Publisher {
 
   override def load(): Unit = fileIo.load
 
-  override def save(s: String): Unit = fileIo.save(s)
+  override def save(body: String, suffix: String): Unit = fileIo.save(body, suffix)
+
 }

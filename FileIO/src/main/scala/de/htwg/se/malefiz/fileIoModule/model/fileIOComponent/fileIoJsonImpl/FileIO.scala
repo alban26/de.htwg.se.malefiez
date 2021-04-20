@@ -18,7 +18,8 @@ class FileIO extends FileIOInterface {
 
   def load(): Unit = {
     val gameString = getJsonString
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(HttpMethods.POST, uri = "http://localhost:8080/gameBoardXML", entity = gameString))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(HttpMethods.POST, uri =
+      "http://localhost:8080/gameBoardJson", entity = gameString))
     responseFuture.onComplete {
       case Success(value) => {
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
@@ -45,9 +46,10 @@ class FileIO extends FileIOInterface {
     Try(Source.fromFile(filename).getLines().mkString)
   }
 
-  def save(gamestate_json: String): Unit = {
+  def save(gamestate_json: String, suffix: String): Unit = {
     import java.io._
-    val print_writer = new PrintWriter(new File("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.json"))
+    val print_writer = new PrintWriter(new File(s"FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard" +
+      s".$suffix"))
     print_writer.write(gamestate_json)
     print_writer.close()
   }

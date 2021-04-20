@@ -59,7 +59,7 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
         get {
           logger.info("Spiel wird geladen")
           tui.processInput("load")
-          complete(HttpEntity("Spiel wurde geladen"))
+          complete(HttpEntity("Spiel wird nun geladen"))
         }
       },
       path("gameBoard") {
@@ -71,14 +71,12 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
       },
       (path("gameBoardJson") & post) {
         entity(as[String]) { gameJsonString => //
-
           controller.evalJson(gameJsonString)
           complete(HttpEntity("Laden von Json war erfolgreich!"))
         }
       },
       (path("gameBoardXml") & post) {
         entity(as[String]) { gameXmlString => //
-
           controller.evalXml(gameXmlString)
           complete(HttpEntity("Laden von Xml war erfolgreich!"))
         }

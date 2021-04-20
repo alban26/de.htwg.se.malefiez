@@ -14,7 +14,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
   def processInput(input: String): Unit =
     input match {
       case "undo" => controller.undo()
-      case "save" => controller.save()
+      case "saveJson" => controller.saveAsJson()
+      case "saveXML" => controller.saveAsXML()
       case "load" => controller.load()
       case "redo" => controller.redo()
       case _ =>

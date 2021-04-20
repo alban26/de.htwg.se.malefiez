@@ -4,6 +4,6 @@ trait FileIOInterface {
 
   def load: Unit
 
-  def save(gameBoard: String): Unit
+  def save(gameBoard: String, suffix: String): Unit
 
 }
