@@ -5,12 +5,16 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.malefiz.fileIoModule.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.fileIoModule.model.fileIOComponent.fileIoJsonImpl.FileIO
 
 
 object FileIOServer extends App{
 
-  val fileIO = new FileIO
+  val injector: Injector = Guice.createInjector(new FileIOServerModule)
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
+
   implicit val system = ActorSystem(Behaviors.empty, "FileIO")
   implicit val executionContext = system.executionContext
 
@@ -18,13 +22,13 @@ object FileIOServer extends App{
     concat (
       get {
         path("json") {
-          complete(HttpEntity(ContentTypes.`application/json`, fileIO.load))
+          complete(HttpEntity(ContentTypes.`application/json`, controller.load()))
         }
       },
       post {
         path("json") {
-          entity(as [String]) { game =>
-            fileIO.save(game)
+          entity(as[String]) { game =>
+            controller.save(game)
             println("GAME SAVED")
             complete("game saved")
           }

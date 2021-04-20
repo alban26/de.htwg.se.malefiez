@@ -3,23 +3,19 @@ package de.htwg.se.malefiz.fileIoModule.controller.controllerComponent.controlle
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.malefiz.fileIoModule.FileIOServerModule
 import de.htwg.se.malefiz.fileIoModule.controller.controllerComponent.ControllerInterface
-import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.malefiz.fileIoModule.model.FileIOInterface
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 
 import scala.swing.Publisher
 
 class Controller @Inject() extends ControllerInterface with Publisher {
 
+
   val injector: Injector = Guice.createInjector(new FileIOServerModule)
+  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
-  override def execute(input: String): Unit = {
-    sendPlayersToGameService(input.split(" ").toList)
 
-  }
+  override def load(): String = fileIo.load
 
-  def sendPlayersToGameService(playerList: List[String]): Unit = rest.sendPlayerListRequest(playerList)
-
-  def startGame(): Unit = rest.startGameRequest()
-
-  override def load(): Unit = rest.sendLoadRequest()
-
+  override def save(s: String): Unit = fileIo.save(s)
 }
