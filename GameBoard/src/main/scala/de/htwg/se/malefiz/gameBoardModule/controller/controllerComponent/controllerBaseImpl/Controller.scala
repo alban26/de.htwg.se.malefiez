@@ -308,7 +308,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     val jsonFile = Json.prettyPrint(jsonGameBoard)
 
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(method = HttpMethods.POST, uri =
-      "http://localhost:8081/json", entity = jsonFile))
+      "http://localhost:8081/save", entity = jsonFile))
     responseFuture.onComplete {
       case Success(value) =>
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
