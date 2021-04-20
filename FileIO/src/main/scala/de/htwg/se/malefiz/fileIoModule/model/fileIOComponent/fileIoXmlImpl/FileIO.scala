@@ -37,8 +37,8 @@ class FileIO extends FileIOInterface {
       case Failure(v) => println("File not Found")
         break
     }
-    val file = Source.fromFile("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml")
-    try file.mkString finally file.close()
+    val file = scala.xml.XML.load("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml").mkString
+    file
   }
 
   def fileNotFound(filename: String): Try[String] = {
