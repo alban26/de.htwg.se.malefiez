@@ -77,7 +77,7 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
       }
     )
 
-    val bindingFuture = Http().newServerAt("0.0.0.0", 8080).bind(route)
+    val bindingFuture = Http().newServerAt("0.0.0.0", 8083).bind(route)
 
     println(s" GameBoard Server online at http://0.0.0.0:8081/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
