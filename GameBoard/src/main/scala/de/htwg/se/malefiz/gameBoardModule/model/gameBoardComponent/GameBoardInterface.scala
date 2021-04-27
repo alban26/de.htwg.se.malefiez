@@ -119,7 +119,7 @@ trait DiceInterface {
 
 trait CreatorInterface {
 
-  def readTextFile(filename: String): Try[Option[BufferedSource]]
+  //def readTextFile(filename: String): Try[Option[BufferedSource]]
 
   def getCellList(inputFile: String): List[Cell]
 

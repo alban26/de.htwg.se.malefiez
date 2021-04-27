@@ -1,4 +1,3 @@
-
 name          := "GameBoard"
 organization  := "de.htwg.se"
 version       := "0.0.1"

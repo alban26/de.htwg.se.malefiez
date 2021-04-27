@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.gameBoardModule.util
 
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
-
+/*
 class UndoManagerSpec extends WordSpec with Matchers {
 
   "An UndoManager" should {
@@ -36,3 +36,6 @@ class UndoManagerSpec extends WordSpec with Matchers {
   }
 
 }
+
+
+ */

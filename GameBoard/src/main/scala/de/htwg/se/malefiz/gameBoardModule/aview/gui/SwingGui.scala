@@ -3,23 +3,27 @@ package de.htwg.se.malefiz.gameBoardModule.aview.gui
 
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color, Font}
-import java.io.File
-
+import java.io.{File, InputStream}
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.changeFigure
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent._
+
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
-
 import scala.swing.event.{ButtonClicked, Key, MouseClicked}
 import scala.swing.{Action, Button, Dialog, Dimension, Frame, Graphics2D, GridBagPanel, Label, Menu, MenuBar, MenuItem, Panel, Swing, TextArea, TextPane}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
 
-  val image: BufferedImage = ImageIO.read(new File("GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/aview/gui/malefizimg.png"))
+  val image: BufferedImage = ImageIO.read(getClass().getResource("/images/malefizimg.png"))
+  val stream: InputStream = getClass.getResourceAsStream("/images/dice.png")
   val g2d: Graphics2D = image.createGraphics()
+
+  import javax.imageio.ImageIO
+  import javax.swing.ImageIcon
+
 
   title = "Malefiz"
   centerOnScreen()
@@ -61,7 +65,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   cubeLabel.border = Swing.EmptyBorder(3)
 
   val cubeButton = new Button()
-  val cubeIcon = new ImageIcon("GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/aview/gui/dice.png")
+  val cubeIcon = new ImageIcon(ImageIO.read(stream))
   cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EmptyBorder(3)
 

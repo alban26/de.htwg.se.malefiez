@@ -170,7 +170,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
 
   override def load(): Unit = {
-    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://localhost:8081/load"))
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://fileio:8081/load"))
       responseFuture.onComplete {
       case Success(value) => {
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))

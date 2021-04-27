@@ -18,7 +18,7 @@ class RestController extends RestControllerInterface {
   implicit val executionContext = system.executionContext
 
   override def startGameRequest(): Unit = {
-    val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8080/newGame")
+    val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8080/newGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(startGameRequest)
     responseFuture.onComplete {
       case Success(value) =>
@@ -34,7 +34,7 @@ class RestController extends RestControllerInterface {
   override def sendPlayerListRequest(playerList: List[String]): Unit = {
 
     val sendPlayersRequest = HttpRequest(method = HttpMethods.POST,
-      uri = "http://localhost:8080/players",
+      uri = "http://gameboard:8080/players",
       entity = HttpEntity(ContentTypes.`application/json`, playerList.toJson.toString())
     )
     val responseFuture: Future[HttpResponse] = Http().singleRequest(sendPlayersRequest)
@@ -53,7 +53,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def sendLoadRequest(): Unit = {
-    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8080/loadGame")
+    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8080/loadGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(loadGameRequest)
     responseFuture.onComplete {
       case Success(value) =>
@@ -73,7 +73,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def openGameBoardRequest(): Unit = {
-    val openGameBoardRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8080/gameBoard")
+    val openGameBoardRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8080/gameBoard")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(openGameBoardRequest)
     responseFuture.onComplete {
       case Success(value) =>

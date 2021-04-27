@@ -1,5 +1,5 @@
 package de.htwg.se.malefiz.gameBoardModule.aview
-
+/*
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.addPlayer
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.controllerBaseImpl.Controller
@@ -184,3 +184,4 @@ class TuiSpec extends WordSpec with Matchers {
     }
   }
 }
+*/

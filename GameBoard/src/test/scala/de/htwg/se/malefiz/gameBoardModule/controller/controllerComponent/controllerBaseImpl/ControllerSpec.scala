@@ -6,7 +6,7 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Stateme
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard, Player}
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
-
+/*
 class ControllerSpec extends WordSpec with Matchers {
   "A Controller" when {
 
@@ -133,3 +133,7 @@ class ControllerSpec extends WordSpec with Matchers {
     }
   }
 }
+
+
+
+ */

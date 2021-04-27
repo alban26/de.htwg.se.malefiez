@@ -1,29 +1,80 @@
-lazy val root = (project in file(".")).aggregate(fileio, gameboard)
-lazy val fileio = project in file("FileIO")
-lazy val gameboard = project in file("GameBoard")
+import sbt.Keys.libraryDependencies
 
-name          := "Malefiz"
-organization  := "de.htwg.se"
-version       := "0.0.1"
-scalaVersion  := "2.13.5"
+ThisBuild / version       := "0.0.1"
+ThisBuild / scalaVersion  := "2.13.5"
+ThisBuild / trapExit := false
 
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.1"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.1" % "test"
-libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.13" % "2.1.1"
-libraryDependencies += "com.google.inject" % "guice" % "4.1.0"
-libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.10"
-libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1"
-libraryDependencies += "com.typesafe.play" %% "play-json-joda" % "2.9.0"
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.9.0"
-
-
-val AkkaVersion = "2.6.8"
-val AkkaHttpVersion = "10.2.4"
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
-  "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
-  "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
-  "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
+val commonDependencies = Seq(
+  "org.scalactic" %% "scalactic" % "3.1.1",
+  "org.scalatest" %% "scalatest" % "3.1.1" % "test",
+  "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
+  "com.google.inject" % "guice" % "4.2.2",
+  "net.codingwell" %% "scala-guice" % "4.2.6",
+  "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
+  "com.typesafe.play" %% "play-json" % "2.8.1",
+  "com.typesafe.akka" %% "akka-testkit" % "2.6.5" % Test,
+  "de.heikoseeberger" %% "akka-http-play-json" % "1.32.0",
+  "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8",
+  "com.typesafe.akka" %% "akka-stream" % "2.6.8",
+  "com.typesafe.akka" %% "akka-http" % "10.2.4",
+  "com.typesafe.akka" %% "akka-http-spray-json" % "10.2.4",
+  "com.typesafe.akka" %% "akka-http-xml" % "10.2.4"
 )
 
-coverageExcludedPackages := "<empty>;.*gui.*;.*Malefiz"
+lazy val root = (project in file(".")).settings(
+  name := "de.htwg.se.malefiz",
+  libraryDependencies ++= commonDependencies,
+  assemblyJarName in assembly := "root.jar",
+  test in assembly := {},
+  assemblyMergeStrategy in assembly := {
+    case PathList("javax", "servlet", xs @ _*)         => MergeStrategy.first
+    case PathList(ps @ _*) if ps.last endsWith ".html" => MergeStrategy.first
+    case "application.conf"                            => MergeStrategy.concat
+    case "module-info.class"                           => MergeStrategy.concat
+    case "CHANGELOG.adoc"                              => MergeStrategy.concat
+    case "unwanted.txt"                                => MergeStrategy.discard
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
+  },
+  mainClass in assembly := Some("de.htwg.se.malefiz.Malefiz")
+).aggregate(gameboard, fileio).dependsOn(gameboard, fileio)
+
+lazy val gameboard = project.settings(
+  name := "GameBoard",
+  libraryDependencies ++= commonDependencies,
+  assemblyJarName in assembly := "gameboard.jar",
+  test in assembly := {},
+  assemblyMergeStrategy in assembly := {
+    case PathList("javax", "servlet", xs @ _*)         => MergeStrategy.first
+    case PathList(ps @ _*) if ps.last endsWith ".html" => MergeStrategy.first
+    case "application.conf"                            => MergeStrategy.concat
+    case "module-info.class"                           => MergeStrategy.concat
+    case "CHANGELOG.adoc"                              => MergeStrategy.concat
+    case "unwanted.txt"                                => MergeStrategy.discard
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
+  },
+  mainClass in assembly := Some("de.htwg.se.malefiz.gameBoardModule.GameBoardServer"),
+  fullClasspath in assembly := (fullClasspath in Runtime).value
+)
+
+lazy val fileio = project.settings(
+  name := "FileIO",
+  libraryDependencies ++= commonDependencies,
+  test in assembly := {},
+  assemblyJarName in assembly := "fileio.jar",
+  assemblyMergeStrategy in assembly := {
+    case PathList("javax", "servlet", xs @ _*)         => MergeStrategy.first
+    case PathList(ps @ _*) if ps.last endsWith ".html" => MergeStrategy.first
+    case "application.conf"                            => MergeStrategy.concat
+    case "module-info.class"                           => MergeStrategy.concat
+    case "CHANGELOG.adoc"                              => MergeStrategy.concat
+    case "unwanted.txt"                                => MergeStrategy.discard
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
+  },
+  mainClass in assembly := Some("de.htwg.se.malefiz.fileIoModule.FileIOServer")
+).aggregate(gameboard).dependsOn(gameboard)

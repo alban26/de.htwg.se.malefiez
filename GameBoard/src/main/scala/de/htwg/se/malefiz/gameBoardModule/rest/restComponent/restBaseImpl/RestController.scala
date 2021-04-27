@@ -29,7 +29,7 @@ class RestController extends RestControllerInterface {
 
     val responseFuture: Future[HttpResponse] =
       Http().singleRequest(HttpRequest(method = HttpMethods.POST,
-        uri = "http://localhost:8081/save",
+        uri = "http://fileio:8081/save",
         entity = HttpEntity(ContentTypes.`application/json`, jsonFile)))
     responseFuture.onComplete {
       case Success(value) =>
@@ -88,7 +88,7 @@ class RestController extends RestControllerInterface {
     val y = prettyPrinter.format(x)
     val responseFuture: Future[HttpResponse] =
       Http().singleRequest(HttpRequest(method = HttpMethods.POST,
-        uri = "http://localhost:8081/save",
+        uri = "http://fileio:8081/save",
         entity = HttpEntity(ContentTypes.`text/xml(UTF-8)`, y)))
     responseFuture.onComplete {
       case Success(value) =>
