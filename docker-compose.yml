@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  root:
+    image: root:latest
+    depends_on:
+      - gameboard
+      - fileio
+    stdin_open: true
+    ports:
+      - "8082:8082"
+    environment:
+      - DISPLAY=192.168.0.17:0
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix
+  fileio:
+    image: fileio:latest
+    stdin_open: true
+    depends_on:
+      - gameboard
+    ports:
+      - "8081:8081"
+  gameboard:
+    image: gameboard:latest
+    stdin_open: true
+    ports:
+      - "8083:8083"
+    environment:
+      - DISPLAY=192.168.0.17:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
