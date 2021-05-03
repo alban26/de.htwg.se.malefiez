@@ -10,6 +10,9 @@ import scala.swing.event.Event
 
 trait ControllerInterface extends Publisher {
 
+  def saveInDb(): Unit
+
+
   def gameBoard: GameBoardInterface
 
   //def gameBoardToString: String

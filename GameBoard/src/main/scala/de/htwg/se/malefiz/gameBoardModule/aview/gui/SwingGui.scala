@@ -274,6 +274,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       contents += new MenuItem(Action("Speichern als XML") {
         controller.saveAsXML()
       })
+      contents += new MenuItem(Action("Speichern in Datenbank") {
+        controller.saveInDb()
+      })
     }
   }
 

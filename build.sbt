@@ -18,7 +18,11 @@ val commonDependencies = Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.8",
   "com.typesafe.akka" %% "akka-http" % "10.2.4",
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.2.4",
-  "com.typesafe.akka" %% "akka-http-xml" % "10.2.4"
+  "com.typesafe.akka" %% "akka-http-xml" % "10.2.4",
+  "com.typesafe.slick" %% "slick" % "3.3.3",
+  //"org.slf4j" % "slf4j-nop" % "1.6.4",
+  "com.h2database" % "h2" % "1.4.192",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3"
 )
 
 lazy val root = (project in file(".")).settings(

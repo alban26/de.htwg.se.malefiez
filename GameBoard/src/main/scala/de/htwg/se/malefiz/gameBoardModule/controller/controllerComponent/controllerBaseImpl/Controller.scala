@@ -11,6 +11,7 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameSta
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
+import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.dao.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Player, Point}
 import de.htwg.se.malefiz.gameBoardModule.rest.restComponent.RestControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.util.UndoManager
@@ -26,6 +27,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   val injector: Injector = Guice.createInjector(new GameBoardServerModule)
   val rest: RestControllerInterface = injector.instance[RestControllerInterface]
+  val db = injector.instance[DaoInterface]
   val mementoGameBoard: GameBoardInterface = gameBoard
   val state: GameState = GameState(this)
   val undoManager = new UndoManager
@@ -427,5 +429,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
    */
-
+  override def saveInDb(): Unit = {
+   db.save(gameBoard)
+  }
 }
