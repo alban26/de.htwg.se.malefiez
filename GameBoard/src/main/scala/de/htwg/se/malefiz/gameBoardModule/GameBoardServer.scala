@@ -57,6 +57,12 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
           complete(HttpEntity("Spiel wird nun geladen"))
         }
       },
+      path("loadGameFromDB") {
+        get {
+          tui.processInput("loadFromDB")
+          complete(HttpEntity("Spiel wird nun von der Datenbank geladen"))
+        }
+      },
       path("gameBoard") {
         get {
           openGameBoardGui()

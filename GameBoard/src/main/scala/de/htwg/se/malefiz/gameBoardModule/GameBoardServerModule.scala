@@ -2,7 +2,8 @@ package de.htwg.se.malefiz.gameBoardModule
 
 import com.google.inject.AbstractModule
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.ControllerInterface
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.dao.DaoInterface
+import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.DaoInterface
+import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.slickImpl.DaoSlick
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.{CreatorInterface, GameBoardInterface}
 import de.htwg.se.malefiz.gameBoardModule.rest.restComponent.RestControllerInterface
 import net.codingwell.scalaguice.ScalaModule
@@ -14,7 +15,7 @@ class GameBoardServerModule extends AbstractModule with ScalaModule {
     bind[GameBoardInterface].to[model.gameBoardComponent.gameBoardBaseImpl.GameBoard]
     bind[CreatorInterface].to[model.gameBoardComponent.gameBoardBaseImpl.Creator]
     bind[RestControllerInterface].to[rest.restComponent.restBaseImpl.RestController]
-    bind[DaoInterface].to[model.gameBoardComponent.gameBoardBaseImpl.dao.h2DB.RelationalDB]
+    bind[DaoInterface].to[DaoSlick]
   }
 
 }

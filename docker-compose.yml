@@ -22,9 +22,18 @@ services:
   gameboard:
     image: gameboard:latest
     stdin_open: true
+    depends_on:
+      - malefizdb
     ports:
       - "8083:8083"
     environment:
       - DISPLAY=192.168.2.111:0
+      - DATABASE_HOST=malefizdb:3306
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
+
+  malefizdb:
+    image: malefiz-mysql:latest
+    hostname: malefizdb
+    ports:
+     - "3306:3306"

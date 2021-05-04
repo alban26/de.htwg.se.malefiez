@@ -19,6 +19,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
 
   val newGameButton = new Button("New Game")
   val loadButton = new Button("Load Game")
+  val loadButtonDB = new Button("Load Game from DB")
   val quitButton = new Button("Quit")
 
   contents = new GridBagPanel {
@@ -56,17 +57,22 @@ class EntryGui (controller: ControllerInterface) extends Frame {
       constraints(0, 2, gridHeight = 2, ipadX = 20, ipadY = 20))
     add(loadButton,
       constraints(0, 4, gridHeight = 2, ipadX = 20, ipadY = 20))
-    add(quitButton,
+    add(loadButtonDB,
       constraints(0, 6, gridHeight = 2, ipadX = 20, ipadY = 20))
+    add(quitButton,
+      constraints(0, 8, gridHeight = 2, ipadX = 20, ipadY = 20))
   }
 
-  listenTo(newGameButton, quitButton, loadButton)
+  listenTo(newGameButton, quitButton, loadButton, loadButtonDB)
 
   reactions += {
     case ButtonClicked(`quitButton`) => System.exit(0)
     case ButtonClicked(`loadButton`) =>
       entryGui.visible = false
       controller.load()
+    case ButtonClicked(`loadButtonDB`) =>
+      entryGui.visible = false
+      controller.loadFromDB()
     case ButtonClicked(`newGameButton`) =>
       visible = false
       entryPlayerGui.visible = true

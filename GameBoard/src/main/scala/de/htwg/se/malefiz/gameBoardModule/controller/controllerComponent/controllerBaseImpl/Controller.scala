@@ -10,8 +10,8 @@ import de.htwg.se.malefiz.gameBoardModule.GameBoardServerModule
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates._
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{ControllerInterface, GameBoardChanged, Statements, Winner}
+import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.dao.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Player, Point}
 import de.htwg.se.malefiz.gameBoardModule.rest.restComponent.RestControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.util.UndoManager
@@ -279,7 +279,39 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard
   }
 
+  def evalDB(gameBoardInterface: GameBoardInterface): Unit = {
+    val newController = new Controller(gameBoardInterface)
+    val stateNr = newController.gameBoard.stateNumber.get
 
+    this.setGameBoard(newController.gameBoard)
+    this.setPossibleCells(newController.gameBoard.possibleCells)
+    this.setPlayersTurn(newController.gameBoard.playersTurn)
+    //this.setDicedNumber(newController.gameBoard.dicedNumber)
+    this.setSelectedFigure(
+      newController.gameBoard.selectedFigure.get._1,
+      newController.gameBoard.selectedFigure.get._2
+    )
+
+    stateNr match {
+      case 1 =>
+        this.state.nextState(Roll(this))
+        this.setStatementStatus(Statements.nextPlayer)
+      case 2 =>
+        this.state.nextState(SelectFigure(this))
+        this.setStatementStatus(Statements.selectFigure)
+      case 3 =>
+        this.state.nextState(SetFigure(this))
+        this.setStatementStatus(Statements.selectField)
+      case 4 =>
+        this.state.nextState(Setup(this))
+        this.setStatementStatus(Statements.addPlayer)
+      case 5 =>
+        this.state.nextState(SetWall(this))
+        this.setStatementStatus(Statements.wall)
+    }
+
+    publish(new GameBoardChanged)
+  }
 
   override def evalXml(resulta: String): Unit = {
 
@@ -341,8 +373,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   def loadR(xmlString: String): GameBoardInterface = {
     val injector = Guice.createInjector(new GameBoardServerModule)
     var gameBoard: GameBoardInterface = injector.instance[GameBoardInterface]
-    //var gameStateT: GameState = injector.instance[GameState]
-    //var controller: ControllerInterface = injector.instance[ControllerInterface]
 
     val file = scala.xml.XML.loadString(xmlString)
     val cellNodes = file \\ "cell"
@@ -364,7 +394,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     }
 
     for (cell <- cellNodes) {
-
       val cellNumber: Int = (cell \ "@cellnumber").text.toInt
       val playerNumber: Int = (cell \ "@playernumber").text.toInt
       val figureNumber: Int = (cell \ "@figurenumber").text.toInt
@@ -379,57 +408,19 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
         gameBoard = gameBoard.removeWall(cellNumber)
 
     }
-
     gameBoard
   }
 
-  /*
-  override def loadGameBoardXml(result: String): GameBoardInterface = {
-
-    val injector = Guice.createInjector(new GameBoardServerModule)
-    var gameBoard: GameBoard = injector.instance[GameBoard]
-
-    val file = scala.xml.XML.loadString(result)
-    val cellNodes = file \\ "cell"
-    val playerNodes = file \\ "player"
-    val pCellNodes = file \\ "pCells"
-
-    var found: Set[Int] = Set[Int]()
-    for (pos <- pCellNodes) {
-      val possCell = (pos \ "@posCell").text.toInt
-      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
-      found += possCell
-    }
-    gameBoard = gameBoard.setPossibleCell(found)
-
-    for (player <- playerNodes) {
-      val playerName: String = (player \ "@playername").text
-      if (playerName != "")
-        gameBoard = gameBoard.createPlayer(playerName)
-    }
-
-    for (cell <- cellNodes) {
-
-      val cellNumber: Int = (cell \ "@cellnumber").text.toInt
-      val playerNumber: Int = (cell \ "@playernumber").text.toInt
-      val figureNumber: Int = (cell \ "@figurenumber").text.toInt
-      val hasWall: Boolean = (cell \ "@haswall").text.toBoolean
-
-      gameBoard = gameBoard.setPlayer(playerNumber, cellNumber)
-      gameBoard = gameBoard.setFigure(figureNumber, cellNumber)
-
-      if (hasWall)
-        gameBoard = gameBoard.setWall(cellNumber)
-      if (!hasWall)
-        gameBoard = gameBoard.removeWall(cellNumber)
-
-    }
-
-    gameBoard
-  }
-
-   */
   override def saveInDb(): Unit = {
    db.save(gameBoard)
+  }
+
+  override def loadFromDB(): Unit = {
+    gameBoard = db.load()
+    println(gameBoard.cellList)
+    println(gameBoard.players)
+    println("hsdaödkfjaüeifhsdf")
+    evalDB(gameBoard)
+    publish(new GameBoardChanged)
   }
 }

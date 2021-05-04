@@ -277,6 +277,9 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       contents += new MenuItem(Action("Speichern in Datenbank") {
         controller.saveInDb()
       })
+      contents += new MenuItem(Action("Laden aus Datenbank") {
+        controller.loadFromDB()
+      })
     }
   }
 

@@ -29,4 +29,7 @@ class Controller @Inject() extends ControllerInterface {
         Right(input)
   }
 
+  override def loadFromDB(): Unit = {
+    rest.sendLoadFromDBRequest()
+  }
 }

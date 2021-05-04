@@ -4,6 +4,8 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def loadFromDB(): Unit
+
   def execute(input: String): Unit
 
   def sendPlayersToGameService(playerList: List[String]): Unit

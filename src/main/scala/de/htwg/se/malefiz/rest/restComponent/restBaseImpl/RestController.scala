@@ -85,4 +85,24 @@ class RestController extends RestControllerInterface {
       case Failure(exception) => println("Fehler beim anzegen des Spielbretts: " + exception)
     }
   }
+
+  override def sendLoadFromDBRequest(): Unit = {
+    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/loadGameFromDB")
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(loadGameRequest)
+    responseFuture.onComplete {
+      case Success(value) =>
+        val entityFuture: Future[String] = value.entity.toStrict(1.seconds).map(_.data.decodeString("UTF-8"))
+        entityFuture.onComplete {
+          case Success(value) =>
+            println("Laderequest an GameBoard: " + value)
+            println("Spiel wird geladen...")
+            val deadline = 2.seconds.fromNow
+            while (deadline.hasTimeLeft) {}
+            //LazyList.range(0, 20).map(x => println())
+            openGameBoardRequest()
+          case Failure(exception) => println("Fehler beim Starten des Spiels im GameboardService: ", exception)
+        }
+      case Failure(exception) => println("Fehler beim Starten des Spiels im GameBoardService: " + exception)
+    }
+  }
 }
