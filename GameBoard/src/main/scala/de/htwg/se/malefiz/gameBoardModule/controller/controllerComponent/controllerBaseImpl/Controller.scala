@@ -419,7 +419,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     gameBoard = db.load()
     println(gameBoard.cellList)
     println(gameBoard.players)
-    println("hsdaödkfjaüeifhsdf")
+    println("hsdaödkfjsdf")
     evalDB(gameBoard)
     publish(new GameBoardChanged)
   }
