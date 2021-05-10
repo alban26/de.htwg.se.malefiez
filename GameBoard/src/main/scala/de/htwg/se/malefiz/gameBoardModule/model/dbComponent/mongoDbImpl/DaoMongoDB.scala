@@ -20,7 +20,7 @@ class DaoMongoDB extends DaoInterface {
   val gameBoardCollection: MongoCollection[Document] = database.getCollection("malefiz")
 
 
-  override def load(): GameBoardInterface = {
+  override def read(): GameBoardInterface = {
     var waitOnRes = true
     var res: String = ""
     val observable: Observable[Document] = gameBoardCollection.find().first()
@@ -43,7 +43,7 @@ class DaoMongoDB extends DaoInterface {
     controller.loadGameBoardJson(res)
   }
 
-  override def save(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
+  override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
 
 
     val rc = new RestController
@@ -62,4 +62,8 @@ class DaoMongoDB extends DaoInterface {
     })
 
   }
+
+  override def update(): Unit = ???
+
+  override def delete(): Unit = ???
 }

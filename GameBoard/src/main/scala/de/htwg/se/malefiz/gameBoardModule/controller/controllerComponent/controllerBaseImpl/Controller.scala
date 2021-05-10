@@ -281,14 +281,11 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   def evalDB(gameBoardInterface: GameBoardInterface): Unit = {
     val newController = new Controller(gameBoardInterface)
-
-    val stateNr = 1 //newController.gameBoard.stateNumber.getOrElse(1)
     this.setStateNumber(1);
     this.setGameBoard(newController.gameBoard)
     this.setPossibleCells(newController.gameBoard.possibleCells)
     this.setPlayersTurn(newController.gameBoard.playersTurn)
     this.setDicedNumber(newController.gameBoard.dicedNumber)
-
     this.state.nextState(Roll(this))
     publish(new GameBoardChanged)
   }
@@ -376,11 +373,11 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
   override def saveInDb(): Unit = {
-   db.save(gameBoard, this)
+   db.create(gameBoard, this)
   }
 
   override def loadFromDB(): Unit = {
-    gameBoard = db.load()
+    gameBoard = db.read()
     evalDB(gameBoard)
   }
 

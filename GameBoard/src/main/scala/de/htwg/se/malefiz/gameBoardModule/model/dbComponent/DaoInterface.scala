@@ -7,8 +7,12 @@ import scala.concurrent.Future
 
 trait DaoInterface {
 
-  def load(): GameBoardInterface
+  def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit
 
-  def save(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit
+  def read(): GameBoardInterface
+
+  def update()
+
+  def delete()
 
 }

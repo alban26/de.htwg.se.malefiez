@@ -35,7 +35,7 @@ class DaoSlick extends DaoInterface {
   val gameStats = TableQuery[GameStatsTable]
 
 
-  override def load(): GameBoardInterface = {
+  override def read(): GameBoardInterface = {
 
     var _players: List[Option[Player]] = Nil
     val playersQuery = players.sortBy(_.playerNumber.desc).result
@@ -87,7 +87,7 @@ class DaoSlick extends DaoInterface {
       gameBoardInterface.stateNumber.getOrElse(1))
   }
 
-  override def save(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
+  override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
     val injection = DBIO.seq(
       (players.schema ++ playersTurn.schema ++ cells.schema ++ gameStats.schema).createIfNotExists,
       cells ++= (for {
@@ -106,4 +106,8 @@ class DaoSlick extends DaoInterface {
       case Failure(e) => println(s"Fehler beim Speichern in die Datenbank: ${e.getMessage}")
     }
   }
+
+  override def update(): Unit = ???
+
+  override def delete(): Unit = ???
 }
