@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.GameState
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.Statements
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.Player
+import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{GameBoard, Player}
 
 import scala.swing.{Button, Publisher}
 import scala.swing.event.Event
@@ -87,6 +87,8 @@ trait ControllerInterface extends Publisher {
   def evalXml(result: String): Unit
 
   //def loadGameBoardXml(result: String): GameBoardInterface
+
+  def loadGameBoardJson(result: String): GameBoard
 
 }
 

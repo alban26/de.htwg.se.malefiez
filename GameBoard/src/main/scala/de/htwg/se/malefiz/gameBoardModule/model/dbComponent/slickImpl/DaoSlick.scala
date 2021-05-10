@@ -1,6 +1,7 @@
 package de.htwg.se.malefiz.gameBoardModule.model.dbComponent.slickImpl
 
 import de.htwg.se.malefiz.gameBoardModule.GameBoardServer.{cellConfigFile, cellLinksFile}
+import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard, Player, Point}
@@ -86,8 +87,7 @@ class DaoSlick extends DaoInterface {
       gameBoardInterface.stateNumber.getOrElse(1))
   }
 
-  override def save(gameBoardInterface: GameBoardInterface): Future[Unit] = {
-
+  override def save(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
     val injection = DBIO.seq(
       (players.schema ++ playersTurn.schema ++ cells.schema ++ gameStats.schema).createIfNotExists,
       cells ++= (for {

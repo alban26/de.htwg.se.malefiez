@@ -165,11 +165,25 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
 
-
-
-
-
-
+  def stateNrMatch(stateNr: Int) = {
+    stateNr match {
+      case 1 =>
+        this.state.nextState(Roll(this))
+        this.setStatementStatus(Statements.nextPlayer)
+      case 2 =>
+        this.state.nextState(SelectFigure(this))
+        this.setStatementStatus(Statements.selectFigure)
+      case 3 =>
+        this.state.nextState(SetFigure(this))
+        this.setStatementStatus(Statements.selectField)
+      case 4 =>
+        this.state.nextState(Setup(this))
+        this.setStatementStatus(Statements.addPlayer)
+      case 5 =>
+        this.state.nextState(SetWall(this))
+        this.setStatementStatus(Statements.wall)
+    }
+  }
 
   override def load(): Unit = {
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://fileio:8081/load"))
@@ -216,28 +230,12 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
       newController.gameBoard.selectedFigure.get._2
     )
 
-    stateNr match {
-      case 1 =>
-        this.state.nextState(Roll(this))
-        this.setStatementStatus(Statements.nextPlayer)
-      case 2 =>
-        this.state.nextState(SelectFigure(this))
-        this.setStatementStatus(Statements.selectFigure)
-      case 3 =>
-        this.state.nextState(SetFigure(this))
-        this.setStatementStatus(Statements.selectField)
-      case 4 =>
-        this.state.nextState(Setup(this))
-        this.setStatementStatus(Statements.addPlayer)
-      case 5 =>
-        this.state.nextState(SetWall(this))
-        this.setStatementStatus(Statements.wall)
-    }
+    stateNrMatch(stateNr)
 
     publish(new GameBoardChanged)
   }
 
-  def loadGameBoardJson(result: String): GameBoard ={
+  override def loadGameBoardJson(result: String): GameBoard ={
     val injector = Guice.createInjector(new GameBoardServerModule)
     var gameBoard: GameBoard = injector.instance[GameBoard]
     val json: JsValue = Json.parse(result)
@@ -248,6 +246,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
+    val playersTurn: Player = (json \ "playersTurn").as[Player]
 
     var found: Set[Int] = Set[Int]()
 
@@ -267,6 +266,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
       gameBoard = gameBoard setPlayer(playerNumber, cellNumber)
       gameBoard = gameBoard setFigure(figureNumber, cellNumber)
 
+
       if (hasWall)
         gameBoard = gameBoard.setWall(cellNumber)
       if (!hasWall)
@@ -274,42 +274,34 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     })
 
     players.foreach(player => if (player.name != "") gameBoard = gameBoard.createPlayer(player.name))
-
+    gameBoard = gameBoard.setPlayersTurn(Option(playersTurn))
     gameBoard = gameBoard.setPossibleCell(posCells)
     gameBoard
   }
 
   def evalDB(gameBoardInterface: GameBoardInterface): Unit = {
     val newController = new Controller(gameBoardInterface)
-    val stateNr = newController.gameBoard.stateNumber.get
+
+    println("Hallo")
+    println("###################################")
+    println(newController.state)
+    println(newController.gameBoard.possibleCells)
+    println(newController.gameBoard.playersTurn)
+    println(newController.gameBoard.selectedFigure)
+    val stateNr = 1 //newController.gameBoard.stateNumber.getOrElse(1)
 
     this.setGameBoard(newController.gameBoard)
     this.setPossibleCells(newController.gameBoard.possibleCells)
     this.setPlayersTurn(newController.gameBoard.playersTurn)
-    //this.setDicedNumber(newController.gameBoard.dicedNumber)
+    this.setDicedNumber(newController.gameBoard.dicedNumber)
     this.setSelectedFigure(
       newController.gameBoard.selectedFigure.get._1,
       newController.gameBoard.selectedFigure.get._2
     )
+    this.setStateNumber(1);
+    println(this.gameBoard.stateNumber)
 
-    stateNr match {
-      case 1 =>
-        this.state.nextState(Roll(this))
-        this.setStatementStatus(Statements.nextPlayer)
-      case 2 =>
-        this.state.nextState(SelectFigure(this))
-        this.setStatementStatus(Statements.selectFigure)
-      case 3 =>
-        this.state.nextState(SetFigure(this))
-        this.setStatementStatus(Statements.selectField)
-      case 4 =>
-        this.state.nextState(Setup(this))
-        this.setStatementStatus(Statements.addPlayer)
-      case 5 =>
-        this.state.nextState(SetWall(this))
-        this.setStatementStatus(Statements.wall)
-    }
-
+    stateNrMatch(stateNr)
     publish(new GameBoardChanged)
   }
 
@@ -327,23 +319,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
       newController.gameBoard.selectedFigure.get._2
     )
 
-    stateNr match {
-      case 1 =>
-        this.state.nextState(Roll(this))
-        this.setStatementStatus(Statements.nextPlayer)
-      case 2 =>
-        this.state.nextState(SelectFigure(this))
-        this.setStatementStatus(Statements.selectFigure)
-      case 3 =>
-        this.state.nextState(SetFigure(this))
-        this.setStatementStatus(Statements.selectField)
-      case 4 =>
-        this.state.nextState(Setup(this))
-        this.setStatementStatus(Statements.addPlayer)
-      case 5 =>
-        this.state.nextState(SetWall(this))
-        this.setStatementStatus(Statements.wall)
-    }
+    stateNrMatch(stateNr)
 
     publish(new GameBoardChanged)
   }
@@ -412,15 +388,14 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
   override def saveInDb(): Unit = {
-   db.save(gameBoard)
+   db.save(gameBoard, this)
   }
 
   override def loadFromDB(): Unit = {
     gameBoard = db.load()
-    println(gameBoard.cellList)
-    println(gameBoard.players)
-    println("hsdaödkfjsdf")
     evalDB(gameBoard)
-    publish(new GameBoardChanged)
+    //publish(new GameBoardChanged)
   }
+
+
 }
