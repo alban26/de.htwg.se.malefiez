@@ -247,6 +247,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     val players: List[Player] = (json \ "players").as[List[Player]]
     val posCells: Set[Int] = (json \ "possibleCells").as[Set[Int]]
     val playersTurn: Player = (json \ "playersTurn").as[Player]
+    val gameState: Int = (json \ "gameState").as[Int]
 
     var found: Set[Int] = Set[Int]()
 
@@ -265,8 +266,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
       gameBoard = gameBoard setPlayer(playerNumber, cellNumber)
       gameBoard = gameBoard setFigure(figureNumber, cellNumber)
-
-
       if (hasWall)
         gameBoard = gameBoard.setWall(cellNumber)
       if (!hasWall)
@@ -276,32 +275,21 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     players.foreach(player => if (player.name != "") gameBoard = gameBoard.createPlayer(player.name))
     gameBoard = gameBoard.setPlayersTurn(Option(playersTurn))
     gameBoard = gameBoard.setPossibleCell(posCells)
+    gameBoard = gameBoard.setStateNumber(gameState)
     gameBoard
   }
 
   def evalDB(gameBoardInterface: GameBoardInterface): Unit = {
     val newController = new Controller(gameBoardInterface)
 
-    println("Hallo")
-    println("###################################")
-    println(newController.state)
-    println(newController.gameBoard.possibleCells)
-    println(newController.gameBoard.playersTurn)
-    println(newController.gameBoard.selectedFigure)
     val stateNr = 1 //newController.gameBoard.stateNumber.getOrElse(1)
-
+    this.setStateNumber(1);
     this.setGameBoard(newController.gameBoard)
     this.setPossibleCells(newController.gameBoard.possibleCells)
     this.setPlayersTurn(newController.gameBoard.playersTurn)
     this.setDicedNumber(newController.gameBoard.dicedNumber)
-    this.setSelectedFigure(
-      newController.gameBoard.selectedFigure.get._1,
-      newController.gameBoard.selectedFigure.get._2
-    )
-    this.setStateNumber(1);
-    println(this.gameBoard.stateNumber)
 
-    stateNrMatch(stateNr)
+    this.state.nextState(Roll(this))
     publish(new GameBoardChanged)
   }
 
@@ -394,7 +382,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   override def loadFromDB(): Unit = {
     gameBoard = db.load()
     evalDB(gameBoard)
-    //publish(new GameBoardChanged)
   }
 
 
