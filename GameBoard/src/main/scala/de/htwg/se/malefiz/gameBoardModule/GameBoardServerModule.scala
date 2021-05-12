@@ -16,8 +16,8 @@ class GameBoardServerModule extends AbstractModule with ScalaModule {
     bind[GameBoardInterface].to[model.gameBoardComponent.gameBoardBaseImpl.GameBoard]
     bind[CreatorInterface].to[model.gameBoardComponent.gameBoardBaseImpl.Creator]
     bind[RestControllerInterface].to[rest.restComponent.restBaseImpl.RestController]
-    //bind[DaoInterface].to[DaoSlick]
-    bind[DaoInterface].to[DaoMongoDB]
+    bind[DaoInterface].to[DaoSlick]
+    //bind[DaoInterface].to[DaoMongoDB]
   }
 
 }
