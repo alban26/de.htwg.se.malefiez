@@ -64,8 +64,8 @@ class RestController extends RestControllerInterface {
     ),
     "playersTurn" -> controller.gameBoard.playersTurn,
     "diceNumber" -> controller.gameBoard.dicedNumber,
-    "selectedFigure1" -> controller.gameBoard.selectedFigure.get._1,
-    "selectedFigure2" -> controller.gameBoard.selectedFigure.get._2,
+    "selectedFigure1" -> controller.gameBoard.selectedFigure.getOrElse((1, 1))._1,
+    "selectedFigure2" -> controller.gameBoard.selectedFigure.getOrElse((1, 1))._2,
     "gameState" -> controller.getGameState.currentState.toString.toInt,
     "possibleCells" -> gameBoard.possibleCells,
     "cells" -> Json.toJson(

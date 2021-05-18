@@ -11,7 +11,8 @@ import org.mongodb.scala.result.InsertOneResult
 
 class DaoMongoDB extends DaoInterface {
 
-  val uri: String = "mongodb://192.168.0.17:27017/?readPreference=primary&authSource=malefiz-mongodb&appname=MongoDB%20Compass&ssl=false"
+  val uri: String = "mongodb://192.168.2.111:27017/?readPreference=primary&authSource=malefiz-mongodb&appname=MongoDB" +
+    "%20Compass&ssl=false"
 
   val client: MongoClient = MongoClient(uri)
 
@@ -45,7 +46,7 @@ class DaoMongoDB extends DaoInterface {
 
   override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
 
-
+    println("Ich bin ein MONGOOOO !!!")
     val rc = new RestController
     val gameBoardJsonString = rc.gameBoardToJson(gameBoardInterface, controllerInterface).toString()
 

@@ -251,6 +251,15 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
     var found: Set[Int] = Set[Int]()
 
+//    var index = 0
+//    while(index <= posCells.size) {
+//
+//      val possCell = (json \ "possibleCells")(index).as[Int]
+//      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
+//      found += possCell
+//      index += 1
+//    }
+
     for (index <- 0 until posCells.size) {
       val possCell = (json \ "possibleCells")(index).as[Int]
       gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)

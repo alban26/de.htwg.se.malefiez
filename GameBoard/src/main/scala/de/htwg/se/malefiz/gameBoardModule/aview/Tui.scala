@@ -16,6 +16,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "undo" => controller.undo()
       case "saveJson" => controller.saveAsJson()
       case "saveXML" => controller.saveAsXML()
+      case "saveDB" => controller.saveInDb()
       case "load" => controller.load()
       case "loadFromDB" => controller.loadFromDB()
       case "redo" => controller.redo()

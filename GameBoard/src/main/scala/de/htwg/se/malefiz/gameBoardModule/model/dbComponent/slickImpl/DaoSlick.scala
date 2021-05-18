@@ -1,16 +1,14 @@
 package de.htwg.se.malefiz.gameBoardModule.model.dbComponent.slickImpl
 
-import de.htwg.se.malefiz.gameBoardModule.GameBoardServer.{cellConfigFile, cellLinksFile}
+import de.htwg.se.malefiz.gameBoardModule.GameBoardServer.cellLinksFile
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard, Player, Point}
+import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl._
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.MySQLProfile.api._
 
-import scala.:+
-import scala.collection.IterableOnce.iterableOnceExtensionMethods
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
@@ -88,7 +86,10 @@ class DaoSlick extends DaoInterface {
   }
 
   override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
+    println("Ich bin MySQL !!!")
     val injection = DBIO.seq(
+      players.schema.dropIfExists, playersTurn.schema.dropIfExists, cells.schema.dropIfExists, gameStats.schema
+      .dropIfExists,
       (players.schema ++ playersTurn.schema ++ cells.schema ++ gameStats.schema).createIfNotExists,
       cells ++= (for {
         cell <- gameBoardInterface.cellList
@@ -101,10 +102,7 @@ class DaoSlick extends DaoInterface {
       gameStats += gameBoardMapper(gameBoardInterface)
     )
 
-    database.run(injection).andThen {
-      case Success(_) => println("Daten erfolgreich gespeichert")
-      case Failure(e) => println(s"Fehler beim Speichern in die Datenbank: ${e.getMessage}")
-    }
+    database.run(injection)
   }
 
   override def update(): Unit = ???

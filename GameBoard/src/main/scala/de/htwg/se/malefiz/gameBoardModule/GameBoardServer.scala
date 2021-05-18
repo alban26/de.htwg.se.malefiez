@@ -70,9 +70,27 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
         }
       },
       (path("gameBoardJson") & post) {
-        entity(as[String]) { gameJsonString => //
+        entity(as[String]) { gameJsonString =>
           controller.evalJson(gameJsonString)
           complete(HttpEntity("Laden von Json war erfolgreich!"))
+        }
+      },
+      (path("process") & post) {
+        entity(as[String]) { input =>
+          tui.processInput(input)
+          complete(HttpEntity(controller.gameBoard.toString))
+        }
+      },
+      (path("save") & post) {
+        entity(as[String]) { input =>
+          tui.processInput(input)
+          complete(HttpEntity("Speichere in Datenbank"))
+        }
+      },
+      (path("roll") & post) {
+        entity(as[String]) { input =>
+          tui.processInput(input)
+          complete(HttpEntity(controller.gameBoard.dicedNumber.getOrElse("0").toString))
         }
       },
       (path("gameBoardXml") & post) {
