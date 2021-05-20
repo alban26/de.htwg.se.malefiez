@@ -9,44 +9,27 @@ import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase}
 import org.mongodb.scala._
 import org.mongodb.scala.result.InsertOneResult
 
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
+
 class DaoMongoDB extends DaoInterface {
 
   val uri: String = "mongodb://192.168.2.111:27017/?readPreference=primary&authSource=malefiz-mongodb&appname=MongoDB" +
     "%20Compass&ssl=false"
 
   val client: MongoClient = MongoClient(uri)
-
   val database: MongoDatabase = client.getDatabase("malefiz")
-
   val gameBoardCollection: MongoCollection[Document] = database.getCollection("malefiz")
 
-
   override def read(): GameBoardInterface = {
-    var waitOnRes = true
-    var res: String = ""
-    val observable: Observable[Document] = gameBoardCollection.find().first()
+    val resultFuture: Future[Document] = gameBoardCollection.find().first().head()
 
-    observable.subscribe(new Observer[Document] {
-      override def onNext(result: Document): Unit = {
-        res = result.getString("gameBoard")
-      }
-
-      override def onError(e: Throwable): Unit = println("failed to load data")
-
-      override def onComplete(): Unit = {
-        waitOnRes = false
-        println("completed loading data")
-      }
-    })
-
-    while (waitOnRes)
-      Thread.sleep(10)
-    controller.loadGameBoardJson(res)
+    val result: Document = Await.result(resultFuture, Duration.Inf)
+    controller.loadGameBoardJson(result.getString("gameBoard"))
   }
 
   override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
 
-    println("Ich bin ein MONGOOOO !!!")
     val rc = new RestController
     val gameBoardJsonString = rc.gameBoardToJson(gameBoardInterface, controllerInterface).toString()
 

@@ -25,25 +25,25 @@ services:
     image: gameboard:latest
     stdin_open: true
     depends_on:
-      - malefizdb
-   #   - malefiz-mongodb
+   #   - malefizdb
+      - malefiz-mongodb
     ports:
       - "8083:8083"
     environment:
       - DISPLAY=192.168.2.111:0
-      - DATABASE_HOST=malefizdb:3306
-    #  - DATABASE_HOST=malefiz-mongodb:27017
+    #  - DATABASE_HOST=malefizdb:3306
+      - DATABASE_HOST=malefiz-mongodb:27017
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
 
-  malefizdb:
-    image: malefiz-mysql:latest
-    hostname: malefizdb
-    ports:
-     - "3306:3306"
-
-#  malefiz-mongodb:
-#    image: malefiz-mongodb:latest
-#    hostname: malefiz-mongodb
+#  malefizdb:
+#    image: malefiz-mysql:latest
+#    hostname: malefizdb
 #    ports:
-#      - "27017:27017"
+#     - "3306:3306"
+
+  malefiz-mongodb:
+    image: malefiz-mongodb:latest
+    hostname: malefiz-mongodb
+    ports:
+      - "27017:27017"
