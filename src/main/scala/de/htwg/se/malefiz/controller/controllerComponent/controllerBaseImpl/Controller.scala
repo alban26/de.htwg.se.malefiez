@@ -7,8 +7,6 @@ import de.htwg.se.malefiz.rest.restComponent.restBaseImpl.RestController
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 
-import scala.swing.Publisher
-
 class Controller @Inject() extends ControllerInterface {
 
   val injector: Injector = Guice.createInjector(new MalefizModule)
