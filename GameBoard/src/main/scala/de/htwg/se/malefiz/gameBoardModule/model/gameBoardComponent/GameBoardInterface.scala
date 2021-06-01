@@ -29,7 +29,7 @@ trait GameBoardInterface {
 
 
 
-
+  def setPlayersList(list: List[Option[Player]]): GameBoard
 
   def buildPlayerString(): Option[String]
 

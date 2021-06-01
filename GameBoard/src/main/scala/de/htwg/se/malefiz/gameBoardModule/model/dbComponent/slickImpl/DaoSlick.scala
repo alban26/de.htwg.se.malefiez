@@ -8,9 +8,8 @@ import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBase
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.MySQLProfile.api._
 
-import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration.Duration
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class DaoSlick extends DaoInterface {
@@ -32,49 +31,64 @@ class DaoSlick extends DaoInterface {
   val cells = TableQuery[CellsTable]
   val gameStats = TableQuery[GameStatsTable]
 
+  val playersQuery = players.sortBy(_.playerNumber.desc).result
+  val cellsQuery = cells.sortBy(_.cellNumber.desc).result
+  val playersTurnQuery = playersTurn.result.head
+  val dicedNumberQuery = gameStats.map(dice => dice.dicedNumber).result.head
+  val selectedFigureQuery = gameStats.map(sf => (sf.playerNumber, sf.figureNumber)).result.head
+  val stateNumberQuery = gameStats.map(sn => sn.stateNumber).result.head
 
-  override def read(): GameBoardInterface = {
+  override def read(): Future[Option[GameBoardInterface]] = {
 
+    val composedAction = for {
+      players <- cellsQuery
+      cells <- playersQuery
+      pTurn <- playersTurnQuery
+      dice <- dicedNumberQuery
+      sFigure <- selectedFigureQuery
+      state <- stateNumberQuery
+    } yield (players, cells, pTurn, dice, sFigure, state)
+
+    database
+      .run(composedAction)
+      .map(value => (cellMapper(value._1),
+        playerMapper(value._2),
+        Option(Player(value._3.playerNumber, value._3.name)),
+        Option(value._4),
+        Option(value._5),
+        Option(value._6))
+      )
+      .map(value => Option(GameBoard(value._1,
+        value._2,
+        Creator().getCellGraph(cellLinksFile),
+        Set.empty,
+        value._4,
+        value._3,
+        value._5,
+        value._6,
+        Option.empty))
+      )
+  }
+
+  def playerMapper(p: Seq[Player]): List[Option[Player]] = {
     var _players: List[Option[Player]] = Nil
-    val playersQuery = players.sortBy(_.playerNumber.desc).result
-    val result_Player = Await.result(database.run(playersQuery), Duration.Inf)
-    result_Player.foreach(p => {_players = Option(Player(p.playerNumber, p.name)) :: _players})
+    p.foreach(player => {
+      _players = Option(Player(player.playerNumber, player.name)) :: _players
+    })
+    _players
+  }
 
+  def cellMapper(cell: Seq[Cell]): List[Cell] = {
     var _cellList: List[Cell] = Nil
-    val cellsQuery = cells.sortBy(_.cellNumber.desc).result
-    val result_Cells = Await.result(database.run(cellsQuery), Duration.Inf)
-    result_Cells.foreach(c => {_cellList = Cell(cellNumber = c.cellNumber, playerNumber = c.playerNumber,
-      figureNumber = c.figureNumber,
-      wallPermission = c.wallPermission,
-      hasWall = c.hasWall, coordinates = Point(c.coordinates.x_coordinate, c.coordinates.y_coordinate),
-      possibleFigures = c.possibleFigures,
-      possibleCells = c.possibleCells) :: _cellList})
-
-    val playersTurnQuery = playersTurn.result.head
-    val result_pTurn = Await.result(database.run(playersTurnQuery), Duration.Inf)
-    val _playersTurn = Option(Player(result_pTurn.playerNumber, result_pTurn.name))
-
-    val dicedNumberQuery = gameStats.map(dice => dice.dicedNumber).result.head
-    val result_dicedNumber = Await.result(database.run(dicedNumberQuery), Duration.Inf)
-    val _dicedNumber = Option(result_dicedNumber)
-
-    val selectedFigureQuery = gameStats.map(sf => (sf.playerNumber, sf.figureNumber)).result.head
-    val result_selectedFigure = Await.result(database.run(selectedFigureQuery), Duration.Inf)
-    val _selectedFigure = Option(result_selectedFigure)
-
-    val stateNumberQuery = gameStats.map(sn => sn.stateNumber).result.head
-    val result_stateNumber = Await.result(database.run(stateNumberQuery), Duration.Inf)
-    val _stateNumber = Option(result_stateNumber)
-
-    GameBoard(cellList = _cellList,
-      players = _players,
-      gameBoardGraph = Creator().getCellGraph(cellLinksFile),
-      possibleCells = Set.empty,
-      dicedNumber = _dicedNumber,
-      playersTurn = _playersTurn,
-      selectedFigure = _selectedFigure,
-      stateNumber = _stateNumber,
-      statementStatus = Option.empty)
+    cell.foreach(c => {
+      _cellList = Cell(cellNumber = c.cellNumber, playerNumber = c.playerNumber,
+        figureNumber = c.figureNumber,
+        wallPermission = c.wallPermission,
+        hasWall = c.hasWall, coordinates = Point(c.coordinates.x_coordinate, c.coordinates.y_coordinate),
+        possibleFigures = c.possibleFigures,
+        possibleCells = c.possibleCells) :: _cellList
+    })
+    _cellList
   }
 
   def gameBoardMapper(gameBoardInterface: GameBoardInterface): GameStats = {
@@ -86,10 +100,9 @@ class DaoSlick extends DaoInterface {
   }
 
   override def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit = {
-    println("Ich bin MySQL !!!")
     val injection = DBIO.seq(
       players.schema.dropIfExists, playersTurn.schema.dropIfExists, cells.schema.dropIfExists, gameStats.schema
-      .dropIfExists,
+        .dropIfExists,
       (players.schema ++ playersTurn.schema ++ cells.schema ++ gameStats.schema).createIfNotExists,
       cells ++= (for {
         cell <- gameBoardInterface.cellList
@@ -101,8 +114,11 @@ class DaoSlick extends DaoInterface {
       playersTurn += gameBoardInterface.playersTurn.get,
       gameStats += gameBoardMapper(gameBoardInterface)
     )
+    database.run(injection).onComplete {
+      case Success(_) => println("LOG: Daten wurden erfolgreich in MySQL gespeichert")
+      case Failure(_) => println("LOG: Fehler beim speichern der Daten in MySQL")
+    }
 
-    database.run(injection)
   }
 
   override def update(): Unit = ???

@@ -1,9 +1,12 @@
 package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
+
 import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.Malefiz.entryPlayerGui
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
+
+import scala.swing._
 import scala.swing.{Button, Dimension, Frame, GridBagPanel, Label}
 import scala.swing.event.ButtonClicked
 
@@ -11,7 +14,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
 
   visible = true
   title = "Malefiz"
-  centerOnScreen()
+  maximize()
 
   val welcomeLabel = new Label("Welcome to malefiz")
   welcomeLabel.foreground = Color.WHITE
@@ -21,6 +24,11 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   val loadButton = new Button("Load Game")
   val loadButtonDB = new Button("Load Game from DB")
   val quitButton = new Button("Quit")
+
+  def showErrorMessage(error: String) {
+    Dialog.showConfirmation(contents.head, error, optionType=Dialog.Options.Default, title="ERROR")
+    this.visible = true
+  }
 
   contents = new GridBagPanel {
 

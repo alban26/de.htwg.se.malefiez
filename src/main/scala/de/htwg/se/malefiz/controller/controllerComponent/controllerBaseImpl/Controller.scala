@@ -1,6 +1,7 @@
 package de.htwg.se.malefiz.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.malefiz.Malefiz.entryGui
 import de.htwg.se.malefiz.MalefizModule
 import de.htwg.se.malefiz.rest.restComponent.RestControllerInterface
 import de.htwg.se.malefiz.rest.restComponent.restBaseImpl.RestController
@@ -14,7 +15,11 @@ class Controller @Inject() extends ControllerInterface {
 
   override def execute(input: String): Unit = sendPlayersToGameService(input.split(" ").toList)
 
-  def sendPlayersToGameService(playerList: List[String]): Unit = rest.sendPlayerListRequest(playerList)
+  def sendPlayersToGameService(playerList: List[String]): Unit = {
+
+
+    rest.sendPlayerListRequest(playerList)
+  }
 
   def startGame(): Unit = rest.startGameRequest()
 
@@ -30,4 +35,6 @@ class Controller @Inject() extends ControllerInterface {
   override def loadFromDB(): Unit = {
     rest.sendLoadFromDBRequest()
   }
+
+  override def showErrorMessage(toString: String): Unit = entryGui.showErrorMessage(toString)
 }

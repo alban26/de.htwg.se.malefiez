@@ -9,7 +9,7 @@ trait DaoInterface {
 
   def create(gameBoardInterface: GameBoardInterface, controllerInterface: ControllerInterface): Unit
 
-  def read(): GameBoardInterface
+  def read(): Future[Option[GameBoardInterface]]
 
   def update()
 

@@ -216,4 +216,5 @@ case class GameBoard(cellList: List[Cell],
 
   override def markFigure(boolean: Boolean)(cellNumber: Int): Cell = cellList(cellNumber).copy(possibleFigures = boolean)
 
+  override def setPlayersList(list: List[Option[Player]]): GameBoard = copy(players = list)
 }

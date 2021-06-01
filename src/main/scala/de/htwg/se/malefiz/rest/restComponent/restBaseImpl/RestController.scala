@@ -4,6 +4,8 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
+import de.htwg.se.malefiz.Malefiz.controller
+import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.rest.restComponent.RestControllerInterface
 import spray.json.DefaultJsonProtocol.{StringJsonFormat, listFormat}
 import spray.json.enrichAny
@@ -16,6 +18,8 @@ class RestController extends RestControllerInterface {
 
   implicit val system = ActorSystem(Behaviors.empty, "Malefiz")
   implicit val executionContext = system.executionContext
+
+
 
   override def startGameRequest(): Unit = {
     val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/newGame")
@@ -32,7 +36,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def sendPlayerListRequest(playerList: List[String]): Unit = {
-
+    println("Sende Spielerliste an Gamboard: " + playerList.toString())
     val sendPlayersRequest = HttpRequest(method = HttpMethods.POST,
       uri = "http://gameboard:8083/players",
       entity = HttpEntity(ContentTypes.`application/json`, playerList.toJson.toString())
@@ -42,12 +46,10 @@ class RestController extends RestControllerInterface {
       case Success(value) =>
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
-          case Success(value) =>
-            println("Sende Spielerliste an GameBoard: " + value)
-            startGameRequest()
-          case Failure(exception) => println("Fehler beim Senden der Spielerliste an GameBaord:", exception)
+          case Success(value) => startGameRequest()
+          case Failure(exception) => controller.showErrorMessage(exception.toString)
         }
-      case Failure(exception) => println("Fehler beim Senden der Spielerliste an GameBoard:" + exception)
+      case Failure(exception) => controller.showErrorMessage(exception.toString)
     }
 
   }
@@ -60,15 +62,15 @@ class RestController extends RestControllerInterface {
         val entityFuture: Future[String] = value.entity.toStrict(1.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
           case Success(value) =>
-            println("Laderequest an GameBoard: " + value)
+            println("Ladereqan GameBoard: " + value)
             println("Spiel wird geladen...")
             val deadline = 2.seconds.fromNow
             while (deadline.hasTimeLeft) {}
             //LazyList.range(0, 20).map(x => println())
             openGameBoardRequest()
-          case Failure(exception) => println("Fehler beim Starten des Spiels im GameboardService: ", exception)
+          case Failure(exception) => controller.showErrorMessage(exception.toString)
         }
-      case Failure(exception) => println("Fehler beim Starten des Spiels im GameBoardService: " + exception)
+      case Failure(exception) => controller.showErrorMessage(exception.toString)
     }
   }
 
@@ -80,9 +82,9 @@ class RestController extends RestControllerInterface {
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
           case Success(value) => println("Spielbrett wird angezeigt: " + value)
-          case Failure(exception) => println("Fehler beim anzeigen des Spielbretts: ", exception)
+          case Failure(exception) => controller.showErrorMessage(exception.toString)
         }
-      case Failure(exception) => println("Fehler beim anzegen des Spielbretts: " + exception)
+      case Failure(exception) => controller.showErrorMessage(exception.toString)
     }
   }
 
@@ -98,11 +100,10 @@ class RestController extends RestControllerInterface {
             println("Spiel wird geladen...")
             val deadline = 2.seconds.fromNow
             while (deadline.hasTimeLeft) {}
-            //LazyList.range(0, 20).map(x => println())
             openGameBoardRequest()
-          case Failure(exception) => println("Fehler beim Starten des Spiels im GameboardService: ", exception)
+          case Failure(exception) => controller.showErrorMessage(exception.toString)
         }
-      case Failure(exception) => println("Fehler beim Starten des Spiels im GameBoardService: " + exception)
+      case Failure(exception) => controller.showErrorMessage(exception.toString)
     }
   }
 }

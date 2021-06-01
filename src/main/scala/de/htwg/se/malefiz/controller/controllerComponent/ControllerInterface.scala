@@ -4,6 +4,8 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def showErrorMessage(toString: String): Unit
+
   def loadFromDB(): Unit
 
   def execute(input: String): Unit

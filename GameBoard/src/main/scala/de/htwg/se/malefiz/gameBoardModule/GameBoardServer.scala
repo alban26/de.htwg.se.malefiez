@@ -1,9 +1,10 @@
 package de.htwg.se.malefiz.gameBoardModule
+
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.HttpEntity
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.gameBoardModule.aview.Tui
@@ -12,6 +13,7 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Control
 import spray.json.DefaultJsonProtocol
 
 import scala.io.StdIn
+import scala.util.{Failure, Success}
 
 object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
 
@@ -28,7 +30,6 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
     implicit val system = ActorSystem(Behaviors.empty, "GameBoard")
     implicit val executionContext = system.executionContext
 
-
     def openGameBoardGui(): Unit = {
       swingGui.visible = true
       swingGui.drawGameBoard()
@@ -41,32 +42,27 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
       (path("players") & post) {
         entity(as[List[String]]) { playerList => //
           playerList.foreach(player => tui.processInput("n " + player))
-          complete(controller.gameBoard.players.toString())
+          complete(StatusCodes.Created, controller.gameBoard.players.toString())
         }
       },
       path("newGame") {
-        get {
-          tui.processInput("n start")
-          openGameBoardGui()
-          complete(HttpEntity("Spiel wurde gestartet"))
-        }
+        tui.processInput("n start")
+        openGameBoardGui()
+        complete(StatusCodes.Created, "Spiel wurde erfolgreich gestartet")
       },
       path("loadGame") {
-        get {
-          tui.processInput("load")
-          complete(HttpEntity("Spiel wird nun geladen"))
-        }
+        tui.processInput("load")
+        complete(StatusCodes.Created, "SpielBrett wurde erfolgreich geoeffnet")
       },
       path("loadGameFromDB") {
-        get {
-          tui.processInput("loadFromDB")
-          complete(HttpEntity("Spiel wird nun von der Datenbank geladen"))
-        }
+        tui.processInput("loadFromDB")
+        complete(StatusCodes.Created, "Spiel wurde erfolgreich geladen")
+
       },
       path("gameBoard") {
         get {
           openGameBoardGui()
-          complete(HttpEntity("Spiel wurde geöffnet"))
+          complete(StatusCodes.Accepted, HttpEntity("Spiel wurde geöffnet"))
         }
       },
       (path("gameBoardJson") & post) {
@@ -78,7 +74,7 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
       (path("process") & post) {
         entity(as[String]) { input =>
           tui.processInput(input)
-          complete(HttpEntity(controller.gameBoard.toString))
+          complete(StatusCodes.Accepted, HttpEntity(controller.gameBoard.toString))
         }
       },
       (path("save") & post) {

@@ -18,6 +18,7 @@ import de.htwg.se.malefiz.gameBoardModule.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 import play.api.libs.json._
 
+import scala.::
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.swing.Publisher
@@ -34,7 +35,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   implicit val system = ActorSystem(Behaviors.empty, "GameBoard")
   implicit val executionContext = system.executionContext
-
 
   override def gameBoardToString: Option[String] = gameBoard.buildCompleteBoard(gameBoard.cellList)
 
@@ -187,7 +187,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def load(): Unit = {
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = "http://fileio:8081/load"))
-      responseFuture.onComplete {
+    responseFuture.onComplete {
       case Success(value) => {
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
@@ -200,39 +200,40 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
 
-  override def evalJson(result: String): Unit = {
+  override def evalJson(result: String): Future[Unit] = {
+    Future {
+      val newController = new Controller(loadGameBoardJson(result))
+      val json: JsValue = Json.parse(result)
 
-    val newController = new Controller(loadGameBoardJson(result))
-    val json: JsValue = Json.parse(result)
+      implicit val playerReader: Reads[Player] = Json.reads[Player]
 
-    implicit val playerReader: Reads[Player] = Json.reads[Player]
+      val diceNumber: Int = (json \ "diceNumber").as[Int]
+      val playersTurn: Player = (json \ "playersTurn").as[Player]
+      val f1: Int = (json \ "selectedFigure1").as[Int]
+      val f2: Int = (json \ "selectedFigure2").as[Int]
+      val gameState: Int = (json \ "gameState").as[Int]
 
-    val diceNumber: Int = (json \ "diceNumber").as[Int]
-    val playersTurn: Player = (json \ "playersTurn").as[Player]
-    val f1: Int = (json \ "selectedFigure1").as[Int]
-    val f2: Int = (json \ "selectedFigure2").as[Int]
-    val gameState: Int = (json \ "gameState").as[Int]
+      newController.setDicedNumber(Some(diceNumber))
+      newController.setPlayersTurn(
+        newController.gameBoard.players(playersTurn.playerNumber - 1)
+      )
+      newController.setSelectedFigure(f1, f2)
+      newController.setStateNumber(gameState)
 
-    newController.setDicedNumber(Some(diceNumber))
-    newController.setPlayersTurn(
-      newController.gameBoard.players(playersTurn.playerNumber - 1)
-    )
-    newController.setSelectedFigure(f1, f2)
-    newController.setStateNumber(gameState)
+      val stateNr = newController.gameBoard.stateNumber.get
 
-    val stateNr = newController.gameBoard.stateNumber.get
+      this.setGameBoard(newController.gameBoard)
+      this.setPossibleCells(newController.gameBoard.possibleCells)
+      this.setPlayersTurn(newController.gameBoard.playersTurn)
+      this.setSelectedFigure(
+        newController.gameBoard.selectedFigure.get._1,
+        newController.gameBoard.selectedFigure.get._2
+      )
 
-    this.setGameBoard(newController.gameBoard)
-    this.setPossibleCells(newController.gameBoard.possibleCells)
-    this.setPlayersTurn(newController.gameBoard.playersTurn)
-    this.setSelectedFigure(
-      newController.gameBoard.selectedFigure.get._1,
-      newController.gameBoard.selectedFigure.get._2
-    )
+      stateNrMatch(stateNr)
 
-    stateNrMatch(stateNr)
-
-    publish(new GameBoardChanged)
+      publish(new GameBoardChanged)
+    }
   }
 
   override def loadGameBoardJson(result: String): GameBoard ={
@@ -251,14 +252,14 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
     var found: Set[Int] = Set[Int]()
 
-//    var index = 0
-//    while(index <= posCells.size) {
-//
-//      val possCell = (json \ "possibleCells")(index).as[Int]
-//      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
-//      found += possCell
-//      index += 1
-//    }
+    //    var index = 0
+    //    while(index <= posCells.size) {
+    //
+    //      val possCell = (json \ "possibleCells")(index).as[Int]
+    //      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
+    //      found += possCell
+    //      index += 1
+    //    }
 
     for (index <- 0 until posCells.size) {
       val possCell = (json \ "possibleCells")(index).as[Int]
@@ -382,12 +383,19 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
   }
 
   override def saveInDb(): Unit = {
-   db.create(gameBoard, this)
+    db.create(gameBoard, this)
   }
 
   override def loadFromDB(): Unit = {
-    gameBoard = db.read()
-    evalDB(gameBoard)
+    db.read().onComplete {
+      case Success(value) =>
+        if (value.isEmpty)
+          println("LOG: Fehler beim laden der Daten aus der Datenbank")
+        else
+          println("LOG: Daten wurden erfolgreich aus der Datenbank geladen")
+        evalDB(value.get)
+      case Failure(_) => println("LOG: " + _)
+    }
   }
 
 

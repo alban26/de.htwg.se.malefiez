@@ -9,7 +9,7 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
 
   title = "Malefiz"
   visible = false
-  centerOnScreen()
+  maximize()
 
   val playerLabel: Label = new Label("Enter the names")
   playerLabel.foreground = Color.WHITE

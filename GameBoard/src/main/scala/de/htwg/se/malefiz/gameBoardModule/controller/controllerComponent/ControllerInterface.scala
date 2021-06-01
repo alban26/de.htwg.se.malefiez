@@ -5,6 +5,7 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Stateme
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{GameBoard, Player}
 
+import scala.concurrent.Future
 import scala.swing.{Button, Publisher}
 import scala.swing.event.Event
 
@@ -12,13 +13,9 @@ trait ControllerInterface extends Publisher {
 
   def loadFromDB(): Unit
 
-
   def saveInDb(): Unit
 
-
   def gameBoard: GameBoardInterface
-
-  //def gameBoardToString: String
 
   def gameBoardToString: Option[String]
 
@@ -82,7 +79,7 @@ trait ControllerInterface extends Publisher {
 
   def load(): Unit
 
-  def evalJson(gameString: String): Unit
+  def evalJson(gameString: String): Future[Unit]
 
   def evalXml(result: String): Unit
 
