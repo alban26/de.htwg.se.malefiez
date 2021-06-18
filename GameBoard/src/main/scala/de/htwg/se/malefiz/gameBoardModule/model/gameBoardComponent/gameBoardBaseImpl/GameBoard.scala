@@ -31,8 +31,9 @@ case class GameBoard(cellList: List[Cell],
 
   //--- Spieler
   override def buildPlayerString(): Option[String] = {
-    Some(s"""|${cellList.slice(0,20).mkString("")}
-             |""".stripMargin)
+    Some(
+      s"""|${cellList.slice(0, 20).mkString("")}
+          |""".stripMargin)
   }
 
 
@@ -40,8 +41,9 @@ case class GameBoard(cellList: List[Cell],
   val buildRow = (start: Int, stop: Int) => start match {
     case 130 => s"""|${cellList.slice(start, stop).mkString("")}
                     |""".stripMargin
-    case _ => buildGameBoardString(stop) + s"""|${cellList.slice(start, stop).mkString("")}
-                                               |""".stripMargin
+    case _ => buildGameBoardString(stop) +
+      s"""|${cellList.slice(start, stop).mkString("")}
+          |""".stripMargin
   }
 
   override def buildGameBoardString(start: Int): String = {
@@ -72,10 +74,6 @@ case class GameBoard(cellList: List[Cell],
 
 
   override def buildCompleteBoard(cellList: List[Cell]): Option[String] = {
-    /*
-    val a = buildGameboard().flatMap(x => buildPlayerString()
-    .flatMap(y => buildGameboardInfo().map(z => x + y + z)))
-     */
     for {
       gameBoardString <- buildGameBoard()
       playerString <- buildPlayerString()
@@ -114,6 +112,7 @@ case class GameBoard(cellList: List[Cell],
       found += currentCell
       gameBoardGraph(currentCell).foreach(x => if (!found.contains(x) && diceNumber != 0) recurse(x, diceNumber - 1))
     }
+
     recurse(startCell, diceNumber)
     copy(possibleCells = needed)
   }
@@ -166,9 +165,9 @@ case class GameBoard(cellList: List[Cell],
 
   override def nextPlayer(playerList: List[Option[Player]], playerNumber: Int): Option[Player] =
     if (playerNumber == playerList.length - 1)
-        playerList.head
+      playerList.head
     else
-        playerList(playerNumber + 1)
+      playerList(playerNumber + 1)
 
   override def setFigure(figureNumber: Int, cellNumber: Int): GameBoard = {
     copy(cellList.updated(cellNumber, setPlayerFigureOnCell(figureNumber, cellNumber)))

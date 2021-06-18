@@ -2,7 +2,7 @@ package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameSt
 
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{ControllerInterface, State}
 
-case class GameState (controller: ControllerInterface) {
+case class GameState(controller: ControllerInterface) {
 
   var currentState: State[GameState] = Setup(controller)
 

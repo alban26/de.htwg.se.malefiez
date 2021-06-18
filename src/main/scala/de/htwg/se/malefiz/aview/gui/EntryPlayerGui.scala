@@ -2,10 +2,10 @@ package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Dimension, Font}
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
-import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 import scala.swing.event.ButtonClicked
+import scala.swing.{Action, Button, Frame, GridBagPanel, Label, Menu, MenuBar, MenuItem, TextField}
 
-class EntryPlayerGui (controller: ControllerInterface) extends Frame {
+class EntryPlayerGui(controller: ControllerInterface) extends Frame {
 
   title = "Malefiz"
   visible = false
@@ -18,26 +18,34 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
   val playerOneLabel: Label = new Label("Player 1   ")
   playerOneLabel.foreground = Color.RED
   playerOneLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
-  val playerOneName: TextField = new TextField {columns = 15}
+  val playerOneName: TextField = new TextField {
+    columns = 15
+  }
 
   val playerTwoLabel: Label = new Label("Player 2   ")
   playerTwoLabel.foreground = Color.GREEN
   playerTwoLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
-  val playerTwoName: TextField = new TextField {columns = 15}
+  val playerTwoName: TextField = new TextField {
+    columns = 15
+  }
 
   val playerThreeLabel: Label = new Label("Player 3   ")
   playerThreeLabel.foreground = Color.ORANGE
   playerThreeLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
-  val playerThreeName: TextField = new TextField {columns = 15}
+  val playerThreeName: TextField = new TextField {
+    columns = 15
+  }
 
   val playerFourLabel: Label = new Label("Player 4    ")
   playerFourLabel.foreground = Color.BLUE
   playerFourLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
-  val playerFourName: TextField = new TextField {columns = 15}
+  val playerFourName: TextField = new TextField {
+    columns = 15
+  }
 
   val continueButton = new Button("start new game")
 
-  menuBar = new MenuBar{
+  menuBar = new MenuBar {
     contents += new Menu("Malefiz") {
       contents += new MenuItem(Action("Quit") {
         System.exit(0)
@@ -75,7 +83,7 @@ class EntryPlayerGui (controller: ControllerInterface) extends Frame {
     }
 
     add(playerLabel,
-      constraints(0, 0, gridWidth = 2, ipadY = 20, fill=GridBagPanel.Fill.Horizontal, anchor = GridBagPanel.Anchor.PageStart))
+      constraints(0, 0, gridWidth = 2, ipadY = 20, fill = GridBagPanel.Fill.Horizontal, anchor = GridBagPanel.Anchor.PageStart))
     add(playerOneLabel,
       constraints(0, 1, ipadY = 20))
     add(playerOneName,

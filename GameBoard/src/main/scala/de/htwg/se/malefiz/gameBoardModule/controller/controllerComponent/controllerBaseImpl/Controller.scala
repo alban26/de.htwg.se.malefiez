@@ -3,8 +3,7 @@ package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.contro
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{HttpMethods, HttpRequest, HttpResponse}
-import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.malefiz.gameBoardModule.GameBoardServerModule
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates._
@@ -18,7 +17,6 @@ import de.htwg.se.malefiz.gameBoardModule.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
 import play.api.libs.json._
 
-import scala.::
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.swing.Publisher
@@ -147,7 +145,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
   override def checkInput(input: String): Either[String, String] = {
     if (state.currentState.toString == "4")
-      if(input.split(" ").toList.size != 2)
+      if (input.split(" ").toList.size != 2)
         Left("Bitte Spieler in Form von : 'n Spielername' eintippen \n " +
           "und mit 'n start' dann starten!")
       else
@@ -236,7 +234,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     }
   }
 
-  override def loadGameBoardJson(result: String): GameBoard ={
+  override def loadGameBoardJson(result: String): GameBoard = {
     val injector = Guice.createInjector(new GameBoardServerModule)
     var gameBoard: GameBoard = injector.instance[GameBoard]
     val json: JsValue = Json.parse(result)
@@ -262,17 +260,17 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     //    }
 
     for (index <- 0 until posCells.size) {
-      val possCell = (json \ "possibleCells")(index).as[Int]
+      val possCell = (json \ "possibleCells") (index).as[Int]
       gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
       found += possCell
     }
     gameBoard = gameBoard.setPossibleCell(found)
 
     LazyList.range(0, 131).foreach(index => {
-      val cellNumber: Int = ((json \ "cells")(index) \ "cellNumber").as[Int]
-      val playerNumber: Int = ((json \ "cells")(index) \ "playerNumber").as[Int]
-      val figureNumber: Int = ((json \ "cells")(index) \ "figureNumber").as[Int]
-      val hasWall: Boolean = ((json \ "cells")(index) \ "hasWall").as[Boolean]
+      val cellNumber: Int = ((json \ "cells") (index) \ "cellNumber").as[Int]
+      val playerNumber: Int = ((json \ "cells") (index) \ "playerNumber").as[Int]
+      val figureNumber: Int = ((json \ "cells") (index) \ "figureNumber").as[Int]
+      val hasWall: Boolean = ((json \ "cells") (index) \ "hasWall").as[Boolean]
 
       gameBoard = gameBoard setPlayer(playerNumber, cellNumber)
       gameBoard = gameBoard setFigure(figureNumber, cellNumber)
@@ -319,7 +317,7 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  def loadController(xmlString: String) : ControllerInterface = {
+  def loadController(xmlString: String): ControllerInterface = {
     val file = scala.xml.XML.loadString(xmlString)
 
     val gameStateNodes = file \\ "gameState"

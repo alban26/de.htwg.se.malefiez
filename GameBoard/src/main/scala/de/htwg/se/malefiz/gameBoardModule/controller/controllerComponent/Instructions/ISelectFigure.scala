@@ -1,15 +1,15 @@
 package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.SetFigure
-import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.{addPlayer, selectField, selectWrongFigure}
+import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.{selectField, selectWrongFigure}
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
 object ISelectFigure extends InstructionTrait {
 
   val select1: Handler0 = {
     case Request(inputList, gameState, controller)
-        if inputList.head.toInt ==
-          controller.gameBoard.playersTurn.get.playerNumber =>
+      if inputList.head.toInt ==
+        controller.gameBoard.playersTurn.get.playerNumber =>
       controller.calculatePath(
         controller.getFigurePosition(inputList.head.toInt, inputList(1).toInt),
         controller.gameBoard.dicedNumber.get
@@ -39,7 +39,7 @@ object ISelectFigure extends InstructionTrait {
 
   val select5: Handler0 = {
     case Request(inputList, gameState, controller)
-        if inputList.head.toInt != controller.gameBoard.playersTurn.get.playerNumber =>
+      if inputList.head.toInt != controller.gameBoard.playersTurn.get.playerNumber =>
       Request(inputList, gameState, controller)
   }
 

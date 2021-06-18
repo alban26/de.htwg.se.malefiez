@@ -1,25 +1,25 @@
 package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.Roll
-import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.{addPlayer, nextPlayer, wrongWall}
+import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.{nextPlayer, wrongWall}
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
 object ISetWall extends InstructionTrait {
 
   val set1: Handler0 = {
     case Request(inputList, gameState, controller)
-        if controller.gameBoard.cellList(inputList.head.toInt).wallPermission && controller.gameBoard
-          .cellList(inputList.head.toInt)
-          .playerNumber == 0 && !controller.gameBoard.cellList(inputList.head.toInt).hasWall =>
+      if controller.gameBoard.cellList(inputList.head.toInt).wallPermission && controller.gameBoard
+        .cellList(inputList.head.toInt)
+        .playerNumber == 0 && !controller.gameBoard.cellList(inputList.head.toInt).hasWall =>
       controller.placeOrRemoveWall(inputList.head.toInt, true)
       Request(inputList, gameState, controller)
   }
 
   val set2: Handler0 = {
     case Request(inputList, gameState, controller)
-        if !controller.gameBoard.cellList(inputList.head.toInt).wallPermission || controller.gameBoard
-          .cellList(inputList.head.toInt)
-          .playerNumber != 0 || controller.gameBoard.cellList(inputList.head.toInt).hasWall =>
+      if !controller.gameBoard.cellList(inputList.head.toInt).wallPermission || controller.gameBoard
+        .cellList(inputList.head.toInt)
+        .playerNumber != 0 || controller.gameBoard.cellList(inputList.head.toInt).hasWall =>
       Request(inputList, gameState, controller)
   }
 

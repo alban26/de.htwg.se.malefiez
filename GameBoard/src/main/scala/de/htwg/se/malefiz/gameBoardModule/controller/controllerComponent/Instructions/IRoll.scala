@@ -1,7 +1,7 @@
 package de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Instructions
 
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.SelectFigure
-import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.{addPlayer, selectFigure}
+import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.selectFigure
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.{InstructionTrait, Request, StatementRequest, Statements}
 
 object IRoll extends InstructionTrait {

@@ -5,7 +5,6 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Control
 import de.htwg.se.malefiz.gameBoardModule.model.dbComponent.DaoInterface
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
 import de.htwg.se.malefiz.gameBoardModule.rest.restComponent.restBaseImpl.RestController
-import org.mongodb.scala.result.InsertOneResult
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, _}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -37,7 +36,7 @@ class DaoMongoDB extends DaoInterface {
     val gameBoardJsonString = rc.gameBoardToJson(gameBoardInterface, controllerInterface).toString()
 
     val gameBoardDoc: Document = Document("gameBoard" -> gameBoardJsonString)
-    gameBoardCollection.insertOne(gameBoardDoc).toFuture().onComplete{
+    gameBoardCollection.insertOne(gameBoardDoc).toFuture().onComplete {
       case Success(_) => print("LOG>> Erfolgreich gespeichert")
       case Failure(_) => print("LOG>> Fehler beim abspeichern")
     }

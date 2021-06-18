@@ -1,37 +1,37 @@
 package de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl
 
 case class Cell(
-    cellNumber: Int,
-    playerNumber: Int,
-    figureNumber: Int,
-    wallPermission: Boolean,
-    hasWall: Boolean,
-    coordinates: Point,
-    possibleFigures: Boolean,
-    possibleCells: Boolean
-) {
+                 cellNumber: Int,
+                 playerNumber: Int,
+                 figureNumber: Int,
+                 wallPermission: Boolean,
+                 hasWall: Boolean,
+                 coordinates: Point,
+                 possibleFigures: Boolean,
+                 possibleCells: Boolean
+               ) {
 
   val stein_or_spieler: String =
     if (cellNumber < 20)
       if (playerNumber != 0 && !hasWall)
         if (possibleFigures)
-          "" + playerNumber + "|" + figureNumber +" "
+          "" + playerNumber + "|" + figureNumber + " "
         else
-          playerNumber+""
+          playerNumber + ""
       else
         "_"
     else if (playerNumber != 0 && !hasWall)
       if (possibleCells)
-        ""+playerNumber + "|" + cellNumber+""
+        "" + playerNumber + "|" + cellNumber + ""
       else
-        playerNumber+""
+        playerNumber + ""
     else if (hasWall)
       if (possibleCells)
         "X" + "|" + cellNumber
       else
         "X"
     else if (possibleCells)
-      cellNumber+""
+      cellNumber + ""
     else
       "_"
 

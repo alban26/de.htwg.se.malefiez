@@ -7,6 +7,7 @@ case class SelectFigure(controller: ControllerInterface) extends State[GameState
 
   override def handle(input: String, gameState: GameState): Unit =
     ISelectFigure.select(Request(input.split(" ").toList, gameState, controller))
+
   override def toString: String = "2"
 
 }

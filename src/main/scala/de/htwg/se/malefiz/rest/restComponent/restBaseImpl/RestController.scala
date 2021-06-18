@@ -5,7 +5,6 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import de.htwg.se.malefiz.Malefiz.controller
-import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.rest.restComponent.RestControllerInterface
 import spray.json.DefaultJsonProtocol.{StringJsonFormat, listFormat}
 import spray.json.enrichAny
@@ -18,8 +17,6 @@ class RestController extends RestControllerInterface {
 
   implicit val system = ActorSystem(Behaviors.empty, "Malefiz")
   implicit val executionContext = system.executionContext
-
-
 
   override def startGameRequest(): Unit = {
     val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/newGame")
@@ -62,11 +59,9 @@ class RestController extends RestControllerInterface {
         val entityFuture: Future[String] = value.entity.toStrict(1.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
           case Success(value) =>
-            println("Ladereqan GameBoard: " + value)
             println("Spiel wird geladen...")
             val deadline = 2.seconds.fromNow
             while (deadline.hasTimeLeft) {}
-            //LazyList.range(0, 20).map(x => println())
             openGameBoardRequest()
           case Failure(exception) => controller.showErrorMessage(exception.toString)
         }
@@ -96,7 +91,6 @@ class RestController extends RestControllerInterface {
         val entityFuture: Future[String] = value.entity.toStrict(1.seconds).map(_.data.decodeString("UTF-8"))
         entityFuture.onComplete {
           case Success(value) =>
-            println("Laderequest an GameBoard: " + value)
             println("Spiel wird geladen...")
             val deadline = 2.seconds.fromNow
             while (deadline.hasTimeLeft) {}

@@ -3,7 +3,7 @@ package de.htwg.se.malefiz.gameBoardModule.model.dbComponent.slickImpl
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Point}
 import slick.jdbc.MySQLProfile.api._
 
-class CellsTable (tag: Tag) extends Table[Cell](tag, "Cells") {
+class CellsTable(tag: Tag) extends Table[Cell](tag, "Cells") {
 
   def cellNumber = column[Int]("ID", O.PrimaryKey)
 

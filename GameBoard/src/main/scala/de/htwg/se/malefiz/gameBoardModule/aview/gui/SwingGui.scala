@@ -3,15 +3,16 @@ package de.htwg.se.malefiz.gameBoardModule.aview.gui
 
 import java.awt.image.BufferedImage
 import java.awt.{BasicStroke, Color, Font}
-import java.io.{File, InputStream}
+import java.io.InputStream
+
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.GameStates.SelectFigure
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.changeFigure
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent._
-
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.text.StyleConstants
+
 import scala.swing.event.{ButtonClicked, Key, MouseClicked}
 import scala.swing.{Action, Button, Dialog, Dimension, Frame, Graphics2D, GridBagPanel, Label, Menu, MenuBar, MenuItem, Panel, Swing, TextArea, TextPane}
 
@@ -20,10 +21,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   val image: BufferedImage = ImageIO.read(getClass().getResource("/images/malefizimg.png"))
   val stream: InputStream = getClass.getResourceAsStream("/images/dice.png")
   val g2d: Graphics2D = image.createGraphics()
-
-  import javax.imageio.ImageIO
-  import javax.swing.ImageIcon
-
 
   title = "Malefiz"
   centerOnScreen()
@@ -90,8 +87,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val panel: Panel = new Panel {
 
-    override def paint(g: Graphics2D): Unit =
-      g.drawImage(image, 0, 0, null)
+    override def paint(g: Graphics2D): Unit = g.drawImage(image, 0, 0, null)
 
     preferredSize = new Dimension(image.getWidth(null), image.getHeight())
     listenTo(mouse.clicks)
@@ -344,7 +340,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       controller.resetGameBoard()
       playerArea.text = ""
       visible = false
-      //entryGui.visible = true
   }
 
   size = new Dimension(900, 1100)

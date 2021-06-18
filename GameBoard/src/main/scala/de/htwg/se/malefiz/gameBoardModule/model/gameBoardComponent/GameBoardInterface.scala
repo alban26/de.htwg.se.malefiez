@@ -4,8 +4,6 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Stateme
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, GameBoard, Player}
 
 import scala.collection.mutable.Map
-import scala.io.BufferedSource
-import scala.util.Try
 
 trait GameBoardInterface {
 
@@ -26,7 +24,6 @@ trait GameBoardInterface {
   def stateNumber: Option[Int]
 
   def statementStatus: Option[Statements]
-
 
 
   def setPlayersList(list: List[Option[Player]]): GameBoard
@@ -118,8 +115,6 @@ trait DiceInterface {
 }
 
 trait CreatorInterface {
-
-  //def readTextFile(filename: String): Try[Option[BufferedSource]]
 
   def getCellList(inputFile: String): List[Cell]
 

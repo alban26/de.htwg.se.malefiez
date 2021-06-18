@@ -4,7 +4,7 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
+import akka.http.scaladsl.model.{HttpEntity, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.gameBoardModule.aview.Tui
@@ -13,7 +13,6 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Control
 import spray.json.DefaultJsonProtocol
 
 import scala.io.StdIn
-import scala.util.{Failure, Success}
 
 object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
 
@@ -100,10 +99,10 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
     val bindingFuture = Http().newServerAt("0.0.0.0", 8083).bind(route)
 
     println(s" GameBoard Server online at http://0.0.0.0:8081/\nPress RETURN to stop...")
-    StdIn.readLine() // let it run until user presses return
+    StdIn.readLine()
     bindingFuture
-      .flatMap(_.unbind()) // trigger unbinding from the port
-      .onComplete(_ => system.terminate()) // and shutdown when done
+      .flatMap(_.unbind())
+      .onComplete(_ => system.terminate())
   }
 
 }

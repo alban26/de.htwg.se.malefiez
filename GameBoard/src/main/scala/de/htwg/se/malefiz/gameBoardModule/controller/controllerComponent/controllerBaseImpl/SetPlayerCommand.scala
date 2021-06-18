@@ -22,7 +22,7 @@ class SetPlayerCommand(playerNumber: Int, playerFigure: Int, cellNumber: Int, co
       controller.gameBoard = controller.gameBoard.setPlayer(
         controller.gameBoard.cellList(cellNumber).playerNumber,
         controller.gameBoard.getHomeNr(controller.gameBoard.cellList(cellNumber).playerNumber,
-            controller.gameBoard.cellList(cellNumber).figureNumber)
+          controller.gameBoard.cellList(cellNumber).figureNumber)
       )
       controller.gameBoard = controller.gameBoard.setFigure(
         controller.gameBoard.cellList(cellNumber).figureNumber,

@@ -10,10 +10,8 @@ import scala.swing.Publisher
 
 class Controller @Inject() extends ControllerInterface with Publisher {
 
-
   val injector: Injector = Guice.createInjector(new FileIOServerModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
-
 
   override def load(): Unit = fileIo.load
 

@@ -4,7 +4,6 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
-import akka.util.ByteString
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.ControllerInterface
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInterface
@@ -15,8 +14,7 @@ import play.api.libs.json.{JsNumber, JsObject, Json, Writes}
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.util.{Failure, Success}
-import scala.xml.Utility.{sequenceToXML, serialize, toXML}
-import scala.xml.{Elem, PrettyPrinter, XML}
+import scala.xml.{Elem, PrettyPrinter}
 
 class RestController extends RestControllerInterface {
 
@@ -103,34 +101,23 @@ class RestController extends RestControllerInterface {
 
   def gameBoardToXml(gameBoard: GameBoardInterface, controller: ControllerInterface): Elem =
     <gameboard size={gameBoard.players.size.toString}>
-      {
-      for {
-        l1 <- gameBoard.cellList.indices
-      } yield cellToXml(l1, gameBoard.cellList(l1))
-      }
-      <player>
-        {
-        for {
-          l1 <- gameBoard.players.indices
-        } yield playerToXml(l1, gameBoard.players(l1).get)
-        }
-      </player>
+      {for {
+      l1 <- gameBoard.cellList.indices
+    } yield cellToXml(l1, gameBoard.cellList(l1))}<player>
+      {for {
+        l1 <- gameBoard.players.indices
+      } yield playerToXml(l1, gameBoard.players(l1).get)}
+    </player>
       <possibleCells>
-        {
-        for {
-          l1 <- gameBoard.possibleCells
-        } yield possibleCellsToXml(l1)
-        }
+        {for {
+        l1 <- gameBoard.possibleCells
+      } yield possibleCellsToXml(l1)}
       </possibleCells>
-      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN ={
-      controller.gameBoard.playersTurn.get.name
-      }></playersTurn>
+      <playersTurn turnZ={controller.gameBoard.playersTurn.get.playerNumber.toString} turnN={controller.gameBoard.playersTurn.get.name}></playersTurn>
 
       <dicedNumber number={controller.gameBoard.dicedNumber.toString}></dicedNumber>
 
-      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={
-      controller.gameBoard.selectedFigure.get._2.toString
-      } ></selectedFigure>
+      <selectedFigure sPlayer={controller.gameBoard.selectedFigure.get._1.toString} sFigure={controller.gameBoard.selectedFigure.get._2.toString}></selectedFigure>
 
       <gameState state={controller.getGameState.currentState.toString}></gameState>
 
@@ -140,18 +127,7 @@ class RestController extends RestControllerInterface {
     <pCells posCell={l1.toString}>
       {l1}
     </pCells>
-  /*
- def gameStateToXml(state: GameState): Elem = {
-   <gameState state={state.state.toString}>
-     {state}
-   </gameState>
- }
- dplayersTurnToXml(player: Player): Elem = {
-   <playersTurn playersturnname ={player.name}>
-     {player}
-   </playersTurn>
- }
-   */
+
   def playerToXml(i: Int, player: Player): Elem =
     <player playernumber={player.playerNumber.toString} playername={player.name}>
       {player}

@@ -6,8 +6,8 @@ import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.GameBoardInte
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{GameBoard, Player}
 
 import scala.concurrent.Future
-import scala.swing.{Button, Publisher}
 import scala.swing.event.Event
+import scala.swing.{Button, Publisher}
 
 trait ControllerInterface extends Publisher {
 

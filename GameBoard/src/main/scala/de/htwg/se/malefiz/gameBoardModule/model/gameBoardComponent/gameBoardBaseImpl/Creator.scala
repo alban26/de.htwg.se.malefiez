@@ -1,13 +1,10 @@
 package de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl
 
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.CreatorInterface
-import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl
+import java.io.InputStream
 
-import java.io.{BufferedReader, InputStream, InputStreamReader}
-import scala.Console.in
+import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.{CreatorInterface, gameBoardBaseImpl}
+
 import scala.collection.mutable.Map
-import scala.io.{BufferedSource, Source}
-import scala.util.{Failure, Success, Try}
 
 case class Creator() extends CreatorInterface {
 

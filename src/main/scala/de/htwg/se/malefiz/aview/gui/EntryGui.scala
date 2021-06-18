@@ -2,13 +2,11 @@ package de.htwg.se.malefiz.aview.gui
 
 import java.awt.{Color, Font}
 
-import de.htwg.se.malefiz.Malefiz.entryGui
-import de.htwg.se.malefiz.Malefiz.entryPlayerGui
+import de.htwg.se.malefiz.Malefiz.{entryGui, entryPlayerGui}
 import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 
-import scala.swing._
-import scala.swing.{Button, Dimension, Frame, GridBagPanel, Label}
 import scala.swing.event.ButtonClicked
+import scala.swing.{Button, Dimension, Frame, GridBagPanel, Label, _}
 
 class EntryGui (controller: ControllerInterface) extends Frame {
 
