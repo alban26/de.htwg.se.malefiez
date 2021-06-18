@@ -11,7 +11,7 @@ val commonDependencies = Seq(
   "net.codingwell" %% "scala-guice" % "5.0.0",
   "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
   "com.typesafe.play" %% "play-json" % "2.8.1",
-  "com.typesafe.akka" %% "akka-testkit" % "2.6.5" % Test,
+  "com.typesafe.akka" %% "akka-testkit" % "2.6.8" % Test,
   "de.heikoseeberger" %% "akka-http-play-json" % "1.32.0",
   "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8",
   "com.typesafe.akka" %% "akka-stream" % "2.6.8",

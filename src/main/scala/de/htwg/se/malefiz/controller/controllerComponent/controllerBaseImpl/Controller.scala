@@ -14,7 +14,7 @@ class Controller @Inject() extends ControllerInterface {
   val rest: RestControllerInterface = injector.instance[RestController]
 
   override def checkInput(input: String): Either[String, String] = {
-    if (input.split(" ").toList.size > 5)
+    if (input.split(" ").toList.size >= 5)
       Left("Bitte maximal 4 Spieler eintippen (leerzeichen-getrennt)!")
     else
       Right(input)
