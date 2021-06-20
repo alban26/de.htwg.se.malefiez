@@ -13,7 +13,7 @@ Malefiz
 
 This game was developed by Alban and Robert for the class Software Engeneering at HTWG Konstanz
 
-![Alt text](src/main/resources/images/malefizimg.png "Malefiz")
+![Alt text](GameBoard/src/main/resources/images/malefizimg.png "Malefiz")
 
 
 Gameplay
