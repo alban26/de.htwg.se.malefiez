@@ -8,7 +8,7 @@ import de.htwg.se.malefiz.controller.controllerComponent.ControllerInterface
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, Dimension, Frame, GridBagPanel, Label, _}
 
-class EntryGui (controller: ControllerInterface) extends Frame {
+class EntryGui(controller: ControllerInterface) extends Frame {
 
   visible = true
   title = "Malefiz"
@@ -23,8 +23,8 @@ class EntryGui (controller: ControllerInterface) extends Frame {
   val loadButtonDB = new Button("Load Game from DB")
   val quitButton = new Button("Quit")
 
-  def showErrorMessage(error: String) {
-    Dialog.showConfirmation(contents.head, error, optionType=Dialog.Options.Default, title="ERROR")
+  def showErrorMessage(error: String): Unit = {
+    Dialog.showConfirmation(contents.head, error, optionType = Dialog.Options.Default, title = "ERROR")
     this.visible = true
   }
 
@@ -41,7 +41,7 @@ class EntryGui (controller: ControllerInterface) extends Frame {
                     fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
                     ipadX: Int = 0,
                     ipadY: Int = 0,
-                    anchor : GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
+                    anchor: GridBagPanel.Anchor.Value = GridBagPanel.Anchor.Center)
     : Constraints = {
       val contraint = new Constraints
       contraint.gridx = x

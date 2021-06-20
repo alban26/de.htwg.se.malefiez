@@ -9,7 +9,7 @@ services:
     ports:
       - "8084:8084"
     environment:
-      - DISPLAY=192.168.2.111:0
+      - DISPLAY=192.168.0.17:0
     volumes:
     - /tmp/.X11-unix:/tmp/.X11-unix
 
@@ -30,8 +30,8 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - DISPLAY=192.168.2.111:0
-    #  - DATABASE_HOST=malefizdb:3306
+      - DISPLAY=192.168.0.17:0
+#      - DATABASE_HOST=malefizdb:3306
       - DATABASE_HOST=malefiz-mongodb:27017
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix

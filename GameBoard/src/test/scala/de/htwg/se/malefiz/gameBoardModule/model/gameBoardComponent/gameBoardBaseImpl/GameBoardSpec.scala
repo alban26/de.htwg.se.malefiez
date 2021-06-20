@@ -9,8 +9,8 @@ class GameBoardSpec extends WordSpec with Matchers {
   "The Gameboard datastructure is a graph with 132 Cells." when {
     "the Gameboard is created" should {
 
-      val cellConfigFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellConfiguration"
-      val cellLinksFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellLinks"
+      val cellConfigFile = "/configuration/mainCellConfiguration"
+      val cellLinksFile = "/configuration/mainCellLinks"
       val players: List[Option[Player]] = List(Some(Player(1, "Robert")))
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph = Creator().getCellGraph(cellLinksFile)

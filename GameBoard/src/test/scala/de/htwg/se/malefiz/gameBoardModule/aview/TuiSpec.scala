@@ -1,5 +1,4 @@
 package de.htwg.se.malefiz.gameBoardModule.aview
-/*
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Statements.addPlayer
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.controllerBaseImpl.Controller
@@ -7,12 +6,13 @@ import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBase
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 import scala.collection.mutable.Map
+
 class TuiSpec extends WordSpec with Matchers {
 
   "A Malefiz Tui" when {
     "when a new game start" should {
-      val cellConfigFile = "project/mainCellConfiguration"
-      val cellLinksFile = "project/mainCellLinks"
+      val cellConfigFile = "/configuration/mainCellConfiguration"
+      val cellLinksFile = "/configuration/mainCellLinks"
 
       val players: List[Option[Player]] = List().empty
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
@@ -168,12 +168,12 @@ class TuiSpec extends WordSpec with Matchers {
         controller.state.currentState.toString should be("3")
         controller.gameBoard.playersTurn.get.name should be("Robert")
       }
-      "If we want to save the game, we can click on edit in the menubar and save the game." +
-        "After that we can load the Game in the entry gui and can play where we left off" in {
-        tui.processInput("save")
-        tui.processInput("load")
-        controller.gameBoard.playersTurn.get.name should be("Robert")
-      }
+//      "If we want to save the game, we can click on edit in the menubar and save the game." +
+//        "After that we can load the Game in the entry gui and can play where we left off" in {
+//        tui.processInput("save")
+//        tui.processInput("load")
+//        controller.gameBoard.playersTurn.get.name should be("Robert")
+//      }
       "If we want to Test if a player can win the game, we set the possible Cell of this turn to the Cell 131 - The Winner Cell" +
         "Then we set the the figure 1 of player 1 to the winner Cell" in {
         controller.setPossibleCells(Set(131))
@@ -184,4 +184,3 @@ class TuiSpec extends WordSpec with Matchers {
     }
   }
 }
-*/
