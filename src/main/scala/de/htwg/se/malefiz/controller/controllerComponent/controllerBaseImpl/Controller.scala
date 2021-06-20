@@ -20,15 +20,30 @@ class Controller @Inject() extends ControllerInterface {
       Right(input)
   }
 
-  override def execute(input: String): Unit = sendPlayersToGameService(input.split(" ").toList)
+  override def execute(input: String): Boolean = {
+    sendPlayersToGameService(input.split(" ").toList)
+    true
+  }
 
-  def startGame(): Unit = rest.startGameRequest()
+  def startGame(): Boolean = {
+    rest.startGameRequest()
+    return true
+  }
 
-  def sendPlayersToGameService(playerList: List[String]): Unit = rest.sendPlayerListRequest(playerList)
+  def sendPlayersToGameService(playerList: List[String]): Boolean = {
+    rest.sendPlayerListRequest(playerList)
+    true
+  }
 
-  override def load(): Unit = rest.sendLoadRequest()
+  override def load(): Boolean = {
+    rest.sendLoadRequest()
+    true
+  }
 
-  override def loadFromDB(): Unit = rest.sendLoadFromDBRequest()
+  override def loadFromDB(): Boolean = {
+    rest.sendLoadFromDBRequest()
+    true
+  }
 
   override def showErrorMessage(toString: String): Unit = entryGui.showErrorMessage(toString)
 }

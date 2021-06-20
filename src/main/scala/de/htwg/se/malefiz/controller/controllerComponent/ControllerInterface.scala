@@ -6,15 +6,15 @@ trait ControllerInterface extends Publisher {
 
   def checkInput(input: String): Either[String, String]
 
-  def execute(input: String): Unit
+  def execute(input: String): Boolean
 
-  def startGame(): Unit
+  def startGame(): Boolean
 
-  def sendPlayersToGameService(playerList: List[String]): Unit
+  def sendPlayersToGameService(playerList: List[String]): Boolean
 
-  def load(): Unit
+  def load(): Boolean
 
-  def loadFromDB(): Unit
+  def loadFromDB(): Boolean
 
   def showErrorMessage(toString: String): Unit
 

@@ -31,18 +31,9 @@ class FileIO extends FileIOInterface {
   }
 
   def getXmlString: String = {
-    /*fileNotFound("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml") match {
-      case Success(v) => println("File Found")
-      case Failure(v) => println("File not Found")
-        break
-    }*/
     scala.xml.XML.load("FileIO/src/main/scala/de/htwg/se/malefiz/fileIoModule/gameboard.xml").mkString
   }
 
-  /*
-  def fileNotFound(filename: String): Try[String] = {
-    Try(Source.fromFile(filename).getLines().mkString)
-  }*/
 
   override def save(gamestate_json: String, suffix: String): Unit = {
     import java.io._

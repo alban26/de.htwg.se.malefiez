@@ -29,6 +29,5 @@ libraryDependencies ++= Seq(
   "de.heikoseeberger" %% "akka-http-play-json" % "1.32.0",
   "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8",
   "org.mockito" %% "mockito-scala" % "1.16.37"
-
 )
 

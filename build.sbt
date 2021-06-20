@@ -4,6 +4,9 @@ ThisBuild / version       := "0.0.1"
 ThisBuild / scalaVersion  := "2.13.5"
 ThisBuild / trapExit := false
 
+val AkkaVersion = "2.6.8"
+val AkkaHttpVersion = "10.2.4"
+
 val commonDependencies = Seq(
   "org.scalactic" %% "scalactic" % "3.1.1",
   "org.scalatest" %% "scalatest" % "3.1.1" % "test",
@@ -11,13 +14,19 @@ val commonDependencies = Seq(
   "net.codingwell" %% "scala-guice" % "5.0.0",
   "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
   "com.typesafe.play" %% "play-json" % "2.8.1",
+  "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
+  "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
+  "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
+  "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion,
+  "com.typesafe.akka" %% "akka-http-xml" % "10.2.4",
+  "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test,
+  "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion,
+  "com.typesafe.akka" %% "akka-http-testkit" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-testkit" % "2.6.8" % Test,
+  "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test,
   "de.heikoseeberger" %% "akka-http-play-json" % "1.32.0",
   "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8",
-  "com.typesafe.akka" %% "akka-stream" % "2.6.8",
-  "com.typesafe.akka" %% "akka-http" % "10.2.4",
-  "com.typesafe.akka" %% "akka-http-spray-json" % "10.2.4",
-  "com.typesafe.akka" %% "akka-http-xml" % "10.2.4",
+  "org.mockito" %% "mockito-scala" % "1.16.37",
   "com.typesafe.slick" %% "slick" % "3.3.3",
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "mysql" % "mysql-connector-java" % "8.0.24",

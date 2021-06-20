@@ -16,6 +16,22 @@ class ControllerSpec extends WordSpec with Matchers {
         val wrongInput = "A B C D E"
         controller.checkInput(wrongInput) should be(Left("Bitte maximal 4 Spieler eintippen (leerzeichen-getrennt)!"))
       }
+      "when entry some input " in {
+        controller.execute("someInput") should be (true)
+      }
+      "load from File" in {
+        controller.loadFromDB() should be (true)
+      }
+      "starting the game" in {
+        controller.startGame() should be (true)
+      }
+      "When sending players to game service" in {
+        val playerList: List[String] = List("alban", "robert")
+        controller.sendPlayersToGameService(playerList)
+      }
+      "when loading from database" in {
+        controller.loadFromDB() should be (true)
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ import spray.json.DefaultJsonProtocol
 import scala.concurrent.Future
 import scala.io.StdIn
 
-case class GameBoardServer() extends SprayJsonSupport with DefaultJsonProtocol {
+object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
 
   val cellConfigFile = "/configuration/mainCellConfiguration"
   val cellLinksFile = "/configuration/mainCellLinks"
@@ -43,12 +43,12 @@ case class GameBoardServer() extends SprayJsonSupport with DefaultJsonProtocol {
     },
     path("newGame") {
       tui.processInput("n start")
-      //openGameBoardGui()
+      openGameBoardGui()
       complete(StatusCodes.Created, "Spiel wurde erfolgreich gestartet")
     },
     path("loadGame") {
       tui.processInput("load")
-      complete(StatusCodes.Created, "SpielBrett wurde erfolgreich geoeffnet")
+      complete(StatusCodes.Created, "Spielbrett wurde erfolgreich geoeffnet")
     },
     path("loadGameFromDB") {
       tui.processInput("loadFromDB")
@@ -64,7 +64,7 @@ case class GameBoardServer() extends SprayJsonSupport with DefaultJsonProtocol {
     (path("gameBoardJson") & post) {
       entity(as[String]) { gameJsonString =>
         controller.evalJson(gameJsonString)
-        complete(HttpEntity("Laden von Json war erfolgreich!"))
+        complete(StatusCodes.Created, HttpEntity("Laden von Json war erfolgreich!"))
       }
     },
     (path("process") & post) {
@@ -76,7 +76,7 @@ case class GameBoardServer() extends SprayJsonSupport with DefaultJsonProtocol {
     (path("save") & post) {
       entity(as[String]) { input =>
         tui.processInput(input)
-        complete(HttpEntity("Speichere in Datenbank"))
+        complete(StatusCodes.Accepted, HttpEntity("Speichere in Datenbank"))
       }
     },
     (path("roll") & post) {
