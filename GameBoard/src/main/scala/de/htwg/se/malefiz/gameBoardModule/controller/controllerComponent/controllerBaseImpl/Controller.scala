@@ -250,14 +250,6 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
 
     var found: Set[Int] = Set[Int]()
 
-    //    var index = 0
-    //    while(index <= posCells.size) {
-    //
-    //      val possCell = (json \ "possibleCells")(index).as[Int]
-    //      gameBoard = gameBoard.setPossibleCellsTrueOrFalse(List(possCell), gameBoard.stateNumber.toString)
-    //      found += possCell
-    //      index += 1
-    //    }
 
     for (index <- 0 until posCells.size) {
       val possCell = (json \ "possibleCells") (index).as[Int]
@@ -298,15 +290,14 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     publish(new GameBoardChanged)
   }
 
-  override def evalXml(resulta: String): Unit = {
+  override def evalXml(result: String): Unit = {
 
-    val newController = new Controller(loadController(resulta).gameBoard)
+    val newController = new Controller(loadController(result).gameBoard)
     val stateNr = newController.gameBoard.stateNumber.get
 
     this.setGameBoard(newController.gameBoard)
     this.setPossibleCells(newController.gameBoard.possibleCells)
     this.setPlayersTurn(newController.gameBoard.playersTurn)
-    //this.setDicedNumber(newController.gameBoard.dicedNumber)
     this.setSelectedFigure(
       newController.gameBoard.selectedFigure.get._1,
       newController.gameBoard.selectedFigure.get._2
@@ -324,10 +315,8 @@ class Controller @Inject()(var gameBoard: GameBoardInterface) extends Controller
     val newController = new Controller(loadR(xmlString))
 
     val dice = (file \\ "dicedNumber" \ "@number").text.toIntOption
-    //newController.gameBoard.rollDice()
 
     val playerZahl = (file \\ "playersTurn" \ "@turnZ").text.toInt
-    //val playerName = (file \\ "playersTurn" \ "@turnN").text
     val stateNumber = (file \\ "gameState" \ "@state").text.toInt
     val selectedFigure_1 = (file \\ "selectedFigure" \ "@sPlayer").text.toInt
     val selectedFigure_2 = (file \\ "selectedFigure" \ "@sFigure").text.toInt

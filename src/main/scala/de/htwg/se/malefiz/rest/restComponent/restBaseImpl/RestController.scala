@@ -19,7 +19,7 @@ class RestController extends RestControllerInterface {
   implicit val executionContext = system.executionContext
 
   override def startGameRequest(): Unit = {
-    val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/newGame")
+    val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/newGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(startGameRequest)
     responseFuture.onComplete {
       case Success(value) =>
@@ -35,7 +35,7 @@ class RestController extends RestControllerInterface {
   override def sendPlayerListRequest(playerList: List[String]): Unit = {
     println("Sende Spielerliste an Gamboard: " + playerList.toString())
     val sendPlayersRequest = HttpRequest(method = HttpMethods.POST,
-      uri = "http://gameboard:8083/players",
+      uri = "http://localhost:8083/players",
       entity = HttpEntity(ContentTypes.`application/json`, playerList.toJson.toString())
     )
     val responseFuture: Future[HttpResponse] = Http().singleRequest(sendPlayersRequest)
@@ -52,7 +52,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def sendLoadRequest(): Unit = {
-    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/loadGame")
+    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/loadGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(loadGameRequest)
     responseFuture.onComplete {
       case Success(value) =>
@@ -70,7 +70,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def openGameBoardRequest(): Unit = {
-    val openGameBoardRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/gameBoard")
+    val openGameBoardRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/gameBoard")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(openGameBoardRequest)
     responseFuture.onComplete {
       case Success(value) =>
@@ -84,7 +84,7 @@ class RestController extends RestControllerInterface {
   }
 
   override def sendLoadFromDBRequest(): Unit = {
-    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://gameboard:8083/loadGameFromDB")
+    val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/loadGameFromDB")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(loadGameRequest)
     responseFuture.onComplete {
       case Success(value) =>

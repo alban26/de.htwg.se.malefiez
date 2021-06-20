@@ -19,7 +19,7 @@ class FileIO extends FileIOInterface {
   def load(): Unit = {
     val gameString = getJsonString
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(HttpMethods.POST, uri =
-      "http://gameboard:8083/gameBoardJson", entity = gameString))
+      "http://localhost:8083/gameBoardJson", entity = gameString))
     responseFuture.onComplete {
       case Success(value) => {
         val entityFuture: Future[String] = value.entity.toStrict(5.seconds).map(_.data.decodeString("UTF-8"))

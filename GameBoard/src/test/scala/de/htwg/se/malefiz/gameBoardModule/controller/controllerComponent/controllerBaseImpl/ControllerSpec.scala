@@ -6,13 +6,13 @@ import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.Stateme
 import de.htwg.se.malefiz.gameBoardModule.model.gameBoardComponent.gameBoardBaseImpl.{Cell, Creator, GameBoard, Player}
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
-/*
+
 class ControllerSpec extends WordSpec with Matchers {
   "A Controller" when {
 
     "observed by an Observer" should {
-      val cellConfigFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellConfiguration"
-      val cellLinksFile = "GameBoard/src/main/scala/de/htwg/se/malefiz/gameBoardModule/mainCellLinks"
+      val cellConfigFile = "/configuration/mainCellConfiguration"
+      val cellLinksFile = "/configuration/mainCellLinks"
       val players: List[Option[Player]] = List().empty
       val cellList: List[Cell] = Creator().getCellList(cellConfigFile)
       val cellGraph: Map[Int, Set[Int]] = Creator().getCellGraph(cellLinksFile)
@@ -83,33 +83,6 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.resetPossibleCells()
         controller.gameBoard.possibleCells should be(Set().empty)
       }
-      "The Controller can save the Game" in {
-       /* controller.setSelectedFigure(1, 3)
-        controller.save()
-
-        val newPlayerList = List(Some(new Player(1, "Robert")))
-
-        val controllerNew =
-          new Controller(
-            gameBoard = GameBoard(
-              cellList,
-              newPlayerList,
-              cellGraph,
-              possibleCells = Set().empty,
-              dicedNumber = Option(1),
-              playersTurn = newPlayerList.head,
-              selectedFigure = Option((2, 1)),
-              stateNumber = Option(2),
-              statementStatus = Option(addPlayer)
-            )
-          )
-        controllerNew.load()
-
-        controllerNew.gameBoard.cellList(22).playerNumber should be(0)
-        controllerNew.execute("exit")
-
-        */
-      }
       "The Controller can set the attribute 'possibleCells' true" in {
         controller.state.currentState = SelectFigure(controller)
         controller.setPossibleCellsTrueOrFalse(List(30, 31, 32, 33))
@@ -136,4 +109,3 @@ class ControllerSpec extends WordSpec with Matchers {
 
 
 
- */

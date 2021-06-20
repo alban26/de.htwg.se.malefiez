@@ -24,7 +24,6 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "redo" => controller.redo()
       case _ =>
         controller.execute(input)
-        textPrint("-------")
     }
   }
 

@@ -14,8 +14,7 @@ import scala.util.{Failure, Success}
 
 class DaoMongoDB extends DaoInterface {
 
-  val uri: String = "mongodb://192.168.2.111:27017/?readPreference=primary&authSource=malefiz-mongodb&appname=MongoDB" +
-    "%20Compass&ssl=false"
+  val uri: String = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 
   val client: MongoClient = MongoClient(uri)
   val database: MongoDatabase = client.getDatabase("malefiz")

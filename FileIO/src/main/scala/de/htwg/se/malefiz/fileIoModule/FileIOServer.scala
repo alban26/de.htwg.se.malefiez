@@ -60,6 +60,6 @@ object FileIOServer extends App {
       }
     )
 
-  val bindingFuture = Http().newServerAt("0.0.0.0", 8081).bind(route)
+  val bindingFuture = Http().newServerAt("localhost", 8081).bind(route)
 
 }

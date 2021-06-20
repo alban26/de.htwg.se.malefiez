@@ -1,6 +1,5 @@
 package de.htwg.se.malefiz.gameBoardModule
 
-import akka.Done
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
@@ -13,7 +12,6 @@ import de.htwg.se.malefiz.gameBoardModule.aview.gui.SwingGui
 import de.htwg.se.malefiz.gameBoardModule.controller.controllerComponent.ControllerInterface
 import spray.json.DefaultJsonProtocol
 
-import scala.concurrent.Future
 import scala.io.StdIn
 
 object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
@@ -100,7 +98,7 @@ object GameBoardServer extends SprayJsonSupport with DefaultJsonProtocol {
 
     route
 
-    val bindingFuture = Http().newServerAt("0.0.0.0", 8083).bind(route)
+    val bindingFuture = Http().newServerAt("localhost", 8083).bind(route)
 
     println(s" GameBoard Server online at http://0.0.0.0:8081/\nPress RETURN to stop...")
     StdIn.readLine()
