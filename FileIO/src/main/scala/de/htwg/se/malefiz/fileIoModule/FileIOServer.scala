@@ -3,17 +3,19 @@ package de.htwg.se.malefiz.fileIoModule
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.malefiz.fileIoModule.controller.controllerComponent.ControllerInterface
+import de.htwg.se.malefiz.gameBoardModule.GameBoardServer.route
 
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
+import scala.io.StdIn
 import scala.util.{Failure, Success}
 
 
-object FileIOServer extends App {
+object FileIOServer {
 
   val injector: Injector = Guice.createInjector(new FileIOServerModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
@@ -45,7 +47,7 @@ object FileIOServer extends App {
                   HttpEntity("Speichern als Json erfolgreich")
                 case Failure(exception) => HttpEntity(exception.toString)
               }
-              HttpEntity("Fehler beim speichern als XML")
+              HttpEntity("Erfolgreich gespeichert!")
             } else {
               HttpEntity("Fehler beim Speichern")
             }
@@ -55,11 +57,25 @@ object FileIOServer extends App {
       get {
         path("load") {
           controller.load()
-          complete("Request succeded")
+          complete(StatusCodes.OK,"Erfolgreich geladen!")
         }
       }
     )
 
-  val bindingFuture = Http().newServerAt("localhost", 8081).bind(route)
+
+
+
+  def main(args: Array[String]): Unit = {
+
+    route
+
+    val bindingFuture = Http().newServerAt("localhost", 8081).bind(route)
+
+    println(s" GameBoard Server online at http://0.0.0.0:8081/\nPress RETURN to stop...")
+    StdIn.readLine()
+    bindingFuture
+      .flatMap(_.unbind())
+      .onComplete(_ => system.terminate())
+  }
 
 }

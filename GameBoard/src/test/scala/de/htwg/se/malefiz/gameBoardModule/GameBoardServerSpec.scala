@@ -20,7 +20,6 @@ class GameBoardServerSpec extends WordSpec with Matchers with ScalaFutures with 
   override def createActorSystem(): akka.actor.ActorSystem =
     testKit.system.classicSystem
 
-  val userRegistry = testKit.createTestProbe()
   lazy val routes = GameBoardServer.route
 
 
