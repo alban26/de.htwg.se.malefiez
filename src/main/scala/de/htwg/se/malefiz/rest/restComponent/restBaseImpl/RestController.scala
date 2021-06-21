@@ -18,7 +18,7 @@ class RestController extends RestControllerInterface {
   implicit val system = ActorSystem(Behaviors.empty, "Malefiz")
   implicit val executionContext = system.executionContext
 
-  override def startGameRequest(): Unit = {
+  override def startGameRequest(): Boolean = {
     val startGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/newGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(startGameRequest)
     responseFuture.onComplete {
@@ -30,6 +30,7 @@ class RestController extends RestControllerInterface {
         }
       case Failure(exception) => println("Fehler beim Starten des Spiels im GameBoardService: " + exception)
     }
+    true
   }
 
   override def sendPlayerListRequest(playerList: List[String]): Unit = {
@@ -51,7 +52,7 @@ class RestController extends RestControllerInterface {
 
   }
 
-  override def sendLoadRequest(): Unit = {
+  override def sendLoadRequest(): Boolean = {
     val loadGameRequest = HttpRequest(method = HttpMethods.GET, uri = "http://localhost:8083/loadGame")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(loadGameRequest)
     responseFuture.onComplete {
@@ -67,6 +68,7 @@ class RestController extends RestControllerInterface {
         }
       case Failure(exception) => controller.showErrorMessage(exception.toString)
     }
+    true
   }
 
   override def openGameBoardRequest(): Unit = {

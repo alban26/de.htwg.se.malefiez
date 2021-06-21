@@ -15,6 +15,7 @@ class TuiSpec extends WordSpec with Matchers {
       val injector: Injector = Guice.createInjector(new MalefizModule)
       val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
 
+      val rest = new RestController
       val tui = new Tui(controller)
 
       "You can load a existing game " in {
@@ -23,12 +24,14 @@ class TuiSpec extends WordSpec with Matchers {
         val playerList = List("Alban", "Robert")
 
         controller.load() should be (true)
+        rest.sendLoadRequest() should be (true)
 
       }
       "or can start a new Game with " in {
         tui.runInput("start")
 
         controller.startGame() should be (true)
+        rest.startGameRequest() should be (true)
       }
     }
   }
