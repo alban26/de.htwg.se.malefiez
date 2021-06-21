@@ -7,6 +7,8 @@ ThisBuild / trapExit := false
 val AkkaVersion = "2.6.8"
 val AkkaHttpVersion = "10.2.4"
 
+
+
 val commonDependencies = Seq(
   "org.scalactic" %% "scalactic" % "3.1.1",
   "org.scalatest" %% "scalatest" % "3.1.1" % "test",
@@ -92,3 +94,5 @@ lazy val fileio = project.settings(
   },
   mainClass in assembly := Some("de.htwg.se.malefiz.fileIoModule.FileIOServer")
 ).aggregate(gameboard).dependsOn(gameboard)
+
+coverageExcludedPackages := "<empty>;.*gui.*;.*Malefiz;.*restBaseImpl.*"
