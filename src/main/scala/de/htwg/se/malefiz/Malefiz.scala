@@ -8,8 +8,8 @@ import scala.io.StdIn.readLine
 
 object Malefiz {
 
-  val cellConfigFile = "project/mainCellConfiguration"
-  val cellLinksFile = "project/mainCellLinks"
+  val cellConfigFile = "/configuration/mainCellConfiguration"
+  val cellLinksFile = "/configuration/mainCellLinks"
   val injector: Injector = Guice.createInjector(new MalefizModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
@@ -26,4 +26,5 @@ object Malefiz {
       tui.processInput(input)
     } while (input != "end")
   }
+
 }

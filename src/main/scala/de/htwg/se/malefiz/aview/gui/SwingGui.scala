@@ -1,10 +1,16 @@
 package de.htwg.se.malefiz.aview.gui
 
-import java.awt.{BasicStroke, Color, Font}
 import java.awt.image.BufferedImage
+import java.awt.{BasicStroke, Color, Font}
+import java.io.{File, InputStream}
+import de.htwg.se.malefiz.Malefiz.entryGui
+//import java.awt.image.BufferedImage
 import java.io.File
 import de.htwg.se.malefiz.controller.controllerComponent
 import de.htwg.se.malefiz.controller.controllerComponent.GameStates.SelectFigure
+import de.htwg.se.malefiz.controller.controllerComponent.Statements.changeFigure
+import de.htwg.se.malefiz.controller.controllerComponent._
+
 import de.htwg.se.malefiz.controller.controllerComponent.{ControllerInterface, GameBoardChanged, StatementRequest, Statements, Winner}
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
@@ -16,8 +22,9 @@ import scala.swing.event.{ButtonClicked, _}
 
 class SwingGui(controller: ControllerInterface) extends Frame {
 
-  val bimage: BufferedImage = ImageIO.read(new File("src/main/scala/de/htwg/se/malefiz/aview/gui/malefizimg.png"))
-  val g2d: Graphics2D = bimage.createGraphics()
+  val image: BufferedImage = ImageIO.read(getClass().getResource("/images/malefizimg.png"))
+  val stream: InputStream = getClass.getResourceAsStream("/images/dice.png")
+  val g2d: Graphics2D = image.createGraphics()
 
   title = "Malefiz"
   centerOnScreen()
@@ -30,7 +37,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val playerLabel = new Label("Player")
   playerLabel.foreground = Color.WHITE
-  playerLabel.background= Color.DARK_GRAY
+  playerLabel.background = Color.DARK_GRAY
   playerLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
   playerLabel.border = Swing.EmptyBorder(3)
 
@@ -42,13 +49,13 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val playerTurnLabel = new Label("Turn")
   playerTurnLabel.foreground = Color.WHITE
-  playerTurnLabel.background= Color.DARK_GRAY
+  playerTurnLabel.background = Color.DARK_GRAY
   playerTurnLabel.border = Swing.EmptyBorder(3)
   playerTurnLabel.font = new Font("Sans Serif", Font.ITALIC, 20)
 
   val playerTurnArea = new Label("")
   playerTurnArea.foreground = Color.WHITE
-  playerTurnArea.background= Color.DARK_GRAY
+  playerTurnArea.background = Color.DARK_GRAY
   playerTurnArea.border = Swing.EmptyBorder(3)
   playerTurnArea.font = new Font("Sans Serif", Font.ITALIC, 16)
 
@@ -59,7 +66,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   cubeLabel.border = Swing.EmptyBorder(3)
 
   val cubeButton = new Button()
-  val cubeIcon = new ImageIcon("src/main/scala/de/htwg/se/malefiz/aview/gui/dice.png")
+  val cubeIcon = new ImageIcon(ImageIO.read(stream))
   cubeButton.icon = cubeIcon
   cubeButton.border = Swing.EmptyBorder(3)
 
@@ -71,7 +78,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val randomNumberArea = new Label("")
   randomNumberArea.foreground = Color.WHITE
-  randomNumberArea.background= Color.DARK_GRAY
+  randomNumberArea.background = Color.DARK_GRAY
   randomNumberArea.font = new Font("Sans Serif", Font.ITALIC, 16)
   randomNumberArea.border = Swing.EmptyBorder(3)
 
@@ -84,11 +91,10 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
   val panel: Panel = new Panel {
 
-    override def paint(g: Graphics2D): Unit = {
-      g.drawImage(bimage, 0, 0, null)
-    }
+    override def paint(g: Graphics2D): Unit =
+      g.drawImage(image, 0, 0, null)
 
-    preferredSize = new Dimension(bimage.getWidth(null), bimage.getHeight())
+    preferredSize = new Dimension(image.getWidth(null), image.getHeight())
     listenTo(mouse.clicks)
 
     reactions += {
@@ -132,23 +138,23 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       i match {
         case 0 =>
           val red = playerArea.styledDocument.addStyle("Red", null)
-          StyleConstants.setForeground(red,Color.RED)
-          doc.insertString(doc.getLength,playerString, red)
+          StyleConstants.setForeground(red, Color.RED)
+          doc.insertString(doc.getLength, playerString, red)
           true
         case 1 =>
           val green = playerArea.styledDocument.addStyle("Green", null)
-          StyleConstants.setForeground(green,Color.GREEN)
-          doc.insertString(doc.getLength,playerString, green)
+          StyleConstants.setForeground(green, Color.GREEN)
+          doc.insertString(doc.getLength, playerString, green)
           true
         case 2 =>
           val yellow = playerArea.styledDocument.addStyle("Yellow/Orange", null)
-          StyleConstants.setForeground(yellow,Color.ORANGE)
-          doc.insertString(doc.getLength,playerString, yellow)
+          StyleConstants.setForeground(yellow, Color.ORANGE)
+          doc.insertString(doc.getLength, playerString, yellow)
           true
         case 3 =>
           val blue = playerArea.styledDocument.addStyle("Blue", null)
-          StyleConstants.setForeground(blue,Color.BLUE)
-          doc.insertString(doc.getLength,playerString, blue)
+          StyleConstants.setForeground(blue, Color.BLUE)
+          doc.insertString(doc.getLength, playerString, blue)
           true
       }
     }
@@ -290,8 +296,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       constraints(0,
         0,
         gridwidth = 9,
-        ipadx = bimage.getWidth(null),
-        ipady = bimage.getHeight(null)))
+        ipadx = image.getWidth(null),
+        ipady = image.getHeight(null)))
   }
 
   listenTo(cubeButton, controller)
@@ -305,7 +311,11 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       drawGameBoard()
     case winner: Winner =>
       drawGameBoard()
-      Dialog.showConfirmation(contents.head, Statements.value(StatementRequest(controller)), optionType = Dialog.Options.Default)
+      Dialog.showConfirmation(
+        contents.head,
+        Statements.value(StatementRequest(controller)),
+        optionType = Dialog.Options.Default
+      )
       controller.resetGameBoard()
       playerArea.text = ""
       visible = false
